@@ -2,8 +2,8 @@ language: java
 
 jdk:
   - oraclejdk7
-  
+
+before_install: cd java
+
 install: 
   - ant deps
-  
-script: cd java
