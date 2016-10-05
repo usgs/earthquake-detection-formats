@@ -1,13 +1,13 @@
 ## Defined formats:
-* [PickJSON](PickJSON.md) Format - A format for unassociated picks from a
+* [Pick](Pick.md) Format - A format for unassociated picks from a
 waveform arrival time picking algorithm.
-* [BeamJSON](BeamJSON.md) Format  - A format for unassociated beams from seismic
+* [Beam](Beam.md) Format  - A format for unassociated beams from seismic
 array beamforming algorithm.
-* [CorrelationJSON](CorrelationJSON.md) Format - A format to contain a seismic
+* [Correlation](Correlation.md) Format - A format to contain a seismic
 event detection made using a cross correlation algorithm.
-* [OriginJSON](OriginJSON.md) Format - A format to contain a seismic event origin
+* [Origin](Origin.md) Format - A format to contain a seismic event origin
 made using an event detection algorithm.
-* [RetractJSON](RetractJSON.md) Format - A format to contain a seismic event
+* [Retract](Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
 
 ## Supporting objects:
