@@ -8,7 +8,8 @@ import org.junit.Test;
 public class BeamTest {
 
 	public static String BEAM_STRING = "{\"Source\":{\"Author\":\"TestAuthor\","
-			+ "\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\","
+			+ "\"AgencyID\":\"US\"},\"StartTime\":\"2015-12-28T21:32:24.017Z\","
+			+ "\"EndTime\":\"2015-12-28T21:32:30.017Z\","
 			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":"
 			+ "\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},"
 			+ "\"Type\":\"Beam\",\"BackAzimuth\":2.65,\"ID\":\"12GFH48776857\","
@@ -23,7 +24,8 @@ public class BeamTest {
 	public static String SITEID = "BMN.HHZ.LB.01";
 	public static String AGENCYID = "US";
 	public static String AUTHOR = "TestAuthor";
-	public static Date TIME = Utility.getDate("2015-12-28T21:32:24.017Z");
+	public static Date STARTTIME = Utility.getDate("2015-12-28T21:32:24.017Z");
+	public static Date ENDTIME = Utility.getDate("2015-12-28T21:32:30.017Z");
 	public static double BACKAZIMUTH = 2.65;
 	public static double BACKAZIMUTHERROR = 3.8;
 	public static double SLOWNESS = 1.44;
@@ -41,7 +43,7 @@ public class BeamTest {
 	public void writesJSON() {
 
 		Beam beamObject = new Beam(ID, SITEID, STATION, CHANNEL, NETWORK,
-				LOCATION, AGENCYID, AUTHOR, TIME, BACKAZIMUTH,
+				LOCATION, AGENCYID, AUTHOR, STARTTIME, ENDTIME, BACKAZIMUTH,
 				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, ASSOCPHASE,
 				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
@@ -82,24 +84,26 @@ public class BeamTest {
 
 		// use constructor
 		Beam beamObject = new Beam(ID, SITEID, STATION, CHANNEL, NETWORK,
-				LOCATION, AGENCYID, AUTHOR, TIME, BACKAZIMUTH,
+				LOCATION, AGENCYID, AUTHOR, STARTTIME, ENDTIME, BACKAZIMUTH,
 				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR);
 
 		// check data values
 		checkData(beamObject, "Alternate Constructor 1");
 
 		// use constructor
-		Beam altBeamObject = new Beam(ID, new Site(SITEID, STATION, CHANNEL,
-				NETWORK, LOCATION), new Source(AGENCYID, AUTHOR), TIME,
-				BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR);
+		Beam altBeamObject = new Beam(ID,
+				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION),
+				new Source(AGENCYID, AUTHOR), STARTTIME, ENDTIME, BACKAZIMUTH,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR);
 
 		// check data values
 		checkData(altBeamObject, "Alternate Constructor 2");
 
 		// use constructor
-		Beam altAltBeamObject = new Beam(ID, new Site(SITEID, STATION, CHANNEL,
-				NETWORK, LOCATION), new Source(AGENCYID, AUTHOR), TIME,
-				BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+		Beam altAltBeamObject = new Beam(ID,
+				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION),
+				new Source(AGENCYID, AUTHOR), STARTTIME, ENDTIME, BACKAZIMUTH,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
 				new Associated(ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
 						ASSOCRESIDUAL, ASSOCSIGMA));
 
@@ -114,7 +118,7 @@ public class BeamTest {
 	public void validate() {
 
 		Beam beamObject = new Beam(ID, SITEID, STATION, CHANNEL, NETWORK,
-				LOCATION, AGENCYID, AUTHOR, TIME, BACKAZIMUTH,
+				LOCATION, AGENCYID, AUTHOR, STARTTIME, ENDTIME, BACKAZIMUTH,
 				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, ASSOCPHASE,
 				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
@@ -126,9 +130,9 @@ public class BeamTest {
 
 		// build bad Beam object
 		Beam badBeamObject = new Beam("", null, "", CHANNEL, NETWORK, LOCATION,
-				AGENCYID, AUTHOR, TIME, null, BACKAZIMUTHERROR, SLOWNESS,
-				SLOWNESSERROR, ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
-				ASSOCRESIDUAL, ASSOCSIGMA);
+				AGENCYID, AUTHOR, STARTTIME, ENDTIME, null, BACKAZIMUTHERROR,
+				SLOWNESS, SLOWNESSERROR, ASSOCPHASE, ASSOCDISTANCE,
+				ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		rc = badBeamObject.isValid();
 
@@ -142,35 +146,40 @@ public class BeamTest {
 		assertEquals(TestName + " ID Equals", ID, beamObject.getID());
 
 		// check beamObject.site.Station
-		assertEquals(TestName + " Station Equals", STATION, beamObject
-				.getSite().getStation());
+		assertEquals(TestName + " Station Equals", STATION,
+				beamObject.getSite().getStation());
 
 		// check beamObject.site.Channel
-		assertEquals(TestName + " Channel Equals", CHANNEL, beamObject
-				.getSite().getChannel());
+		assertEquals(TestName + " Channel Equals", CHANNEL,
+				beamObject.getSite().getChannel());
 
 		// check beamObject.site.Network
-		assertEquals(TestName + " Network Equals", NETWORK, beamObject
-				.getSite().getNetwork());
+		assertEquals(TestName + " Network Equals", NETWORK,
+				beamObject.getSite().getNetwork());
 
 		// check beamObject.site.Location
-		assertEquals(TestName + " Location Equals", LOCATION, beamObject
-				.getSite().getLocation());
+		assertEquals(TestName + " Location Equals", LOCATION,
+				beamObject.getSite().getLocation());
 
 		// check beamObject.site.SiteID
-		assertEquals(TestName + " SiteID Equals", SITEID, beamObject.getSite()
-				.getSiteID());
+		assertEquals(TestName + " SiteID Equals", SITEID,
+				beamObject.getSite().getSiteID());
 
 		// check beamObject.Source.AgencyID
-		assertEquals(TestName + " AgencyID Equals", AGENCYID, beamObject
-				.getSource().getAgencyID());
+		assertEquals(TestName + " AgencyID Equals", AGENCYID,
+				beamObject.getSource().getAgencyID());
 
 		// check beamObject.Source.Author
-		assertEquals(TestName + " Author Equals", AUTHOR, beamObject
-				.getSource().getAuthor());
+		assertEquals(TestName + " Author Equals", AUTHOR,
+				beamObject.getSource().getAuthor());
 
-		// check beamObject.Time
-		assertEquals(TestName + " Time Equals", TIME, beamObject.getTime());
+		// check beamObject.startTime
+		assertEquals(TestName + " Start Time Equals", STARTTIME,
+				beamObject.getStartTime());
+
+		// check beamObject.endTime
+		assertEquals(TestName + " End Time Equals", ENDTIME,
+				beamObject.getEndTime());
 
 		// check beamObject.BackAzimuth
 		assertEquals(TestName + " BackAzimuth Equals", BACKAZIMUTH,
@@ -190,24 +199,24 @@ public class BeamTest {
 
 		if (!beamObject.getAssociationInfo().isEmpty()) {
 			// check beamObject.Associated.Phase
-			assertEquals(TestName + " Phase Equals", ASSOCPHASE, beamObject
-					.getAssociationInfo().getPhase());
+			assertEquals(TestName + " Phase Equals", ASSOCPHASE,
+					beamObject.getAssociationInfo().getPhase());
 
 			// check beamObject.Associated.Distance
 			assertEquals(TestName + " Distance Equals", ASSOCDISTANCE,
 					beamObject.getAssociationInfo().getDistance(), 0);
 
 			// check beamObject.Associated.Azimuth
-			assertEquals(TestName + " Azimuth Equals", ASSOCAZIMUTH, beamObject
-					.getAssociationInfo().getAzimuth(), 0);
+			assertEquals(TestName + " Azimuth Equals", ASSOCAZIMUTH,
+					beamObject.getAssociationInfo().getAzimuth(), 0);
 
 			// check beamObject.Associated.Residual
 			assertEquals(TestName + " Residual Equals", ASSOCRESIDUAL,
 					beamObject.getAssociationInfo().getResidual(), 0);
 
 			// check beamObject.Associated.Sigma
-			assertEquals(TestName + " Sigma Equals", ASSOCSIGMA, beamObject
-					.getAssociationInfo().getSigma(), 0);
+			assertEquals(TestName + " Sigma Equals", ASSOCSIGMA,
+					beamObject.getAssociationInfo().getSigma(), 0);
 		}
 	}
 }
