@@ -1,5 +1,7 @@
 # Detection Formats
 
+[![Build Status](https://travis-ci.org/usgs/earthquake-detection-formats.svg?branch=master)](https://travis-ci.org/usgs/earthquake-detection-formats)
+
 The US Geological Survey (USGS) National Earthquake Information Center (NEIC) defines a number of data exchange formats to communicate seismic event detection information between processing systems. These formats are defined using objects as defined in the [JSON standard](http://www.json.org).
 
 [License](LICENSE.md)
