@@ -66,11 +66,11 @@ correlated, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 * Correlation - A decimal number containing the correlation value of the
 detection.
 * Latitude - A decimal number that identifies the computed origin latitude of
-the correlation.
+the correlation in degrees.
 * Longitude - A decimal number that identifies the computed origin longitude of
-the correlation.
+the correlation in degrees.
 * Depth - A decimal number that identifies the computed origin elevation of the
-correlation.
+correlation in kilometers.
 * OriginTime - A string containing the UTC computed origin time of the
 correlation, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 

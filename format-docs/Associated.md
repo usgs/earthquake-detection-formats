@@ -31,10 +31,11 @@ association.
 
 * Phase - A string that identifies the seismic phase for this data if
 associated.
-* Distance - A decimal number containing the distance between the detection's
-and data's locations if associated.
-* Azimuth - A decimal number containing the azimuth between the detection's and
-data's locations if associated.
-* Residual - A decimal number containing residual of the data if associated.
+* Distance - A decimal number containing the distance in degrees between the 
+detection's and data's locations if associated.
+* Azimuth - A decimal number containing the azimuth in degrees between the 
+detection's and data's locations if associated.
+* Residual - A decimal number containing residual in seconds of the data if 
+associated.
 * Sigma - A decimal number reflecting the number of standard deviations of the
 data from the calculated value if associated.

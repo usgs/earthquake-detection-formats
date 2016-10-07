@@ -38,9 +38,12 @@ Required Values:
 * ID - A string containing an unique identifier for this origin.
 * Source - An object containing the source of the origin, see
 [Source](Source.md).
-* Latitude - A decimal number that identifies the latitude of the origin.
-* Longitude - A decimal number that identifies the longitude of the origin.
-* Depth - A decimal number that identifies the elevation of the origin.
+* Latitude - A decimal number that identifies the latitude of the origin in 
+degrees.
+* Longitude - A decimal number that identifies the longitude of the origin in 
+degrees.
+* Depth - A decimal number that identifies the elevation of the origin in 
+kilometers.
 * Time - A string containing the UTC origin time of the origin, in the ISO8601
 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 
