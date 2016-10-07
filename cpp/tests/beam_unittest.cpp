@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define BEAMSTRING "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
+#define BEAMSTRING "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
 #define ID "12GFH48776857"
 #define STATION "BMN"
 #define CHANNEL "HHZ"
@@ -13,7 +13,8 @@
 #define SITEID "BMN.HHZ.LB.01"
 #define AGENCYID "US"
 #define AUTHOR "TestAuthor"
-#define TIME "2015-12-28T21:32:24.017Z"
+#define STARTTIME "2015-12-28T21:32:24.017Z"
+#define ENDTIME "2015-12-28T21:32:30.017Z"
 #define BACKAZIMUTH 2.65
 #define BACKAZIMUTHERROR 3.8
 #define SLOWNESS 1.44
@@ -24,8 +25,7 @@
 #define ASSOCRESIDUAL -0.025393
 #define ASSOCSIGMA 0.086333
 
-void checkdata(detectionformats::beam beamobject, std::string testinfo)
-{
+void checkdata(detectionformats::beam beamobject, std::string testinfo) {
 	// check id
 	std::string beamid = beamobject.id;
 	std::string expectedid = std::string(ID);
@@ -66,10 +66,17 @@ void checkdata(detectionformats::beam beamobject, std::string testinfo)
 	std::string expectedauthor = std::string(AUTHOR);
 	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
 
-	// check time
-	double beamtime = beamobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
-	ASSERT_EQ(beamtime, expectedtime);
+	// check start time
+	double beamstarttime = beamobject.starttime;
+	double expectedstarttime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(STARTTIME));
+	ASSERT_EQ(beamstarttime, expectedstarttime);
+
+	// check end time
+	double beamendtime = beamobject.endtime;
+	double expectedendtime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(ENDTIME));
+	ASSERT_EQ(beamendtime, expectedendtime);
 
 	// check backazimuth
 	double beambackazimuth = beamobject.backazimuth;
@@ -119,8 +126,7 @@ void checkdata(detectionformats::beam beamobject, std::string testinfo)
 
 // tests to see if beam can successfully
 // write json output
-TEST(BeamTest, WritesJSON)
-{
+TEST(BeamTest, WritesJSON) {
 	detectionformats::beam beamobject;
 
 	// build beam object
@@ -137,7 +143,10 @@ TEST(BeamTest, WritesJSON)
 	beamobject.source.agencyid = std::string(AGENCYID);
 	beamobject.source.author = std::string(AUTHOR);
 
-	beamobject.time = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
+	beamobject.starttime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(STARTTIME));
+	beamobject.endtime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(ENDTIME));
 	beamobject.backazimuth = BACKAZIMUTH;
 	beamobject.backazimutherror = BACKAZIMUTHERROR;
 	beamobject.slowness = SLOWNESS;
@@ -152,23 +161,26 @@ TEST(BeamTest, WritesJSON)
 
 	// build json string
 	rapidjson::Document beamdocument;
-	std::string beamjson = detectionformats::ToJSONString(beamobject.tojson(beamdocument, beamdocument.GetAllocator()));
-    
-    // read it back in
-    rapidjson::Document beamdocument2;
-    detectionformats::beam beamobject2(detectionformats::FromJSONString(beamjson, beamdocument2));
-    
-    // check data values
-    checkdata(beamobject2, "");
+	std::string beamjson = detectionformats::ToJSONString(
+			beamobject.tojson(beamdocument, beamdocument.GetAllocator()));
+
+	// read it back in
+	rapidjson::Document beamdocument2;
+	detectionformats::beam beamobject2(
+			detectionformats::FromJSONString(beamjson, beamdocument2));
+
+	// check data values
+	checkdata(beamobject2, "");
 }
 
 // tests to see if beam can successfully
 // read json output
-TEST(BeamTest, ReadsJSON)
-{
+TEST(BeamTest, ReadsJSON) {
 	// build beam object
 	rapidjson::Document beamdocument;
-	detectionformats::beam beamobject(detectionformats::FromJSONString(std::string(BEAMSTRING), beamdocument));
+	detectionformats::beam beamobject(
+			detectionformats::FromJSONString(std::string(BEAMSTRING),
+					beamdocument));
 
 	// check data values
 	checkdata(beamobject, "");
@@ -176,20 +188,32 @@ TEST(BeamTest, ReadsJSON)
 
 // tests to see if beam can successfully
 // be constructed
-TEST(BeamTest, Constructor)
-{
+TEST(BeamTest, Constructor) {
 	// use constructor
-	detectionformats::beam beamobject(std::string(ID), std::string(SITEID), std::string(STATION), std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-		std::string(AGENCYID), std::string(AUTHOR), detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, std::string(ASSOCPHASE), ASSOCDISTANCE,
-		ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+	detectionformats::beam beamobject(std::string(ID), std::string(SITEID),
+			std::string(STATION), std::string(CHANNEL), std::string(NETWORK),
+			std::string(LOCATION), std::string(AGENCYID), std::string(AUTHOR),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(STARTTIME)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(ENDTIME)),
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+			std::string(ASSOCPHASE), ASSOCDISTANCE,
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 	// check data values
 	checkdata(beamobject, "Tested constructor.");
 
 	// use alternate constructor
-	detectionformats::beam beamobject_altc(std::string(ID), detectionformats::site(std::string(SITEID), std::string(STATION), std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION)),
-		detectionformats::source(std::string(AGENCYID), std::string(AUTHOR)), detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
-		ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+	detectionformats::beam beamobject_altc(std::string(ID),
+			detectionformats::site(std::string(SITEID), std::string(STATION),
+					std::string(CHANNEL), std::string(NETWORK),
+					std::string(LOCATION)),
+			detectionformats::source(std::string(AGENCYID),
+					std::string(AUTHOR)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(STARTTIME)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(ENDTIME)),
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
 
 	// check data values
 	checkdata(beamobject_altc, "Tested alternate constructor.");
@@ -197,12 +221,16 @@ TEST(BeamTest, Constructor)
 
 // tests to see if beam can successfully
 // be copy constructed
-TEST(BeamTest, CopyConstructor)
-{
+TEST(BeamTest, CopyConstructor) {
 	// use constructor
-	detectionformats::beam frombeamobject(std::string(ID), std::string(SITEID), std::string(STATION), std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-		std::string(AGENCYID), std::string(AUTHOR), detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, std::string(ASSOCPHASE), ASSOCDISTANCE,
-		ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+	detectionformats::beam frombeamobject(std::string(ID), std::string(SITEID),
+			std::string(STATION), std::string(CHANNEL), std::string(NETWORK),
+			std::string(LOCATION), std::string(AGENCYID), std::string(AUTHOR),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(STARTTIME)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(ENDTIME)),
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+			std::string(ASSOCPHASE), ASSOCDISTANCE,
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 	detectionformats::beam beamobject(frombeamobject);
 
@@ -212,8 +240,7 @@ TEST(BeamTest, CopyConstructor)
 
 // tests to see if beam can successfully
 // validate
-TEST(BeamTest, Validate)
-{
+TEST(BeamTest, Validate) {
 	detectionformats::beam beamobject;
 
 	// build beam object
@@ -230,7 +257,10 @@ TEST(BeamTest, Validate)
 	beamobject.source.agencyid = std::string(AGENCYID);
 	beamobject.source.author = std::string(AUTHOR);
 
-	beamobject.time = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
+	beamobject.starttime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(STARTTIME));
+	beamobject.endtime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(ENDTIME));
 	beamobject.backazimuth = BACKAZIMUTH;
 	beamobject.backazimutherror = BACKAZIMUTHERROR;
 	beamobject.slowness = SLOWNESS;
@@ -247,23 +277,20 @@ TEST(BeamTest, Validate)
 	bool result = beamobject.isvalid();
 
 	// check return code
-	ASSERT_EQ(result, true) << "Tested for successful validation.";
+	ASSERT_EQ(result, true)<< "Tested for successful validation.";
 
 	// build bad beam object
 	detectionformats::beam badbeamobject;
 	beamobject.id = "";
 
 	result = false;
-	try
-	{
+	try {
 		// call validation
 		result = badbeamobject.isvalid();
-	}
-	catch (const std::exception &)
-	{
+	} catch (const std::exception &) {
 		// don't care what the exception was
 	}
 
 	// check return code
-	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
 }

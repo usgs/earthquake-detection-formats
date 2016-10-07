@@ -1,11 +1,13 @@
-# BeamJSON Format Specification
+# Beam Format Specification
 
 ## Description
 
-BeamJSON is a format designed to encode the basic information of an unassociated waveform beam.  PickJSON uses the [JSON standard](http://www.json.org) .
+Beam is a format designed to encode the basic information of an unassociated
+waveform beam.  PickJSON uses the [JSON standard](http://www.json.org).
 
 ## Usage
-BeamJSON is intended for use in seismic data messaging between seismic applications and organizations.
+Beam is intended for use in seismic data messaging between seismic applications
+and organizations.
 
 ## Output
 
@@ -25,7 +27,8 @@ BeamJSON is intended for use in seismic data messaging between seismic applicati
          "AgencyID" : String,
          "Author"   : String
       },
-      "Time"             : ISO8601,
+      "StartTime"        : ISO8601,
+      "EndTime"          : ISO8601,
       "BackAzimuth"      : Number,
       "BackAzimuthError" : Number,
       "Slowness"         : Number,
@@ -46,15 +49,22 @@ BeamJSON is intended for use in seismic data messaging between seismic applicati
 These are the values **required** to define a beam.
 * Type - A string that identifies this message as a beam.
 * ID - A string containing an unique identifier for this beam.
-* Site - An object containing the station the beam was made at, see [Site](Site.md).
+* Site - An object containing the station the beam was made at, see
+[Site](Site.md).
 * Source - An object containing the source of the beam, see [Source](Source.md).
-* Time - A string containing the UTC arrival time of the beam, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
+* StartTime - A string containing the UTC start time of the beam, in the ISO8601
+format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
+* EndTime - A string containing the UTC end time of the beam, in the ISO8601
+format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 * BackAzimuth - A decimal number containing the back azimuth.
 * Slowness - A decimal number containing the horizontal slowness.
 
 **Optional Values:**
 
-The following are supplementary values that **may or may not** be provided by various algorithms.
+The following are supplementary values that **may or may not** be provided by
+various algorithms.
 * BackAzimuthError - A decimal number containing the back azimuth error.
 * SlownessError - A decimal number containing the horizontal slowness error.
-* AssociationInfo - An object containing the association information if this beam is used as data in an [OriginJSON](OriginJSON.md), see [Association](Association.md).
+* AssociationInfo - An object containing the association information if this
+beam is used as data in an [OriginJSON](OriginJSON.md), see
+[Association](Association.md).

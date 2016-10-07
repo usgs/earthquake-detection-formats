@@ -19,7 +19,8 @@ public class Beam implements DetectionInt {
 	public static final String ID_KEY = "ID";
 	public static final String SITE_KEY = "Site";
 	public static final String SOURCE_KEY = "Source";
-	public static final String TIME_KEY = "Time";
+	public static final String STARTTIME_KEY = "StartTime";
+	public static final String ENDTIME_KEY = "EndTime";
 	public static final String BACKAZIMUTH_KEY = "BackAzimuth";
 	public static final String SLOWNESS_KEY = "Slowness";
 	public static final String BACKAZIMUTHERROR_KEY = "BackAzimuthError";
@@ -47,9 +48,14 @@ public class Beam implements DetectionInt {
 	private final Source source;
 
 	/**
-	 * Required time for this Beam
+	 * Required starttime for this Beam
 	 */
-	private final Date time;
+	private final Date startTime;
+
+	/**
+	 * Required endtime for this Beam
+	 */
+	private final Date endTime;
 
 	/**
 	 * Required Double containing the back azimuth
@@ -85,7 +91,8 @@ public class Beam implements DetectionInt {
 		site = null;
 		source = null;
 		id = null;
-		time = null;
+		startTime = null;
+		endTime = null;
 		backAzimuth = null;
 		backAzimuthError = null;
 		slowness = null;
@@ -113,8 +120,10 @@ public class Beam implements DetectionInt {
 	 *            - A String containing the agencyid to use
 	 * @param newAuthor
 	 *            - A String containing the author to use
-	 * @param newTime
-	 *            - A Date containing the time to use
+	 * @param newStartTime
+	 *            - A Date containing the start time to use
+	 * @param newEndTime
+	 *            - A Date containing the end time to use
 	 * @param newBackAzimuth
 	 *            - A Double containing the back azimuth to use
 	 * @param newBackAzimutherror
@@ -127,12 +136,14 @@ public class Beam implements DetectionInt {
 	 */
 	public Beam(String newID, String newSiteID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
-			String newAgencyID, String newAuthor, Date newTime,
-			Double newBackAzimuth, Double newBackAzimutherror,
+			String newAgencyID, String newAuthor, Date newStartTime,
+			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
 			Double newSlowness, Double newSlownessError) {
 
-		this(newID, new Site(newSiteID, newStation, newChannel, newNetwork,
-				newLocation), new Source(newAgencyID, newAuthor), newTime,
+		this(newID,
+				new Site(newSiteID, newStation, newChannel, newNetwork,
+						newLocation),
+				new Source(newAgencyID, newAuthor), newStartTime, newEndTime,
 				newBackAzimuth, newBackAzimutherror, newSlowness,
 				newSlownessError);
 	}
@@ -157,8 +168,10 @@ public class Beam implements DetectionInt {
 	 *            - A String containing the agencyid to use
 	 * @param newAuthor
 	 *            - A String containing the author to use
-	 * @param newTime
-	 *            - A Date containing the time to use
+	 * @param newStartTime
+	 *            - A Date containing the start time to use
+	 * @param newEndTime
+	 *            - A Date containing the end time to use
 	 * @param newBackAzimuth
 	 *            - A Double containing the back azimuth to use
 	 * @param newBackAzimutherror
@@ -186,19 +199,22 @@ public class Beam implements DetectionInt {
 	 */
 	public Beam(String newID, String newSiteID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
-			String newAgencyID, String newAuthor, Date newTime,
-			Double newBackAzimuth, Double newBackAzimutherror,
+			String newAgencyID, String newAuthor, Date newStartTime,
+			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
 			Double newSlowness, Double newSlownessError,
 			String newAssociatedPhase, Double newAssociatedDistance,
 			Double newAssociatedAzimuth, Double newAssociatedResidual,
 			Double newAssociatedSigma) {
 
-		this(newID, new Site(newSiteID, newStation, newChannel, newNetwork,
-				newLocation), new Source(newAgencyID, newAuthor), newTime,
+		this(newID,
+				new Site(newSiteID, newStation, newChannel, newNetwork,
+						newLocation),
+				new Source(newAgencyID, newAuthor), newStartTime, newEndTime,
 				newBackAzimuth, newBackAzimutherror, newSlowness,
-				newSlownessError, new Associated(newAssociatedPhase,
-						newAssociatedDistance, newAssociatedAzimuth,
-						newAssociatedResidual, newAssociatedSigma));
+				newSlownessError,
+				new Associated(newAssociatedPhase, newAssociatedDistance,
+						newAssociatedAzimuth, newAssociatedResidual,
+						newAssociatedSigma));
 	}
 
 	/**
@@ -211,8 +227,10 @@ public class Beam implements DetectionInt {
 	 *            - A Site containing the site to use
 	 * @param newSource
 	 *            - A Source containing the source to use
-	 * @param newTime
-	 *            - A Date containing the time to use
+	 * @param newStartTime
+	 *            - A Date containing the start time to use
+	 * @param newEndTime
+	 *            - A Date containing the end time to use
 	 * @param newBackAzimuth
 	 *            - A Double containing the back azimuth to use
 	 * @param newBackAzimutherror
@@ -223,13 +241,13 @@ public class Beam implements DetectionInt {
 	 * @param newSlownessError
 	 *            - A Double containing the slowness error to use, null to omit
 	 */
-	public Beam(String newID, Site newSite, Source newSource, Date newTime,
-			Double newBackAzimuth, Double newBackAzimutherror,
+	public Beam(String newID, Site newSite, Source newSource, Date newStartTime,
+			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
 			Double newSlowness, Double newSlownessError) {
 
-		this(newID, newSite, newSource, newTime, newBackAzimuth,
-				newBackAzimutherror, newSlowness, newSlownessError,
-				new Associated());
+		this(newID, newSite, newSource, newStartTime, newEndTime,
+				newBackAzimuth, newBackAzimutherror, newSlowness,
+				newSlownessError, new Associated());
 	}
 
 	/**
@@ -242,8 +260,10 @@ public class Beam implements DetectionInt {
 	 *            - A Site containing the site to use
 	 * @param newSource
 	 *            - A Source containing the source to use
-	 * @param newTime
-	 *            - A Date containing the time to use
+	 * @param newStartTime
+	 *            - A Date containing the start time to use
+	 * @param newEndTime
+	 *            - A Date containing the end time to use
 	 * @param newBackAzimuth
 	 *            - A Double containing the back azimuth to use
 	 * @param newBackAzimutherror
@@ -256,8 +276,8 @@ public class Beam implements DetectionInt {
 	 * @param newAssociated
 	 *            - A Associated containing the associated to use, null to omit
 	 */
-	public Beam(String newID, Site newSite, Source newSource, Date newTime,
-			Double newBackAzimuth, Double newBackAzimutherror,
+	public Beam(String newID, Site newSite, Source newSource, Date newStartTime,
+			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
 			Double newSlowness, Double newSlownessError,
 			Associated newAssociated) {
 
@@ -265,7 +285,8 @@ public class Beam implements DetectionInt {
 		id = newID;
 		site = newSite;
 		source = newSource;
-		time = newTime;
+		startTime = newStartTime;
+		endTime = newEndTime;
 		backAzimuth = newBackAzimuth;
 		backAzimuthError = newBackAzimutherror;
 		slowness = newSlowness;
@@ -310,11 +331,20 @@ public class Beam implements DetectionInt {
 			source = null;
 		}
 
-		// time
-		if (newJSONObject.containsKey(TIME_KEY)) {
-			time = Utility.getDate(newJSONObject.get(TIME_KEY).toString());
+		// startTime
+		if (newJSONObject.containsKey(STARTTIME_KEY)) {
+			startTime = Utility
+					.getDate(newJSONObject.get(STARTTIME_KEY).toString());
 		} else {
-			time = null;
+			startTime = null;
+		}
+
+		// endTime
+		if (newJSONObject.containsKey(ENDTIME_KEY)) {
+			endTime = Utility
+					.getDate(newJSONObject.get(ENDTIME_KEY).toString());
+		} else {
+			endTime = null;
 		}
 
 		// backAzimuth
@@ -370,7 +400,8 @@ public class Beam implements DetectionInt {
 		String jsonID = getID();
 		Site jsonSite = getSite();
 		Source jsonSource = getSource();
-		Date jsonTime = getTime();
+		Date jsonStartTime = getStartTime();
+		Date jsonEndTime = getEndTime();
 		Double jsonBackAzimuth = getBackAzimuth();
 		Double jsonSlowness = getSlowness();
 		Double jsonBackAzimuthError = getBackAzimuthError();
@@ -396,9 +427,14 @@ public class Beam implements DetectionInt {
 			newJSONObject.put(SOURCE_KEY, jsonSource.toJSON());
 		}
 
-		// time
-		if (jsonTime != null) {
-			newJSONObject.put(TIME_KEY, Utility.formatDate(jsonTime));
+		// startTime
+		if (jsonStartTime != null) {
+			newJSONObject.put(STARTTIME_KEY, Utility.formatDate(jsonStartTime));
+		}
+
+		// endTime
+		if (jsonEndTime != null) {
+			newJSONObject.put(ENDTIME_KEY, Utility.formatDate(jsonEndTime));
 		}
 
 		// backAzimuth
@@ -424,8 +460,8 @@ public class Beam implements DetectionInt {
 
 		// associated
 		if ((jsonAssociationInfo != null) && (!jsonAssociationInfo.isEmpty()))
-			newJSONObject
-					.put(ASSOCIATIONINFO_KEY, jsonAssociationInfo.toJSON());
+			newJSONObject.put(ASSOCIATIONINFO_KEY,
+					jsonAssociationInfo.toJSON());
 
 		return (newJSONObject);
 	}
@@ -456,7 +492,8 @@ public class Beam implements DetectionInt {
 		String jsonID = getID();
 		Site jsonSite = getSite();
 		Source jsonSource = getSource();
-		Date jsonTime = getTime();
+		Date jsonStartTime = getStartTime();
+		Date jsonEndTime = getEndTime();
 		Double jsonBackAzimuth = getBackAzimuth();
 		Double jsonSlowness = getSlowness();
 		Double jsonBackAzimuthError = getBackAzimuthError();
@@ -505,10 +542,16 @@ public class Beam implements DetectionInt {
 			errorList.add("Invalid Source in Beam Class.");
 		}
 
-		// time
-		if (jsonTime == null) {
+		// startTime
+		if (jsonStartTime == null) {
 			// time not found
-			errorList.add("No Time in Beam Class.");
+			errorList.add("No Start Time in Beam Class.");
+		}
+
+		// endTime
+		if (jsonEndTime == null) {
+			// time not found
+			errorList.add("No End Time in Beam Class.");
 		}
 
 		// backAzimuth
@@ -594,10 +637,17 @@ public class Beam implements DetectionInt {
 	}
 
 	/**
-	 * @return the time
+	 * @return the startTime
 	 */
-	public Date getTime() {
-		return time;
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * @return the endTime
+	 */
+	public Date getEndTime() {
+		return endTime;
 	}
 
 	/**
