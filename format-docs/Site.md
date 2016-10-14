@@ -4,7 +4,7 @@
 
 The Site object is an object designed to define the seismic station used to
 produce a [Pick](Pick.md), [Beam](Beam.md), or [Correlation](Correlation.md)
-message.  Site uses the [JSON standard](http://www.json.org) .
+message.  Site uses the [JSON standard](http://www.json.org).
 
 ## Usage
 Site is intended for use as part of the [Pick](Pick.md), [Beam](Beam.md), or
@@ -12,7 +12,7 @@ Site is intended for use as part of the [Pick](Pick.md), [Beam](Beam.md), or
 applications and organizations.
 
 ## Output
-
+```json
     {
       "SiteID"    : String,
       "Station"   : String,
@@ -20,6 +20,7 @@ applications and organizations.
       "Network"   : String,
       "Location"  : String
     }
+```
 
 ## Glossary
 **Required Values:**

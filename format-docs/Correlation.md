@@ -10,7 +10,7 @@ Correlation is intended for use in seismic data messaging between seismic
 applications and organizations.
 
 ## Output
-
+```json
     {
       "Type"      : "Correlation",
       "ID"        : String,
@@ -30,10 +30,17 @@ applications and organizations.
       "Phase"       : String,
       "Time"        : ISO8601,
       "Correlation" : Number,
-      "Latitude"    : Number,
-      "Longitude"   : Number,
-      "OriginTime"  : ISO8601,
-      "Depth"       : Number,
+      "Hypocenter"  :
+      {
+          "Latitude"        : Number,
+          "Longitude"       : Number,
+          "Depth"           : Number,         
+          "Time"            : ISO8601,
+          "LatitudeError"   : Number,
+          "LongitudeError"  : Number,
+          "DepthError"      : Number,
+          "TimeError"       : Number
+      },      
       "EventType"   : String,
       "Magnitude"   : Number,
       "SNR"         : Number,
@@ -49,6 +56,7 @@ applications and organizations.
          "Sigma"    : Number
       }
     }
+```
 
 ## Glossary
 **Required Values:**
@@ -61,18 +69,12 @@ These are the values **required** to define a correlation.
 * Source - An object containing the source of the correlation, see
 [Source](Source.md).
 * Phase - A string that identifies the seismic phase that was correlated.
-* PhaseTime - A string containing the UTC arrival time of the phase that was
+* Time - A string containing the UTC arrival time of the phase that was
 correlated, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 * Correlation - A decimal number containing the correlation value of the
 detection.
-* Latitude - A decimal number that identifies the computed origin latitude of
-the correlation in degrees.
-* Longitude - A decimal number that identifies the computed origin longitude of
-the correlation in degrees.
-* Depth - A decimal number that identifies the computed origin elevation of the
-correlation in kilometers.
-* OriginTime - A string containing the UTC computed origin time of the
-correlation, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
+* Hypocenter - An object containing the hypocenter of the correlation, see
+[Hypo](Hypo.md).
 
 **Optional Values:**
 
@@ -90,5 +92,5 @@ used to declare this correlation.
 * ThresholdType - A string containing the type of detection threshold that was
 used.
 * AssociationInfo - An object containing the association information if this
-correlation is used as data in an [Origin](Origin.md), see
+correlation is used as data in a [Detection](Detection.md), see
 [Associated](Associated.md).

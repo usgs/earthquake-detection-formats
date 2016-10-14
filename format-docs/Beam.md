@@ -10,7 +10,7 @@ Beam is intended for use in seismic data messaging between seismic applications
 and organizations.
 
 ## Output
-
+```json
     {
       "Type"      : "Beam",
       "ID"        : String,
@@ -42,6 +42,7 @@ and organizations.
          "Sigma"    : Number
       }
     }
+```
 
 ## Glossary
 **Required Values:**
@@ -66,5 +67,5 @@ various algorithms.
 * BackAzimuthError - A decimal number containing the back azimuth error.
 * SlownessError - A decimal number containing the horizontal slowness error.
 * AssociationInfo - An object containing the association information if this
-beam is used as data in an [OriginJSON](OriginJSON.md), see
+beam is used as data in a [Detection](Detection.md), see
 [Association](Association.md).

@@ -3,14 +3,14 @@
 ## Description
 
 Retract is a format designed to encode the basic information of an earthquake
-event retraction.  Retract uses the [JSON standard](http://www.json.org).
+detection retraction.  Retract uses the [JSON standard](http://www.json.org).
 
 ## Usage
 Retract is intended for use in seismic data messaging between seismic
 applications.
 
 ## Output
-
+```json
     {
       "Type"        : "Retract",
       "ID"          : String,
@@ -20,6 +20,7 @@ applications.
          "Author"   : String
       }
     }
+```
 
 ## Glossary
 Required Values:
