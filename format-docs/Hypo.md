@@ -43,8 +43,8 @@ The following are supplementary values that **may or may not** be provided by
 various algorithms.
 * LatitudeError - A decimal number that identifies the error of the latitude of
 this hypocenter in kilometers.
-* LongitudeError - A decimal number that identifies the error of the longitude  
+* LongitudeError - A decimal number that identifies the error of the longitude
 of this hypocenter in kilometers.
 * DepthError - A decimal number that identifies the depth error of this
 hypocenter in kilometers.
-* Time - A decimal number that identifies the error of the time in seconds.
+* TimeError - A decimal number that identifies the error of the time in seconds.

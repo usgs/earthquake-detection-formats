@@ -51,12 +51,12 @@ Required Values:
 
 Optional Values:
 * DetectionType - A string that identifies whether the Detection is `New`,
-`Update`, `Final`, or `Retract`.
+`Update`, or `Final`.
 * EventType - A string containing the type of Detection that was found;
 `earthquake` or `blast`.
 * Bayes - A decimal number that identifies bayesian statistic for this Detection.
-* Sigma - A decimal number indicating the standard deviation of the arrival time
-measurement.
+* Sigma - A decimal number indicating the standard deviation of the hypocenter
+time measurement.
 * Data - An array of [Pick](Pick.md), [Beam](Beam.md), and / or
 [Correlation](Correlation.md) objects used to generate this Detection.
 * MinimumDistance - The minimum distance to the closest station.
