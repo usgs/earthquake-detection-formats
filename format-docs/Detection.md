@@ -52,7 +52,7 @@ Required Values:
 Optional Values:
 * DetectionType - A string that identifies whether the Detection is `New`,
 `Update`, or `Final`.
-* EventType - A string containing the type of Detection that was found;
+* EventType - A string containing the type of Event that was detected;
 `earthquake` or `blast`.
 * Bayes - A decimal number that identifies bayesian statistic for this Detection.
 * Sigma - A decimal number indicating the standard deviation of the hypocenter
