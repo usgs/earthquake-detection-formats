@@ -35,6 +35,7 @@ set (SRCS ${PROJECT_SOURCE_DIR}/src/util.cpp
     ${PROJECT_SOURCE_DIR}/src/filter.cpp
     ${PROJECT_SOURCE_DIR}/src/amplitude.cpp
     ${PROJECT_SOURCE_DIR}/src/associated.cpp
+    ${PROJECT_SOURCE_DIR}/src/hypo.cpp
     ${PROJECT_SOURCE_DIR}/src/beam.cpp
     ${PROJECT_SOURCE_DIR}/src/correlation.cpp
     ${PROJECT_SOURCE_DIR}/src/pick.cpp
@@ -50,6 +51,7 @@ set (HDRS ${PROJECT_SOURCE_DIR}/include/util.h
     ${PROJECT_SOURCE_DIR}/include/filter.h
     ${PROJECT_SOURCE_DIR}/include/amplitude.h
     ${PROJECT_SOURCE_DIR}/include/associated.h
+    ${PROJECT_SOURCE_DIR}/include/hypo.h
     ${PROJECT_SOURCE_DIR}/include/beam.h
     ${PROJECT_SOURCE_DIR}/include/correlation.h
     ${PROJECT_SOURCE_DIR}/include/pick.h
@@ -100,6 +102,7 @@ if (RUN_TESTS)
             ${PROJECT_SOURCE_DIR}/tests/source_unittest.cpp
             ${PROJECT_SOURCE_DIR}/tests/amplitude_unittest.cpp
             ${PROJECT_SOURCE_DIR}/tests/filter_unittest.cpp
+            ${PROJECT_SOURCE_DIR}/tests/hypo_unittest.cpp
             ${PROJECT_SOURCE_DIR}/tests/main.cpp
         )
 

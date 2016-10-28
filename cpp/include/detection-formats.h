@@ -10,5 +10,6 @@
 #include "util.h"
 #include "base.h"
 #include "retract.h"
+#include "hypo.h"
 
 #endif
