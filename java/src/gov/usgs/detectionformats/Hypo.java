@@ -105,7 +105,7 @@ public class Hypo implements DetectionInt {
 	 */
 	public Hypo(Double newLatitude, Double newLongitude, Date newTime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
-			double newTimeError, Double newDepthError) {
+			Double newTimeError, Double newDepthError) {
 
 		latitude = newLatitude;
 		longitude = newLongitude;
