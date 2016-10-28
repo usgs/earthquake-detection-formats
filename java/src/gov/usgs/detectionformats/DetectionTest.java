@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
-public class OriginTest {
+public class DetectionTest {
 
 	public static String ORIGIN_STRING = "{\"Gap\":33.67,\"Source\":{\"Author\":"
 			+ "\"TestAuthor\",\"AgencyID\":\"US\"},\"Data\":[{\"Source\":"
@@ -43,7 +43,7 @@ public class OriginTest {
 			+ "\"Hypocenter\":{\"TimeError\":1.984,\"Time\":"
 			+ "\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,"
 			+ "\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,"
-			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"Type\":\"Origin\","
+			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"Type\":\"Detection\","
 			+ "\"RMS\":3.8,\"Bayes\":2.65,\"OriginType\":\"New\",\"ID\":"
 			+ "\"12GFH48776857\",\"EventType\":\"earthquake\","
 			+ "\"MinimumDistance\":2.14}";
@@ -107,7 +107,7 @@ public class OriginTest {
 	@Test
 	public void writesJSON() {
 
-		Origin originObject = new Origin(ID, AGENCYID, AUTHOR, LATITUDE,
+		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
@@ -118,7 +118,7 @@ public class OriginTest {
 
 		// check the data
 		try {
-			checkData(new Origin(Utility.fromJSONString(jsonString)),
+			checkData(new Detection(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class OriginTest {
 		// build Correlation object
 		try {
 
-			checkData(new Origin(Utility.fromJSONString(ORIGIN_STRING)),
+			checkData(new Detection(Utility.fromJSONString(ORIGIN_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -148,7 +148,7 @@ public class OriginTest {
 	public void altConstructors() {
 
 		// use constructor
-		Origin originObject = new Origin(ID, new Source(AGENCYID, AUTHOR),
+		Detection originObject = new Detection(ID, new Source(AGENCYID, AUTHOR),
 				new Hypo(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
 						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 				ORIGINTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
@@ -164,7 +164,7 @@ public class OriginTest {
 	@Test
 	public void validate() {
 
-		Origin originObject = new Origin(ID, AGENCYID, AUTHOR, LATITUDE,
+		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
@@ -176,12 +176,11 @@ public class OriginTest {
 		// check return code
 		assertEquals("Successful Validation", true, rc);
 
-		// build bad Origin object
-		Origin badOriginObject = new Origin("", AGENCYID, null, LATITUDE,
-				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
-				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
-				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
-				buildCorrelationData());
+		// build bad Detection object
+		Detection badOriginObject = new Detection("", AGENCYID, null, LATITUDE,
+				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR,
+				DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS,
+				GAP, buildPickData(), buildBeamData(), buildCorrelationData());
 
 		rc = badOriginObject.isValid();
 
@@ -189,7 +188,7 @@ public class OriginTest {
 		assertEquals("Unsuccessful Validation", false, rc);
 	}
 
-	public void checkData(Origin originObject, String TestName) {
+	public void checkData(Detection originObject, String TestName) {
 
 		// check originObject.ID
 		assertEquals(TestName + " ID Equals", ID, originObject.getID());

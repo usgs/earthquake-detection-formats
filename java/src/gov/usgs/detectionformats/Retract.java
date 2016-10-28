@@ -19,12 +19,12 @@ public class Retract implements DetectionInt{
 	public static final String SOURCE_KEY = "Source";
 
 	/**
-	 * Required type identifier for this Origin
+	 * Required type identifier for this Retract
 	 */
 	private final String type;
 
 	/**
-	 * Required unique identifier for this Origin
+	 * Required unique identifier for this Retract
 	 */
 	private final String id;
 

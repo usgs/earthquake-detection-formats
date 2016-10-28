@@ -83,7 +83,7 @@ public class Hypo implements DetectionInt {
 	/**
 	 * Advanced constructor
 	 * 
-	 * The alternate advanced constructor for the Origin class. Initializes
+	 * The alternate advanced constructor for the Hypo class. Initializes
 	 * members to provided values.
 	 * 
 	 * @param newLatitude

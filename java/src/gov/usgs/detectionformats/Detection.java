@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
  * 
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
-public class Origin implements DetectionInt {
+public class Detection implements DetectionInt {
 
 	/**
 	 * JSON Keys
@@ -28,12 +28,12 @@ public class Origin implements DetectionInt {
 	public static final String DATA_KEY = "Data";
 
 	/**
-	 * Required type identifier for this Origin
+	 * Required type identifier for this Detection
 	 */
 	private final String type;
 
 	/**
-	 * Required unique identifier for this Origin
+	 * Required unique identifier for this Detection
 	 */
 	private final String id;
 
@@ -48,34 +48,34 @@ public class Origin implements DetectionInt {
 	private final Hypo hypocenter;
 
 	/**
-	 * Optional String containing the origin type of this Origin valid values
+	 * Optional String containing the origin type of this Detection valid values
 	 * are "new" "Update", "Final", or "Retract"
 	 */
 	private final String originType;
 
 	/**
-	 * Optional String containing the event type of this Origin valid values are
-	 * "earthquake" or "blast"
+	 * Optional String containing the event type of this Detection valid values
+	 * are "earthquake" or "blast"
 	 */
 	private final String eventType;
 
 	/**
-	 * Required Double containing the Origin bayesian statistic
+	 * Required Double containing the Detection bayesian statistic
 	 */
 	private final Double bayes;
 
 	/**
-	 * Required Double containing the Origin minimum distance
+	 * Required Double containing the Detection minimum distance
 	 */
 	private final Double minimumDistance;
 
 	/**
-	 * Required Double containing the Origin rms
+	 * Required Double containing the Detection rms
 	 */
 	private final Double rms;
 
 	/**
-	 * Required Double containing the Origin gap
+	 * Required Double containing the Detection gap
 	 */
 	private final Double gap;
 
@@ -90,16 +90,17 @@ public class Origin implements DetectionInt {
 	private final ArrayList<Beam> beamData;
 
 	/**
-	 * An optional vector of Origin objects used to generate this origin
+	 * An optional vector of Detection objects used to generate this origin
 	 */
 	private final ArrayList<Correlation> correlationData;
 
 	/**
-	 * The constructor for the Origin class. Initializes members to null values.
+	 * The constructor for the Detection class. Initializes members to null
+	 * values.
 	 */
-	public Origin() {
+	public Detection() {
 
-		type = "Origin";
+		type = "Detection";
 		source = null;
 		id = null;
 		hypocenter = null;
@@ -117,7 +118,7 @@ public class Origin implements DetectionInt {
 	/**
 	 * Advanced constructor
 	 * 
-	 * The advanced constructor for the Origin class. Initializes members to
+	 * The advanced constructor for the Detection class. Initializes members to
 	 * provided values.
 	 * 
 	 * @param newID
@@ -162,10 +163,10 @@ public class Origin implements DetectionInt {
 	 *            - A ArrayList&lt;Beam&gt; newBeamData containing the data that
 	 *            went into this origin, null to omit
 	 * @param newCorrelationData
-	 *            - A ArrayList&lt;Origin&gt; newCorrelationData containing the
-	 *            data that went into this origin, null to omit
+	 *            - A ArrayList&lt;Detection&gt; newCorrelationData containing
+	 *            the data that went into this origin, null to omit
 	 */
-	public Origin(String newID, String newAgencyID, String newAuthor,
+	public Detection(String newID, String newAgencyID, String newAuthor,
 			Double newLatitude, Double newLongitude, Date newOrigintime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
 			Double newTimeError, Double newDepthError, String newOriginType,
@@ -185,7 +186,7 @@ public class Origin implements DetectionInt {
 	/**
 	 * Alternate advanced constructor
 	 * 
-	 * The alternate advanced constructor for the Origin class. Initializes
+	 * The alternate advanced constructor for the Detection class. Initializes
 	 * members to provided values.
 	 * 
 	 * @param newID
@@ -214,16 +215,16 @@ public class Origin implements DetectionInt {
 	 *            - A Vector&lt;Beam&gt; newBeamData containing the data that
 	 *            went into this origin, null to omit
 	 * @param newCorrelationData
-	 *            - A Vector&lt;Origin&gt; newCorrelationData containing the
+	 *            - A Vector&lt;Detection&gt; newCorrelationData containing the
 	 *            data that went into this origin, null to omit
 	 */
-	public Origin(String newID, Source newSource, Hypo newHypocenter,
+	public Detection(String newID, Source newSource, Hypo newHypocenter,
 			String newOriginType, String newEventType, Double newBayes,
 			Double newMinimumDistance, Double newRMS, Double newGap,
 			ArrayList<Pick> newPickData, ArrayList<Beam> newBeamData,
 			ArrayList<Correlation> newCorrelationData) {
 
-		type = "Origin";
+		type = "Detection";
 		id = newID;
 		source = newSource;
 		hypocenter = newHypocenter;
@@ -245,7 +246,7 @@ public class Origin implements DetectionInt {
 	 * @param newJSONObject
 	 *            - A JSONObject.
 	 */
-	public Origin(JSONObject newJSONObject) {
+	public Detection(JSONObject newJSONObject) {
 
 		// Required values
 		// type
@@ -537,31 +538,31 @@ public class Origin implements DetectionInt {
 		// type
 		if (jsonType == null) {
 			// type not found
-			errorList.add("No Type in Origin Class.");
+			errorList.add("No Type in Detection Class.");
 		} else if (jsonType.isEmpty()) {
 			// type empty
-			errorList.add("Empty Type in Origin Class.");
-		} else if (!jsonType.equals("Origin")) {
+			errorList.add("Empty Type in Detection Class.");
+		} else if (!jsonType.equals("Detection")) {
 			// wrong type
-			errorList.add("Non-Origin type in Origin Class.");
+			errorList.add("Non-Detection type in Detection Class.");
 		}
 
 		// id
 		if (jsonID == null) {
 			// id not found
-			errorList.add("No ID in Origin Class.");
+			errorList.add("No ID in Detection Class.");
 		} else if (jsonID.isEmpty()) {
 			// id empty
-			errorList.add("Empty ID in Origin Class.");
+			errorList.add("Empty ID in Detection Class.");
 		}
 
 		// source
 		if (jsonSource == null) {
 			// source not found
-			errorList.add("No Source in Origin Class.");
+			errorList.add("No Source in Detection Class.");
 		} else if (!jsonSource.isValid()) {
 			// source invalid
-			errorList.add("Invalid Source in Origin Class.");
+			errorList.add("Invalid Source in Detection Class.");
 		}
 
 		// hypocenter
@@ -592,7 +593,7 @@ public class Origin implements DetectionInt {
 
 			if (!match) {
 				// invalid originType
-				errorList.add("Invalid OriginType in Origin Class.");
+				errorList.add("Invalid OriginType in Detection Class.");
 			}
 		}
 
@@ -610,7 +611,7 @@ public class Origin implements DetectionInt {
 
 			if (!match) {
 				// invalid eventType
-				errorList.add("Invalid EventType in Origin Class.");
+				errorList.add("Invalid EventType in Detection Class.");
 			}
 		}
 
@@ -618,7 +619,8 @@ public class Origin implements DetectionInt {
 		if (jsonBayes != null) {
 			if (jsonBayes < 0) {
 				// invalid bayes
-				errorList.add("Bayes in Origin Class is not greater than 0.");
+				errorList
+						.add("Bayes in Detection Class is not greater than 0.");
 			}
 		}
 
@@ -627,7 +629,7 @@ public class Origin implements DetectionInt {
 			if (jsonMinimumDistance < 0) {
 				// invalid minimum distance
 				errorList.add(
-						"MinimumDistance in Origin Class  is not greater than 0.");
+						"MinimumDistance in Detection Class  is not greater than 0.");
 			}
 		}
 
@@ -636,7 +638,7 @@ public class Origin implements DetectionInt {
 			if ((jsonGap < 0) || (jsonGap > 360)) {
 				// invalid Magnitude
 				errorList.add(
-						"Gap in Origin Class not in the range of 0 to 360.");
+						"Gap in Detection Class not in the range of 0 to 360.");
 			}
 		}
 
@@ -652,7 +654,8 @@ public class Origin implements DetectionInt {
 				Pick jsonPick = ((Pick) pickIterator.next());
 
 				if (!jsonPick.isValid()) {
-					errorList.add("Invalid Pick in PickData in Origin Class");
+					errorList
+							.add("Invalid Pick in PickData in Detection Class");
 					break;
 				}
 			}
@@ -669,7 +672,8 @@ public class Origin implements DetectionInt {
 				Beam jsonBeam = ((Beam) beamIterator.next());
 
 				if (!jsonBeam.isValid()) {
-					errorList.add("Invalid Beam in BeamData in Origin Class");
+					errorList
+							.add("Invalid Beam in BeamData in Detection Class");
 					break;
 				}
 			}
@@ -688,7 +692,7 @@ public class Origin implements DetectionInt {
 
 				if (!jsonCorrelation.isValid()) {
 					errorList.add(
-							"Invalid Correlation in CorrelationData in Origin Class");
+							"Invalid Correlation in CorrelationData in Detection Class");
 					break;
 				}
 			}
