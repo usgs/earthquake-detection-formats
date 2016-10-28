@@ -8,40 +8,44 @@ import org.junit.Test;
 
 public class OriginTest {
 
-	public static String ORIGIN_STRING = "{\"Gap\":33.67,\"Type\":\"Origin\","
-			+ "\"RMS\":3.8,\"OriginType\":\"New\",\"Bayes\":2.65,\"EventType\":"
-			+ "\"earthquake\",\"Depth\":32.44,\"Source\":{\"Author\":"
+	public static String ORIGIN_STRING = "{\"Gap\":33.67,\"Source\":{\"Author\":"
 			+ "\"TestAuthor\",\"AgencyID\":\"US\"},\"Data\":[{\"Source\":"
 			+ "{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Filter\":"
-			+ "[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Onset\":\"questionable\","
-			+ "\"Amplitude\":{\"Period\":2.65,\"Amplitude\":21.5,\"SNR\":3.8},"
-			+ "\"Time\":\"2015-12-28T21:32:24.017Z\",\"Site\":{\"Station\":"
-			+ "\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":"
-			+ "\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Type\":\"Pick\",\"ID\":"
-			+ "\"12GFH48776857\",\"Polarity\":\"up\",\"Phase\":\"P\",\"Picker\":"
-			+ "\"manual\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":"
-			+ "0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393}},"
-			+ "{\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},"
-			+ "\"StartTime\":\"2015-12-28T21:32:24.017Z\","
-			+ "\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"Site\":{\"Station\":"
-			+ "\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":"
-			+ "\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Type\":\"Beam\","
-			+ "\"BackAzimuth\":2.65,\"ID\":\"12GFH48776857\",\"BackAzimuthError\":"
+			+ "[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Onset\":"
+			+ "\"questionable\",\"Amplitude\":{\"Period\":2.65,\"Amplitude\":"
+			+ "21.5,\"SNR\":3.8},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Site\":"
+			+ "{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\","
+			+ "\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Type\":"
+			+ "\"Pick\",\"ID\":\"12GFH48776857\",\"Polarity\":\"up\",\"Phase\":"
+			+ "\"P\",\"Picker\":\"manual\",\"AssociationInfo\":{\"Distance\":"
+			+ "0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
+			+ "\"Residual\":-0.025393}},{\"Source\":{\"Author\":\"TestAuthor\","
+			+ "\"AgencyID\":\"US\"},\"Site\":{\"Station\":\"BMN\",\"Channel\":"
+			+ "\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":"
+			+ "\"BMN.HHZ.LB.01\"},\"Type\":\"Beam\",\"BackAzimuth\":2.65,\"ID\":"
+			+ "\"12GFH48776857\",\"EndTime\":\"2015-12-28T21:32:30.017Z\","
+			+ "\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuthError\":"
 			+ "3.8,\"Slowness\":1.44,\"AssociationInfo\":{\"Distance\":0.442559,"
-			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":"
-			+ "-0.025393},\"SlownessError\":0.4},{\"ZScore\":33.67,\"Magnitude\":"
-			+ "2.14,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":"
-			+ "\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Type\":"
-			+ "\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\","
-			+ "\"Depth\":32.44,\"AssociationInfo\":{\"Distance\":0.442559,"
-			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":"
-			+ "-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":"
-			+ "\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":"
-			+ "\"2015-12-28T21:32:24.017Z\",\"SNR\":3.8,\"OriginTime\":"
-			+ "\"2015-12-28T21:30:44.039Z\",\"ID\":\"12GFH48776857\",\"Latitude\":"
-			+ "40.3344,\"Longitude\":-121.44,\"ThresholdType\":\"minimum\","
-			+ "\"Phase\":\"P\"}],\"Time\":\"2015-12-28T21:32:24.017Z\",\"ID\":"
-			+ "\"12GFH48776857\",\"Latitude\":40.3344,\"Longitude\":-121.44,"
+			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
+			+ "\"Residual\":-0.025393},\"SlownessError\":0.4},{\"ZScore\":33.67,"
+			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":"
+			+ "\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},"
+			+ "\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,"
+			+ "\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":"
+			+ "0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
+			+ "\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":"
+			+ "{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":"
+			+ "\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,"
+			+ "\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,"
+			+ "\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,"
+			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":"
+			+ "\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}],"
+			+ "\"Hypocenter\":{\"TimeError\":1.984,\"Time\":"
+			+ "\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,"
+			+ "\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,"
+			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"Type\":\"Origin\","
+			+ "\"RMS\":3.8,\"Bayes\":2.65,\"OriginType\":\"New\",\"ID\":"
+			+ "\"12GFH48776857\",\"EventType\":\"earthquake\","
 			+ "\"MinimumDistance\":2.14}";
 	public static String ID = "12GFH48776857";
 	public static String AGENCYID = "US";
@@ -50,6 +54,10 @@ public class OriginTest {
 	public static double LONGITUDE = -121.44;
 	public static Date TIME = Utility.getDate("2015-12-28T21:32:24.017Z");
 	public static double DEPTH = 32.44;
+	public static double LATITUDEERROR = 12.5;
+	public static double LONGITUDEERROR = 22.64;
+	public static double DEPTHERROR = 2.44;
+	public static double TIMEERROR = 1.984;
 	public static String ORIGINTYPE = "New";
 	public static String EVENTTYPE = "earthquake";
 	public static double BAYES = 2.65;
@@ -75,18 +83,23 @@ public class OriginTest {
 			+ "\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":"
 			+ "0.4,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,"
 			+ "\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}";
-	public static String CORRELATIONDATA = "{\"Type\":\"Correlation\",\"ID\":"
-			+ "\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\","
-			+ "\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\","
-			+ "\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":"
-			+ "\"TestAuthor\"},\"Phase\":\"P\","
-			+ "\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,"
-			+ "\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,"
-			+ "\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":"
-			+ "\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,"
-			+ "\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\","
-			+ "\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,"
-			+ "\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}";
+	public static String CORRELATIONDATA = "{\"ZScore\":33.67,"
+			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\","
+			+ "\"Network\":\"LB\",\"Location\":\"01\","
+			+ "\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,"
+			+ "\"Type\":\"Correlation\",\"Correlation\":2.65,"
+			+ "\"EventType\":\"earthquake\","
+			+ "\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,"
+			+ "\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},"
+			+ "\"DetectionThreshold\":1.5,"
+			+ "\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},"
+			+ "\"Time\":\"2015-12-28T21:32:24.017Z\","
+			+ "\"Hypocenter\":{\"TimeError\":1.984,"
+			+ "\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,"
+			+ "\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,"
+			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,"
+			+ "\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\","
+			+ "\"Phase\":\"P\"}";
 
 	/**
 	 * Able to write a JSON string
@@ -95,7 +108,8 @@ public class OriginTest {
 	public void writesJSON() {
 
 		Origin originObject = new Origin(ID, AGENCYID, AUTHOR, LATITUDE,
-				LONGITUDE, TIME, DEPTH, ORIGINTYPE, EVENTTYPE, BAYES,
+				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
+				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
 				buildCorrelationData());
 
@@ -135,9 +149,10 @@ public class OriginTest {
 
 		// use constructor
 		Origin originObject = new Origin(ID, new Source(AGENCYID, AUTHOR),
-				LATITUDE, LONGITUDE, TIME, DEPTH, ORIGINTYPE, EVENTTYPE, BAYES,
-				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
-				buildCorrelationData());
+				new Hypo(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
+						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+				ORIGINTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
+				buildPickData(), buildBeamData(), buildCorrelationData());
 
 		// check data values
 		checkData(originObject, "Alternate Constructor 1");
@@ -150,7 +165,8 @@ public class OriginTest {
 	public void validate() {
 
 		Origin originObject = new Origin(ID, AGENCYID, AUTHOR, LATITUDE,
-				LONGITUDE, TIME, DEPTH, ORIGINTYPE, EVENTTYPE, BAYES,
+				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
+				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
 				buildCorrelationData());
 
@@ -162,7 +178,8 @@ public class OriginTest {
 
 		// build bad Origin object
 		Origin badOriginObject = new Origin("", AGENCYID, null, LATITUDE,
-				LONGITUDE, null, DEPTH, ORIGINTYPE, EVENTTYPE, BAYES,
+				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
+				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
 				buildCorrelationData());
 
@@ -185,20 +202,29 @@ public class OriginTest {
 		assertEquals(TestName + " Author Equals", AUTHOR,
 				originObject.getSource().getAuthor());
 
-		// check originObject.Latitude
-		assertEquals(TestName + " Latitude Equals", LATITUDE,
-				originObject.getLatitude(), 0);
+		// check originObject.hypocenter.Depth
+		assertEquals(TestName + " Depth Equals", DEPTH,
+				originObject.getHypocenter().getDepth(), 0);
 
-		// check originObject.Longitude
-		assertEquals(TestName + " Longitude Equals", LONGITUDE,
-				originObject.getLongitude(), 0);
+		// check originObject.hypocenter.Time
+		assertEquals(TestName + " OriginTime Equals", TIME,
+				originObject.getHypocenter().getTime());
 
-		// check originObject.Time
-		assertEquals(TestName + " Time Equals", TIME, originObject.getTime());
+		// check originObject.hypocenter.LatitudeError
+		assertEquals(TestName + " LatitudeError Equals", LATITUDEERROR,
+				originObject.getHypocenter().getLatitudeError(), 0);
 
-		// check originObject.Depth
-		assertEquals(TestName + " Depth Equals", DEPTH, originObject.getDepth(),
-				0);
+		// check originObject.hypocenter.LongitudeError
+		assertEquals(TestName + " LongitudError Equals", LONGITUDEERROR,
+				originObject.getHypocenter().getLongitudeError(), 0);
+
+		// check originObject.hypocenter.DepthError
+		assertEquals(TestName + " DepthError Equals", DEPTHERROR,
+				originObject.getHypocenter().getDepthError(), 0);
+
+		// check originObject.hypocenter.TimeError
+		assertEquals(TestName + " TimeError Equals", TIMEERROR,
+				originObject.getHypocenter().getTimeError(), 0);
 
 		// check OriginObject.OriginType
 		assertEquals(TestName + " OriginType Equals", ORIGINTYPE,
