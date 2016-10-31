@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define ORIGINSTRING "{\"Type\":\"Origin\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"Time\":\"2015-12-28T21:32:24.017Z\",\"OriginType\":\"New\",\"EventType\":\"earthquake\",\"Bayes\":2.65,\"MinimumDistance\":2.14,\"RMS\":3.8,\"Gap\":33.67,\"Data\":[{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}]}"
+#define ORIGINSTRING "{\"Type\":\"Origin\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"OriginType\":\"New\",\"EventType\":\"earthquake\",\"Bayes\":2.65,\"MinimumDistance\":2.14,\"RMS\":3.8,\"Gap\":33.67,\"Data\":[{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}]}"
 #define ID "12GFH48776857"
 #define AGENCYID "US"
 #define AUTHOR "TestAuthor"
@@ -12,6 +12,10 @@
 #define LONGITUDE -121.44
 #define TIME "2015-12-28T21:32:24.017Z"
 #define DEPTH 32.44
+#define LATITUDEERROR 12.5
+#define LONGITUDEERROR 22.64
+#define DEPTHERROR 2.44
+#define TIMEERROR 1.984
 #define ORIGINTYPE "New"
 #define EVENTTYPE "earthquake"
 #define BAYES 2.65
@@ -20,46 +24,48 @@
 #define GAP 33.67
 #define PICKDATA "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
 #define BEAMDATA "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-#define CORRELATIONDATA "{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
+#define CORRELATIONDATA "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
 
-std::vector<detectionformats::pick> buildpickdata()
-{
+std::vector<detectionformats::pick> buildpickdata() {
 	std::vector<detectionformats::pick> newpickdata;
 
 	// pick ?need one more?
 	rapidjson::Document pickdocument;
-	detectionformats::pick pickobject(detectionformats::FromJSONString(std::string(PICKDATA), pickdocument));
+	detectionformats::pick pickobject(
+			detectionformats::FromJSONString(std::string(PICKDATA),
+					pickdocument));
 	newpickdata.push_back(pickobject);
 
-	return(newpickdata);
+	return (newpickdata);
 }
 
-std::vector<detectionformats::beam> buildbeamdata()
-{
+std::vector<detectionformats::beam> buildbeamdata() {
 	std::vector<detectionformats::beam> newbeamdata;
 
 	// beam ?need one more?
 	rapidjson::Document beamdocument;
-	detectionformats::beam beamobject(detectionformats::FromJSONString(std::string(BEAMDATA), beamdocument));
+	detectionformats::beam beamobject(
+			detectionformats::FromJSONString(std::string(BEAMDATA),
+					beamdocument));
 	newbeamdata.push_back(beamobject);
 
-	return(newbeamdata);
+	return (newbeamdata);
 }
 
-std::vector<detectionformats::correlation> buildcorrleationdata()
-{
+std::vector<detectionformats::correlation> buildcorrleationdata() {
 	std::vector<detectionformats::correlation> newcorrelationdata;
 
 	// correlation ?need one more?
 	rapidjson::Document correlationdocument;
-	detectionformats::correlation correlationobject(detectionformats::FromJSONString(std::string(CORRELATIONDATA), correlationdocument));
+	detectionformats::correlation correlationobject(
+			detectionformats::FromJSONString(std::string(CORRELATIONDATA),
+					correlationdocument));
 	newcorrelationdata.push_back(correlationobject);
 
-	return(newcorrelationdata);
+	return (newcorrelationdata);
 }
 
-void checkdata(detectionformats::origin originobject, std::string testinfo)
-{
+void checkdata(detectionformats::origin originobject, std::string testinfo) {
 	// check id
 	std::string originid = originobject.id;
 	std::string expectedid = std::string(ID);
@@ -76,24 +82,45 @@ void checkdata(detectionformats::origin originobject, std::string testinfo)
 	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
 
 	// check latitude
-	double originlatitude = originobject.latitude;
+	double latitude = originobject.hypocenter.latitude;
 	double expectedlatitude = LATITUDE;
-	ASSERT_EQ(originlatitude, expectedlatitude);
+	ASSERT_EQ(latitude, expectedlatitude);
 
 	// check longitude
-	double originlongitude = originobject.longitude;
+	double longitude = originobject.hypocenter.longitude;
 	double expectedlongitude = LONGITUDE;
-	ASSERT_EQ(originlongitude, expectedlongitude);
+	ASSERT_EQ(longitude, expectedlongitude);
 
-	// check time
-	double origintime = originobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
-	ASSERT_EQ(origintime, expectedtime);
+	// check origintime
+	double origintime = originobject.hypocenter.time;
+	double expectedorigintime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(TIME));
+	ASSERT_EQ(origintime, expectedorigintime);
 
 	// check depth
-	double origindepth = originobject.depth;
+	double depth = originobject.hypocenter.depth;
 	double expecteddepth = DEPTH;
-	ASSERT_EQ(origindepth, expecteddepth);
+	ASSERT_EQ(depth, expecteddepth);
+
+	// check latitude error
+	double latitudeerror = originobject.hypocenter.latitudeerror;
+	double expectedlatitudeerror = LATITUDEERROR;
+	ASSERT_EQ(latitudeerror, expectedlatitudeerror);
+
+	// check longitude error
+	double longitdeerror = originobject.hypocenter.longitudeerror;
+	double expectedlongitudeerror = LONGITUDEERROR;
+	ASSERT_EQ(longitdeerror, expectedlongitudeerror);
+
+	// check time error
+	double timeerror = originobject.hypocenter.timeerror;
+	double expectedtimeerror = TIMEERROR;
+	ASSERT_EQ(timeerror, expectedtimeerror);
+
+	// check depth error
+	double deptherror = originobject.hypocenter.deptherror;
+	double expecteddeptherror = DEPTHERROR;
+	ASSERT_EQ(deptherror, expecteddeptherror);
 
 	// check origintype
 	std::string originorigintype = originobject.origintype;
@@ -127,14 +154,11 @@ void checkdata(detectionformats::origin originobject, std::string testinfo)
 
 	// need to check data still!!!!!!
 	// somehow?
-
-
 }
 
 // tests to see if origin can successfully
 // write json output
-TEST(OriginTest, WritesJSON)
-{
+TEST(OriginTest, WritesJSON) {
 	detectionformats::origin originobject;
 
 	// build origin object
@@ -144,10 +168,16 @@ TEST(OriginTest, WritesJSON)
 	originobject.source.agencyid = std::string(AGENCYID);
 	originobject.source.author = std::string(AUTHOR);
 
-	originobject.latitude = LATITUDE;
-	originobject.longitude = LONGITUDE;
-	originobject.time = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
-	originobject.depth = DEPTH;
+	originobject.hypocenter.latitude = LATITUDE;
+	originobject.hypocenter.longitude = LONGITUDE;
+	originobject.hypocenter.time = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(TIME));
+	originobject.hypocenter.depth = DEPTH;
+	originobject.hypocenter.latitudeerror = LATITUDEERROR;
+	originobject.hypocenter.longitudeerror = LONGITUDEERROR;
+	originobject.hypocenter.timeerror = TIMEERROR;
+	originobject.hypocenter.deptherror = DEPTHERROR;
+
 	originobject.origintype = std::string(ORIGINTYPE);
 	originobject.eventtype = std::string(EVENTTYPE);
 	originobject.bayes = BAYES;
@@ -162,23 +192,26 @@ TEST(OriginTest, WritesJSON)
 
 	// build json string
 	rapidjson::Document origindocument;
-	std::string originjson = detectionformats::ToJSONString(originobject.tojson(origindocument, origindocument.GetAllocator()));
+	std::string originjson = detectionformats::ToJSONString(
+			originobject.tojson(origindocument, origindocument.GetAllocator()));
 
-    // read it back in
-    rapidjson::Document origindocument2;
-    detectionformats::origin originobject2(detectionformats::FromJSONString(originjson, origindocument2));
+	// read it back in
+	rapidjson::Document origindocument2;
+	detectionformats::origin originobject2(
+			detectionformats::FromJSONString(originjson, origindocument2));
 
-    // check data values
-    checkdata(originobject2, "");
+	// check data values
+	checkdata(originobject2, "");
 }
 
 // tests to see if origin can successfully
 // read json output
-TEST(OriginTest, ReadsJSON)
-{
+TEST(OriginTest, ReadsJSON) {
 	// build associated object
 	rapidjson::Document origindocument;
-	detectionformats::origin originobject(detectionformats::FromJSONString(std::string(ORIGINSTRING), origindocument));
+	detectionformats::origin originobject(
+			detectionformats::FromJSONString(std::string(ORIGINSTRING),
+					origindocument));
 
 	// check data values
 	checkdata(originobject, "");
@@ -186,17 +219,29 @@ TEST(OriginTest, ReadsJSON)
 
 // tests to see if origin can successfully
 // be constructed
-TEST(OriginTest, Constructor)
-{
+TEST(OriginTest, Constructor) {
 	// use constructor
-	detectionformats::origin originobject(std::string(ID), std::string(AGENCYID), std::string(AUTHOR), LATITUDE, LONGITUDE, detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),  DEPTH, std::string(ORIGINTYPE), std::string(EVENTTYPE),
-		BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(), buildcorrleationdata());
+	detectionformats::origin originobject(std::string(ID),
+			std::string(AGENCYID), std::string(AUTHOR), LATITUDE, LONGITUDE,
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR,
+			std::string(ORIGINTYPE), std::string(EVENTTYPE),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(),
+			buildcorrleationdata());
 
 	// check data values
 	checkdata(originobject, "Tested Constructor");
 
-	detectionformats::origin originobject_altc(std::string(ID), detectionformats::source(std::string(AGENCYID), std::string(AUTHOR)), LATITUDE, LONGITUDE, detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), DEPTH, std::string(ORIGINTYPE),
-		std::string(EVENTTYPE), BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(), buildcorrleationdata());
+	detectionformats::origin originobject_altc(std::string(ID),
+			detectionformats::source(std::string(AGENCYID),
+					std::string(AUTHOR)),
+			detectionformats::hypo(LATITUDE, LONGITUDE,
+					detectionformats::ConvertISO8601ToEpochTime(
+							std::string(TIME)), DEPTH, LATITUDEERROR,
+					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+			std::string(ORIGINTYPE), std::string(EVENTTYPE), BAYES,
+			MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(),
+			buildcorrleationdata());
 
 	// check data values
 	checkdata(originobject_altc, "Tested Alternate Constructor");
@@ -204,11 +249,15 @@ TEST(OriginTest, Constructor)
 
 // tests to see if origin can successfully
 // be copy constructed
-TEST(OriginTest, CopyConstructor)
-{
+TEST(OriginTest, CopyConstructor) {
 	// use constructor
-	detectionformats::origin fromoriginobject(std::string(ID), std::string(AGENCYID), std::string(AUTHOR), LATITUDE, LONGITUDE, detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), DEPTH, std::string(ORIGINTYPE), std::string(EVENTTYPE),
-		BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(), buildcorrleationdata());
+	detectionformats::origin fromoriginobject(std::string(ID),
+			std::string(AGENCYID), std::string(AUTHOR), LATITUDE, LONGITUDE,
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR,
+			std::string(ORIGINTYPE), std::string(EVENTTYPE),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(),
+			buildcorrleationdata());
 
 	detectionformats::origin originobject(fromoriginobject);
 
@@ -218,8 +267,7 @@ TEST(OriginTest, CopyConstructor)
 
 // tests to see if origin can successfully
 // validate
-TEST(OriginTest, Validate)
-{
+TEST(OriginTest, Validate) {
 	detectionformats::origin originobject;
 
 	// build origin object
@@ -229,10 +277,16 @@ TEST(OriginTest, Validate)
 	originobject.source.agencyid = std::string(AGENCYID);
 	originobject.source.author = std::string(AUTHOR);
 
-	originobject.latitude = LATITUDE;
-	originobject.longitude = LONGITUDE;
-	originobject.time = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
-	originobject.depth = DEPTH;
+	originobject.hypocenter.latitude = LATITUDE;
+	originobject.hypocenter.longitude = LONGITUDE;
+	originobject.hypocenter.time = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(TIME));
+	originobject.hypocenter.depth = DEPTH;
+	originobject.hypocenter.latitudeerror = LATITUDEERROR;
+	originobject.hypocenter.longitudeerror = LONGITUDEERROR;
+	originobject.hypocenter.timeerror = TIMEERROR;
+	originobject.hypocenter.deptherror = DEPTHERROR;
+
 	originobject.origintype = std::string(ORIGINTYPE);
 	originobject.eventtype = std::string(EVENTTYPE);
 	originobject.bayes = BAYES;
@@ -249,23 +303,20 @@ TEST(OriginTest, Validate)
 	bool result = originobject.isvalid();
 
 	// check return code
-	ASSERT_EQ(result, true) << "Tested for successful validation.";
+	ASSERT_EQ(result, true)<< "Tested for successful validation.";
 
 	// build bad origin object
 	detectionformats::origin badoriginobject;
 	badoriginobject.id = "";
 
 	result = false;
-	try
-	{
+	try {
 		// call validation
 		result = badoriginobject.isvalid();
-	}
-	catch (const std::exception &)
-	{
+	} catch (const std::exception &) {
 		// don't care what the exception was
 	}
 
 	// check return code
-	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
 }
