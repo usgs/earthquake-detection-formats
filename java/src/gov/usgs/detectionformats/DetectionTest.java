@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class DetectionTest {
 
-	public static String ORIGIN_STRING = "{\"Gap\":33.67,\"Source\":{\"Author\":"
+	public static String DETECTION_STRING = "{\"Gap\":33.67,\"Source\":{\"Author\":"
 			+ "\"TestAuthor\",\"AgencyID\":\"US\"},\"Data\":[{\"Source\":"
 			+ "{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Filter\":"
 			+ "[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Onset\":"
@@ -44,7 +44,7 @@ public class DetectionTest {
 			+ "\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,"
 			+ "\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,"
 			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"Type\":\"Detection\","
-			+ "\"RMS\":3.8,\"Bayes\":2.65,\"OriginType\":\"New\",\"ID\":"
+			+ "\"RMS\":3.8,\"Bayes\":2.65,\"DetectionType\":\"New\",\"ID\":"
 			+ "\"12GFH48776857\",\"EventType\":\"earthquake\","
 			+ "\"MinimumDistance\":2.14}";
 	public static String ID = "12GFH48776857";
@@ -58,7 +58,7 @@ public class DetectionTest {
 	public static double LONGITUDEERROR = 22.64;
 	public static double DEPTHERROR = 2.44;
 	public static double TIMEERROR = 1.984;
-	public static String ORIGINTYPE = "New";
+	public static String DETECTIONTYPE = "New";
 	public static String EVENTTYPE = "earthquake";
 	public static double BAYES = 2.65;
 	public static double MINIMUMDISTANCE = 2.14;
@@ -109,7 +109,7 @@ public class DetectionTest {
 
 		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
-				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
+				TIMEERROR, DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
 				buildCorrelationData());
 
@@ -134,7 +134,7 @@ public class DetectionTest {
 		// build Correlation object
 		try {
 
-			checkData(new Detection(Utility.fromJSONString(ORIGIN_STRING)),
+			checkData(new Detection(Utility.fromJSONString(DETECTION_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -151,7 +151,7 @@ public class DetectionTest {
 		Detection originObject = new Detection(ID, new Source(AGENCYID, AUTHOR),
 				new Hypo(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
 						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
-				ORIGINTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
+				DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
 				buildPickData(), buildBeamData(), buildCorrelationData());
 
 		// check data values
@@ -166,7 +166,7 @@ public class DetectionTest {
 
 		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
-				TIMEERROR, DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES,
+				TIMEERROR, DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
 				buildCorrelationData());
 
@@ -179,7 +179,7 @@ public class DetectionTest {
 		// build bad Detection object
 		Detection badOriginObject = new Detection("", AGENCYID, null, LATITUDE,
 				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR,
-				DEPTHERROR, ORIGINTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS,
+				DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS,
 				GAP, buildPickData(), buildBeamData(), buildCorrelationData());
 
 		rc = badOriginObject.isValid();
@@ -225,9 +225,9 @@ public class DetectionTest {
 		assertEquals(TestName + " TimeError Equals", TIMEERROR,
 				originObject.getHypocenter().getTimeError(), 0);
 
-		// check OriginObject.OriginType
-		assertEquals(TestName + " OriginType Equals", ORIGINTYPE,
-				originObject.getOriginType());
+		// check OriginObject.DetectionType
+		assertEquals(TestName + " DetectionType Equals", DETECTIONTYPE,
+				originObject.getDetectionType());
 
 		// check originObject.EventType
 		assertEquals(TestName + " EventType Equals", EVENTTYPE,

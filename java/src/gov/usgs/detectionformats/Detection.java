@@ -19,7 +19,7 @@ public class Detection implements DetectionInt {
 	public static final String ID_KEY = "ID";
 	public static final String SOURCE_KEY = "Source";
 	public static final String HYPOCENTER_KEY = "Hypocenter";
-	public static final String ORIGINTYPE_KEY = "OriginType";
+	public static final String DETECTIONTYPE_KEY = "DetectionType";
 	public static final String EVENTTYPE_KEY = "EventType";
 	public static final String BAYES_KEY = "Bayes";
 	public static final String MINIMUMDISTANCE_KEY = "MinimumDistance";
@@ -51,7 +51,7 @@ public class Detection implements DetectionInt {
 	 * Optional String containing the origin type of this Detection valid values
 	 * are "new" "Update", "Final", or "Retract"
 	 */
-	private final String originType;
+	private final String detectionType;
 
 	/**
 	 * Optional String containing the event type of this Detection valid values
@@ -104,7 +104,7 @@ public class Detection implements DetectionInt {
 		source = null;
 		id = null;
 		hypocenter = null;
-		originType = null;
+		detectionType = null;
 		eventType = null;
 		bayes = null;
 		minimumDistance = null;
@@ -143,7 +143,7 @@ public class Detection implements DetectionInt {
 	 *            - A Double containing the new time error to use, null to omit
 	 * @param newDepthError
 	 *            - A Double containing the depth error to use, null to omit
-	 * @param newOriginType
+	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
@@ -169,7 +169,7 @@ public class Detection implements DetectionInt {
 	public Detection(String newID, String newAgencyID, String newAuthor,
 			Double newLatitude, Double newLongitude, Date newOrigintime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
-			Double newTimeError, Double newDepthError, String newOriginType,
+			Double newTimeError, Double newDepthError, String newDetectionType,
 			String newEventType, Double newBayes, Double newMinimumDistance,
 			Double newRMS, Double newGap, ArrayList<Pick> newPickData,
 			ArrayList<Beam> newBeamData,
@@ -179,7 +179,7 @@ public class Detection implements DetectionInt {
 				new Hypo(newLatitude, newLongitude, newOrigintime, newDepth,
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
-				newOriginType, newEventType, newBayes, newMinimumDistance,
+				newDetectionType, newEventType, newBayes, newMinimumDistance,
 				newRMS, newGap, newPickData, newBeamData, newCorrelationData);
 	}
 
@@ -195,7 +195,7 @@ public class Detection implements DetectionInt {
 	 *            - A Source Object containing the source to use
 	 * @param newHypocenter
 	 *            - A Hypo containing the hypocenter to use
-	 * @param newOriginType
+	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
@@ -219,7 +219,7 @@ public class Detection implements DetectionInt {
 	 *            data that went into this origin, null to omit
 	 */
 	public Detection(String newID, Source newSource, Hypo newHypocenter,
-			String newOriginType, String newEventType, Double newBayes,
+			String newDetectionType, String newEventType, Double newBayes,
 			Double newMinimumDistance, Double newRMS, Double newGap,
 			ArrayList<Pick> newPickData, ArrayList<Beam> newBeamData,
 			ArrayList<Correlation> newCorrelationData) {
@@ -228,7 +228,7 @@ public class Detection implements DetectionInt {
 		id = newID;
 		source = newSource;
 		hypocenter = newHypocenter;
-		originType = newOriginType;
+		detectionType = newDetectionType;
 		eventType = newEventType;
 		bayes = newBayes;
 		minimumDistance = newMinimumDistance;
@@ -279,11 +279,11 @@ public class Detection implements DetectionInt {
 		}
 
 		// Optional values
-		// originType
-		if (newJSONObject.containsKey(ORIGINTYPE_KEY)) {
-			originType = (String) newJSONObject.get(ORIGINTYPE_KEY);
+		// detectionType
+		if (newJSONObject.containsKey(DETECTIONTYPE_KEY)) {
+			detectionType = (String) newJSONObject.get(DETECTIONTYPE_KEY);
 		} else {
-			originType = null;
+			detectionType = null;
 		}
 
 		// eventType
@@ -383,7 +383,7 @@ public class Detection implements DetectionInt {
 		String jsonID = getID();
 		Source jsonSource = getSource();
 		Hypo jsonHypocenter = getHypocenter();
-		String jsonOriginType = getOriginType();
+		String jsonDetectionType = getDetectionType();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
@@ -413,9 +413,9 @@ public class Detection implements DetectionInt {
 		}
 
 		// Optional values
-		// originType
-		if (jsonOriginType != null) {
-			newJSONObject.put(ORIGINTYPE_KEY, jsonOriginType);
+		// detectionType
+		if (jsonDetectionType != null) {
+			newJSONObject.put(DETECTIONTYPE_KEY, jsonDetectionType);
 		}
 
 		// eventType
@@ -523,7 +523,7 @@ public class Detection implements DetectionInt {
 		String jsonID = getID();
 		Source jsonSource = getSource();
 		Hypo jsonHypocenter = getHypocenter();
-		String jsonOriginType = getOriginType();
+		String jsonDetectionType = getDetectionType();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
@@ -575,25 +575,25 @@ public class Detection implements DetectionInt {
 		}
 
 		// Optional Keys
-		// originType
-		if (jsonOriginType != null) {
+		// detectionType
+		if (jsonDetectionType != null) {
 
 			boolean match = false;
-			if (jsonOriginType.equals("New")) {
+			if (jsonDetectionType.equals("New")) {
 				match = true;
-			} else if (jsonOriginType.equals("Update")) {
+			} else if (jsonDetectionType.equals("Update")) {
 				match = true;
-			} else if (jsonOriginType.equals("Final")) {
+			} else if (jsonDetectionType.equals("Final")) {
 				match = true;
-			} else if (jsonOriginType.equals("Retract")) {
+			} else if (jsonDetectionType.equals("Retract")) {
 				match = true;
 			} else {
 				match = false;
 			}
 
 			if (!match) {
-				// invalid originType
-				errorList.add("Invalid OriginType in Detection Class.");
+				// invalid detectionType
+				errorList.add("Invalid DetectionType in Detection Class.");
 			}
 		}
 
@@ -730,10 +730,10 @@ public class Detection implements DetectionInt {
 		return hypocenter;
 	}
 	/**
-	 * @return the originType
+	 * @return the detectionType
 	 */
-	public String getOriginType() {
-		return originType;
+	public String getDetectionType() {
+		return detectionType;
 	}
 
 	/**
