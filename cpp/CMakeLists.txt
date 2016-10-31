@@ -39,7 +39,7 @@ set (SRCS ${PROJECT_SOURCE_DIR}/src/util.cpp
     ${PROJECT_SOURCE_DIR}/src/beam.cpp
     ${PROJECT_SOURCE_DIR}/src/correlation.cpp
     ${PROJECT_SOURCE_DIR}/src/pick.cpp
-    ${PROJECT_SOURCE_DIR}/src/origin.cpp
+    ${PROJECT_SOURCE_DIR}/src/detection.cpp
     ${PROJECT_SOURCE_DIR}/src/retract.cpp
 )
 
@@ -55,7 +55,7 @@ set (HDRS ${PROJECT_SOURCE_DIR}/include/util.h
     ${PROJECT_SOURCE_DIR}/include/beam.h
     ${PROJECT_SOURCE_DIR}/include/correlation.h
     ${PROJECT_SOURCE_DIR}/include/pick.h
-    ${PROJECT_SOURCE_DIR}/include/origin.h
+    ${PROJECT_SOURCE_DIR}/include/detection.h
     ${PROJECT_SOURCE_DIR}/include/retract.h
 )
 
@@ -93,7 +93,7 @@ if (RUN_TESTS)
 
         # ----- TEST SOURCES ----- #
         set (UNITTEST_SOURCES ${PROJECT_SOURCE_DIR}/tests/correlation_unittest.cpp
-            ${PROJECT_SOURCE_DIR}/tests/origin_unittest.cpp
+            ${PROJECT_SOURCE_DIR}/tests/detection_unittest.cpp
             ${PROJECT_SOURCE_DIR}/tests/pick_unittest.cpp
             ${PROJECT_SOURCE_DIR}/tests/beam_unittest.cpp
             ${PROJECT_SOURCE_DIR}/tests/retract_unittest.cpp

@@ -15,31 +15,31 @@
 
 namespace detectionformats {
 /**
- * \brief detectionformats origin conversion class
+ * \brief detectionformats detection conversion class
  *
- * The detectionformats origin class is a conversion class used to create, parse,
- * and validate the event origin data format origin.  The origin format uses
+ * The detectionformats detection class is a conversion class used to create, parse,
+ * and validate the event detection data format detection.  The detection format uses
  * the JSON standard (www.json.org)
  *
- * origin is intended for use in seismic data messaging between seismic
+ * detection is intended for use in seismic data messaging between seismic
  * applications and organizations.
  *
- * origin uses the Source and Site common objects.
+ * detection uses the Source and Site common objects.
  */
-class origin: public detectionbase {
+class detection: public detectionbase {
 public:
 	/**
-	 * \brief origin constructor
+	 * \brief detection constructor
 	 *
-	 * The constructor for the origin class.
+	 * The constructor for the detection class.
 	 * Initilizes members to null values.
 	 */
-	origin();
+	detection();
 
 	/**
-	 * \brief origin advanced constructor
+	 * \brief detection advanced constructor
 	 *
-	 * The advanced constructor for the origin class.
+	 * The advanced constructor for the detection class.
 	 * Initilizes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
@@ -47,7 +47,7 @@ public:
 	 * \param newauthor - A std::string containing the author to use
 	 * \param newlatitude - A double containing the latitude to use
 	 * \param newlongitude - A double containing the longitude to use
-	 * \param neworigintime - A double containing the new origin time to use
+	 * \param newdetectiontime - A double containing the new detection time to use
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -68,27 +68,27 @@ public:
 	 * \param newgap - A double containing the gap to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newpickdata - A std::vector<detectionformats::pickjson> newdata
-	 * 		containing the data that went into this origin, empty vector to omit
+	 * 		containing the data that went into this detection, empty vector to omit
 	 * \param newbeamdata - A std::vector<detectionformats::beamjson> newdata
-	 * 		containing the data that went into this origin, empty vector to omit
+	 * 		containing the data that went into this detection, empty vector to omit
 	 * \param newcorrelationdata - A std::vector<detectionformats::correlationjson>
-	 * 		newdata containing the data that went into this origin, empty vector
+	 * 		newdata containing the data that went into this detection, empty vector
 	 * 		to omit
 	 */
-	origin(std::string newid, std::string newagencyid, std::string newauthor,
-			double newlatitude, double newlongitude, double neworigintime,
+	detection(std::string newid, std::string newagencyid, std::string newauthor,
+			double newlatitude, double newlongitude, double newdetectiontime,
 			double newdepth, double newlatitudeerror, double newlongitudeerror,
 			double newtimeerror, double newdeptherror,
-			std::string neworigintype, std::string neweventtype,
+			std::string newdetectiontype, std::string neweventtype,
 			double newbayes, double newminimumdistance, double newrms,
 			double newgap, std::vector<detectionformats::pick> newpickdata,
 			std::vector<detectionformats::beam> newbeamdata,
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
-	 * \brief origin alternate advanced constructor
+	 * \brief detection alternate advanced constructor
 	 *
-	 * The alternate advanced constructor for the origin class.
+	 * The alternate advanced constructor for the detection class.
 	 * Initilizes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
@@ -96,7 +96,7 @@ public:
 	 * 		use
 	 * \param newhypocenter - A detectionformats::hypo containing the hypocenter
 	 * 		to use
-	 * \param neworigintype - A std::string containing the origin type to use,
+	 * \param newdetectiontype - A std::string containing the detection type to use,
 	 * 		empty string to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
@@ -109,15 +109,15 @@ public:
 	 * \param newgap - A double containing the gap to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newpickdata - A std::vector<detectionformats::pickjson> newdata
-	 * 		containing the data that went into this origin, empty vector to omit
+	 * 		containing the data that went into this detection, empty vector to omit
 	 * \param newbeamdata - A std::vector<detectionformats::beamjson> newdata
-	 * 		containing the data that went into this origin, empty vector to omit
+	 * 		containing the data that went into this detection, empty vector to omit
 	 * \param newcorrelationdata - A std::vector<detectionformats::correlationjson>
-	 * 		newdata containing the data that went into this origin, empty vector
+	 * 		newdata containing the data that went into this detection, empty vector
 	 * 		to omit
 	 */
-	origin(std::string newid, detectionformats::source newsource,
-			detectionformats::hypo newhypocenter, std::string neworigintype,
+	detection(std::string newid, detectionformats::source newsource,
+			detectionformats::hypo newhypocenter, std::string newdetectiontype,
 			std::string neweventtype, double newbayes,
 			double newminimumdistance, double newrms, double newgap,
 			std::vector<detectionformats::pick> newpickdata,
@@ -125,29 +125,29 @@ public:
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
-	 * \brief origin advanced constructor
+	 * \brief detection advanced constructor
 	 *
-	 * The advanced constructor for the origin class.
+	 * The advanced constructor for the detection class.
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	origin(rapidjson::Value &json);
+	detection(rapidjson::Value &json);
 
 	/**
-	 * \brief origin copy constructor
+	 * \brief detection copy constructor
 	 *
-	 * The copy constructor for the origin class.
-	 * Copies the provided object from a origin, populating members
-	 * \param neworigin - A origin.
+	 * The copy constructor for the detection class.
+	 * Copies the provided object from a detection, populating members
+	 * \param newdetection - A detection.
 	 */
-	origin(const origin & neworigin);
+	detection(const detection & newdetection);
 
 	/**
-	 * \brief origin destructor
+	 * \brief detection destructor
 	 *
-	 * The destructor for the origin class.
+	 * The destructor for the detection class.
 	 */
-	~origin();
+	~detection();
 
 	/**
 	 * \brief Convert to json object function
@@ -168,16 +168,16 @@ public:
 	virtual std::vector<std::string> geterrors() override;
 
 	/**
-	 * \brief origin id
+	 * \brief detection id
 	 *
-	 * A required std::string containing the id of this origin message
+	 * A required std::string containing the id of this detection message
 	 */
 	std::string id;
 
 	/**
-	 * \brief origin source
+	 * \brief detection source
 	 *
-	 * A required detectionformats::site containing the site for this origin
+	 * A required detectionformats::site containing the site for this detection
 	 * message
 	 */
 	detectionformats::source source;
@@ -186,22 +186,22 @@ public:
 	 * \brief correlation hypocenter
 	 *
 	 * A required detectionformats::hypo defining the hypocenter of this
-	 * origin message
+	 * detection message
 	 */
 	detectionformats::hypo hypocenter;
 
 	/**
-	 * \brief origin type
+	 * \brief detection type
 	 *
-	 * An optional std::string containing the origin type of this origin
+	 * An optional std::string containing the detection type of this detection
 	 * valid values are "New", "Update", "Final", or "Retract"
 	 */
-	std::string origintype;
+	std::string detectiontype;
 
 	/**
-	 * \brief origin event type
+	 * \brief detection event type
 	 *
-	 * An optional std::string containing the event type of this origin
+	 * An optional std::string containing the event type of this detection
 	 * valid values are "earthquake" or "blast"
 	 */
 	std::string eventtype;
@@ -209,49 +209,49 @@ public:
 	/**
 	 * \brief bayes value
 	 *
-	 * An optional double defining the bayesian statistic for this origin
+	 * An optional double defining the bayesian statistic for this detection
 	 */
 	double bayes;
 
 	/**
 	 * \brief minimum distance value
 	 *
-	 * A required double defining the minimum distance value for this origin
+	 * A required double defining the minimum distance value for this detection
 	 */
 	double minimumdistance;
 
 	/**
 	 * \brief rms value
 	 *
-	 * A required double defining the rms value for this origin
+	 * A required double defining the rms value for this detection
 	 */
 	double rms;
 
 	/**
 	 * \brief gap value
 	 *
-	 * A required double defining the gap value for this origin
+	 * A required double defining the gap value for this detection
 	 */
 	double gap;
 
 	/**
 	 * \brief pick data vector
 	 *
-	 * An optional vector of pick objects used to generate this origin
+	 * An optional vector of pick objects used to generate this detection
 	 */
 	std::vector<detectionformats::pick> pickdata;
 
 	/**
 	 * \brief beam data vector
 	 *
-	 * An optional vector of beam objects used to generate this origin
+	 * An optional vector of beam objects used to generate this detection
 	 */
 	std::vector<detectionformats::beam> beamdata;
 
 	/**
 	 * \brief correlation data vector
 	 *
-	 * An optional vector of correlation objects used to generate this origin
+	 * An optional vector of correlation objects used to generate this detection
 	 */
 	std::vector<detectionformats::correlation> correlationdata;
 

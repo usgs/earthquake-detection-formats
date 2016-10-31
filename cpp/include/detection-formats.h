@@ -2,7 +2,7 @@
 #ifndef DETECTION_H
 #define DETECTION_H
 
-#include "origin.h"
+#include "detection.h"
 #include "retract.h"
 #include "pick.h"
 #include "beam.h"

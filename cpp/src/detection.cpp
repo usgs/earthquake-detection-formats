@@ -1,11 +1,11 @@
-#include "origin.h"
+#include "detection.h"
 
 // JSON Keys
 #define TYPE_KEY "Type"
 #define ID_KEY "ID"
 #define SOURCE_KEY "Source"
 #define HYPOCENTER_KEY "Hypocenter"
-#define ORIGINTYPE_KEY "OriginType"
+#define DETECTIONTYPE_KEY "DetectionType"
 #define EVENTTYPE_KEY "EventType"
 #define BAYES_KEY "Bayes"
 #define MINIMUMDISTANCE_KEY "MinimumDistance"
@@ -14,12 +14,12 @@
 #define DATA_KEY "Data"
 
 namespace detectionformats {
-origin::origin() {
-	type = ORIGIN_TYPE;
+detection::detection() {
+	type = DETECTION_TYPE;
 	id = "";
 	source = detectionformats::source();
 	hypocenter = detectionformats::hypo();
-	origintype = "";
+	detectiontype = "";
 	eventtype = "";
 	bayes = std::numeric_limits<double>::quiet_NaN();
 	minimumdistance = std::numeric_limits<double>::quiet_NaN();
@@ -30,22 +30,22 @@ origin::origin() {
 	correlationdata.clear();
 }
 
-origin::origin(std::string newid, std::string newagencyid,
+detection::detection(std::string newid, std::string newagencyid,
 		std::string newauthor, double newlatitude, double newlongitude,
-		double neworigintime, double newdepth, double newlatitudeerror,
+		double newdetectiontime, double newdepth, double newlatitudeerror,
 		double newlongitudeerror, double newtimeerror, double newdeptherror,
-		std::string neworigintype, std::string neweventtype, double newbayes,
+		std::string newdetectiontype, std::string neweventtype, double newbayes,
 		double newminimumdistance, double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::beam> newbeamdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
-	type = ORIGIN_TYPE;
+	type = DETECTION_TYPE;
 	id = newid;
-	origin::source = detectionformats::source(newagencyid, newauthor);
+	detection::source = detectionformats::source(newagencyid, newauthor);
 	hypocenter = detectionformats::hypo(newlatitude, newlongitude,
-			neworigintime, newdepth, newlatitudeerror, newlongitudeerror,
+			newdetectiontime, newdepth, newlatitudeerror, newlongitudeerror,
 			newtimeerror, newdeptherror);
-	origintype = neworigintype;
+	detectiontype = newdetectiontype;
 	eventtype = neweventtype;
 	bayes = newbayes;
 	minimumdistance = newminimumdistance;
@@ -69,18 +69,18 @@ origin::origin(std::string newid, std::string newagencyid,
 	}
 }
 
-origin::origin(std::string newid, detectionformats::source newsource,
-		detectionformats::hypo newhypocenter, std::string neworigintype,
+detection::detection(std::string newid, detectionformats::source newsource,
+		detectionformats::hypo newhypocenter, std::string newdetectiontype,
 		std::string neweventtype, double newbayes, double newminimumdistance,
 		double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::beam> newbeamdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
-	type = ORIGIN_TYPE;
+	type = DETECTION_TYPE;
 	id = newid;
-	origin::source = newsource;
+	detection::source = newsource;
 	hypocenter = newhypocenter;
-	origintype = neworigintype;
+	detectiontype = newdetectiontype;
 	eventtype = neweventtype;
 	bayes = newbayes;
 	minimumdistance = newminimumdistance;
@@ -104,7 +104,7 @@ origin::origin(std::string newid, detectionformats::source newsource,
 	}
 }
 
-origin::origin(rapidjson::Value &json) {
+detection::detection(rapidjson::Value &json) {
 	// required values
 	// type
 	if ((json.HasMember(TYPE_KEY) == true)
@@ -138,13 +138,13 @@ origin::origin(rapidjson::Value &json) {
 		hypocenter = detectionformats::hypo();
 
 	// optional values
-	// origintype
-	if ((json.HasMember(ORIGINTYPE_KEY) == true)
-			&& (json[ORIGINTYPE_KEY].IsString() == true))
-		origintype = std::string(json[ORIGINTYPE_KEY].GetString(),
-				json[ORIGINTYPE_KEY].GetStringLength());
+	// detectiontype
+	if ((json.HasMember(DETECTIONTYPE_KEY) == true)
+			&& (json[DETECTIONTYPE_KEY].IsString() == true))
+		detectiontype = std::string(json[DETECTIONTYPE_KEY].GetString(),
+				json[DETECTIONTYPE_KEY].GetStringLength());
 	else
-		origintype = "";
+		detectiontype = "";
 
 	// eventtype
 	if ((json.HasMember(EVENTTYPE_KEY) == true)
@@ -223,42 +223,42 @@ origin::origin(rapidjson::Value &json) {
 	}
 }
 
-origin::origin(const origin & neworigin) {
-	type = ORIGIN_TYPE;
-	id = neworigin.id;
-	origin::source = neworigin.source;
-	hypocenter = neworigin.hypocenter;
-	origintype = neworigin.origintype;
-	eventtype = neworigin.eventtype;
-	bayes = neworigin.bayes;
-	minimumdistance = neworigin.minimumdistance;
-	rms = neworigin.rms;
-	gap = neworigin.gap;
+detection::detection(const detection & newdetection) {
+	type = DETECTION_TYPE;
+	id = newdetection.id;
+	detection::source = newdetection.source;
+	hypocenter = newdetection.hypocenter;
+	detectiontype = newdetection.detectiontype;
+	eventtype = newdetection.eventtype;
+	bayes = newdetection.bayes;
+	minimumdistance = newdetection.minimumdistance;
+	rms = newdetection.rms;
+	gap = newdetection.gap;
 
 	// copy data
 	pickdata.clear();
-	for (int i = 0; i < (int) neworigin.pickdata.size(); i++) {
-		pickdata.push_back(neworigin.pickdata[i]);
+	for (int i = 0; i < (int) newdetection.pickdata.size(); i++) {
+		pickdata.push_back(newdetection.pickdata[i]);
 	}
 
 	beamdata.clear();
-	for (int i = 0; i < (int) neworigin.beamdata.size(); i++) {
-		beamdata.push_back(neworigin.beamdata[i]);
+	for (int i = 0; i < (int) newdetection.beamdata.size(); i++) {
+		beamdata.push_back(newdetection.beamdata[i]);
 	}
 
 	correlationdata.clear();
-	for (int i = 0; i < (int) neworigin.correlationdata.size(); i++) {
-		correlationdata.push_back(neworigin.correlationdata[i]);
+	for (int i = 0; i < (int) newdetection.correlationdata.size(); i++) {
+		correlationdata.push_back(newdetection.correlationdata[i]);
 	}
 }
 
-origin::~origin() {
+detection::~detection() {
 	pickdata.clear();
 	beamdata.clear();
 	correlationdata.clear();
 }
 
-rapidjson::Value & origin::tojson(rapidjson::Value &json,
+rapidjson::Value & detection::tojson(rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -286,12 +286,12 @@ rapidjson::Value & origin::tojson(rapidjson::Value &json,
 	json.AddMember(HYPOCENTER_KEY, hypocentervalue, allocator);
 
 	// optional values
-	// origintype
-	if (origintype != "") {
-		rapidjson::Value origintypevalue;
-		origintypevalue.SetString(rapidjson::StringRef(origintype.c_str()),
+	// detectiontype
+	if (detectiontype != "") {
+		rapidjson::Value detectiontypevalue;
+		detectiontypevalue.SetString(rapidjson::StringRef(detectiontype.c_str()),
 				allocator);
-		json.AddMember(ORIGINTYPE_KEY, origintypevalue, allocator);
+		json.AddMember(DETECTIONTYPE_KEY, detectiontypevalue, allocator);
 	}
 
 	// eventtype
@@ -358,50 +358,50 @@ rapidjson::Value & origin::tojson(rapidjson::Value &json,
 	return (json);
 }
 
-std::vector<std::string> origin::geterrors() {
+std::vector<std::string> detection::geterrors() {
 	std::vector<std::string> errorlist;
 
 	// check required data
 	// Type
-	if (type != ORIGIN_TYPE) {
+	if (type != DETECTION_TYPE) {
 		// wrong type
-		errorlist.push_back("Non-origin type in origin class.");
+		errorlist.push_back("Non-detection type in detection class.");
 	}
 
 	// id
 	if (id == "") {
 		// empty id
-		errorlist.push_back("Empty ID in origin class.");
+		errorlist.push_back("Empty ID in detection class.");
 	}
 
 	// source
 	if (source.isvalid() != true) {
 		// bad source
-		errorlist.push_back("Source object did not validate in origin class.");
+		errorlist.push_back("Source object did not validate in detection class.");
 	}
 
 	// hypocenter
 	if (hypocenter.isvalid() != true) {
 		// hypocenter not found
 		errorlist.push_back(
-				"Hypo object did not validate in origin class.");
+				"Hypo object did not validate in detection class.");
 	}
 
 	// optional keys
-	// origintype
-	if (eventtype != "") {
+	// detectiontype
+	if (detectiontype != "") {
 		bool match = false;
 		// check all the valid types to see if this string matches
-		for (int i = detectionformats::origintypeindex::neworigin;
-				i < detectionformats::origintypeindex::origintypecount; i++) {
-			if (origintype == detectionformats::origintypevalues[i]) {
+		for (int i = detectionformats::detectiontypeindex::newdetection;
+				i < detectionformats::detectiontypeindex::detectiontypecount; i++) {
+			if (detectiontype == detectionformats::detectiontypevalues[i]) {
 				match = true;
 				break;
 			}
 		}
 
 		if (match == false) {
-			errorlist.push_back("Invalid OriginType in origin class.");
+			errorlist.push_back("Invalid DetectionType in detection class.");
 		}
 	}
 
@@ -418,35 +418,35 @@ std::vector<std::string> origin::geterrors() {
 		}
 
 		if (match == false) {
-			errorlist.push_back("Invalid EventType in origin class.");
+			errorlist.push_back("Invalid EventType in detection class.");
 		}
 	}
 
 	// bayes
 	if (std::isnan(bayes) != true) {
 		if (bayes < 0) {
-			errorlist.push_back("Invalid Bayes in origin class.");
+			errorlist.push_back("Invalid Bayes in detection class.");
 		}
 	}
 
 	// minimumdistance
 	if (std::isnan(minimumdistance) != true) {
 		if (minimumdistance < 0) {
-			errorlist.push_back("Invalid MinimumDistance in origin class.");
+			errorlist.push_back("Invalid MinimumDistance in detection class.");
 		}
 	}
 
 	// rms
 	if (std::isnan(rms) != true) {
 		if (rms < -10000) {
-			errorlist.push_back("Invalid RMS in origin class.");
+			errorlist.push_back("Invalid RMS in detection class.");
 		}
 	}
 
 	// gap
 	if (std::isnan(gap) != true) {
 		if ((gap < 0) || (gap > 360)) {
-			errorlist.push_back("Invalid Gap in origin class.");
+			errorlist.push_back("Invalid Gap in detection class.");
 		}
 	}
 
@@ -456,7 +456,7 @@ std::vector<std::string> origin::geterrors() {
 		for (int i = 0; i < (int) pickdata.size(); i++) {
 			if (pickdata[i].isvalid() != true) {
 				// bad source
-				errorlist.push_back("Invalid pick in origin class.");
+				errorlist.push_back("Invalid pick in detection class.");
 			}
 		}
 	}
@@ -466,7 +466,7 @@ std::vector<std::string> origin::geterrors() {
 		for (int i = 0; i < (int) beamdata.size(); i++) {
 			if (beamdata[i].isvalid() != true) {
 				// bad source
-				errorlist.push_back("Invalid beam in origin class.");
+				errorlist.push_back("Invalid beam in detection class.");
 			}
 		}
 	}
@@ -476,7 +476,7 @@ std::vector<std::string> origin::geterrors() {
 		for (int i = 0; i < (int) correlationdata.size(); i++) {
 			if (correlationdata[i].isvalid() != true) {
 				// bad source
-				errorlist.push_back("Invalid correlation in origin class.");
+				errorlist.push_back("Invalid correlation in detection class.");
 			}
 		}
 	}
