@@ -149,7 +149,7 @@ public class DetectionTest {
 
 		// use constructor
 		Detection originObject = new Detection(ID, new Source(AGENCYID, AUTHOR),
-				new Hypo(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
+				new Hypocenter(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
 						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 				DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
 				buildPickData(), buildBeamData(), buildCorrelationData());

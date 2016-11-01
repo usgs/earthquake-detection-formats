@@ -2,6 +2,7 @@
 #ifndef DETECTION_H
 #define DETECTION_H
 
+#include "hypocenter.h"
 #include "detection.h"
 #include "retract.h"
 #include "pick.h"
@@ -10,6 +11,5 @@
 #include "util.h"
 #include "base.h"
 #include "retract.h"
-#include "hypo.h"
 
 #endif

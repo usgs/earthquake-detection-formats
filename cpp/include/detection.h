@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include "hypocenter.h"
 #include "pick.h"
 #include "beam.h"
 #include "correlation.h"
@@ -94,7 +95,7 @@ public:
 	 * \param newid - A std::string containing the id to use
 	 * \param newsource - A detectionformats::source containing the source to
 	 * 		use
-	 * \param newhypocenter - A detectionformats::hypo containing the hypocenter
+	 * \param newhypocenter - A detectionformats::hypocenter containing the hypocenter
 	 * 		to use
 	 * \param newdetectiontype - A std::string containing the detection type to use,
 	 * 		empty string to omit
@@ -117,10 +118,10 @@ public:
 	 * 		to omit
 	 */
 	detection(std::string newid, detectionformats::source newsource,
-			detectionformats::hypo newhypocenter, std::string newdetectiontype,
-			std::string neweventtype, double newbayes,
-			double newminimumdistance, double newrms, double newgap,
-			std::vector<detectionformats::pick> newpickdata,
+			detectionformats::hypocenter newhypocenter,
+			std::string newdetectiontype, std::string neweventtype,
+			double newbayes, double newminimumdistance, double newrms,
+			double newgap, std::vector<detectionformats::pick> newpickdata,
 			std::vector<detectionformats::beam> newbeamdata,
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
@@ -185,10 +186,10 @@ public:
 	/**
 	 * \brief correlation hypocenter
 	 *
-	 * A required detectionformats::hypo defining the hypocenter of this
+	 * A required detectionformats::hypocenter defining the hypocenter of this
 	 * detection message
 	 */
-	detectionformats::hypo hypocenter;
+	detectionformats::hypocenter hypocenter;
 
 	/**
 	 * \brief detection type

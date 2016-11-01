@@ -45,7 +45,7 @@ public class Detection implements DetectionInt {
 	/**
 	 * Required hypocenter
 	 */
-	private final Hypo hypocenter;
+	private final Hypocenter hypocenter;
 
 	/**
 	 * Optional String containing the origin type of this Detection valid values
@@ -176,7 +176,7 @@ public class Detection implements DetectionInt {
 			ArrayList<Correlation> newCorrelationData) {
 
 		this(newID, new Source(newAgencyID, newAuthor),
-				new Hypo(newLatitude, newLongitude, newOrigintime, newDepth,
+				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
 				newDetectionType, newEventType, newBayes, newMinimumDistance,
@@ -218,7 +218,7 @@ public class Detection implements DetectionInt {
 	 *            - A Vector&lt;Detection&gt; newCorrelationData containing the
 	 *            data that went into this origin, null to omit
 	 */
-	public Detection(String newID, Source newSource, Hypo newHypocenter,
+	public Detection(String newID, Source newSource, Hypocenter newHypocenter,
 			String newDetectionType, String newEventType, Double newBayes,
 			Double newMinimumDistance, Double newRMS, Double newGap,
 			ArrayList<Pick> newPickData, ArrayList<Beam> newBeamData,
@@ -272,7 +272,7 @@ public class Detection implements DetectionInt {
 
 		// hypocenter
 		if (newJSONObject.containsKey(HYPOCENTER_KEY)) {
-			hypocenter = new Hypo(
+			hypocenter = new Hypocenter(
 					(JSONObject) newJSONObject.get(HYPOCENTER_KEY));
 		} else {
 			hypocenter = null;
@@ -382,7 +382,7 @@ public class Detection implements DetectionInt {
 		String jsonType = getType();
 		String jsonID = getID();
 		Source jsonSource = getSource();
-		Hypo jsonHypocenter = getHypocenter();
+		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonDetectionType = getDetectionType();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
@@ -522,7 +522,7 @@ public class Detection implements DetectionInt {
 		String jsonType = getType();
 		String jsonID = getID();
 		Source jsonSource = getSource();
-		Hypo jsonHypocenter = getHypocenter();
+		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonDetectionType = getDetectionType();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
@@ -726,7 +726,7 @@ public class Detection implements DetectionInt {
 	/**
 	 * @return the hypocenter
 	 */
-	public Hypo getHypocenter() {
+	public Hypocenter getHypocenter() {
 		return hypocenter;
 	}
 	/**

@@ -7,11 +7,11 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
+#include "hypocenter.h"
 #include <string>
 #include "site.h"
 #include "source.h"
 #include "associated.h"
-#include "hypo.h"
 
 namespace detectionformats {
 
@@ -169,7 +169,7 @@ public:
 	 * \param newphase - A std::string containing the phase to use
 	 * \param newtime - A double containing the new phase time to use
 	 * \param newcorrelation - A double containing the correlation value to use
-	 * \param newhypocenter - A detectionformats::hypo containing the hypocenter
+	 * \param newhypocenter - A detectionformats::hypocenter containing the hypocenter
 	 * 		to use
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
@@ -187,9 +187,10 @@ public:
 	correlation(std::string newid, detectionformats::site newsite,
 			detectionformats::source newsource, std::string newphase,
 			double newtime, double newcorrelation,
-			detectionformats::hypo newhypocenter, std::string neweventtype,
-			double newmagnitude, double newsnr, double newzscore,
-			double newdetectionthreshold, std::string newthresholdtype);
+			detectionformats::hypocenter newhypocenter,
+			std::string neweventtype, double newmagnitude, double newsnr,
+			double newzscore, double newdetectionthreshold,
+			std::string newthresholdtype);
 
 	/**
 	 * \brief correlation alternate advanced constructor
@@ -204,7 +205,7 @@ public:
 	 * \param newphase - A std::string containing the phase to use
 	 * \param newtime - A double containing the new phase time to use
 	 * \param newcorrelation - A double containing the correlation value to use
-	 * \param newhypocenter - A etectionformats::hypo containing the hypocenter
+	 * \param newhypocenter - A etectionformats::hypocenter containing the hypocenter
 	 * 		to use
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
@@ -224,9 +225,10 @@ public:
 	correlation(std::string newid, detectionformats::site newsite,
 			detectionformats::source newsource, std::string newphase,
 			double newtime, double newcorrelation,
-			detectionformats::hypo newhypocenter, std::string neweventtype,
-			double newmagnitude, double newsnr, double newzscore,
-			double newdetectionthreshold, std::string newthresholdtype,
+			detectionformats::hypocenter newhypocenter,
+			std::string neweventtype, double newmagnitude, double newsnr,
+			double newzscore, double newdetectionthreshold,
+			std::string newthresholdtype,
 			detectionformats::associated newassociated);
 
 	/**
@@ -321,10 +323,10 @@ public:
 	/**
 	 * \brief correlation hypocenter
 	 *
-	 * A required detectionformats::hypo defining the hypocenter of this
+	 * A required detectionformats::hypocenter defining the hypocenter of this
 	 * correlation message
 	 */
-	detectionformats::hypo hypocenter;
+	detectionformats::hypocenter hypocenter;
 
 	/**
 	 * \brief correlation event type

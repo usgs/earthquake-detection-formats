@@ -1,4 +1,4 @@
-#include "hypo.h"
+#include "hypocenter.h"
 
 // JSON Keys
 #define LATITUDE_KEY "Latitude"
@@ -12,7 +12,7 @@
 
 namespace detectionformats {
 
-hypo::hypo() {
+hypocenter::hypocenter() {
 	latitude = std::numeric_limits<double>::quiet_NaN();
 	longitude = std::numeric_limits<double>::quiet_NaN();
 	depth = std::numeric_limits<double>::quiet_NaN();
@@ -24,7 +24,7 @@ hypo::hypo() {
 
 }
 
-hypo::hypo(double newlatitude, double newlongitude, double newtime,
+hypocenter::hypocenter(double newlatitude, double newlongitude, double newtime,
 		double newdepth, double newlatitudeerror, double newlongitudeerror,
 		double newtimeerror, double newdeptherror) {
 	latitude = newlatitude;
@@ -37,7 +37,7 @@ hypo::hypo(double newlatitude, double newlongitude, double newtime,
 	timeerror = newtimeerror;
 }
 
-hypo::hypo(rapidjson::Value &json) {
+hypocenter::hypocenter(rapidjson::Value &json) {
 	// required values
 	// latitude
 	if ((json.HasMember(LATITUDE_KEY) == true)
@@ -106,21 +106,21 @@ hypo::hypo(rapidjson::Value &json) {
 		deptherror = std::numeric_limits<double>::quiet_NaN();
 }
 
-hypo::hypo(const hypo & newhypo) {
-	latitude = newhypo.latitude;
-	longitude = newhypo.longitude;
-	depth = newhypo.depth;
-	time = newhypo.time;
-	latitudeerror = newhypo.latitudeerror;
-	longitudeerror = newhypo.longitudeerror;
-	deptherror = newhypo.deptherror;
-	timeerror = newhypo.timeerror;
+hypocenter::hypocenter(const hypocenter & newhypocenter) {
+	latitude = newhypocenter.latitude;
+	longitude = newhypocenter.longitude;
+	depth = newhypocenter.depth;
+	time = newhypocenter.time;
+	latitudeerror = newhypocenter.latitudeerror;
+	longitudeerror = newhypocenter.longitudeerror;
+	deptherror = newhypocenter.deptherror;
+	timeerror = newhypocenter.timeerror;
 }
 
-hypo::~hypo() {
+hypocenter::~hypocenter() {
 }
 
-rapidjson::Value & hypo::tojson(rapidjson::Value &json,
+rapidjson::Value & hypocenter::tojson(rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -167,37 +167,38 @@ rapidjson::Value & hypo::tojson(rapidjson::Value &json,
 	return (json);
 }
 
-std::vector<std::string> hypo::geterrors() {
+std::vector<std::string> hypocenter::geterrors() {
 	std::vector<std::string> errorlist;
 
 	// check required data
 	// latitude
 	if (std::isnan(latitude) == true) {
 		// latitude not found
-		errorlist.push_back("No Latitude in hypo class.");
+		errorlist.push_back("No Latitude in hypocenter class.");
 	}
 	if ((latitude < -90) || (latitude > 90)) {
-		errorlist.push_back("Invalid Latitude in hypo class.");
+		errorlist.push_back("Invalid Latitude in hypocenter class.");
 	}
 
 	// longitude
 	if (std::isnan(longitude) == true) {
 		// longitude not found
-		errorlist.push_back("No Longitude in hypo class.");
+		errorlist.push_back("No Longitude in hypocenter class.");
 	}
 	if ((longitude < -180) || (longitude > 180)) {
-		errorlist.push_back("Invalid Longitude in hypo class.");
+		errorlist.push_back("Invalid Longitude in hypocenter class.");
 	}
 
 	// time
 	if (std::isnan(time) == true) {
-		errorlist.push_back("Time is missing in hypo class.");
+		errorlist.push_back("Time is missing in hypocenter class.");
 	} else {
 		try {
 			if (detectionformats::IsStringISO8601(
 					detectionformats::ConvertEpochTimeToISO8601(time))
 					== false) {
-				errorlist.push_back("Time did not validate in hypo class.");
+				errorlist.push_back(
+						"Time did not validate in hypocenter class.");
 			}
 		} catch (const std::exception & e) {
 			errorlist.push_back(std::string(e.what()));
@@ -207,10 +208,10 @@ std::vector<std::string> hypo::geterrors() {
 	// depth
 	if (std::isnan(depth) == true) {
 		// depth not found
-		errorlist.push_back("No Depth in hypo class.");
+		errorlist.push_back("No Depth in hypocenter class.");
 	}
 	if ((depth < -100) || (depth > 1500)) {
-		errorlist.push_back("Invalid Depth in hypo class.");
+		errorlist.push_back("Invalid Depth in hypocenter class.");
 	}
 
 	// optional keys

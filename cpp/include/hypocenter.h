@@ -4,8 +4,8 @@
  * the comments so that Doxygen will still
  * be able to work.
  ****************************************/
-#ifndef DETECTION_HYPO_H
-#define DETECTION_HYPO_H
+#ifndef DETECTION_HYPOCENTER_H
+#define DETECTION_HYPOCENTER_H
 
 #include <string>
 #include <exception>
@@ -20,20 +20,20 @@ namespace detectionformats {
  * and validate hypocenter data as part of detectionformats data.
  *
  */
-class hypo: public detectionbase {
+class hypocenter: public detectionbase {
 public:
 	/**
-	 * \brief hypo constructor
+	 * \brief hypocenter constructor
 	 *
-	 * The constructor for the hypo class.
+	 * The constructor for the hypocenter class.
 	 * Initilizes members to null values.
 	 */
-	hypo();
+	hypocenter();
 
 	/**
-	 * \brief hypo advanced constructor
+	 * \brief hypocenter advanced constructor
 	 *
-	 * The advanced constructor for the hypo class.
+	 * The advanced constructor for the hypocenter class.
 	 * Initilizes members to provided values.
 	 *
 	 * \param newlatitude - A double containing the latitude to use
@@ -49,34 +49,34 @@ public:
 	 * \param newdeptherror - A double containing the depth error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 */
-	hypo(double newlatitude, double newlongitude, double newtime,
+	hypocenter(double newlatitude, double newlongitude, double newtime,
 			double newdepth, double newlatitudeerror, double newlongitudeerror,
 			double newtimeerror, double newdeptherror);
 
 	/**
-	 * \brief hypo advanced constructor
+	 * \brief hypocenter advanced constructor
 	 *
-	 * The advanced constructor for the hypo class.
+	 * The advanced constructor for the hypocenter class.
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	hypo(rapidjson::Value &json);
+	hypocenter(rapidjson::Value &json);
 
 	/**
-	 * \brief hypo copy constructor
+	 * \brief hypocenter copy constructor
 	 *
-	 * The copy constructor for the hypo class.
-	 * Copies the provided object from a hypo, populating members
-	 * \param newfilter - A hypo.
+	 * The copy constructor for the hypocenter class.
+	 * Copies the provided object from a hypocenter, populating members
+	 * \param newfilter - A hypocenter.
 	 */
-	hypo(const hypo & newfilter);
+	hypocenter(const hypocenter & newfilter);
 
 	/**
-	 * \brief hypo destructor
+	 * \brief hypocenter destructor
 	 *
-	 * The destructor for the hypo class.
+	 * The destructor for the hypocenter class.
 	 */
-	~hypo();
+	~hypocenter();
 
 	/**
 	 * \brief Convert to json object function
@@ -101,56 +101,56 @@ public:
 	/**
 	 * \brief latitude value
 	 *
-	 * A required double defining the latitude of this hypo
+	 * A required double defining the latitude of this hypocenter
 	 */
 	double latitude;
 
 	/**
 	 * \brief longitude value
 	 *
-	 * A required double defining the longitude of this hypo
+	 * A required double defining the longitude of this hypocenter
 	 */
 	double longitude;
 
 	/**
 	 * \brief time value
 	 *
-	 * A required double containing the time for this hypo
+	 * A required double containing the time for this hypocenter
 	 */
 	double time;
 
 	/**
 	 * \brief depth value
 	 *
-	 * A required double defining the depth of this hypo
+	 * A required double defining the depth of this hypocenter
 	 */
 	double depth;
 
 	/**
 	 * \brief latitude value
 	 *
-	 * An optional double defining the latitude error of this hypo
+	 * An optional double defining the latitude error of this hypocenter
 	 */
 	double latitudeerror;
 
 	/**
 	 * \brief longitude value
 	 *
-	 * An optional double defining the longitude error of this hypo
+	 * An optional double defining the longitude error of this hypocenter
 	 */
 	double longitudeerror;
 
 	/**
-	 * \brief hypo time
+	 * \brief hypocenter time
 	 *
-	 * An optional double containing the time error for this hypo
+	 * An optional double containing the time error for this hypocenter
 	 */
 	double timeerror;
 
 	/**
 	 * \brief depth value
 	 *
-	 * An optional double defining the depth error of this hypo
+	 * An optional double defining the depth error of this hypocenter
 	 */
 	double deptherror;
 

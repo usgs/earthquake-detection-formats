@@ -7,7 +7,7 @@ import java.util.Date;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
-public class HypoTest {
+public class HypocenterTest {
 
 	public static final String HYPO_STRING = "{\"TimeError\":1.984,"
 			+ "\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,"
@@ -29,7 +29,7 @@ public class HypoTest {
 	@Test
 	public void writesJSON() {
 
-		Hypo hypoObject = new Hypo(LATITUDE, LONGITUDE, TIME, DEPTH,
+		Hypocenter hypoObject = new Hypocenter(LATITUDE, LONGITUDE, TIME, DEPTH,
 				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR);
 
 		// write out to a string
@@ -37,7 +37,7 @@ public class HypoTest {
 
 		// check the data
 		try {
-			checkData(new Hypo(Utility.fromJSONString(jsonString)),
+			checkData(new Hypocenter(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class HypoTest {
 		// build Correlation object
 		try {
 
-			checkData(new Hypo(Utility.fromJSONString(HYPO_STRING)),
+			checkData(new Hypocenter(Utility.fromJSONString(HYPO_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class HypoTest {
 	@Test
 	public void validate() {
 
-		Hypo hypoObject = new Hypo(LATITUDE, LONGITUDE, TIME, DEPTH,
+		Hypocenter hypoObject = new Hypocenter(LATITUDE, LONGITUDE, TIME, DEPTH,
 				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR);
 
 		// Successful validation
@@ -76,7 +76,7 @@ public class HypoTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad Hypo object
-		Hypo badHypoObject = new Hypo(null, LONGITUDE, null, DEPTH,
+		Hypocenter badHypoObject = new Hypocenter(null, LONGITUDE, null, DEPTH,
 				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR);
 
 		rc = badHypoObject.isValid();
@@ -85,7 +85,7 @@ public class HypoTest {
 		assertEquals("Unsuccessful Validation", false, rc);
 	}
 
-	public void checkData(Hypo hypoObject, String TestName) {
+	public void checkData(Hypocenter hypoObject, String TestName) {
 
 		// check hypoObject.Latitude
 		assertEquals(TestName + " Latitude Equals", LATITUDE,

@@ -26,7 +26,7 @@ correlation::correlation() {
 	phase = "";
 	time = std::numeric_limits<double>::quiet_NaN();
 	correlationvalue = std::numeric_limits<double>::quiet_NaN();
-	hypocenter = detectionformats::hypo();
+	hypocenter = detectionformats::hypocenter();
 	eventtype = "";
 	magnitude = std::numeric_limits<double>::quiet_NaN();
 	snr = std::numeric_limits<double>::quiet_NaN();
@@ -53,9 +53,9 @@ correlation::correlation(std::string newid, std::string newsiteid,
 	phase = newphase;
 	time = newtime;
 	correlationvalue = newcorrelation;
-	hypocenter = detectionformats::hypo(newlatitude, newlongitude, neworigintime,
-			newdepth, newlatitudeerror, newlongitudeerror, newtimeerror,
-			newdeptherror);
+	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
+			neworigintime, newdepth, newlatitudeerror, newlongitudeerror,
+			newtimeerror, newdeptherror);
 	eventtype = neweventtype;
 	magnitude = newmagnitude;
 	snr = newsnr;
@@ -85,9 +85,9 @@ correlation::correlation(std::string newid, std::string newsiteid,
 	phase = newphase;
 	time = newtime;
 	correlationvalue = newcorrelation;
-	hypocenter = detectionformats::hypo(newlatitude, newlongitude, neworigintime,
-			newdepth, newlatitudeerror, newlongitudeerror, newtimeerror,
-			newdeptherror);
+	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
+			neworigintime, newdepth, newlatitudeerror, newlongitudeerror,
+			newtimeerror, newdeptherror);
 	eventtype = neweventtype;
 	magnitude = newmagnitude;
 	snr = newsnr;
@@ -102,7 +102,7 @@ correlation::correlation(std::string newid, std::string newsiteid,
 correlation::correlation(std::string newid, detectionformats::site newsite,
 		detectionformats::source newsource, std::string newphase,
 		double newtime, double newcorrelation,
-		detectionformats::hypo newhypocenter, std::string neweventtype,
+		detectionformats::hypocenter newhypocenter, std::string neweventtype,
 		double newmagnitude, double newsnr, double newzscore,
 		double newdetectionthreshold, std::string newthresholdtype) {
 	type = CORRELATION_TYPE;
@@ -125,7 +125,7 @@ correlation::correlation(std::string newid, detectionformats::site newsite,
 correlation::correlation(std::string newid, detectionformats::site newsite,
 		detectionformats::source newsource, std::string newphase,
 		double newtime, double newcorrelation,
-		detectionformats::hypo newhypocenter, std::string neweventtype,
+		detectionformats::hypocenter newhypocenter, std::string neweventtype,
 		double newmagnitude, double newsnr, double newzscore,
 		double newdetectionthreshold, std::string newthresholdtype,
 		detectionformats::associated newassociated) {
@@ -208,9 +208,9 @@ correlation::correlation(rapidjson::Value &json) {
 	if ((json.HasMember(HYPOCENTER_KEY) == true)
 			&& (json[HYPOCENTER_KEY].IsObject() == true)) {
 		rapidjson::Value & hypocentervalue = json[HYPOCENTER_KEY];
-		hypocenter = detectionformats::hypo(hypocentervalue);
+		hypocenter = detectionformats::hypocenter(hypocentervalue);
 	} else
-		hypocenter = detectionformats::hypo();
+		hypocenter = detectionformats::hypocenter();
 
 	// optional values
 	// eventtype
@@ -453,7 +453,7 @@ std::vector<std::string> correlation::geterrors() {
 	if (hypocenter.isvalid() != true) {
 		// hypocenter not found
 		errorlist.push_back(
-				"Hypo object did not validate in correlation class.");
+				"hypocenter object did not validate in correlation class.");
 	}
 
 	// optional data

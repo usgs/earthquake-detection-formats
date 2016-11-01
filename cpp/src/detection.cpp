@@ -18,7 +18,7 @@ detection::detection() {
 	type = DETECTION_TYPE;
 	id = "";
 	source = detectionformats::source();
-	hypocenter = detectionformats::hypo();
+	hypocenter = detectionformats::hypocenter();
 	detectiontype = "";
 	eventtype = "";
 	bayes = std::numeric_limits<double>::quiet_NaN();
@@ -42,7 +42,7 @@ detection::detection(std::string newid, std::string newagencyid,
 	type = DETECTION_TYPE;
 	id = newid;
 	detection::source = detectionformats::source(newagencyid, newauthor);
-	hypocenter = detectionformats::hypo(newlatitude, newlongitude,
+	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
 			newdetectiontime, newdepth, newlatitudeerror, newlongitudeerror,
 			newtimeerror, newdeptherror);
 	detectiontype = newdetectiontype;
@@ -70,7 +70,7 @@ detection::detection(std::string newid, std::string newagencyid,
 }
 
 detection::detection(std::string newid, detectionformats::source newsource,
-		detectionformats::hypo newhypocenter, std::string newdetectiontype,
+		detectionformats::hypocenter newhypocenter, std::string newdetectiontype,
 		std::string neweventtype, double newbayes, double newminimumdistance,
 		double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
@@ -133,9 +133,9 @@ detection::detection(rapidjson::Value &json) {
 	if ((json.HasMember(HYPOCENTER_KEY) == true)
 			&& (json[HYPOCENTER_KEY].IsObject() == true)) {
 		rapidjson::Value & hypocentervalue = json[HYPOCENTER_KEY];
-		hypocenter = detectionformats::hypo(hypocentervalue);
+		hypocenter = detectionformats::hypocenter(hypocentervalue);
 	} else
-		hypocenter = detectionformats::hypo();
+		hypocenter = detectionformats::hypocenter();
 
 	// optional values
 	// detectiontype
@@ -384,7 +384,7 @@ std::vector<std::string> detection::geterrors() {
 	if (hypocenter.isvalid() != true) {
 		// hypocenter not found
 		errorlist.push_back(
-				"Hypo object did not validate in detection class.");
+				"hypocenter object did not validate in detection class.");
 	}
 
 	// optional keys

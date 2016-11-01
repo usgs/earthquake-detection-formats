@@ -12,7 +12,7 @@
 #define DEPTHERROR 2.44
 #define TIMEERROR 1.984
 
-void checkdata(detectionformats::hypo hypoobject, std::string testinfo) {
+void checkdata(detectionformats::hypocenter hypoobject, std::string testinfo) {
 	// check latitude
 	double hypolatitude = hypoobject.latitude;
 	double expectedlatitude = LATITUDE;
@@ -55,12 +55,12 @@ void checkdata(detectionformats::hypo hypoobject, std::string testinfo) {
 	ASSERT_EQ(hypodeptherror, expecteddeptherror);
 }
 
-// tests to see if hypo can successfully
+// tests to see if hypocenter can successfully
 // write json output
 TEST(HypoTest, WritesJSON) {
-	detectionformats::hypo hypoobject;
+	detectionformats::hypocenter hypoobject;
 
-	// build hypo object
+	// build hypocenter object
 	hypoobject.latitude = LATITUDE;
 	hypoobject.longitude = LONGITUDE;
 	hypoobject.time = detectionformats::ConvertISO8601ToEpochTime(
@@ -78,19 +78,19 @@ TEST(HypoTest, WritesJSON) {
 
 	// read it back in
 	rapidjson::Document hypodocument2;
-	detectionformats::hypo hypoobject2(
+	detectionformats::hypocenter hypoobject2(
 			detectionformats::FromJSONString(hypojson, hypodocument2));
 
 	// check data values
 	checkdata(hypoobject2, "");
 }
 
-// tests to see if hypo can successfully
+// tests to see if hypocenter can successfully
 // read json output
 TEST(HypoTest, ReadsJSON) {
 	// build associated object
 	rapidjson::Document hypodocument;
-	detectionformats::hypo hypoobject(
+	detectionformats::hypocenter hypoobject(
 			detectionformats::FromJSONString(std::string(HYPOSTRING),
 					hypodocument));
 
@@ -98,11 +98,11 @@ TEST(HypoTest, ReadsJSON) {
 	checkdata(hypoobject, "");
 }
 
-// tests to see if hypo can successfully
+// tests to see if hypocenter can successfully
 // be constructed
 TEST(HypoTest, Constructor) {
 	// use constructor
-	detectionformats::hypo hypoobject(LATITUDE, LONGITUDE,
+	detectionformats::hypocenter hypoobject(LATITUDE, LONGITUDE,
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			DEPTH,
 			LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR);
@@ -111,27 +111,27 @@ TEST(HypoTest, Constructor) {
 	checkdata(hypoobject, "Tested Constructor");
 }
 
-// tests to see if hypo can successfully
+// tests to see if hypocenter can successfully
 // be copy constructed
 TEST(HypoTest, CopyConstructor) {
 	// use constructor
-	detectionformats::hypo fromhypoobject(LATITUDE, LONGITUDE,
+	detectionformats::hypocenter fromhypoobject(LATITUDE, LONGITUDE,
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			DEPTH,
 			LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR);
 
-	detectionformats::hypo hypoobject(fromhypoobject);
+	detectionformats::hypocenter hypoobject(fromhypoobject);
 
 	// check data values
 	checkdata(hypoobject, "");
 }
 
-// tests to see if hypo can successfully
+// tests to see if hypocenter can successfully
 // validate
 TEST(HypoTest, Validate) {
-	detectionformats::hypo hypoobject;
+	detectionformats::hypocenter hypoobject;
 
-	// build hypo object
+	// build hypocenter object
 	hypoobject.latitude = LATITUDE;
 	hypoobject.longitude = LONGITUDE;
 	hypoobject.time = detectionformats::ConvertISO8601ToEpochTime(
@@ -148,8 +148,8 @@ TEST(HypoTest, Validate) {
 	// check return code
 	ASSERT_EQ(result, true)<< "Tested for successful validation.";
 
-	// build bad hypo object
-	detectionformats::hypo badhypoobject;
+	// build bad hypocenter object
+	detectionformats::hypocenter badhypoobject;
 	badhypoobject.latitude = std::numeric_limits<double>::quiet_NaN();
 
 	result = false;

@@ -70,7 +70,7 @@ public class Correlation implements DetectionInt {
 	/**
 	 * Required hypocenter
 	 */
-	private final Hypo hypocenter;
+	private final Hypocenter hypocenter;
 
 	/**
 	 * Optional String containing the event type of this Correlation valid
@@ -204,7 +204,7 @@ public class Correlation implements DetectionInt {
 						newLocation),
 				new Source(newAgencyID, newAuthor), newPhase, newTime,
 				newCorrelation,
-				new Hypo(newLatitude, newLongitude, newOrigintime, newDepth,
+				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
 				newEventtype, newMagnitude, newSNR, newZScore,
@@ -301,7 +301,7 @@ public class Correlation implements DetectionInt {
 						newLocation),
 				new Source(newAgencyID, newAuthor), newPhase, newTime,
 				newCorrelation,
-				new Hypo(newLatitude, newLongitude, newOrigintime, newDepth,
+				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
 				newEventtype, newMagnitude, newSNR, newZScore,
@@ -347,7 +347,7 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
-			Hypo newHypocenter, String newEventtype, Double newMagnitude,
+			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
 			Double newSNR, Double newZScore, Double newDetectionThreshold,
 			String newThresholdType) {
 
@@ -394,7 +394,7 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
-			Hypo newHypocenter, String newEventtype, Double newMagnitude,
+			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
 			Double newSNR, Double newZScore, Double newDetectionThreshold,
 			String newThresholdType, Associated newAssociated) {
 
@@ -475,7 +475,7 @@ public class Correlation implements DetectionInt {
 
 		// hypocenter
 		if (newJSONObject.containsKey(HYPOCENTER_KEY)) {
-			hypocenter = new Hypo(
+			hypocenter = new Hypocenter(
 					(JSONObject) newJSONObject.get(HYPOCENTER_KEY));
 		} else {
 			hypocenter = null;
@@ -552,7 +552,7 @@ public class Correlation implements DetectionInt {
 		String jsonPhase = getPhase();
 		Date jsonTime = getTime();
 		Double jsonCorrelation = getCorrelation();
-		Hypo jsonHypocenter = getHypocenter();
+		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		Double jsonSNR = getSNR();
@@ -668,7 +668,7 @@ public class Correlation implements DetectionInt {
 		String jsonPhase = getPhase();
 		Date jsonTime = getTime();
 		Double jsonCorrelation = getCorrelation();
-		Hypo jsonHypocenter = getHypocenter();
+		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		String jsonThresholdType = getThresholdType();
@@ -853,7 +853,7 @@ public class Correlation implements DetectionInt {
 	/**
 	 * @return the hypocenter
 	 */
-	public Hypo getHypocenter() {
+	public Hypocenter getHypocenter() {
 		return hypocenter;
 	}
 

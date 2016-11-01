@@ -235,7 +235,7 @@ TEST(DetectionTest, Constructor) {
 	detectionformats::detection detectionobject_altc(std::string(ID),
 			detectionformats::source(std::string(AGENCYID),
 					std::string(AUTHOR)),
-			detectionformats::hypo(LATITUDE, LONGITUDE,
+			detectionformats::hypocenter(LATITUDE, LONGITUDE,
 					detectionformats::ConvertISO8601ToEpochTime(
 							std::string(TIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),

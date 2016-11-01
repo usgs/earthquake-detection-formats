@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
  * 
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
-public class Hypo implements DetectionInt {
+public class Hypocenter implements DetectionInt {
 
 	/**
 	 * JSON Keys
@@ -68,7 +68,7 @@ public class Hypo implements DetectionInt {
 	/**
 	 * The constructor for the Hypo class. Initializes members to null values.
 	 */
-	public Hypo() {
+	public Hypocenter() {
 
 		latitude = null;
 		longitude = null;
@@ -103,7 +103,7 @@ public class Hypo implements DetectionInt {
 	 * @param newDepthError
 	 *            - A Double containing the depth error to use, null to omit
 	 */
-	public Hypo(Double newLatitude, Double newLongitude, Date newTime,
+	public Hypocenter(Double newLatitude, Double newLongitude, Date newTime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
 			Double newTimeError, Double newDepthError) {
 
@@ -123,7 +123,7 @@ public class Hypo implements DetectionInt {
 	 * @param newJSONObject
 	 *            - A JSONObject.
 	 */
-	public Hypo(JSONObject newJSONObject) {
+	public Hypocenter(JSONObject newJSONObject) {
 
 		// Required values
 		// latitude

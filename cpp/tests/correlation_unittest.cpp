@@ -297,7 +297,7 @@ TEST(CorrelationTest, Constructor) {
 					std::string(AUTHOR)), std::string(PHASE),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			CORRELATION,
-			detectionformats::hypo(LATITUDE, LONGITUDE,
+			detectionformats::hypocenter(LATITUDE, LONGITUDE,
 					detectionformats::ConvertISO8601ToEpochTime(
 							std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
