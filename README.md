@@ -27,7 +27,7 @@ event origin made using an event detection algorithm.
 retraction made using an event detection algorithm.
 
 ## Supporting objects:
-* [Hypocenter](Hypocenter.md) Object - An object that contains information about
+* [Hypocenter](format-docs/Hypocenter.md) Object - An object that contains information about
 a hypocenter as part of a detection.
 * [Amplitude](format-docs/Amplitude.md) Object - An object that contains
 information about an amplitude as part of a pick.
