@@ -21,12 +21,14 @@ waveform arrival time picking algorithm.
 seismic array beamforming algorithm.
 * [Correlation](format-docs/Correlation.md) Format - A format to contain a
 seismic event detection made using a cross correlation algorithm.
-* [Origin](format-docs/Origin.md) Format - A format to contain a seismic event
-origin made using an event detection algorithm.
+* [Detection](format-docs/Detection.md) Format - A format to contain a seismic
+event origin made using an event detection algorithm.
 * [Retract](format-docs/Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
 
 ## Supporting objects:
+* [Hypocenter](Hypocenter.md) Object - An object that contains information about
+a hypocenter as part of a detection.
 * [Amplitude](format-docs/Amplitude.md) Object - An object that contains
 information about an amplitude as part of a pick.
 * [Associated](format-docs/Associated.md) Object - An object that contains

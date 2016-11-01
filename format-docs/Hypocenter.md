@@ -1,14 +1,14 @@
-# Hypo Object Specification
+# Hypocenter Object Specification
 
 ## Description
 
-The Hypo object is an object designed to define a Hypocenter as part of a
-[Detection](Detection.md) or [Correlation](Correlation.md) message.  Hypo uses
-the [JSON standard](http://www.json.org).
+The Hypocenter object is an object designed to define a Hypocenter as part of a
+[Detection](Detection.md) or [Correlation](Correlation.md) message.  Hypocenter
+uses the [JSON standard](http://www.json.org).
 
 
 ## Usage
-Hypo is intended for use as part of the [Detection](Detection.md) or
+Hypocenter is intended for use as part of the [Detection](Detection.md) or
 [Correlation](Correlation.md)  Formats in seismic data messaging between seismic
 applications and organizations.
 

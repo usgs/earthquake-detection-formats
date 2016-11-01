@@ -11,8 +11,8 @@ made using an event detection algorithm.
 retraction made using an event detection algorithm.
 
 ## Supporting objects:
-* [Hypo](Hypo.md) Object - An object that contains information about a
-hypocenter as part of a detection.
+* [Hypocenter](Hypocenter.md) Object - An object that contains information about
+a hypocenter as part of a detection.
 * [Amplitude](Amplitude.md) Object - An object that contains information about
 an amplitude as part of a pick.
 * [Associated](Associated.md) Object - An object that contains associated

@@ -74,7 +74,7 @@ correlated, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 * Correlation - A decimal number containing the correlation value of the
 detection.
 * Hypocenter - An object containing the hypocenter of the correlation, see
-[Hypo](Hypo.md).
+[Hypocenter](Hypocenter.md).
 
 **Optional Values:**
 

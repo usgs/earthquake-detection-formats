@@ -47,7 +47,7 @@ Required Values:
 * Source - An object containing the source of the Detection, see
 [Source](Source.md).
 * Hypocenter - An object containing the hypocenter of the Detection, see
-[Hypo](Hypo.md).
+[Hypocenter](Hypocenter.md).
 
 Optional Values:
 * DetectionType - A string that identifies whether the Detection is `New`,
