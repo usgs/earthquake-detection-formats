@@ -1,3 +1,6 @@
+The purpose of these formats is to hold data representing the estimates of
+various types of seismic event detections.
+
 ## Defined formats:
 * [Pick](Pick.md) Format - A format for unassociated picks from a
 waveform arrival time picking algorithm.
@@ -5,8 +8,8 @@ waveform arrival time picking algorithm.
 array beamforming algorithm.
 * [Correlation](Correlation.md) Format - A format to contain a seismic
 event detection made using a cross correlation algorithm.
-* [Detection](Detection.md) Format - A format to contain a seismic event detection
-made using an event detection algorithm.
+* [Detection](format-docs/Detection.md) Format - A format to contain a seismic
+event detection generated using an event detection or association algorithm.
 * [Retract](Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
 

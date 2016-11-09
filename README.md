@@ -11,8 +11,10 @@ as defined in the [JSON standard](http://www.json.org).
 [License](LICENSE.md)
 
 The purpose of this project is to:
-1. Store the format definitions in a source controlled manner.
-2. Host libraries used to generate and parse the formats
+1. Define formats to hold data representing the estimates of various types of
+seismic event detections.
+2. Store the format definitions in a source controlled manner.
+3. Host libraries used to generate and parse the formats
 
 ## Defined formats:
 * [Pick](format-docs/Pick.md) Format - A format for unassociated picks from a
@@ -22,7 +24,7 @@ seismic array beamforming algorithm.
 * [Correlation](format-docs/Correlation.md) Format - A format to contain a
 seismic event detection made using a cross correlation algorithm.
 * [Detection](format-docs/Detection.md) Format - A format to contain a seismic
-event origin made using an event detection algorithm.
+event detection generated using an event detection or association algorithm.
 * [Retract](format-docs/Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
 
