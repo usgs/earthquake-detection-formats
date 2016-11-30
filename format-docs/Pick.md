@@ -4,14 +4,14 @@
 
 Pick is a format designed to encode the basic information of an unassociated
 waveform arrival time pick.  Pick uses the
-[JSON standard](http://www.json.org) .
+[JSON standard](http://www.json.org).
 
 ## Usage
 Pick is intended for use in seismic data messaging between seismic
 applications and organizations.
 
 ## Output
-
+```json
     {
       "Type"      : "Pick",
       "ID"        : String,
@@ -50,6 +50,7 @@ applications and organizations.
          "Sigma"    : Number
       }
     }
+```
 
 ## Glossary
 **Required Values:**
@@ -80,6 +81,5 @@ was made, see
 * Amplitude - An object containing the amplitude associated with the pick, see
 [Amplitude](Amplitude.md).
 * AssociationInfo - An object containing the association information if this
-pick is used as data in an
-[Origin](Origin.md),
-see [Associated](Associated.md).
+pick is used as data in a [Detection](Detection.md), see
+[Associated](Associated.md).

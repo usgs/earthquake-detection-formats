@@ -46,8 +46,8 @@ namespace detectionformats
 				return(formattypes::beamtype);
 			else if (typestring == CORRELATION_TYPE)
 				return(formattypes::correlationtype);
-			else if (typestring == ORIGIN_TYPE)
-				return(formattypes::origintype);
+			else if (typestring == DETECTION_TYPE)
+				return(formattypes::detectiontype);
 			else if (typestring == RETRACT_TYPE)
 				return(formattypes::retracttype);
 			

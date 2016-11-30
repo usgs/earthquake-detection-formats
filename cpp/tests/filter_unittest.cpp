@@ -38,7 +38,7 @@ TEST(FilterTest, WritesJSON)
     // read it back in
     rapidjson::Document filterdocument2;
     detectionformats::filter filterobject2(detectionformats::FromJSONString(filterjson, filterdocument2));
-    
+
     // check data values
     checkdata(filterobject2, "");
 }

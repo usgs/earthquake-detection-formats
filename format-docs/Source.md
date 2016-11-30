@@ -4,7 +4,7 @@
 
 The Source object is an object designed to define the originating seismic
 organization that produced a [Pick](Pick.md), [Beam](Beam.md),
-[Correlation](Correlation.md), or [Origin](Origin.md) message.
+[Correlation](Correlation.md), or [Detection](Detection.md) message.
 Site uses the [JSON standard](http://www.json.org).
 
 ## Usage
@@ -14,11 +14,12 @@ Source is intended for use as part of the [Pick](Pick.md),
 applications and organizations.
 
 ## Output
-
+```json
     {
       "AgencyID"  : String,
       "Author"    : String
     }
+```
 
 ## Glossary
 **Required Values:**

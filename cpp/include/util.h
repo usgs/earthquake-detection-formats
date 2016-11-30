@@ -13,13 +13,13 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
-#define ORIGINEXTENSION "jsonorig"
+#define DETECTIONEXTENSION "jsondetect"
 #define RETRACTEXTENSION "jsonrtct"
 #define PICKEXTENSION "jsonpick"
 #define BEAMEXTENSION "jsonbeam"
 #define CORRELATIONEXTENSION "jsoncorl"
 
-#define ORIGIN_TYPE "Origin"
+#define DETECTION_TYPE "Detection"
 #define CORRELATION_TYPE "Correlation"
 #define PICK_TYPE "Pick"
 #define BEAM_TYPE "Beam"
@@ -73,19 +73,19 @@ namespace detectionformats
 	static const char *pickervalues[] = { "manual", "raypicker", "filterpicker", "earthworm", "other", "" };
 
 	/**
-	* \brief detectionformats valid event type index enum
+	* \brief detectionformats valid detection type index enum
 	*/
-	enum origintypeindex { neworigin = 0, update = 1, final = 2, retractorigin = 3, origintypecount = 4 };
+	enum detectiontypeindex { newdetection = 0, update = 1, final = 2, retractdetection = 3, detectiontypecount = 4 };
 
 	/**
-	* \brief detectionformats valid event type values
+	* \brief detectionformats valid detection type values
 	*/
-	static const char *origintypevalues[] = { "New", "Update", "Final", "Retract", "" };
+	static const char *detectiontypevalues[] = { "New", "Update", "Final", "Retract", "" };
 
 	/**
 	* \brief detectionformats format types
 	*/
-	enum formattypes { picktype = 0, beamtype = 1, correlationtype = 2, origintype = 3, retracttype = 4, unknown = -1 };
+	enum formattypes { picktype = 0, beamtype = 1, correlationtype = 2, detectiontype = 3, retracttype = 4, unknown = -1 };
 
 	/**
 	* \brief detectionformats function to get the detection type for a provided json formatted string

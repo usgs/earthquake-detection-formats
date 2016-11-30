@@ -23,10 +23,7 @@ public class Correlation implements DetectionInt {
 	public static final String PHASE_KEY = "Phase";
 	public static final String TIME_KEY = "Time";
 	public static final String CORRELATION_KEY = "Correlation";
-	public static final String LATITUDE_KEY = "Latitude";
-	public static final String LONGITUDE_KEY = "Longitude";
-	public static final String DEPTH_KEY = "Depth";
-	public static final String ORIGINTIME_KEY = "OriginTime";
+	public static final String HYPOCENTER_KEY = "Hypocenter";
 	public static final String EVENTTYPE_KEY = "EventType";
 	public static final String MAGNITUDE_KEY = "Magnitude";
 	public static final String SNR_KEY = "SNR";
@@ -71,24 +68,9 @@ public class Correlation implements DetectionInt {
 	private final Double correlation;
 
 	/**
-	 * Required Double containing the Correlation latitude
+	 * Required hypocenter
 	 */
-	private final Double latitude;
-
-	/**
-	 * Required Double containing the Correlation longitude
-	 */
-	private final Double longitude;
-
-	/**
-	 * Required Double containing the Correlation depth
-	 */
-	private final Double depth;
-
-	/**
-	 * Required origin time for this Correlation
-	 */
-	private final Date originTime;
+	private final Hypocenter hypocenter;
 
 	/**
 	 * Optional String containing the event type of this Correlation valid
@@ -139,10 +121,7 @@ public class Correlation implements DetectionInt {
 		phase = null;
 		time = null;
 		correlation = null;
-		latitude = null;
-		longitude = null;
-		depth = null;
-		originTime = null;
+		hypocenter = null;
 		eventType = null;
 		magnitude = null;
 		snr = null;
@@ -184,10 +163,18 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the latitude to use
 	 * @param newLongitude
 	 *            - A Double containing the longitude to use
-	 * @param newDepth
-	 *            - A Double containing the depth to use
 	 * @param newOrigintime
 	 *            - A Date containing the origin time string to use
+	 * @param newDepth
+	 *            - A Double containing the depth to use
+	 * @param newLatitudeError
+	 *            - A Double containing the latitude error to use, null to omit
+	 * @param newLongitudeError
+	 *            - A Double containing the longitude error to use, null to omit
+	 * @param newTimeError
+	 *            - A Double containing the new time error to use, null to omit
+	 * @param newDepthError
+	 *            - A Double containing the depth error to use, null to omit
 	 * @param newEventtype
 	 *            - A String containing the event type to use, null to omit
 	 * @param newMagnitude
@@ -204,17 +191,23 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, String newSiteID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
-			String newAgencyID, String newAuthor, String newPhase,
-			Date newTime, Double newCorrelation, Double newLatitude,
-			Double newLongitude, Double newDepth, Date newOrigintime,
+			String newAgencyID, String newAuthor, String newPhase, Date newTime,
+			Double newCorrelation, Double newLatitude, Double newLongitude,
+			Date newOrigintime, Double newDepth, Double newLatitudeError,
+			Double newLongitudeError, Double newTimeError, Double newDepthError,
 			String newEventtype, Double newMagnitude, Double newSNR,
 			Double newZScore, Double newDetectionThreshold,
 			String newThresholdType) {
 
-		this(newID, new Site(newSiteID, newStation, newChannel, newNetwork,
-				newLocation), new Source(newAgencyID, newAuthor), newPhase,
-				newTime, newCorrelation, newLatitude, newLongitude, newDepth,
-				newOrigintime, newEventtype, newMagnitude, newSNR, newZScore,
+		this(newID,
+				new Site(newSiteID, newStation, newChannel, newNetwork,
+						newLocation),
+				new Source(newAgencyID, newAuthor), newPhase, newTime,
+				newCorrelation,
+				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
+						newLatitudeError, newLongitudeError, newTimeError,
+						newDepthError),
+				newEventtype, newMagnitude, newSNR, newZScore,
 				newDetectionThreshold, newThresholdType, new Associated());
 	}
 
@@ -250,10 +243,18 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the latitude to use
 	 * @param newLongitude
 	 *            - A Double containing the longitude to use
-	 * @param newDepth
-	 *            - A Double containing the depth to use
 	 * @param newOrigintime
 	 *            - A Date containing the origin time string to use
+	 * @param newDepth
+	 *            - A Double containing the depth to use
+	 * @param newLatitudeError
+	 *            - A Double containing the latitude error to use, null to omit
+	 * @param newLongitudeError
+	 *            - A Double containing the longitude error to use, null to omit
+	 * @param newTimeError
+	 *            - A Double containing the new time error to use, null to omit
+	 * @param newDepthError
+	 *            - A Double containing the depth error to use, null to omit
 	 * @param newEventtype
 	 *            - A String containing the event type to use, null to omit
 	 * @param newMagnitude
@@ -285,21 +286,27 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, String newSiteID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
-			String newAgencyID, String newAuthor, String newPhase,
-			Date newTime, Double newCorrelation, Double newLatitude,
-			Double newLongitude, Double newDepth, Date newOrigintime,
+			String newAgencyID, String newAuthor, String newPhase, Date newTime,
+			Double newCorrelation, Double newLatitude, Double newLongitude,
+			Date newOrigintime, Double newDepth, Double newLatitudeError,
+			Double newLongitudeError, Double newTimeError, Double newDepthError,
 			String newEventtype, Double newMagnitude, Double newSNR,
 			Double newZScore, Double newDetectionThreshold,
 			String newThresholdType, String newAssociatedPhase,
 			Double newAssociatedDistance, Double newAssociatedAzimuth,
 			Double newAssociatedResidual, Double newAssociatedSigma) {
 
-		this(newID, new Site(newSiteID, newStation, newChannel, newNetwork,
-				newLocation), new Source(newAgencyID, newAuthor), newPhase,
-				newTime, newCorrelation, newLatitude, newLongitude, newDepth,
-				newOrigintime, newEventtype, newMagnitude, newSNR, newZScore,
-				newDetectionThreshold, newThresholdType, new Associated(
-						newAssociatedPhase, newAssociatedDistance,
+		this(newID,
+				new Site(newSiteID, newStation, newChannel, newNetwork,
+						newLocation),
+				new Source(newAgencyID, newAuthor), newPhase, newTime,
+				newCorrelation,
+				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
+						newLatitudeError, newLongitudeError, newTimeError,
+						newDepthError),
+				newEventtype, newMagnitude, newSNR, newZScore,
+				newDetectionThreshold, newThresholdType,
+				new Associated(newAssociatedPhase, newAssociatedDistance,
 						newAssociatedAzimuth, newAssociatedResidual,
 						newAssociatedSigma));
 	}
@@ -322,14 +329,8 @@ public class Correlation implements DetectionInt {
 	 *            - A Date containing the phase time string to use
 	 * @param newCorrelation
 	 *            - A Double containing the correlation value to use
-	 * @param newLatitude
-	 *            - A Double containing the latitude to use
-	 * @param newLongitude
-	 *            - A Double containing the longitude to use
-	 * @param newDepth
-	 *            - A Double containing the depth to use
-	 * @param newOrigintime
-	 *            - A Date containing the origin time string to use
+	 * @param newHypocenter
+	 *            - A Hypo containing the hypocenter to use
 	 * @param newEventtype
 	 *            - A String containing the event type to use, null to omit
 	 * @param newMagnitude
@@ -346,14 +347,12 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
-			Double newLatitude, Double newLongitude, Double newDepth,
-			Date newOrigintime, String newEventtype, Double newMagnitude,
+			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
 			Double newSNR, Double newZScore, Double newDetectionThreshold,
 			String newThresholdType) {
 
 		this(newID, newSite, newSource, newPhase, newTime, newCorrelation,
-				newLatitude, newLongitude, newDepth, newOrigintime,
-				newEventtype, newMagnitude, newSNR, newZScore,
+				newHypocenter, newEventtype, newMagnitude, newSNR, newZScore,
 				newDetectionThreshold, newThresholdType, new Associated());
 	}
 
@@ -375,14 +374,8 @@ public class Correlation implements DetectionInt {
 	 *            - A Date containing the phase time string to use
 	 * @param newCorrelation
 	 *            - A Double containing the correlation value to use
-	 * @param newLatitude
-	 *            - A Double containing the latitude to use
-	 * @param newLongitude
-	 *            - A Double containing the longitude to use
-	 * @param newDepth
-	 *            - A Double containing the depth to use
-	 * @param newOrigintime
-	 *            - A Date containing the origin time string to use
+	 * @param newHypocenter
+	 *            - A Hypo containing the hypocenter to use
 	 * @param newEventtype
 	 *            - A String containing the event type to use, null to omit
 	 * @param newMagnitude
@@ -401,8 +394,7 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
-			Double newLatitude, Double newLongitude, Double newDepth,
-			Date newOrigintime, String newEventtype, Double newMagnitude,
+			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
 			Double newSNR, Double newZScore, Double newDetectionThreshold,
 			String newThresholdType, Associated newAssociated) {
 
@@ -413,10 +405,7 @@ public class Correlation implements DetectionInt {
 		phase = newPhase;
 		time = newTime;
 		correlation = newCorrelation;
-		latitude = newLatitude;
-		longitude = newLongitude;
-		depth = newDepth;
-		originTime = newOrigintime;
+		hypocenter = newHypocenter;
 		eventType = newEventtype;
 		magnitude = newMagnitude;
 		snr = newSNR;
@@ -484,33 +473,12 @@ public class Correlation implements DetectionInt {
 			correlation = null;
 		}
 
-		// latitude
-		if (newJSONObject.containsKey(LATITUDE_KEY)) {
-			latitude = (double) newJSONObject.get(LATITUDE_KEY);
+		// hypocenter
+		if (newJSONObject.containsKey(HYPOCENTER_KEY)) {
+			hypocenter = new Hypocenter(
+					(JSONObject) newJSONObject.get(HYPOCENTER_KEY));
 		} else {
-			latitude = null;
-		}
-
-		// longitude
-		if (newJSONObject.containsKey(LONGITUDE_KEY)) {
-			longitude = (double) newJSONObject.get(LONGITUDE_KEY);
-		} else {
-			longitude = null;
-		}
-
-		// depth
-		if (newJSONObject.containsKey(DEPTH_KEY)) {
-			depth = (double) newJSONObject.get(DEPTH_KEY);
-		} else {
-			depth = null;
-		}
-
-		// originTime
-		if (newJSONObject.containsKey(ORIGINTIME_KEY)) {
-			originTime = Utility.getDate(newJSONObject.get(ORIGINTIME_KEY)
-					.toString());
-		} else {
-			originTime = null;
+			hypocenter = null;
 		}
 
 		// Optional values
@@ -584,10 +552,7 @@ public class Correlation implements DetectionInt {
 		String jsonPhase = getPhase();
 		Date jsonTime = getTime();
 		Double jsonCorrelation = getCorrelation();
-		Double jsonLatitude = getLatitude();
-		Double jsonLongitude = getLongitude();
-		Double jsonDepth = getDepth();
-		Date jsonOriginTime = getOriginTime();
+		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		Double jsonSNR = getSNR();
@@ -630,25 +595,9 @@ public class Correlation implements DetectionInt {
 			newJSONObject.put(CORRELATION_KEY, jsonCorrelation);
 		}
 
-		// latitude
-		if (jsonLatitude != null) {
-			newJSONObject.put(LATITUDE_KEY, jsonLatitude);
-		}
-
-		// longitude
-		if (jsonLongitude != null) {
-			newJSONObject.put(LONGITUDE_KEY, jsonLongitude);
-		}
-
-		// depth
-		if (jsonDepth != null) {
-			newJSONObject.put(DEPTH_KEY, jsonDepth);
-		}
-
-		// originTime
-		if (jsonOriginTime != null) {
-			newJSONObject.put(ORIGINTIME_KEY,
-					Utility.formatDate(jsonOriginTime));
+		// hypocenter
+		if (jsonHypocenter != null) {
+			newJSONObject.put(HYPOCENTER_KEY, jsonHypocenter.toJSON());
 		}
 
 		// Optional values
@@ -684,8 +633,8 @@ public class Correlation implements DetectionInt {
 
 		// associated
 		if ((jsonAssociationInfo != null) && (!jsonAssociationInfo.isEmpty()))
-			newJSONObject
-					.put(ASSOCIATIONINFO_KEY, jsonAssociationInfo.toJSON());
+			newJSONObject.put(ASSOCIATIONINFO_KEY,
+					jsonAssociationInfo.toJSON());
 
 		return (newJSONObject);
 	}
@@ -719,10 +668,7 @@ public class Correlation implements DetectionInt {
 		String jsonPhase = getPhase();
 		Date jsonTime = getTime();
 		Double jsonCorrelation = getCorrelation();
-		Double jsonLatitude = getLatitude();
-		Double jsonLongitude = getLongitude();
-		Double jsonDepth = getDepth();
-		Date jsonOriginTime = getOriginTime();
+		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		String jsonThresholdType = getThresholdType();
@@ -794,44 +740,17 @@ public class Correlation implements DetectionInt {
 			errorList.add("No Correlation in Correlation Class.");
 		} else if (jsonCorrelation < 0) {
 			// invalid latitude
-			errorList
-					.add("Correaltion in Correlation Class not in greater than 0.");
+			errorList.add(
+					"Correaltion in Correlation Class not in greater than 0.");
 		}
 
-		// latitude
-		if (jsonLatitude == null) {
-			// latitude not found
-			errorList.add("No Latitude in Correlation Class.");
-		} else if ((jsonLatitude < -90) || (jsonLatitude > 90)) {
-			// invalid latitude
-			errorList
-					.add("Latitude in Correlation Class not in the range of -90 to 90.");
-		}
-
-		// longitude
-		if (jsonLongitude == null) {
-			// longitude not found
-			errorList.add("No Longitude in Correlation Class.");
-		} else if ((jsonLongitude < -180) || (jsonLongitude > 180)) {
-			// invalid longitude
-			errorList
-					.add("Longitude in Correlation Class not in the range of -180 to 180.");
-		}
-
-		// depth
-		if (jsonDepth == null) {
-			// depth not found
-			errorList.add("No Depth in Correlation Class.");
-		} else if ((jsonDepth < -100) || (jsonDepth > 1500)) {
-			// invalid depth
-			errorList
-					.add("Depth in Correlation Class not in the range of -100 to 1500.");
-		}
-
-		// originTime
-		if (jsonOriginTime == null) {
-			// origin time not found
-			errorList.add("No Origin Time in Correlation Class.");
+		// hypocenter
+		if (jsonHypocenter == null) {
+			// hypocenter not found
+			errorList.add("No Hypocenter in Correlation Class.");
+		} else if (!jsonHypocenter.isValid()) {
+			// hypocenter invalid
+			errorList.add("Invalid Hypocenter in Correlation Class.");
 		}
 
 		// Optional Keys
@@ -857,8 +776,8 @@ public class Correlation implements DetectionInt {
 		if (jsonMagnitude != null) {
 			if ((jsonMagnitude < -2) || (jsonMagnitude > 10)) {
 				// invalid Magnitude
-				errorList
-						.add("Magnitude in Correlation Class not in the range of -1 to 10.");
+				errorList.add(
+						"Magnitude in Correlation Class not in the range of -1 to 10.");
 			}
 		}
 
@@ -932,31 +851,10 @@ public class Correlation implements DetectionInt {
 	}
 
 	/**
-	 * @return the latitude
+	 * @return the hypocenter
 	 */
-	public Double getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * @return the longitude
-	 */
-	public Double getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * @return the depth
-	 */
-	public Double getDepth() {
-		return depth;
-	}
-
-	/**
-	 * @return the originTime
-	 */
-	public Date getOriginTime() {
-		return originTime;
+	public Hypocenter getHypocenter() {
+		return hypocenter;
 	}
 
 	/**

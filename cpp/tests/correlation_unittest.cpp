@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define CORRELATIONSTRING "{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
+#define CORRELATIONSTRING "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
 #define ID "12GFH48776857"
 #define STATION "BMN"
 #define CHANNEL "HHZ"
@@ -19,6 +19,10 @@
 #define LATITUDE 40.3344
 #define LONGITUDE -121.44
 #define ORIGINTIME "2015-12-28T21:30:44.039Z"
+#define LATITUDEERROR 12.5
+#define LONGITUDEERROR 22.64
+#define DEPTHERROR 2.44
+#define TIMEERROR 1.984
 #define DEPTH 32.44
 #define EVENTTYPE "earthquake"
 #define MAGNITUDE 2.14
@@ -32,8 +36,8 @@
 #define ASSOCRESIDUAL -0.025393
 #define ASSOCSIGMA 0.086333
 
-void checkdata(detectionformats::correlation correlationobject, std::string testinfo)
-{
+void checkdata(detectionformats::correlation correlationobject,
+		std::string testinfo) {
 	// check id
 	std::string correlationid = correlationobject.id;
 	std::string expectedid = std::string(ID);
@@ -81,7 +85,8 @@ void checkdata(detectionformats::correlation correlationobject, std::string test
 
 	// check time
 	double correlationtime = correlationobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
+	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(TIME));
 	ASSERT_EQ(correlationtime, expectedtime);
 
 	// check correlation
@@ -90,24 +95,46 @@ void checkdata(detectionformats::correlation correlationobject, std::string test
 	ASSERT_EQ(correlationcorrelation, expectedcorrelation);
 
 	// check latitude
-	double correlationlatitude = correlationobject.latitude;
+	double correlationlatitude = correlationobject.hypocenter.latitude;
 	double expectedlatitude = LATITUDE;
 	ASSERT_EQ(correlationlatitude, expectedlatitude);
 
 	// check longitude
-	double correlationlongitude = correlationobject.longitude;
+	double correlationlongitude = correlationobject.hypocenter.longitude;
 	double expectedlongitude = LONGITUDE;
 	ASSERT_EQ(correlationlongitude, expectedlongitude);
 
 	// check origintime
-	double correlationorigintime = correlationobject.origintime;
-	double expectedorigintime = detectionformats::ConvertISO8601ToEpochTime(std::string(ORIGINTIME));
+	double correlationorigintime = correlationobject.hypocenter.time;
+	double expectedorigintime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(ORIGINTIME));
 	ASSERT_EQ(correlationorigintime, expectedorigintime);
 
 	// check depth
-	double correlationdepth = correlationobject.depth;
+	double correlationdepth = correlationobject.hypocenter.depth;
 	double expecteddepth = DEPTH;
 	ASSERT_EQ(correlationdepth, expecteddepth);
+
+	// check latitude error
+	double correlationlatitudeerror = correlationobject.hypocenter.latitudeerror;
+	double expectedlatitudeerror = LATITUDEERROR;
+	ASSERT_EQ(correlationlatitudeerror, expectedlatitudeerror);
+
+	// check longitude error
+	double correlationlongitdeerror =
+			correlationobject.hypocenter.longitudeerror;
+	double expectedlongitudeerror = LONGITUDEERROR;
+	ASSERT_EQ(correlationlongitdeerror, expectedlongitudeerror);
+
+	// check time error
+	double correlationtimeerror = correlationobject.hypocenter.timeerror;
+	double expectedtimeerror = TIMEERROR;
+	ASSERT_EQ(correlationtimeerror, expectedtimeerror);
+
+	// check depth error
+	double correlationdeptherror = correlationobject.hypocenter.deptherror;
+	double expecteddeptherror = DEPTHERROR;
+	ASSERT_EQ(correlationdeptherror, expecteddeptherror);
 
 	// check eventtype
 	std::string correlationeventtype = correlationobject.eventtype;
@@ -137,7 +164,8 @@ void checkdata(detectionformats::correlation correlationobject, std::string test
 	// check thresholdtype
 	std::string correlationthresholdtype = correlationobject.thresholdtype;
 	std::string expectedthresholdtype = std::string(THRESHOLDTYPE);
-	ASSERT_STREQ(correlationthresholdtype.c_str(), expectedthresholdtype.c_str());
+	ASSERT_STREQ(correlationthresholdtype.c_str(),
+			expectedthresholdtype.c_str());
 
 	// check phase
 	std::string associatedphase = correlationobject.associationinfo.phase;
@@ -167,8 +195,7 @@ void checkdata(detectionformats::correlation correlationobject, std::string test
 
 // tests to see if correlation can successfully
 // write json output
-TEST(CorrelationTest, WritesJSON)
-{
+TEST(CorrelationTest, WritesJSON) {
 	detectionformats::correlation correlationobject;
 
 	// build correlation object
@@ -185,13 +212,20 @@ TEST(CorrelationTest, WritesJSON)
 	correlationobject.source.agencyid = std::string(AGENCYID);
 	correlationobject.source.author = std::string(AUTHOR);
 
-	correlationobject.time = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
+	correlationobject.time = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(TIME));
 	correlationobject.phase = std::string(PHASE);
 	correlationobject.correlationvalue = CORRELATION;
-	correlationobject.latitude = LATITUDE;
-	correlationobject.longitude = LONGITUDE;
-	correlationobject.origintime = detectionformats::ConvertISO8601ToEpochTime(std::string(ORIGINTIME));
-	correlationobject.depth = DEPTH;
+	correlationobject.hypocenter.latitude = LATITUDE;
+	correlationobject.hypocenter.longitude = LONGITUDE;
+	correlationobject.hypocenter.time =
+			detectionformats::ConvertISO8601ToEpochTime(
+					std::string(ORIGINTIME));
+	correlationobject.hypocenter.depth = DEPTH;
+	correlationobject.hypocenter.latitudeerror = LATITUDEERROR;
+	correlationobject.hypocenter.longitudeerror = LONGITUDEERROR;
+	correlationobject.hypocenter.timeerror = TIMEERROR;
+	correlationobject.hypocenter.deptherror = DEPTHERROR;
 	correlationobject.eventtype = std::string(EVENTTYPE);
 	correlationobject.magnitude = MAGNITUDE;
 	correlationobject.snr = SNR;
@@ -208,23 +242,28 @@ TEST(CorrelationTest, WritesJSON)
 
 	// build json string
 	rapidjson::Document correlationdocument;
-	std::string correlationjson = detectionformats::ToJSONString(correlationobject.tojson(correlationdocument, correlationdocument.GetAllocator()));
-    
-    // read it back in
-    rapidjson::Document correlationdocument2;
-    detectionformats::correlation correlationobject2(detectionformats::FromJSONString(correlationjson, correlationdocument2));
-    
-    // check data values
-    checkdata(correlationobject2, "");
+	std::string correlationjson = detectionformats::ToJSONString(
+			correlationobject.tojson(correlationdocument,
+					correlationdocument.GetAllocator()));
+
+	// read it back in
+	rapidjson::Document correlationdocument2;
+	detectionformats::correlation correlationobject2(
+			detectionformats::FromJSONString(correlationjson,
+					correlationdocument2));
+
+	// check data values
+	checkdata(correlationobject2, "");
 }
 
 // tests to see if correlation can successfully
 // read json output
-TEST(CorrelationTest, ReadsJSON)
-{
+TEST(CorrelationTest, ReadsJSON) {
 	// build associated object
 	rapidjson::Document correlationdocument;
-	detectionformats::correlation correlationobject(detectionformats::FromJSONString(std::string(CORRELATIONSTRING), correlationdocument));
+	detectionformats::correlation correlationobject(
+			detectionformats::FromJSONString(std::string(CORRELATIONSTRING),
+					correlationdocument));
 
 	// check data values
 	checkdata(correlationobject, "");
@@ -232,19 +271,41 @@ TEST(CorrelationTest, ReadsJSON)
 
 // tests to see if correlation can successfully
 // be constructed
-TEST(CorrelationTest, Constructor)
-{
+TEST(CorrelationTest, Constructor) {
 	// use constructor
-	detectionformats::correlation correlationobject(std::string(ID), std::string(SITEID), std::string(STATION), std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-		std::string(AGENCYID), std::string(AUTHOR), std::string(PHASE), detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), CORRELATION, LATITUDE, LONGITUDE, DEPTH, detectionformats::ConvertISO8601ToEpochTime(std::string(ORIGINTIME)), std::string(EVENTTYPE),
-		MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+	detectionformats::correlation correlationobject(std::string(ID),
+			std::string(SITEID), std::string(STATION), std::string(CHANNEL),
+			std::string(NETWORK), std::string(LOCATION), std::string(AGENCYID),
+			std::string(AUTHOR), std::string(PHASE),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			CORRELATION, LATITUDE, LONGITUDE,
+			detectionformats::ConvertISO8601ToEpochTime(
+					std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE,
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 	// check data values
 	checkdata(correlationobject, "Tested Constructor");
 
-	detectionformats::correlation correlationobject_altc(std::string(ID), detectionformats::site(std::string(SITEID), std::string(STATION), std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION)),
-		detectionformats::source(std::string(AGENCYID), std::string(AUTHOR)), std::string(PHASE), detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), CORRELATION, LATITUDE, LONGITUDE, DEPTH, detectionformats::ConvertISO8601ToEpochTime(std::string(ORIGINTIME)), std::string(EVENTTYPE),
-		MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, std::string(THRESHOLDTYPE), detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+	detectionformats::correlation correlationobject_altc(std::string(ID),
+			detectionformats::site(std::string(SITEID), std::string(STATION),
+					std::string(CHANNEL), std::string(NETWORK),
+					std::string(LOCATION)),
+			detectionformats::source(std::string(AGENCYID),
+					std::string(AUTHOR)), std::string(PHASE),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			CORRELATION,
+			detectionformats::hypocenter(LATITUDE, LONGITUDE,
+					detectionformats::ConvertISO8601ToEpochTime(
+							std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+			std::string(EVENTTYPE),
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(THRESHOLDTYPE),
+			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
 
 	// check data values
 	checkdata(correlationobject_altc, "Tested Alternate Constructor");
@@ -252,12 +313,20 @@ TEST(CorrelationTest, Constructor)
 
 // tests to see if correlation can successfully
 // be copy constructed
-TEST(CorrelationTest, CopyConstructor)
-{
+TEST(CorrelationTest, CopyConstructor) {
 	// use constructor
-	detectionformats::correlation fromcorrelationobject(std::string(ID), std::string(SITEID), std::string(STATION), std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-		std::string(AGENCYID), std::string(AUTHOR), std::string(PHASE), detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)), CORRELATION, LATITUDE, LONGITUDE, DEPTH, detectionformats::ConvertISO8601ToEpochTime(std::string(ORIGINTIME)), std::string(EVENTTYPE),
-		MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+	detectionformats::correlation fromcorrelationobject(std::string(ID),
+			std::string(SITEID), std::string(STATION), std::string(CHANNEL),
+			std::string(NETWORK), std::string(LOCATION), std::string(AGENCYID),
+			std::string(AUTHOR), std::string(PHASE),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			CORRELATION, LATITUDE, LONGITUDE,
+			detectionformats::ConvertISO8601ToEpochTime(
+					std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE,
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 	detectionformats::correlation correlationobject(fromcorrelationobject);
 
@@ -267,8 +336,7 @@ TEST(CorrelationTest, CopyConstructor)
 
 // tests to see if correlation can successfully
 // validate
-TEST(CorrelationTest, Validate)
-{
+TEST(CorrelationTest, Validate) {
 	detectionformats::correlation correlationobject;
 
 	// build correlation object
@@ -285,13 +353,20 @@ TEST(CorrelationTest, Validate)
 	correlationobject.source.agencyid = std::string(AGENCYID);
 	correlationobject.source.author = std::string(AUTHOR);
 
-	correlationobject.time = detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
+	correlationobject.time = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(TIME));
 	correlationobject.phase = std::string(PHASE);
 	correlationobject.correlationvalue = CORRELATION;
-	correlationobject.latitude = LATITUDE;
-	correlationobject.longitude = LONGITUDE;
-	correlationobject.origintime = detectionformats::ConvertISO8601ToEpochTime(std::string(ORIGINTIME));
-	correlationobject.depth = DEPTH;
+	correlationobject.hypocenter.latitude = LATITUDE;
+	correlationobject.hypocenter.longitude = LONGITUDE;
+	correlationobject.hypocenter.time =
+			detectionformats::ConvertISO8601ToEpochTime(
+					std::string(ORIGINTIME));
+	correlationobject.hypocenter.depth = DEPTH;
+	correlationobject.hypocenter.latitudeerror = LATITUDEERROR;
+	correlationobject.hypocenter.longitudeerror = LONGITUDEERROR;
+	correlationobject.hypocenter.timeerror = TIMEERROR;
+	correlationobject.hypocenter.deptherror = DEPTHERROR;
 	correlationobject.eventtype = std::string(EVENTTYPE);
 	correlationobject.magnitude = MAGNITUDE;
 	correlationobject.snr = SNR;
@@ -310,23 +385,20 @@ TEST(CorrelationTest, Validate)
 	bool result = correlationobject.isvalid();
 
 	// check return code
-	ASSERT_EQ(result, true) << "Tested for successful validation.";
+	ASSERT_EQ(result, true)<< "Tested for successful validation.";
 
 	// build bad correlation object
 	detectionformats::correlation badcorrelationobject;
 	badcorrelationobject.id = "";
 
 	result = false;
-	try
-	{
+	try {
 		// call validation
 		result = badcorrelationobject.isvalid();
-	}
-	catch (const std::exception &)
-	{
+	} catch (const std::exception &) {
 		// don't care what the exception was
 	}
 
 	// check return code
-	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
 }

@@ -1,3 +1,6 @@
+The purpose of these formats is to hold data representing the estimates of
+various types of seismic event detections.
+
 ## Defined formats:
 * [Pick](Pick.md) Format - A format for unassociated picks from a
 waveform arrival time picking algorithm.
@@ -5,19 +8,21 @@ waveform arrival time picking algorithm.
 array beamforming algorithm.
 * [Correlation](Correlation.md) Format - A format to contain a seismic
 event detection made using a cross correlation algorithm.
-* [Origin](Origin.md) Format - A format to contain a seismic event origin
-made using an event detection algorithm.
+* [Detection](format-docs/Detection.md) Format - A format to contain a seismic
+event detection generated using an event detection or association algorithm.
 * [Retract](Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
 
 ## Supporting objects:
+* [Hypocenter](Hypocenter.md) Object - An object that contains information about
+a hypocenter as part of a detection.
 * [Amplitude](Amplitude.md) Object - An object that contains information about
 an amplitude as part of a pick.
 * [Associated](Associated.md) Object - An object that contains associated
-information if a pick, beam, or correlation is included in an origin.
+information if a pick, beam, or correlation is included in an detection.
 * [Filter](Filter.md) Object - An object that contains filter information as
 part of a pick.
 * [Site](Site.md) Object - An object that defines the station used to create a
-pick, beam, correlation,
+pick, beam, correlation.
 * [Source](Source.md) Object - An object that defines the creator/source of a
-pick, beam, correlation, or origin
+pick, beam, correlation, or detection.

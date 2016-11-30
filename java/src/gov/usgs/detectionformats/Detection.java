@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
  * 
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
-public class Origin implements DetectionInt {
+public class Detection implements DetectionInt {
 
 	/**
 	 * JSON Keys
@@ -18,11 +18,8 @@ public class Origin implements DetectionInt {
 	public static final String TYPE_KEY = "Type";
 	public static final String ID_KEY = "ID";
 	public static final String SOURCE_KEY = "Source";
-	public static final String LATITUDE_KEY = "Latitude";
-	public static final String LONGITUDE_KEY = "Longitude";
-	public static final String TIME_KEY = "Time";
-	public static final String DEPTH_KEY = "Depth";
-	public static final String ORIGINTYPE_KEY = "OriginType";
+	public static final String HYPOCENTER_KEY = "Hypocenter";
+	public static final String DETECTIONTYPE_KEY = "DetectionType";
 	public static final String EVENTTYPE_KEY = "EventType";
 	public static final String BAYES_KEY = "Bayes";
 	public static final String MINIMUMDISTANCE_KEY = "MinimumDistance";
@@ -31,12 +28,12 @@ public class Origin implements DetectionInt {
 	public static final String DATA_KEY = "Data";
 
 	/**
-	 * Required type identifier for this Origin
+	 * Required type identifier for this Detection
 	 */
 	private final String type;
 
 	/**
-	 * Required unique identifier for this Origin
+	 * Required unique identifier for this Detection
 	 */
 	private final String id;
 
@@ -46,54 +43,39 @@ public class Origin implements DetectionInt {
 	private final Source source;
 
 	/**
-	 * Required Double containing the Origin latitude
+	 * Required hypocenter
 	 */
-	private final Double latitude;
+	private final Hypocenter hypocenter;
 
 	/**
-	 * Required Double containing the Origin longitude
-	 */
-	private final Double longitude;
-
-	/**
-	 * Required time for this Origin
-	 */
-	private final Date time;
-
-	/**
-	 * Required Double containing the Origin depth
-	 */
-	private final Double depth;
-
-	/**
-	 * Optional String containing the origin type of this Origin valid values
+	 * Optional String containing the origin type of this Detection valid values
 	 * are "new" "Update", "Final", or "Retract"
 	 */
-	private final String originType;
+	private final String detectionType;
 
 	/**
-	 * Optional String containing the event type of this Origin valid values are
-	 * "earthquake" or "blast"
+	 * Optional String containing the event type of this Detection valid values
+	 * are "earthquake" or "blast"
 	 */
 	private final String eventType;
 
 	/**
-	 * Required Double containing the Origin bayesian statistic
+	 * Required Double containing the Detection bayesian statistic
 	 */
 	private final Double bayes;
 
 	/**
-	 * Required Double containing the Origin minimum distance
+	 * Required Double containing the Detection minimum distance
 	 */
 	private final Double minimumDistance;
 
 	/**
-	 * Required Double containing the Origin rms
+	 * Required Double containing the Detection rms
 	 */
 	private final Double rms;
 
 	/**
-	 * Required Double containing the Origin gap
+	 * Required Double containing the Detection gap
 	 */
 	private final Double gap;
 
@@ -108,23 +90,21 @@ public class Origin implements DetectionInt {
 	private final ArrayList<Beam> beamData;
 
 	/**
-	 * An optional vector of Origin objects used to generate this origin
+	 * An optional vector of Detection objects used to generate this origin
 	 */
 	private final ArrayList<Correlation> correlationData;
 
 	/**
-	 * The constructor for the Pick class. Initializes members to null values.
+	 * The constructor for the Detection class. Initializes members to null
+	 * values.
 	 */
-	public Origin() {
+	public Detection() {
 
-		type = "Origin";
+		type = "Detection";
 		source = null;
 		id = null;
-		latitude = null;
-		longitude = null;
-		depth = null;
-		time = null;
-		originType = null;
+		hypocenter = null;
+		detectionType = null;
 		eventType = null;
 		bayes = null;
 		minimumDistance = null;
@@ -138,7 +118,7 @@ public class Origin implements DetectionInt {
 	/**
 	 * Advanced constructor
 	 * 
-	 * The advanced constructor for the Origin class. Initializes members to
+	 * The advanced constructor for the Detection class. Initializes members to
 	 * provided values.
 	 * 
 	 * @param newID
@@ -151,11 +131,19 @@ public class Origin implements DetectionInt {
 	 *            - A Double containing the latitude to use
 	 * @param newLongitude
 	 *            - A Double containing the longitude to use
-	 * @param newTime
+	 * @param newOrigintime
 	 *            - A Date containing the origin time string to use
 	 * @param newDepth
 	 *            - A Double containing the depth to use
-	 * @param newOriginType
+	 * @param newLatitudeError
+	 *            - A Double containing the latitude error to use, null to omit
+	 * @param newLongitudeError
+	 *            - A Double containing the longitude error to use, null to omit
+	 * @param newTimeError
+	 *            - A Double containing the new time error to use, null to omit
+	 * @param newDepthError
+	 *            - A Double containing the depth error to use, null to omit
+	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
@@ -175,42 +163,39 @@ public class Origin implements DetectionInt {
 	 *            - A ArrayList&lt;Beam&gt; newBeamData containing the data that
 	 *            went into this origin, null to omit
 	 * @param newCorrelationData
-	 *            - A ArrayList&lt;Origin&gt; newCorrelationData containing the
-	 *            data that went into this origin, null to omit
+	 *            - A ArrayList&lt;Detection&gt; newCorrelationData containing
+	 *            the data that went into this origin, null to omit
 	 */
-	public Origin(String newID, String newAgencyID, String newAuthor,
-			Double newLatitude, Double newLongitude, Date newTime,
-			Double newDepth, String newOriginType, String newEventType,
-			Double newBayes, Double newMinimumDistance, Double newRMS,
-			Double newGap, ArrayList<Pick> newPickData,
+	public Detection(String newID, String newAgencyID, String newAuthor,
+			Double newLatitude, Double newLongitude, Date newOrigintime,
+			Double newDepth, Double newLatitudeError, Double newLongitudeError,
+			Double newTimeError, Double newDepthError, String newDetectionType,
+			String newEventType, Double newBayes, Double newMinimumDistance,
+			Double newRMS, Double newGap, ArrayList<Pick> newPickData,
 			ArrayList<Beam> newBeamData,
 			ArrayList<Correlation> newCorrelationData) {
 
-		this(newID, new Source(newAgencyID, newAuthor), newLatitude,
-				newLongitude, newTime, newDepth, newOriginType, newEventType,
-				newBayes, newMinimumDistance, newRMS, newGap, newPickData,
-				newBeamData, newCorrelationData);
+		this(newID, new Source(newAgencyID, newAuthor),
+				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
+						newLatitudeError, newLongitudeError, newTimeError,
+						newDepthError),
+				newDetectionType, newEventType, newBayes, newMinimumDistance,
+				newRMS, newGap, newPickData, newBeamData, newCorrelationData);
 	}
 
 	/**
 	 * Alternate advanced constructor
 	 * 
-	 * The alternate advanced constructor for the Origin class. Initializes
+	 * The alternate advanced constructor for the Detection class. Initializes
 	 * members to provided values.
 	 * 
 	 * @param newID
 	 *            - A String containing the id to use
 	 * @param newSource
 	 *            - A Source Object containing the source to use
-	 * @param newLatitude
-	 *            - A Double containing the latitude to use
-	 * @param newLongitude
-	 *            - A Double containing the longitude to use
-	 * @param newTime
-	 *            - A Date containing the new origin time string to use
-	 * @param newDepth
-	 *            - A Double containing the depth to use
-	 * @param newOriginType
+	 * @param newHypocenter
+	 *            - A Hypo containing the hypocenter to use
+	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
@@ -230,24 +215,20 @@ public class Origin implements DetectionInt {
 	 *            - A Vector&lt;Beam&gt; newBeamData containing the data that
 	 *            went into this origin, null to omit
 	 * @param newCorrelationData
-	 *            - A Vector&lt;Origin&gt; newCorrelationData containing the
+	 *            - A Vector&lt;Detection&gt; newCorrelationData containing the
 	 *            data that went into this origin, null to omit
 	 */
-	public Origin(String newID, Source newSource, Double newLatitude,
-			Double newLongitude, Date newTime, Double newDepth,
-			String newOriginType, String newEventType, Double newBayes,
+	public Detection(String newID, Source newSource, Hypocenter newHypocenter,
+			String newDetectionType, String newEventType, Double newBayes,
 			Double newMinimumDistance, Double newRMS, Double newGap,
 			ArrayList<Pick> newPickData, ArrayList<Beam> newBeamData,
 			ArrayList<Correlation> newCorrelationData) {
 
-		type = "Origin";
+		type = "Detection";
 		id = newID;
 		source = newSource;
-		latitude = newLatitude;
-		longitude = newLongitude;
-		depth = newDepth;
-		time = newTime;
-		originType = newOriginType;
+		hypocenter = newHypocenter;
+		detectionType = newDetectionType;
 		eventType = newEventType;
 		bayes = newBayes;
 		minimumDistance = newMinimumDistance;
@@ -265,7 +246,7 @@ public class Origin implements DetectionInt {
 	 * @param newJSONObject
 	 *            - A JSONObject.
 	 */
-	public Origin(JSONObject newJSONObject) {
+	public Detection(JSONObject newJSONObject) {
 
 		// Required values
 		// type
@@ -289,40 +270,20 @@ public class Origin implements DetectionInt {
 			source = null;
 		}
 
-		// latitude
-		if (newJSONObject.containsKey(LATITUDE_KEY)) {
-			latitude = (double) newJSONObject.get(LATITUDE_KEY);
+		// hypocenter
+		if (newJSONObject.containsKey(HYPOCENTER_KEY)) {
+			hypocenter = new Hypocenter(
+					(JSONObject) newJSONObject.get(HYPOCENTER_KEY));
 		} else {
-			latitude = null;
-		}
-
-		// longitude
-		if (newJSONObject.containsKey(LONGITUDE_KEY)) {
-			longitude = (double) newJSONObject.get(LONGITUDE_KEY);
-		} else {
-			longitude = null;
-		}
-
-		// depth
-		if (newJSONObject.containsKey(DEPTH_KEY)) {
-			depth = (double) newJSONObject.get(DEPTH_KEY);
-		} else {
-			depth = null;
-		}
-
-		// time
-		if (newJSONObject.containsKey(TIME_KEY)) {
-			time = Utility.getDate(newJSONObject.get(TIME_KEY).toString());
-		} else {
-			time = null;
+			hypocenter = null;
 		}
 
 		// Optional values
-		// originType
-		if (newJSONObject.containsKey(ORIGINTYPE_KEY)) {
-			originType = (String) newJSONObject.get(ORIGINTYPE_KEY);
+		// detectionType
+		if (newJSONObject.containsKey(DETECTIONTYPE_KEY)) {
+			detectionType = (String) newJSONObject.get(DETECTIONTYPE_KEY);
 		} else {
-			originType = null;
+			detectionType = null;
 		}
 
 		// eventType
@@ -421,11 +382,8 @@ public class Origin implements DetectionInt {
 		String jsonType = getType();
 		String jsonID = getID();
 		Source jsonSource = getSource();
-		Double jsonLatitude = getLatitude();
-		Double jsonLongitude = getLongitude();
-		Double jsonDepth = getDepth();
-		Date jsonTime = getTime();
-		String jsonOriginType = getOriginType();
+		Hypocenter jsonHypocenter = getHypocenter();
+		String jsonDetectionType = getDetectionType();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
@@ -449,30 +407,15 @@ public class Origin implements DetectionInt {
 			newJSONObject.put(SOURCE_KEY, jsonSource.toJSON());
 		}
 
-		// latitude
-		if (jsonLatitude != null) {
-			newJSONObject.put(LATITUDE_KEY, jsonLatitude);
-		}
-
-		// longitude
-		if (jsonLongitude != null) {
-			newJSONObject.put(LONGITUDE_KEY, jsonLongitude);
-		}
-
-		// depth
-		if (jsonDepth != null) {
-			newJSONObject.put(DEPTH_KEY, jsonDepth);
-		}
-
-		// time
-		if (jsonTime != null) {
-			newJSONObject.put(TIME_KEY, Utility.formatDate(jsonTime));
+		// hypocenter
+		if (jsonHypocenter != null) {
+			newJSONObject.put(HYPOCENTER_KEY, jsonHypocenter.toJSON());
 		}
 
 		// Optional values
-		// originType
-		if (jsonOriginType != null) {
-			newJSONObject.put(ORIGINTYPE_KEY, jsonOriginType);
+		// detectionType
+		if (jsonDetectionType != null) {
+			newJSONObject.put(DETECTIONTYPE_KEY, jsonDetectionType);
 		}
 
 		// eventType
@@ -579,11 +522,8 @@ public class Origin implements DetectionInt {
 		String jsonType = getType();
 		String jsonID = getID();
 		Source jsonSource = getSource();
-		Double jsonLatitude = getLatitude();
-		Double jsonLongitude = getLongitude();
-		Double jsonDepth = getDepth();
-		Date jsonTime = getTime();
-		String jsonOriginType = getOriginType();
+		Hypocenter jsonHypocenter = getHypocenter();
+		String jsonDetectionType = getDetectionType();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
@@ -598,89 +538,62 @@ public class Origin implements DetectionInt {
 		// type
 		if (jsonType == null) {
 			// type not found
-			errorList.add("No Type in Origin Class.");
+			errorList.add("No Type in Detection Class.");
 		} else if (jsonType.isEmpty()) {
 			// type empty
-			errorList.add("Empty Type in Origin Class.");
-		} else if (!jsonType.equals("Origin")) {
+			errorList.add("Empty Type in Detection Class.");
+		} else if (!jsonType.equals("Detection")) {
 			// wrong type
-			errorList.add("Non-Origin type in Origin Class.");
+			errorList.add("Non-Detection type in Detection Class.");
 		}
 
 		// id
 		if (jsonID == null) {
 			// id not found
-			errorList.add("No ID in Origin Class.");
+			errorList.add("No ID in Detection Class.");
 		} else if (jsonID.isEmpty()) {
 			// id empty
-			errorList.add("Empty ID in Origin Class.");
+			errorList.add("Empty ID in Detection Class.");
 		}
 
 		// source
 		if (jsonSource == null) {
 			// source not found
-			errorList.add("No Source in Origin Class.");
+			errorList.add("No Source in Detection Class.");
 		} else if (!jsonSource.isValid()) {
 			// source invalid
-			errorList.add("Invalid Source in Origin Class.");
+			errorList.add("Invalid Source in Detection Class.");
 		}
 
-		// latitude
-		if (jsonLatitude == null) {
-			// latitude not found
-			errorList.add("No Latitude in Origin Class.");
-		} else if ((jsonLatitude < -90) || (jsonLatitude > 90)) {
-			// invalid latitude
-			errorList.add(
-					"Latitude in Origin Class not in the range of -90 to 90.");
-		}
-
-		// longitude
-		if (jsonLongitude == null) {
-			// longitude not found
-			errorList.add("No Longitude in Origin Class.");
-		} else if ((jsonLongitude < -180) || (jsonLongitude > 180)) {
-			// invalid longitude
-			errorList.add(
-					"Longitude in Origin Class not in the range of -180 to 180.");
-		}
-
-		// depth
-		if (jsonDepth == null) {
-			// depth not found
-			errorList.add("No Depth in Origin Class.");
-		} else if ((jsonDepth < -100) || (jsonDepth > 1500)) {
-			// invalid depth
-			errorList.add(
-					"Depth in Origin Class not in the range of -100 to 1500.");
-		}
-
-		// time
-		if (jsonTime == null) {
-			// time not found
-			errorList.add("No Time in Origin Class.");
+		// hypocenter
+		if (jsonHypocenter == null) {
+			// hypocenter not found
+			errorList.add("No Hypocenter in Correlation Class.");
+		} else if (!jsonHypocenter.isValid()) {
+			// hypocenter invalid
+			errorList.add("Invalid Hypocenter in Correlation Class.");
 		}
 
 		// Optional Keys
-		// originType
-		if (jsonOriginType != null) {
+		// detectionType
+		if (jsonDetectionType != null) {
 
 			boolean match = false;
-			if (jsonOriginType.equals("New")) {
+			if (jsonDetectionType.equals("New")) {
 				match = true;
-			} else if (jsonOriginType.equals("Update")) {
+			} else if (jsonDetectionType.equals("Update")) {
 				match = true;
-			} else if (jsonOriginType.equals("Final")) {
+			} else if (jsonDetectionType.equals("Final")) {
 				match = true;
-			} else if (jsonOriginType.equals("Retract")) {
+			} else if (jsonDetectionType.equals("Retract")) {
 				match = true;
 			} else {
 				match = false;
 			}
 
 			if (!match) {
-				// invalid originType
-				errorList.add("Invalid OriginType in Origin Class.");
+				// invalid detectionType
+				errorList.add("Invalid DetectionType in Detection Class.");
 			}
 		}
 
@@ -698,7 +611,7 @@ public class Origin implements DetectionInt {
 
 			if (!match) {
 				// invalid eventType
-				errorList.add("Invalid EventType in Origin Class.");
+				errorList.add("Invalid EventType in Detection Class.");
 			}
 		}
 
@@ -706,7 +619,8 @@ public class Origin implements DetectionInt {
 		if (jsonBayes != null) {
 			if (jsonBayes < 0) {
 				// invalid bayes
-				errorList.add("Bayes in Origin Class is not greater than 0.");
+				errorList
+						.add("Bayes in Detection Class is not greater than 0.");
 			}
 		}
 
@@ -715,7 +629,7 @@ public class Origin implements DetectionInt {
 			if (jsonMinimumDistance < 0) {
 				// invalid minimum distance
 				errorList.add(
-						"MinimumDistance in Origin Class  is not greater than 0.");
+						"MinimumDistance in Detection Class  is not greater than 0.");
 			}
 		}
 
@@ -724,7 +638,7 @@ public class Origin implements DetectionInt {
 			if ((jsonGap < 0) || (jsonGap > 360)) {
 				// invalid Magnitude
 				errorList.add(
-						"Gap in Origin Class not in the range of 0 to 360.");
+						"Gap in Detection Class not in the range of 0 to 360.");
 			}
 		}
 
@@ -740,7 +654,8 @@ public class Origin implements DetectionInt {
 				Pick jsonPick = ((Pick) pickIterator.next());
 
 				if (!jsonPick.isValid()) {
-					errorList.add("Invalid Pick in PickData in Origin Class");
+					errorList
+							.add("Invalid Pick in PickData in Detection Class");
 					break;
 				}
 			}
@@ -757,7 +672,8 @@ public class Origin implements DetectionInt {
 				Beam jsonBeam = ((Beam) beamIterator.next());
 
 				if (!jsonBeam.isValid()) {
-					errorList.add("Invalid Beam in BeamData in Origin Class");
+					errorList
+							.add("Invalid Beam in BeamData in Detection Class");
 					break;
 				}
 			}
@@ -776,7 +692,7 @@ public class Origin implements DetectionInt {
 
 				if (!jsonCorrelation.isValid()) {
 					errorList.add(
-							"Invalid Correlation in CorrelationData in Origin Class");
+							"Invalid Correlation in CorrelationData in Detection Class");
 					break;
 				}
 			}
@@ -808,38 +724,16 @@ public class Origin implements DetectionInt {
 	}
 
 	/**
-	 * @return the latitude
+	 * @return the hypocenter
 	 */
-	public Double getLatitude() {
-		return latitude;
+	public Hypocenter getHypocenter() {
+		return hypocenter;
 	}
-
 	/**
-	 * @return the longitude
+	 * @return the detectionType
 	 */
-	public Double getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * @return the time
-	 */
-	public Date getTime() {
-		return time;
-	}
-
-	/**
-	 * @return the depth
-	 */
-	public Double getDepth() {
-		return depth;
-	}
-
-	/**
-	 * @return the originType
-	 */
-	public String getOriginType() {
-		return originType;
+	public String getDetectionType() {
+		return detectionType;
 	}
 
 	/**
