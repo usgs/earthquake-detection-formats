@@ -6,9 +6,6 @@ set(VERSION_MINOR   9   CACHE STRING "DetectionFormats minor version number.")
 set(VERSION_PATCH   0   CACHE STRING "DetectionFormats patch version number.")
 mark_as_advanced(VERSION_MAJOR VERSION_MINOR VERSION_PATCH)
 
-# ----- OPTIONS ----- #
-option(test "Build all tests." OFF)
-
 # ----- OVERRIDE TO SET STATIC RUNTIME ON MSVC ----- #
 set(CMAKE_USER_MAKE_RULES_OVERRIDE ${CMAKE_CURRENT_SOURCE_DIR}/c_flag_overrides.cmake)
 set(CMAKE_USER_MAKE_RULES_OVERRIDE_CXX ${CMAKE_CURRENT_SOURCE_DIR}/cxx_flag_overrides.cmake)
@@ -84,7 +81,7 @@ set_target_properties(DetectionFormats PROPERTIES OUTPUT_NAME detection-formats$
 # ----- TESTS ----- #
 set(GTEST_ROOT "./" CACHE PATH "Path to the google test library")
 find_package(GTest)
-option(RUN_TESTS "Create and run unit tests (requires GTest)" ${GTEST_FOUND})
+option(RUN_TESTS "Create and run unit tests (requires GTest)" OFF)
 
 if (RUN_TESTS)
 
@@ -130,7 +127,7 @@ endif()
 
 # ----- DOCUMENTATION ----- #
 find_package(Doxygen)
-option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ${DOXYGEN_FOUND})
+option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" OFF)
 
 if(BUILD_DOCUMENTATION)
 
