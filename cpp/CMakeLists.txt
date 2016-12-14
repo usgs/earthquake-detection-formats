@@ -32,36 +32,38 @@ include_directories(${PROJECT_SOURCE_DIR}/lib)
 include_directories(${PROJECT_SOURCE_DIR}/lib/rapidjson)
 
 # ----- SET SOURCE FILES ----- #
-set (SRCS ${PROJECT_SOURCE_DIR}/src/util.cpp
-    ${PROJECT_SOURCE_DIR}/src/base.cpp
-    ${PROJECT_SOURCE_DIR}/src/site.cpp
-    ${PROJECT_SOURCE_DIR}/src/source.cpp
-    ${PROJECT_SOURCE_DIR}/src/filter.cpp
-    ${PROJECT_SOURCE_DIR}/src/amplitude.cpp
-    ${PROJECT_SOURCE_DIR}/src/associated.cpp
-    ${PROJECT_SOURCE_DIR}/src/hypocenter.cpp
-    ${PROJECT_SOURCE_DIR}/src/beam.cpp
-    ${PROJECT_SOURCE_DIR}/src/correlation.cpp
-    ${PROJECT_SOURCE_DIR}/src/pick.cpp
-    ${PROJECT_SOURCE_DIR}/src/detection.cpp
-    ${PROJECT_SOURCE_DIR}/src/retract.cpp
-)
+file(GLOB SRCS ${PROJECT_SOURCE_DIR}/src/*.cpp)
+#set (SRCS ${PROJECT_SOURCE_DIR}/src/util.cpp
+#    ${PROJECT_SOURCE_DIR}/src/base.cpp
+#    ${PROJECT_SOURCE_DIR}/src/site.cpp
+#    ${PROJECT_SOURCE_DIR}/src/source.cpp
+#    ${PROJECT_SOURCE_DIR}/src/filter.cpp
+#    ${PROJECT_SOURCE_DIR}/src/amplitude.cpp
+#    ${PROJECT_SOURCE_DIR}/src/associated.cpp
+#    ${PROJECT_SOURCE_DIR}/src/hypocenter.cpp
+#    ${PROJECT_SOURCE_DIR}/src/beam.cpp
+#    ${PROJECT_SOURCE_DIR}/src/correlation.cpp
+#    ${PROJECT_SOURCE_DIR}/src/pick.cpp
+#    ${PROJECT_SOURCE_DIR}/src/detection.cpp
+#    ${PROJECT_SOURCE_DIR}/src/retract.cpp
+#)
 
 # ----- SET HEADER FILES ----- #
-set (HDRS ${PROJECT_SOURCE_DIR}/include/util.h
-    ${PROJECT_SOURCE_DIR}/include/base.h
-    ${PROJECT_SOURCE_DIR}/include/site.h
-    ${PROJECT_SOURCE_DIR}/include/source.h
-    ${PROJECT_SOURCE_DIR}/include/filter.h
-    ${PROJECT_SOURCE_DIR}/include/amplitude.h
-    ${PROJECT_SOURCE_DIR}/include/associated.h
-    ${PROJECT_SOURCE_DIR}/include/hypocenter.h
-    ${PROJECT_SOURCE_DIR}/include/beam.h
-    ${PROJECT_SOURCE_DIR}/include/correlation.h
-    ${PROJECT_SOURCE_DIR}/include/pick.h
-    ${PROJECT_SOURCE_DIR}/include/detection.h
-    ${PROJECT_SOURCE_DIR}/include/retract.h
-)
+file(GLOB HDRS ${PROJECT_SOURCE_DIR}/include/*.h)
+#set (HDRS ${PROJECT_SOURCE_DIR}/include/util.h
+#    ${PROJECT_SOURCE_DIR}/include/base.h
+#    ${PROJECT_SOURCE_DIR}/include/site.h
+#    ${PROJECT_SOURCE_DIR}/include/source.h
+#    ${PROJECT_SOURCE_DIR}/include/filter.h
+#    ${PROJECT_SOURCE_DIR}/include/amplitude.h
+#    ${PROJECT_SOURCE_DIR}/include/associated.h
+#    ${PROJECT_SOURCE_DIR}/include/hypocenter.h
+#    ${PROJECT_SOURCE_DIR}/include/beam.h
+#    ${PROJECT_SOURCE_DIR}/include/correlation.h
+#    ${PROJECT_SOURCE_DIR}/include/pick.h
+#    ${PROJECT_SOURCE_DIR}/include/detection.h
+#    ${PROJECT_SOURCE_DIR}/include/retract.h
+#)
 
 # ----- CREATE LIBRARY ----- #
 add_library (DetectionFormats STATIC ${SRCS} ${HDRS})
@@ -77,7 +79,7 @@ generate_export_header(DetectionFormats)
 # ----- GLOBAL INCLUDES ----- #
 target_include_directories(
     DetectionFormats PUBLIC
-    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>"
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
@@ -203,9 +205,8 @@ install(
 # Headers:
 #   * *.h-> <prefix>/include/*.h
 install(
-    DIRECTORY ${PROJECT_SOURCE_DIR}/include
-    DESTINATION "."
-    FILES_MATCHING PATTERN "*.h"
+    FILES ${HDRS}
+    DESTINATION "${include_install_dir}/${PROJECT_NAME}"
 )
 
 install(
