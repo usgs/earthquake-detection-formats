@@ -25,11 +25,15 @@ configure_file (
     "${PROJECT_BINARY_DIR}/DetectionFormatsCMakeConfig.h"
 )
 
+# ----- EXTERNAL LIBRARIES ----- #
+# rapidjson
+set(RAPIDJSON_PATH "${CURRENT_SOURCE_DIR}/lib/rapidjson" CACHE PATH "Path to rapidjson")
+
 # ----- SET INCLUDE DIRECTORIES ----- #
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/lib)
-include_directories(${PROJECT_SOURCE_DIR}/lib/rapidjson)
+include_directories(${RAPIDJSON_PATH}/..)
+include_directories(${RAPIDJSON_PATH})
 
 # ----- SET SOURCE FILES ----- #
 file(GLOB SRCS ${PROJECT_SOURCE_DIR}/src/*.cpp)
