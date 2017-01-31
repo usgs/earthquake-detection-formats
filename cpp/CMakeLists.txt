@@ -13,9 +13,9 @@ include(internal_utils.cmake)
 fix_default_compiler_settings()  # Defined in internal_utils.cmake.
 
 # ----- SET FOR C++14 STANDARD ----- #
-if (NOT MSVC)
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif (NOT MSVC)
+#if (NOT MSVC)
+#    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+#endif (NOT MSVC)
 
 # ----- CMAKE CONFIG HEADER ----- #
 # pass some of the CMake settings
