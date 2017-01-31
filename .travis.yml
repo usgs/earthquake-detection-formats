@@ -53,4 +53,4 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake -DRUN_TESTS=1 .. && make test
+  - cmake -DRUN_TESTS=1 .. && make
