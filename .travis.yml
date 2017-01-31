@@ -46,13 +46,11 @@ install:
     - export LIBRARY_PATH=$(pwd)
     - cp -r /usr/src/gtest/* ./
     - cmake -D CMAKE_INSTALL_PREFIX:PATH=./ ./
-    - make 
+    - make
 script:
-  - cd ..
-  - cd java
-  - ant
-  - cd ..
-  - cd cpp
+  - cd ${TRAVIS_BUILD_DIR}/java
+  - ant test
+  - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake .. && make
+  - cmake -D RUN_TESTS=1 .. && make test
