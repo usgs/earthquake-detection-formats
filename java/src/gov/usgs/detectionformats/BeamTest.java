@@ -15,7 +15,8 @@ public class BeamTest {
 			+ "\"Type\":\"Beam\",\"BackAzimuth\":2.65,\"ID\":\"12GFH48776857\","
 			+ "\"BackAzimuthError\":3.8,\"Slowness\":1.44,\"AssociationInfo\":"
 			+ "{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\","
-			+ "\"Sigma\":0.086333,\"Residual\":-0.025393},\"SlownessError\":0.4}";
+			+ "\"Sigma\":0.086333,\"Residual\":-0.025393},\"SlownessError\":0.4"
+			+ "\"Power\":12.18,\"PowerError\":0.557}";
 	public static String ID = "12GFH48776857";
 	public static String STATION = "BMN";
 	public static String CHANNEL = "HHZ";
@@ -30,6 +31,8 @@ public class BeamTest {
 	public static double BACKAZIMUTHERROR = 3.8;
 	public static double SLOWNESS = 1.44;
 	public static double SLOWNESSERROR = 0.4;
+	public static double POWER = 12.18;
+	public static double POWERERROR = 0.557;
 	public static String ASSOCPHASE = "P";
 	public static double ASSOCDISTANCE = 0.442559;
 	public static double ASSOCAZIMUTH = 0.418479;
@@ -44,8 +47,8 @@ public class BeamTest {
 
 		Beam beamObject = new Beam(ID, SITEID, STATION, CHANNEL, NETWORK,
 				LOCATION, AGENCYID, AUTHOR, STARTTIME, ENDTIME, BACKAZIMUTH,
-				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR,
+				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(beamObject.toJSON());
@@ -85,7 +88,7 @@ public class BeamTest {
 		// use constructor
 		Beam beamObject = new Beam(ID, SITEID, STATION, CHANNEL, NETWORK,
 				LOCATION, AGENCYID, AUTHOR, STARTTIME, ENDTIME, BACKAZIMUTH,
-				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR);
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR);
 
 		// check data values
 		checkData(beamObject, "Alternate Constructor 1");
@@ -94,7 +97,7 @@ public class BeamTest {
 		Beam altBeamObject = new Beam(ID,
 				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION),
 				new Source(AGENCYID, AUTHOR), STARTTIME, ENDTIME, BACKAZIMUTH,
-				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR);
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR);
 
 		// check data values
 		checkData(altBeamObject, "Alternate Constructor 2");
@@ -103,7 +106,7 @@ public class BeamTest {
 		Beam altAltBeamObject = new Beam(ID,
 				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION),
 				new Source(AGENCYID, AUTHOR), STARTTIME, ENDTIME, BACKAZIMUTH,
-				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR,
 				new Associated(ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
 						ASSOCRESIDUAL, ASSOCSIGMA));
 
@@ -119,8 +122,8 @@ public class BeamTest {
 
 		Beam beamObject = new Beam(ID, SITEID, STATION, CHANNEL, NETWORK,
 				LOCATION, AGENCYID, AUTHOR, STARTTIME, ENDTIME, BACKAZIMUTH,
-				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR,
+				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// Successful validation
 		boolean rc = beamObject.isValid();
@@ -131,7 +134,7 @@ public class BeamTest {
 		// build bad Beam object
 		Beam badBeamObject = new Beam("", null, "", CHANNEL, NETWORK, LOCATION,
 				AGENCYID, AUTHOR, STARTTIME, ENDTIME, null, BACKAZIMUTHERROR,
-				SLOWNESS, SLOWNESSERROR, ASSOCPHASE, ASSOCDISTANCE,
+				SLOWNESS, SLOWNESSERROR, POWER, POWERERROR, ASSOCPHASE, ASSOCDISTANCE,
 				ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		rc = badBeamObject.isValid();
@@ -196,6 +199,14 @@ public class BeamTest {
 		// check beamObject.SlownessError
 		assertEquals(TestName + " SlownessError Equals", SLOWNESSERROR,
 				beamObject.getSlownessError(), 0);
+
+		// check beamObject.Power
+		assertEquals(TestName + " Slowness Equals", POWER,
+				beamObject.getPower(), 0);
+
+		// check beamObject.PowerError
+		assertEquals(TestName + " SlownessError Equals", POWERERROR,
+				beamObject.getPowerError(), 0);
 
 		if (!beamObject.getAssociationInfo().isEmpty()) {
 			// check beamObject.Associated.Phase
