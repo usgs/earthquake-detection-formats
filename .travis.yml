@@ -43,7 +43,7 @@ install:
       fi
   # Install gtest
     - mkdir ~/gtest && cd ~/gtest
-    - export LIBRARY_PATH=$(pwd)
+    - export GTEST_ROOT=$(pwd)
     - cp -r /usr/src/gtest/* ./
     - cmake -D CMAKE_INSTALL_PREFIX:PATH=./ ./
     - make
@@ -53,4 +53,4 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake -D RUN_TESTS=1 .. && make test
+  - cmake -DRUN_TESTS=1 .. && make test
