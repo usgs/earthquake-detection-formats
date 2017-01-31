@@ -4,6 +4,8 @@ language: java
 jdk:
   - oraclejdk7
 
+compiler: gcc
+
 sudo: false
 # add modern c++
 addons:
