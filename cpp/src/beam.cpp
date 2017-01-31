@@ -9,8 +9,10 @@
 #define ENDTIME_KEY "EndTime"
 #define BACKAZIMUTH_KEY "BackAzimuth"
 #define SLOWNESS_KEY "Slowness"
+#define POWER_KEY "Power"
 #define BACKAZIMUTHERROR_KEY "BackAzimuthError"
 #define SLOWNESSERROR_KEY "SlownessError"
+#define POWERERROR_KEY "PowerError"
 #define ASSOCIATIONINFO_KEY "AssociationInfo"
 
 namespace detectionformats {
@@ -25,6 +27,8 @@ beam::beam() {
 	backazimutherror = std::numeric_limits<double>::quiet_NaN();
 	slowness = std::numeric_limits<double>::quiet_NaN();
 	slownesserror = std::numeric_limits<double>::quiet_NaN();
+	power = std::numeric_limits<double>::quiet_NaN();
+	powererror = std::numeric_limits<double>::quiet_NaN();
 	associationinfo = detectionformats::associated();
 }
 
@@ -32,7 +36,8 @@ beam::beam(std::string newid, std::string newsiteid, std::string newstation,
 		std::string newchannel, std::string newnetwork, std::string newlocation,
 		std::string newagencyid, std::string newauthor, double newstarttime,
 		double newendtime, double newbackazimuth, double newbackazimutherror,
-		double newslowness, double newslownesserror) {
+		double newslowness, double newslownesserror, double newpower,
+		double newpowererror) {
 	type = BEAM_TYPE;
 	id = newid;
 	site = detectionformats::site(newsiteid, newstation, newchannel, newnetwork,
@@ -44,6 +49,8 @@ beam::beam(std::string newid, std::string newsiteid, std::string newstation,
 	backazimutherror = newbackazimutherror;
 	slowness = newslowness;
 	slownesserror = newslownesserror;
+	power = newpower;
+	powererror = newpowererror;
 	associationinfo = detectionformats::associated();
 }
 
@@ -51,10 +58,10 @@ beam::beam(std::string newid, std::string newsiteid, std::string newstation,
 		std::string newchannel, std::string newnetwork, std::string newlocation,
 		std::string newagencyid, std::string newauthor, double newstarttime,
 		double newendtime, double newbackazimuth, double newbackazimutherror,
-		double newslowness, double newslownesserror,
-		std::string newassociatedphase, double newassociateddistance,
-		double newassociatedazimuth, double newassociatedresidual,
-		double newassociatedsigma) {
+		double newslowness, double newslownesserror, double newpower,
+		double newpowererror, std::string newassociatedphase,
+		double newassociateddistance, double newassociatedazimuth,
+		double newassociatedresidual, double newassociatedsigma) {
 	type = BEAM_TYPE;
 	id = newid;
 	site = detectionformats::site(newsiteid, newstation, newchannel, newnetwork,
@@ -66,6 +73,8 @@ beam::beam(std::string newid, std::string newsiteid, std::string newstation,
 	backazimutherror = newbackazimutherror;
 	slowness = newslowness;
 	slownesserror = newslownesserror;
+	power = newpower;
+	powererror = newpowererror;
 	associationinfo = detectionformats::associated(newassociatedphase,
 			newassociateddistance, newassociatedazimuth, newassociatedresidual,
 			newassociatedsigma);
@@ -74,7 +83,8 @@ beam::beam(std::string newid, std::string newsiteid, std::string newstation,
 beam::beam(std::string newid, detectionformats::site newsite,
 		detectionformats::source newsource, double newstarttime,
 		double newendtime, double newbackazimuth, double newbackazimutherror,
-		double newslowness, double newslownesserror) {
+		double newslowness, double newslownesserror, double newpower,
+		double newpowererror) {
 	type = BEAM_TYPE;
 	id = newid;
 	site = newsite;
@@ -85,14 +95,16 @@ beam::beam(std::string newid, detectionformats::site newsite,
 	backazimutherror = newbackazimutherror;
 	slowness = newslowness;
 	slownesserror = newslownesserror;
+	power = newpower;
+	powererror = newpowererror;
 	associationinfo = detectionformats::associated();
 }
 
 beam::beam(std::string newid, detectionformats::site newsite,
 		detectionformats::source newsource, double newstarttime,
 		double newendtime, double newbackazimuth, double newbackazimutherror,
-		double newslowness, double newslownesserror,
-		detectionformats::associated newassociated) {
+		double newslowness, double newslownesserror, double newpower,
+		double newpowererror, detectionformats::associated newassociated) {
 	type = BEAM_TYPE;
 	id = newid;
 	site = newsite;
@@ -103,6 +115,8 @@ beam::beam(std::string newid, detectionformats::site newsite,
 	backazimutherror = newbackazimutherror;
 	slowness = newslowness;
 	slownesserror = newslownesserror;
+	power = newpower;
+	powererror = newpowererror;
 	associationinfo = newassociated;
 }
 
@@ -173,6 +187,14 @@ beam::beam(rapidjson::Value &json) {
 	else
 		slowness = std::numeric_limits<double>::quiet_NaN();
 
+	// slowness
+	if ((json.HasMember(POWER_KEY) == true)
+			&& (json[POWER_KEY].IsNumber() == true)
+			&& (json[POWER_KEY].IsDouble() == true))
+		power = json[POWER_KEY].GetDouble();
+	else
+		power = std::numeric_limits<double>::quiet_NaN();
+
 	// optional values
 	// backazimutherror
 	if ((json.HasMember(BACKAZIMUTHERROR_KEY) == true)
@@ -189,6 +211,14 @@ beam::beam(rapidjson::Value &json) {
 		slownesserror = json[SLOWNESSERROR_KEY].GetDouble();
 	else
 		slownesserror = std::numeric_limits<double>::quiet_NaN();
+
+	// powererror
+	if ((json.HasMember(POWERERROR_KEY) == true)
+			&& (json[POWERERROR_KEY].IsNumber() == true)
+			&& (json[POWERERROR_KEY].IsDouble() == true))
+		powererror = json[POWERERROR_KEY].GetDouble();
+	else
+		powererror = std::numeric_limits<double>::quiet_NaN();
 
 	// associated
 	if ((json.HasMember(ASSOCIATIONINFO_KEY) == true)
@@ -210,6 +240,8 @@ beam::beam(const beam &newbeam) {
 	backazimutherror = newbeam.backazimutherror;
 	slowness = newbeam.slowness;
 	slownesserror = newbeam.slownesserror;
+	power = newbeam.power;
+	powererror = newbeam.powererror;
 	associationinfo = newbeam.associationinfo;
 }
 
@@ -271,6 +303,10 @@ rapidjson::Value & beam::tojson(rapidjson::Value &json,
 	if (std::isnan(slowness) != true)
 		json.AddMember(SLOWNESS_KEY, slowness, allocator);
 
+	// power
+	if (std::isnan(power) != true)
+		json.AddMember(POWER_KEY, power, allocator);
+
 	// optional values
 	// backazimutherror
 	if (std::isnan(backazimutherror) != true)
@@ -279,6 +315,10 @@ rapidjson::Value & beam::tojson(rapidjson::Value &json,
 	// slownesserror
 	if (std::isnan(slownesserror) != true)
 		json.AddMember(SLOWNESSERROR_KEY, slownesserror, allocator);
+
+	// powererror
+	if (std::isnan(powererror) != true)
+		json.AddMember(POWERERROR_KEY, powererror, allocator);
 
 	// associated
 	if (associationinfo.isempty() == false) {
@@ -359,11 +399,20 @@ std::vector<std::string> beam::geterrors() {
 
 	// slowness
 	if (std::isnan(slowness) == true) {
-		// backazimuth not found
+		// slowness not found
 		errorlist.push_back("No Slowness in beam class.");
 	}
 	if (slowness < 0) {
 		errorlist.push_back("Invalid Slowness in beam class.");
+	}
+
+	// power
+	if (std::isnan(power) == true) {
+		// power not found
+		errorlist.push_back("No Power in beam class.");
+	}
+	if (power < 0) {
+		errorlist.push_back("Invalid Power in beam class.");
 	}
 
 	// optional data
@@ -377,6 +426,12 @@ std::vector<std::string> beam::geterrors() {
 	if (std::isnan(slownesserror) != true) {
 		if (slownesserror < 0) {
 			errorlist.push_back("Invalid SlownessError in beam class.");
+		}
+	}
+	// powererror
+	if (std::isnan(powererror) != true) {
+		if (powererror < 0) {
+			errorlist.push_back("Invalid PowerError in beam class.");
 		}
 	}
 
