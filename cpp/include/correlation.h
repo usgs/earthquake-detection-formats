@@ -7,8 +7,10 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
-#include "hypocenter.h"
 #include <string>
+#include <limits>
+
+#include "hypocenter.h"
 #include "site.h"
 #include "source.h"
 #include "associated.h"

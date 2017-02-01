@@ -8,6 +8,8 @@
 #define DETECTION_BEAM_H
 
 #include <string>
+#include <limits>
+
 #include "site.h"
 #include "source.h"
 #include "associated.h"
