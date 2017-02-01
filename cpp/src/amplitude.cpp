@@ -1,5 +1,7 @@
 #include "amplitude.h"
 
+#include <limits>
+
 // JSON Keys
 #define AMPLITUDE_KEY "Amplitude"
 #define PERIOD_KEY "Period"
