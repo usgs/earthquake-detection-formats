@@ -85,13 +85,15 @@ if (RUN_TESTS)
         ${PROJECT_SOURCE_DIR}/tests/main.cpp
     )
 
+    set(PTHREADLIB -pthread)
+
     # ----- SET TEST INCLUDE DIRECTORIES ----- #
     include_directories(${GTEST_INCLUDE_DIRS})
 
     # ----- CREATE TEST EXE ----- #
     add_executable(DetectionFormatsTests ${UNITTEST_SOURCES})
     set_target_properties(DetectionFormatsTests PROPERTIES OUTPUT_NAME DetectionFormats-tests)
-    target_link_libraries(DetectionFormatsTests ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries(DetectionFormatsTests ${PTHREADLIB} ${GTEST_BOTH_LIBRARIES})
     target_link_libraries(DetectionFormatsTests DetectionFormats)
 
     # ----- TESTS ----- #
