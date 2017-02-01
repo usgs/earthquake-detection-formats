@@ -1,5 +1,7 @@
 #include "hypocenter.h"
 
+#include <limits>
+
 // JSON Keys
 #define LATITUDE_KEY "Latitude"
 #define LONGITUDE_KEY "Longitude"

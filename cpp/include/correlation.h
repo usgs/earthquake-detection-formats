@@ -8,7 +8,6 @@
 #define DETECTION_CORRELATION_H
 
 #include <string>
-#include <limits>
 
 #include "hypocenter.h"
 #include "site.h"

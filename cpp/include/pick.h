@@ -8,7 +8,6 @@
 #define DETECTION_PICK_H
 
 #include <string>
-#include <limits>
 
 #include "site.h"
 #include "source.h"

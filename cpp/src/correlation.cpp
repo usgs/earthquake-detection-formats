@@ -1,5 +1,7 @@
 #include "correlation.h"
 
+#include <limits>
+
 // JSON Keys
 #define TYPE_KEY "Type"
 #define ID_KEY "ID"

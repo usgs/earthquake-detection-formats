@@ -1,5 +1,7 @@
 #include "pick.h"
 
+#include <limits>
+
 // JSON Keys
 #define TYPE_KEY "Type"
 #define ID_KEY "ID"
@@ -69,7 +71,7 @@ namespace detectionformats
 		amplitude = detectionformats::amplitude(newamplitude, newperiod, newsnr);
 		associationinfo = detectionformats::associated();
 	}
-	
+
 	pick::pick(std::string newid, detectionformats::site newsite, double newtime, detectionformats::source newsource, std::string newphase, std::string newpolarity, std::string newonset, std::string newpicker, std::vector<detectionformats::filter> newfilterdata, detectionformats::amplitude newamplitude)
 	{
 		type = PICK_TYPE;
@@ -389,7 +391,7 @@ namespace detectionformats
 		}
 		else
 		{
-			try 
+			try
 			{
 				if (detectionformats::IsStringISO8601(detectionformats::ConvertEpochTimeToISO8601(time)) == false)
 				{
@@ -506,7 +508,7 @@ namespace detectionformats
 			}
 		}
 
-		// since id and phase are free text strings, no further validation is required. 
+		// since id and phase are free text strings, no further validation is required.
 		// NOTE: Further validation COULD be done to confirm that phase is a valid phase name
 
 		// return the list of errors
