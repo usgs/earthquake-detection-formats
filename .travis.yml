@@ -4,7 +4,7 @@ language: java
 jdk:
   - oraclejdk7
 
-compiler: g++-5
+compiler: g++
 
 sudo: false
 # add modern c++
@@ -49,6 +49,8 @@ install:
     - cp -r /usr/src/gtest/* ./
     - cmake -D CMAKE_INSTALL_PREFIX:PATH=./ ./
     - make
+
+
 script:
   - cd ${TRAVIS_BUILD_DIR}/java
   - ant test
