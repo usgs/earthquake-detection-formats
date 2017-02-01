@@ -14,6 +14,7 @@ Dependencies
 Building
 ------
 The steps to get and build detection-formats.jar using ant are as follows:
+
 1. Clone detection-formats.
 2. Open a command window and change directories to /java/
 3. To build the jar file, run the command ant jar
