@@ -38,6 +38,9 @@ install:
     - cp -r /usr/src/gtest/* ./
     - cmake -D CMAKE_INSTALL_PREFIX:PATH=./ ./
     - make
+  # set compilers
+    - export CXX="g++-5"
+    - export CC="gcc-5"
 
 before_script:
     - uname -a
@@ -50,4 +53,4 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson -DCMAKE_CXX_COMPILER=g++-5 .. && make
+  - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
