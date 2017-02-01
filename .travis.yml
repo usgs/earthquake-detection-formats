@@ -4,19 +4,17 @@ language: java
 jdk:
   - oraclejdk7
 
-compiler: g++
+compiler: g++-5
 
 sudo: false
 # add modern c++
 addons:
   apt:
     packages:
-      - clang-3.7
       - g++-5
       - gcc-5
       - libgtest-dev
     sources:
-      - llvm-toolchain-precise
       - ubuntu-toolchain-r-test
 
 # before_install
@@ -51,7 +49,6 @@ install:
 before_script:
     - uname -a
     - printenv
-    - clang++3.7 --version 2>&1 | grep clang
     - g++-5 --version 2>&1 | grep g++-5
 
 script:
@@ -60,4 +57,4 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make CXX=g++-5
+  - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson -DCMAKE_CXX_COMPILER=g++-5 .. && make
