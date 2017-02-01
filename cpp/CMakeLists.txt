@@ -84,8 +84,10 @@ if (RUN_TESTS)
         ${PROJECT_SOURCE_DIR}/tests/hypocenter_unittest.cpp
         ${PROJECT_SOURCE_DIR}/tests/main.cpp
     )
-
-    set(PTHREADLIB -pthread)
+    
+    if (NOT MSVC)
+        set(PTHREADLIB -pthread)
+    endif (NOT MSVC)
 
     # ----- SET TEST INCLUDE DIRECTORIES ----- #
     include_directories(${GTEST_INCLUDE_DIRS})
