@@ -50,6 +50,11 @@ install:
     - cmake -D CMAKE_INSTALL_PREFIX:PATH=./ ./
     - make
 
+before_script:
+    - uname -a
+    - printenv
+    - clang++3.7 --version 2>&1 | grep clang
+    - g++-5 --version 2>&1 | grep g++-5
 
 script:
   - cd ${TRAVIS_BUILD_DIR}/java
