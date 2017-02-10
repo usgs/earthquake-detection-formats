@@ -8,6 +8,7 @@
 #define DETECTION_BEAM_H
 
 #include <string>
+
 #include "site.h"
 #include "source.h"
 #include "associated.h"
@@ -58,13 +59,17 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newpower - A double containing the power to use
+	 * \param newpowererror - A double containing the power error to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	beam(std::string newid, std::string newsiteid, std::string newstation,
 			std::string newchannel, std::string newnetwork,
 			std::string newlocation, std::string newagencyid,
 			std::string newauthor, double newstarttime, double newendtime,
 			double newbackazimuth, double newbackazimutherror,
-			double newslowness, double newslownesserror);
+			double newslowness, double newslownesserror, double newpower,
+			double newpowererror);
 
 	/**
 	 * \brief beam advanced constructor
@@ -88,6 +93,9 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newpower - A double containing the power to use
+	 * \param newpowererror - A double containing the power error to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newassociatedphase - A std:string containing the associated phase
 	 * to use, empty string to omit
 	 * \param newassociateddistance - A double containing the associated
@@ -104,10 +112,10 @@ public:
 			std::string newlocation, std::string newagencyid,
 			std::string newauthor, double newstarttime, double newendtime,
 			double newbackazimuth, double newbackazimutherror,
-			double newslowness, double newslownesserror,
-			std::string newassociatedphase, double newassociateddistance,
-			double newassociatedazimuth, double newassociatedresidual,
-			double newassociatedsigma);
+			double newslowness, double newslownesserror, double newpower,
+			double newpowererror,  std::string newassociatedphase,
+			double newassociateddistance, double newassociatedazimuth,
+			double newassociatedresidual, double newassociatedsigma);
 
 	/**
 	 * \brief beam alternate advanced constructor
@@ -127,12 +135,15 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newpower - A double containing the power to use
+	 * \param newpowererror - A double containing the power error to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	beam(std::string newid, detectionformats::site newsite,
 			detectionformats::source newsource, double newstarttime,
 			double newendtime, double newbackazimuth,
 			double newbackazimutherror, double newslowness,
-			double newslownesserror);
+			double newslownesserror, double newpower, double newpowererror);
 
 	/**
 	 * \brief beam alternate advanced constructor
@@ -151,6 +162,9 @@ public:
 	 * to use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newpower - A double containing the power to use
+	 * \param newpowererror - A double containing the power error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newassociated - A detectionformats::associated containing the
 	 * associated to use
@@ -159,7 +173,7 @@ public:
 			detectionformats::source newsource, double newstarttime,
 			double newendtime, double newbackazimuth,
 			double newbackazimutherror, double newslowness,
-			double newslownesserror,
+			double newslownesserror, double newpower, double newpowererror,
 			detectionformats::associated newassociated);
 
 	/**
@@ -267,9 +281,23 @@ public:
 	/**
 	 * \brief beam slowness error value
 	 *
-	 * A required double defining the slowness error of this beam message
+	 * An optional double defining the slowness error of this beam message
 	 */
 	double slownesserror;
+
+	/**
+	 * \brief beam power
+	 *
+	 * A required double defining the power of this beam message
+	 */
+	double power;
+
+	/**
+	 * \brief beam power error value
+	 *
+	 * An optional double defining the power error of this beam message
+	 */
+	double powererror;
 
 	/**
 	 * \brief beam associated

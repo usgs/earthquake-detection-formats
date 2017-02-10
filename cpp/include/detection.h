@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+
 #include "hypocenter.h"
 #include "pick.h"
 #include "beam.h"

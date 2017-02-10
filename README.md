@@ -11,6 +11,7 @@ as defined in the [JSON standard](http://www.json.org).
 [License](LICENSE.md)
 
 The purpose of this project is to:
+
 1. Define formats to hold data representing the estimates of various types of
 seismic event detections.
 2. Store the format definitions in a source controlled manner.

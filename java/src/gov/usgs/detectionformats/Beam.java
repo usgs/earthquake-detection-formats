@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * a conversion class used to create, parse, and validate beam detection data
- * 
+ *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Beam implements DetectionInt {
@@ -24,6 +24,8 @@ public class Beam implements DetectionInt {
 	public static final String BACKAZIMUTH_KEY = "BackAzimuth";
 	public static final String SLOWNESS_KEY = "Slowness";
 	public static final String BACKAZIMUTHERROR_KEY = "BackAzimuthError";
+	public static final String POWER_KEY = "Power";
+	public static final String POWERERROR_KEY = "PowerError";
 	public static final String SLOWNESSERROR_KEY = "SlownessError";
 	public static final String ASSOCIATIONINFO_KEY = "AssociationInfo";
 
@@ -78,6 +80,16 @@ public class Beam implements DetectionInt {
 	private final Double slownessError;
 
 	/**
+	 * Required Double containing the power
+	 */
+	private final Double power;
+
+	/**
+	 * Optional Double containing the power error
+	 */
+	private final Double powerError;
+
+	/**
 	 * Optional associated information.
 	 */
 	private final Associated associationInfo;
@@ -97,6 +109,8 @@ public class Beam implements DetectionInt {
 		backAzimuthError = null;
 		slowness = null;
 		slownessError = null;
+		power = null;
+		powerError = null;
 		associationInfo = null;
 	}
 
@@ -133,19 +147,24 @@ public class Beam implements DetectionInt {
 	 *            - A Double containing the slowness to use
 	 * @param newSlownessError
 	 *            - A Double containing the slowness error to use, null to omit
+	 * @param newPower
+	 *            - A Double containing the power to use
+	 * @param newPowerError
+	 *            - A Double containing the power error to use, null to omit
 	 */
 	public Beam(String newID, String newSiteID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
 			String newAgencyID, String newAuthor, Date newStartTime,
 			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
-			Double newSlowness, Double newSlownessError) {
+			Double newSlowness, Double newSlownessError, Double newPower,
+			Double newPowerError) {
 
 		this(newID,
 				new Site(newSiteID, newStation, newChannel, newNetwork,
 						newLocation),
 				new Source(newAgencyID, newAuthor), newStartTime, newEndTime,
 				newBackAzimuth, newBackAzimutherror, newSlowness,
-				newSlownessError);
+				newSlownessError, newPower, newPowerError);
 	}
 
 	/**
@@ -181,6 +200,10 @@ public class Beam implements DetectionInt {
 	 *            - A Double containing the slowness to use
 	 * @param newSlownessError
 	 *            - A Double containing the slowness error to use, null to omit
+	 * @param newPower
+	 *            - A Double containing the power to use
+	 * @param newPowerError
+	 *            - A Double containing the power error to use, null to omit
 	 * @param newAssociatedPhase
 	 *            - A std:string containing the associated phase to use, null to
 	 *            omit
@@ -201,17 +224,17 @@ public class Beam implements DetectionInt {
 			String newChannel, String newNetwork, String newLocation,
 			String newAgencyID, String newAuthor, Date newStartTime,
 			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
-			Double newSlowness, Double newSlownessError,
-			String newAssociatedPhase, Double newAssociatedDistance,
-			Double newAssociatedAzimuth, Double newAssociatedResidual,
-			Double newAssociatedSigma) {
+			Double newSlowness, Double newSlownessError, Double newPower,
+			Double newPowerError, String newAssociatedPhase,
+			Double newAssociatedDistance, Double newAssociatedAzimuth,
+			Double newAssociatedResidual, Double newAssociatedSigma) {
 
 		this(newID,
 				new Site(newSiteID, newStation, newChannel, newNetwork,
 						newLocation),
 				new Source(newAgencyID, newAuthor), newStartTime, newEndTime,
 				newBackAzimuth, newBackAzimutherror, newSlowness,
-				newSlownessError,
+				newSlownessError, newPower, newPowerError,
 				new Associated(newAssociatedPhase, newAssociatedDistance,
 						newAssociatedAzimuth, newAssociatedResidual,
 						newAssociatedSigma));
@@ -236,6 +259,10 @@ public class Beam implements DetectionInt {
 	 * @param newBackAzimutherror
 	 *            - A Double containing the back azimuth error to use, null to
 	 *            omit
+	 * @param newPower
+	 *            - A Double containing the power to use
+	 * @param newPowerError
+	 *            - A Double containing the power error to use, null to omit
 	 * @param newSlowness
 	 *            - A Double containing the slowness to use
 	 * @param newSlownessError
@@ -243,11 +270,12 @@ public class Beam implements DetectionInt {
 	 */
 	public Beam(String newID, Site newSite, Source newSource, Date newStartTime,
 			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
-			Double newSlowness, Double newSlownessError) {
+			Double newSlowness, Double newSlownessError, Double newPower,
+			Double newPowerError) {
 
 		this(newID, newSite, newSource, newStartTime, newEndTime,
 				newBackAzimuth, newBackAzimutherror, newSlowness,
-				newSlownessError, new Associated());
+				newSlownessError, newPower, newPowerError, new Associated());
 	}
 
 	/**
@@ -273,13 +301,17 @@ public class Beam implements DetectionInt {
 	 *            - A Double containing the slowness to use
 	 * @param newSlownessError
 	 *            - A Double containing the slowness error to use, null to omit
+	 * @param newPower
+	 *            - A Double containing the power to use
+	 * @param newPowerError
+	 *            - A Double containing the power error to use, null to omit
 	 * @param newAssociated
 	 *            - A Associated containing the associated to use, null to omit
 	 */
 	public Beam(String newID, Site newSite, Source newSource, Date newStartTime,
 			Date newEndTime, Double newBackAzimuth, Double newBackAzimutherror,
-			Double newSlowness, Double newSlownessError,
-			Associated newAssociated) {
+			Double newSlowness, Double newSlownessError, Double newPower,
+			Double newPowerError, Associated newAssociated) {
 
 		type = "Beam";
 		id = newID;
@@ -291,6 +323,8 @@ public class Beam implements DetectionInt {
 		backAzimuthError = newBackAzimutherror;
 		slowness = newSlowness;
 		slownessError = newSlownessError;
+		power = newPower;
+		powerError = newPowerError;
 		associationInfo = newAssociated;
 	}
 
@@ -361,6 +395,13 @@ public class Beam implements DetectionInt {
 			slowness = null;
 		}
 
+		// power
+		if (newJSONObject.containsKey(POWER_KEY)) {
+			power = (double) newJSONObject.get(POWER_KEY);
+		} else {
+			power = null;
+		}
+
 		// Optional values
 		// backAzimuthError
 		if (newJSONObject.containsKey(BACKAZIMUTHERROR_KEY)) {
@@ -374,6 +415,13 @@ public class Beam implements DetectionInt {
 			slownessError = (double) newJSONObject.get(SLOWNESSERROR_KEY);
 		} else {
 			slownessError = null;
+		}
+
+		// powerError
+		if (newJSONObject.containsKey(POWERERROR_KEY)) {
+			powerError = (double) newJSONObject.get(POWERERROR_KEY);
+		} else {
+			powerError = null;
 		}
 
 		// associated
@@ -404,8 +452,10 @@ public class Beam implements DetectionInt {
 		Date jsonEndTime = getEndTime();
 		Double jsonBackAzimuth = getBackAzimuth();
 		Double jsonSlowness = getSlowness();
+		Double jsonPower = getPower();
 		Double jsonBackAzimuthError = getBackAzimuthError();
 		Double jsonSlownessError = getSlownessError();
+		Double jsonPowerError = getPowerError();
 		Associated jsonAssociationInfo = getAssociationInfo();
 
 		// Required values
@@ -447,6 +497,11 @@ public class Beam implements DetectionInt {
 			newJSONObject.put(SLOWNESS_KEY, jsonSlowness);
 		}
 
+		// power
+		if (jsonPower != null) {
+			newJSONObject.put(POWER_KEY, jsonPower);
+		}
+
 		// Optional values
 		// backAzimuthError
 		if (jsonBackAzimuthError != null) {
@@ -456,6 +511,11 @@ public class Beam implements DetectionInt {
 		// SlownessError
 		if (jsonSlownessError != null) {
 			newJSONObject.put(SLOWNESSERROR_KEY, jsonSlownessError);
+		}
+
+		// powerError
+		if (jsonPowerError != null) {
+			newJSONObject.put(POWERERROR_KEY, jsonPowerError);
 		}
 
 		// associated
@@ -496,8 +556,10 @@ public class Beam implements DetectionInt {
 		Date jsonEndTime = getEndTime();
 		Double jsonBackAzimuth = getBackAzimuth();
 		Double jsonSlowness = getSlowness();
+		Double jsonPower = getPower();
 		Double jsonBackAzimuthError = getBackAzimuthError();
 		Double jsonSlownessError = getSlownessError();
+		Double jsonPowerError = getPowerError();
 		Associated jsonAssociationInfo = getAssociationInfo();
 
 		ArrayList<String> errorList = new ArrayList<String>();
@@ -572,6 +634,15 @@ public class Beam implements DetectionInt {
 			errorList.add("Invalid Slowness in Beam Class.");
 		}
 
+		// power
+		if (jsonPower == null) {
+			// power not found
+			errorList.add("No Power in Beam Class.");
+		} else if (jsonPower < 0) {
+			// invalid power
+			errorList.add("Invalid Power in Beam Class.");
+		}
+
 		// Optional Keys
 		// backAzimuthError
 		if (jsonBackAzimuthError != null) {
@@ -593,6 +664,13 @@ public class Beam implements DetectionInt {
 			if (jsonSlownessError < 0) {
 				// invalid slownessError
 				errorList.add("Invalid SlownessError in Beam Class.");
+			}
+		}
+
+		if (jsonPowerError != null) {
+			if (jsonPowerError < 0) {
+				// invalid powerError
+				errorList.add("Invalid PowerError in Beam Class.");
 			}
 		}
 
@@ -672,10 +750,24 @@ public class Beam implements DetectionInt {
 	}
 
 	/**
+	 * @return the power
+	 */
+	public Double getPower() {
+		return power;
+	}
+
+	/**
 	 * @return the slownessError
 	 */
 	public Double getSlownessError() {
 		return slownessError;
+	}
+
+	/**
+	 * @return the powerError
+	 */
+	public Double getPowerError() {
+		return powerError;
 	}
 
 	/**

@@ -33,6 +33,8 @@ and organizations.
       "BackAzimuthError" : Number,
       "Slowness"         : Number,
       "SlownessError"    : Number,
+      "Power"            : Number,
+      "PowerError"       : Number,      
       "AssociationInfo"  :
       {
          "Phase"    : String,
@@ -59,6 +61,7 @@ format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 * BackAzimuth - A decimal number containing the back azimuth.
 * Slowness - A decimal number containing the horizontal slowness.
+* Power - A decimal number containing the power.
 
 **Optional Values:**
 
@@ -66,6 +69,7 @@ The following are supplementary values that **may or may not** be provided by
 various algorithms.
 * BackAzimuthError - A decimal number containing the back azimuth error.
 * SlownessError - A decimal number containing the horizontal slowness error.
+* PowerError - A decimal number containing the power error.
 * AssociationInfo - An object containing the association information if this
 beam is used as data in a [Detection](Detection.md), see
 [Association](Association.md).

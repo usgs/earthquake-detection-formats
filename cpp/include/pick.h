@@ -8,6 +8,7 @@
 #define DETECTION_PICK_H
 
 #include <string>
+
 #include "site.h"
 #include "source.h"
 #include "amplitude.h"
@@ -16,16 +17,16 @@
 
 namespace detectionformats
 {
-	
+
 
 	/**
-	* \brief detectionformats pick conversion class 
+	* \brief detectionformats pick conversion class
 	*
 	* The detectionformats pick class is a conversion class used to create, parse, and
-	* validate the unassociated pick data format pick.  The pick format uses 
+	* validate the unassociated pick data format pick.  The pick format uses
 	* the JSON standard (www.json.org)
 	*
-	* pick is intended for use in seismic data messaging between seismic 
+	* pick is intended for use in seismic data messaging between seismic
 	* applications and organizations.
 	*
 	* pick uses the Source and Site common objects.
@@ -122,7 +123,7 @@ namespace detectionformats
 		* \param newfilterdata -A std::vector<detectionformats::filter> containing the filters that were used
 		* \param newamplitude - A double containing the amplitude to us
 		*/
-		pick(std::string newid, detectionformats::site newsite, double newtime, detectionformats::source newsource, std::string newphase, 
+		pick(std::string newid, detectionformats::site newsite, double newtime, detectionformats::source newsource, std::string newphase,
 			     std::string newpolarity, std::string newonset, std::string newpicker, std::vector<detectionformats::filter> newfilterdata,
 			     detectionformats::amplitude newamplitude);
 
@@ -191,7 +192,7 @@ namespace detectionformats
 		virtual std::vector<std::string> geterrors() override;
 
 		/**
-		* \brief pick id 
+		* \brief pick id
 		*
 		* A required std::string containing the id of this pick message
 		*/

@@ -50,7 +50,7 @@ namespace detectionformats
 				return(formattypes::detectiontype);
 			else if (typestring == RETRACT_TYPE)
 				return(formattypes::retracttype);
-			
+
 		}
 
 		// no / invalid type found
@@ -163,7 +163,7 @@ namespace detectionformats
 
 		return(true);
 	}
-    
+
     // Space where environment variable TZ will be
     // stored after the first call to ConvertISO8601ToEpochTime()
     #define MAXENV 128
@@ -220,41 +220,41 @@ namespace detectionformats
         // windows specific timezone handling
         char * pTZ;
         char szTZExisting[32] = "TZ=";
-        
+
         // Save current TZ setting locally
         pTZ = getenv("TZ");
-        
+
         if(pTZ)
         {
             /* remember we have "TZ=" stored as the first 3 chars of the array */
             strncpy(&szTZExisting[3], pTZ, sizeof(szTZExisting) - 4);
             szTZExisting[sizeof(szTZExisting)-1] = 0x00;
         }
-        
+
         // Change time zone to GMT
         _putenv("TZ=UTC");
-        
+
         // set the timezone-offset to 0
         _timezone = 0;
-        
+
         // set the DST-offset to 0
         _daylight = 0;
 
         // ensure _tzset() has been called, so that it isn't called again.
         _tzset();
-        
+
         // convert to epoch time
         double usableTime = double(mktime(&timeinfo));
 
         // Restore original TZ setting
         _putenv(szTZExisting);
         _tzset();
-        
+
 #else
         // linux and other timezone handling
         char  *tz;
         char   TZorig[MAXENV];
-        
+
         // Save current TZ setting locally
         tz = getenv("TZ");
         if( tz != (char *) NULL )
@@ -266,7 +266,7 @@ namespace detectionformats
             }
         }
         sprintf( TZorig, "TZ=%s", tz );
-        
+
         // Change time zone to GMT
         sprintf( envTZ, "TZ=GMT" );
         if( putenv( envTZ ) != 0 )
@@ -274,20 +274,20 @@ namespace detectionformats
             printf("ConvertISO8601ToEpochTime: putenv: unable to set TZ environment variable.\n" );
             return( -1 );
         }
-        
+
         // convert to epoch time
         double usableTime = double(mktime(&timeinfo));
-        
+
         // Restore original TZ setting
         sprintf( envTZ, "%s", TZorig );
-        if( putenv( envTZ ) != 0 )  
+        if( putenv( envTZ ) != 0 )
         {
             printf("ConvertISO8601ToEpochTime: putenv: unable to restore TZ environment variable.\n" );
         }
         tzset();
-        
+
 #endif
-    
+
 		// add decimal seconds and return
 		return (usableTime + seconds);
 	}
@@ -297,7 +297,7 @@ namespace detectionformats
 		time_t time = (int)epochtime;
 		double decimalseconds = epochtime - (int)time;
 
-		// build the time portion, all but the seconds which are 
+		// build the time portion, all but the seconds which are
 		// seperate since time_t can't do decimal seconds
 		char timebuf[sizeof "2011-10-08T07:07:"];
 		tm* timestruct = gmtime(&time);

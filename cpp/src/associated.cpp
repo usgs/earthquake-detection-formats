@@ -1,5 +1,7 @@
 #include "associated.h"
 
+#include <limits>
+
 // JSON Keys
 #define PHASE_KEY "Phase"
 #define DISTANCE_KEY "Distance"
@@ -117,7 +119,7 @@ namespace detectionformats
 		{
 			errorlist.push_back("Phase did not validate in associated object.");
 		}
-		
+
 		// return the list of errors
 		return (errorlist);
 	}

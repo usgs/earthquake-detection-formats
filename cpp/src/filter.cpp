@@ -1,5 +1,7 @@
 #include "filter.h"
 
+#include <limits>
+
 // JSON Keys
 #define HIGHPASS_KEY "HighPass"
 #define LOWPASS_KEY "LowPass"

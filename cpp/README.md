@@ -12,6 +12,7 @@ Dependencies
 Building
 ------
 The steps to get and build detection-formats using CMake are as follows:
+
 1. Clone detection-formats.
 2. Open a command window and change directories to /cpp/
 3. Make a build directory `mkdir build`
