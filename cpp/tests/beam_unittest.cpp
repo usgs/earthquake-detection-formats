@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define BEAMSTRING "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"Power\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerError\":0.557,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
+#define BEAMSTRING "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
 #define ID "12GFH48776857"
 #define STATION "BMN"
 #define CHANNEL "HHZ"
@@ -19,8 +19,8 @@
 #define BACKAZIMUTHERROR 3.8
 #define SLOWNESS 1.44
 #define SLOWNESSERROR 0.4
-#define POWER 12.18
-#define POWERERROR 0.557
+#define POWERRATIO 12.18
+#define POWERRATIOERROR 0.557
 #define ASSOCPHASE "P"
 #define ASSOCDISTANCE 0.442559
 #define ASSOCAZIMUTH 0.418479
@@ -100,15 +100,15 @@ void checkdata(detectionformats::beam beamobject, std::string testinfo) {
 	double expectedslownesserror = SLOWNESSERROR;
 	ASSERT_EQ(beamslownesserrorr, expectedslownesserror);
 
-	// check power
-	double beampower = beamobject.power;
-	double expectedpower = POWER;
-	ASSERT_EQ(beampower, expectedpower);
+	// check powerratio
+	double beampowerratio = beamobject.powerratio;
+	double expectedpowerratio = POWERRATIO;
+	ASSERT_EQ(beampowerratio, expectedpowerratio);
 
-	// check powererror
-	double beampowererrorr = beamobject.powererror;
-	double expectedpowererror = POWERERROR;
-	ASSERT_EQ(beampowererrorr, expectedpowererror);
+	// check powerratioerror
+	double beampowerratioerrorr = beamobject.powerratioerror;
+	double expectedpowerratioerror = POWERRATIOERROR;
+	ASSERT_EQ(beampowerratioerrorr, expectedpowerratioerror);
 
 	// check phase
 	std::string associatedphase = beamobject.associationinfo.phase;
@@ -163,8 +163,8 @@ TEST(BeamTest, WritesJSON) {
 	beamobject.backazimutherror = BACKAZIMUTHERROR;
 	beamobject.slowness = SLOWNESS;
 	beamobject.slownesserror = SLOWNESSERROR;
-	beamobject.power = POWER;
-	beamobject.powererror = POWERERROR;
+	beamobject.powerratio = POWERRATIO;
+	beamobject.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
 	beamobject.associationinfo.phase = std::string(ASSOCPHASE);
@@ -209,8 +209,8 @@ TEST(BeamTest, Constructor) {
 			std::string(LOCATION), std::string(AGENCYID), std::string(AUTHOR),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(STARTTIME)),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(ENDTIME)),
-			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER,
-			POWERERROR,
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+			POWERRATIOERROR,
 			std::string(ASSOCPHASE), ASSOCDISTANCE,
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
@@ -226,9 +226,9 @@ TEST(BeamTest, Constructor) {
 					std::string(AUTHOR)),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(STARTTIME)),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(ENDTIME)),
-			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR,
-			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+			POWERRATIOERROR, detectionformats::associated(std::string(ASSOCPHASE),
+			ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
 
 	// check data values
 	checkdata(beamobject_altc, "Tested alternate constructor.");
@@ -243,8 +243,8 @@ TEST(BeamTest, CopyConstructor) {
 			std::string(LOCATION), std::string(AGENCYID), std::string(AUTHOR),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(STARTTIME)),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(ENDTIME)),
-			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWER, POWERERROR,
-			std::string(ASSOCPHASE), ASSOCDISTANCE,
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+			POWERRATIOERROR, std::string(ASSOCPHASE), ASSOCDISTANCE,
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 	detectionformats::beam beamobject(frombeamobject);
@@ -280,8 +280,8 @@ TEST(BeamTest, Validate) {
 	beamobject.backazimutherror = BACKAZIMUTHERROR;
 	beamobject.slowness = SLOWNESS;
 	beamobject.slownesserror = SLOWNESSERROR;
-	beamobject.power = POWER;
-	beamobject.powererror = POWERERROR;
+	beamobject.powerratio = POWERRATIO;
+	beamobject.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
 	beamobject.associationinfo.phase = std::string(ASSOCPHASE);

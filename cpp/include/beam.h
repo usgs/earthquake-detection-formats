@@ -59,8 +59,8 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newpower - A double containing the power to use
-	 * \param newpowererror - A double containing the power error to use,
+	 * \param newpowerratio - A double containing the powerratio to use
+	 * \param newpowerratioerror - A double containing the powerratio error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	beam(std::string newid, std::string newsiteid, std::string newstation,
@@ -68,8 +68,8 @@ public:
 			std::string newlocation, std::string newagencyid,
 			std::string newauthor, double newstarttime, double newendtime,
 			double newbackazimuth, double newbackazimutherror,
-			double newslowness, double newslownesserror, double newpower,
-			double newpowererror);
+			double newslowness, double newslownesserror, double newpowerratio,
+			double newpowerratioerror);
 
 	/**
 	 * \brief beam advanced constructor
@@ -93,8 +93,8 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newpower - A double containing the power to use
-	 * \param newpowererror - A double containing the power error to use,
+	 * \param newpowerratio - A double containing the powerratio to use
+	 * \param newpowerratioerror - A double containing the powerratio error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newassociatedphase - A std:string containing the associated phase
 	 * to use, empty string to omit
@@ -112,8 +112,8 @@ public:
 			std::string newlocation, std::string newagencyid,
 			std::string newauthor, double newstarttime, double newendtime,
 			double newbackazimuth, double newbackazimutherror,
-			double newslowness, double newslownesserror, double newpower,
-			double newpowererror,  std::string newassociatedphase,
+			double newslowness, double newslownesserror, double newpowerratio,
+			double newpowerratioerror,  std::string newassociatedphase,
 			double newassociateddistance, double newassociatedazimuth,
 			double newassociatedresidual, double newassociatedsigma);
 
@@ -135,15 +135,15 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newpower - A double containing the power to use
-	 * \param newpowererror - A double containing the power error to use,
+	 * \param newpowerratio - A double containing the powerratio to use
+	 * \param newpowerratioerror - A double containing the powerratio error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	beam(std::string newid, detectionformats::site newsite,
 			detectionformats::source newsource, double newstarttime,
 			double newendtime, double newbackazimuth,
 			double newbackazimutherror, double newslowness,
-			double newslownesserror, double newpower, double newpowererror);
+			double newslownesserror, double newpowerratio, double newpowerratioerror);
 
 	/**
 	 * \brief beam alternate advanced constructor
@@ -163,8 +163,8 @@ public:
 	 * \param newslowness - A double containing the slowness to use
 	 * \param newslownesserror - A double containing the slowness error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newpower - A double containing the power to use
-	 * \param newpowererror - A double containing the power error to use,
+	 * \param newpowerratio - A double containing the powerratio to use
+	 * \param newpowerratioerror - A double containing the powerratio error to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newassociated - A detectionformats::associated containing the
 	 * associated to use
@@ -173,7 +173,7 @@ public:
 			detectionformats::source newsource, double newstarttime,
 			double newendtime, double newbackazimuth,
 			double newbackazimutherror, double newslowness,
-			double newslownesserror, double newpower, double newpowererror,
+			double newslownesserror, double newpowerratio, double newpowerratioerror,
 			detectionformats::associated newassociated);
 
 	/**
@@ -286,18 +286,18 @@ public:
 	double slownesserror;
 
 	/**
-	 * \brief beam power
+	 * \brief beam powerratio
 	 *
-	 * A required double defining the power of this beam message
+	 * A required double defining the powerratio of this beam message
 	 */
-	double power;
+	double powerratio;
 
 	/**
-	 * \brief beam power error value
+	 * \brief beam powerratio error value
 	 *
-	 * An optional double defining the power error of this beam message
+	 * An optional double defining the powerratio error of this beam message
 	 */
-	double powererror;
+	double powerratioerror;
 
 	/**
 	 * \brief beam associated
