@@ -25,7 +25,7 @@ public class DetectionTest {
 			+ "\"BMN.HHZ.LB.01\"},\"Type\":\"Beam\",\"BackAzimuth\":2.65,\"ID\":"
 			+ "\"12GFH48776857\",\"EndTime\":\"2015-12-28T21:32:30.017Z\","
 			+ "\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuthError\":"
-			+ "3.8,\"Slowness\":1.44,\"Power\":12.18,\"PowerError\":0.557,"
+			+ "3.8,\"Slowness\":1.44,\"PowerRatio\":12.18,\"PowerRatioError\":0.557,"
 			+ "\"AssociationInfo\":{\"Distance\":0.442559,"
 			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
 			+ "\"Residual\":-0.025393},\"SlownessError\":0.4},{\"ZScore\":33.67,"
@@ -82,7 +82,7 @@ public class DetectionTest {
 			+ "\"StartTime\":\"2015-12-28T21:32:24.017Z\","
 			+ "\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,"
 			+ "\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,"
-			+ "\"Power\":12.18,\"PowerError\":0.557,\"AssociationInfo\":"
+			+ "\"PowerRatio\":12.18,\"PowerRatioError\":0.557,\"AssociationInfo\":"
 			+ "{\"Phase\":\"P\",\"Distance\":0.442559,"
 			+ "\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}";
 	public static String CORRELATIONDATA = "{\"ZScore\":33.67,"
@@ -181,8 +181,9 @@ public class DetectionTest {
 		// build bad Detection object
 		Detection badOriginObject = new Detection("", AGENCYID, null, LATITUDE,
 				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR,
-				DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS,
-				GAP, buildPickData(), buildBeamData(), buildCorrelationData());
+				DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE,
+				RMS, GAP, buildPickData(), buildBeamData(),
+				buildCorrelationData());
 
 		rc = badOriginObject.isValid();
 
