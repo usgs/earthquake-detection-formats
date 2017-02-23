@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * a conversion class used to create, parse, and validate pick detection data

@@ -3,7 +3,6 @@ package gov.usgs.detectionformats;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * a conversion class used to create, parse, and validate beam detection data
