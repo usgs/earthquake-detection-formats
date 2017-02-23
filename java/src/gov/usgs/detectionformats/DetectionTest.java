@@ -15,22 +15,13 @@ public class DetectionTest {
 			+ "\"questionable\",\"Amplitude\":{\"Period\":2.65,\"Amplitude\":"
 			+ "21.5,\"SNR\":3.8},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Site\":"
 			+ "{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\","
-			+ "\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Type\":"
+			+ "\"Location\":\"01\"},\"Type\":"
 			+ "\"Pick\",\"ID\":\"12GFH48776857\",\"Polarity\":\"up\",\"Phase\":"
 			+ "\"P\",\"Picker\":\"manual\",\"AssociationInfo\":{\"Distance\":"
 			+ "0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
-			+ "\"Residual\":-0.025393}},{\"Source\":{\"Author\":\"TestAuthor\","
-			+ "\"AgencyID\":\"US\"},\"Site\":{\"Station\":\"BMN\",\"Channel\":"
-			+ "\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":"
-			+ "\"BMN.HHZ.LB.01\"},\"Type\":\"Beam\",\"BackAzimuth\":2.65,\"ID\":"
-			+ "\"12GFH48776857\",\"EndTime\":\"2015-12-28T21:32:30.017Z\","
-			+ "\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuthError\":"
-			+ "3.8,\"Slowness\":1.44,\"PowerRatio\":12.18,\"PowerRatioError\":0.557,"
-			+ "\"AssociationInfo\":{\"Distance\":0.442559,"
-			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
-			+ "\"Residual\":-0.025393},\"SlownessError\":0.4},{\"ZScore\":33.67,"
+			+ "\"Residual\":-0.025393}},{\"ZScore\":33.67,"
 			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":"
-			+ "\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},"
+			+ "\"LB\",\"Location\":\"01\"},"
 			+ "\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,"
 			+ "\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":"
 			+ "0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,"
@@ -66,7 +57,7 @@ public class DetectionTest {
 	public static double RMS = 3.8;
 	public static double GAP = 33.67;
 	public static String PICKDATA = "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\""
-			+ ",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\","
+			+ ",\"Site\":{\"Station\":\"BMN\","
 			+ "\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},"
 			+ "\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},"
 			+ "\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\","
@@ -75,20 +66,9 @@ public class DetectionTest {
 			+ "\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},"
 			+ "\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,"
 			+ "\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}";
-	public static String BEAMDATA = "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\""
-			+ ",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\","
-			+ "\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},"
-			+ "\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},"
-			+ "\"StartTime\":\"2015-12-28T21:32:24.017Z\","
-			+ "\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,"
-			+ "\"Slowness\":1.44,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,"
-			+ "\"PowerRatio\":12.18,\"PowerRatioError\":0.557,\"AssociationInfo\":"
-			+ "{\"Phase\":\"P\",\"Distance\":0.442559,"
-			+ "\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}";
 	public static String CORRELATIONDATA = "{\"ZScore\":33.67,"
 			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\","
-			+ "\"Network\":\"LB\",\"Location\":\"01\","
-			+ "\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,"
+			+ "\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,"
 			+ "\"Type\":\"Correlation\",\"Correlation\":2.65,"
 			+ "\"EventType\":\"earthquake\","
 			+ "\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,"
@@ -112,7 +92,7 @@ public class DetectionTest {
 		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 				TIMEERROR, DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES,
-				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
+				MINIMUMDISTANCE, RMS, GAP, buildPickData(),
 				buildCorrelationData());
 
 		// write out to a string
@@ -154,7 +134,7 @@ public class DetectionTest {
 				new Hypocenter(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
 						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 				DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
-				buildPickData(), buildBeamData(), buildCorrelationData());
+				buildPickData(), buildCorrelationData());
 
 		// check data values
 		checkData(originObject, "Alternate Constructor 1");
@@ -169,7 +149,7 @@ public class DetectionTest {
 		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 				TIMEERROR, DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES,
-				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildBeamData(),
+				MINIMUMDISTANCE, RMS, GAP, buildPickData(),
 				buildCorrelationData());
 
 		// Successful validation
@@ -182,8 +162,7 @@ public class DetectionTest {
 		Detection badOriginObject = new Detection("", AGENCYID, null, LATITUDE,
 				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR,
 				DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE,
-				RMS, GAP, buildPickData(), buildBeamData(),
-				buildCorrelationData());
+				RMS, GAP, buildPickData(), buildCorrelationData());
 
 		rc = badOriginObject.isValid();
 
@@ -264,18 +243,6 @@ public class DetectionTest {
 			e.printStackTrace();
 		}
 		return (newPickData);
-	}
-
-	public ArrayList<Beam> buildBeamData() {
-		ArrayList<Beam> newBeamData = new ArrayList<Beam>();
-
-		// Beam ?need one more?
-		try {
-			newBeamData.add(new Beam(Utility.fromJSONString(BEAMDATA)));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return (newBeamData);
 	}
 
 	public ArrayList<Correlation> buildCorrelationData() {

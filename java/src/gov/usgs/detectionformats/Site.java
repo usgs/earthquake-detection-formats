@@ -15,16 +15,10 @@ public class Site implements DetectionInt {
 	/**
 	 * JSON Keys
 	 */
-	public static final String SITEID_KEY = "SiteID";
 	public static final String STATION_KEY = "Station";
 	public static final String CHANNEL_KEY = "Channel";
 	public static final String NETWORK_KEY = "Network";
 	public static final String LOCATION_KEY = "Location";
-
-	/**
-	 * Required unique identifier for this Site
-	 */
-	private final String siteID;
 
 	/**
 	 * Required station code.
@@ -51,7 +45,6 @@ public class Site implements DetectionInt {
 	 */
 	public Site() {
 
-		siteID = null;
 		station = null;
 		channel = null;
 		network = null;
@@ -62,8 +55,6 @@ public class Site implements DetectionInt {
 	 * The advanced constructor for the Site class. Initializes members to
 	 * provided values.
 	 *
-	 * @param newSiteID
-	 *            - A String containing the siteID to use
 	 * @param newStation
 	 *            - A String containing the station to use
 	 * @param newChannel
@@ -73,10 +64,9 @@ public class Site implements DetectionInt {
 	 * @param newLocation
 	 *            - A String containing the location to use (null omit)
 	 */
-	public Site(String newSiteID, String newStation, String newChannel,
+	public Site(String newStation, String newChannel,
 			String newNetwork, String newLocation) {
 
-		siteID = newSiteID;
 		station = newStation;
 		channel = newChannel;
 		network = newNetwork;
@@ -92,13 +82,6 @@ public class Site implements DetectionInt {
 	public Site(JSONObject newJSONObject) {
 
 		// required values
-		// siteID
-		if (newJSONObject.containsKey(SITEID_KEY)) {
-			siteID = newJSONObject.get(SITEID_KEY).toString();
-		} else {
-			siteID = null;
-		}
-
 		// station
 		if (newJSONObject.containsKey(STATION_KEY)) {
 			station = newJSONObject.get(STATION_KEY).toString();
@@ -139,18 +122,12 @@ public class Site implements DetectionInt {
 
 		JSONObject NewJSONObject = new JSONObject();
 
-		String jsonSiteID = getSiteID();
 		String jsonStation = getStation();
 		String jsonNetwork = getNetwork();
 		String jsonChannel = getChannel();
 		String jsonLocation = getLocation();
 
 		// required values
-		// siteID
-		if ((jsonSiteID != null) && (!jsonSiteID.isEmpty())) {
-			NewJSONObject.put(SITEID_KEY, jsonSiteID);
-		}
-
 		// station
 		if ((jsonStation != null) && (!jsonStation.isEmpty())) {
 			NewJSONObject.put(STATION_KEY, jsonStation);
@@ -198,24 +175,13 @@ public class Site implements DetectionInt {
 	 */
 	public ArrayList<String> getErrors() {
 
-		String jsonSiteID = getSiteID();
 		String jsonStation = getStation();
 		String jsonNetwork = getNetwork();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
 		// check for required keys
-		// siteID
-		if (jsonSiteID == null) {
-			// siteID not found
-			errorList.add("No SiteID in Site Class.");
-		} else if (jsonSiteID.isEmpty()) {
-			// siteID empty
-			errorList.add("Empty SiteID in Site Class.");
-		}
-
 		// station
-		// siteID
 		if (jsonStation == null) {
 			// station not found
 			errorList.add("No Station in Site Class.");
@@ -233,7 +199,7 @@ public class Site implements DetectionInt {
 			errorList.add("Empty Network in Site Class.");
 		}
 
-		// since siteID, station, channel, network, and location are free text
+		// since station, channel, network, and location are free text
 		// strings, no further validation is required. channel and location
 		// are also optional.
 		// NOTE: Further validation COULD be done to confirm that values matched
@@ -241,13 +207,6 @@ public class Site implements DetectionInt {
 
 		// success
 		return (errorList);
-	}
-
-	/**
-	 * @return the siteID
-	 */
-	public String getSiteID() {
-		return siteID;
 	}
 
 	/**

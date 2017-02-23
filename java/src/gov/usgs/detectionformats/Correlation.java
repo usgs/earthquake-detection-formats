@@ -139,8 +139,6 @@ public class Correlation implements DetectionInt {
 	 * 
 	 * @param newID
 	 *            - A String containing the id to use
-	 * @param newSiteID
-	 *            - A String containing the siteid to use
 	 * @param newStation
 	 *            - A String containing the station to use
 	 * @param newChannel
@@ -189,7 +187,7 @@ public class Correlation implements DetectionInt {
 	 * @param newThresholdType
 	 *            - A String containing the threshold type to use, null to omit
 	 */
-	public Correlation(String newID, String newSiteID, String newStation,
+	public Correlation(String newID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
 			String newAgencyID, String newAuthor, String newPhase, Date newTime,
 			Double newCorrelation, Double newLatitude, Double newLongitude,
@@ -200,7 +198,7 @@ public class Correlation implements DetectionInt {
 			String newThresholdType) {
 
 		this(newID,
-				new Site(newSiteID, newStation, newChannel, newNetwork,
+				new Site(newStation, newChannel, newNetwork,
 						newLocation),
 				new Source(newAgencyID, newAuthor), newPhase, newTime,
 				newCorrelation,
@@ -219,8 +217,6 @@ public class Correlation implements DetectionInt {
 	 * 
 	 * @param newID
 	 *            - A String containing the id to use
-	 * @param newSiteID
-	 *            - A String containing the siteid to use
 	 * @param newStation
 	 *            - A String containing the station to use
 	 * @param newChannel
@@ -284,7 +280,7 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the associated sigma to use, null to
 	 *            omit
 	 */
-	public Correlation(String newID, String newSiteID, String newStation,
+	public Correlation(String newID, String newStation,
 			String newChannel, String newNetwork, String newLocation,
 			String newAgencyID, String newAuthor, String newPhase, Date newTime,
 			Double newCorrelation, Double newLatitude, Double newLongitude,
@@ -297,7 +293,7 @@ public class Correlation implements DetectionInt {
 			Double newAssociatedResidual, Double newAssociatedSigma) {
 
 		this(newID,
-				new Site(newSiteID, newStation, newChannel, newNetwork,
+				new Site(newStation, newChannel, newNetwork,
 						newLocation),
 				new Source(newAgencyID, newAuthor), newPhase, newTime,
 				newCorrelation,

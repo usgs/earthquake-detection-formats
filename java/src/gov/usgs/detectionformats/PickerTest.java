@@ -15,7 +15,9 @@ public class PickerTest {
 			+ "2.65}],\"Onset\":\"questionable\",\"Amplitude\":{\"Period\":2.65,"
 			+ "\"Amplitude\":21.5,\"SNR\":3.8},\"Time\":\"2015-12-28T21:32:24.017Z\","
 			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\","
-			+ "\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Type\":\"Pick\","
+			+ "\"Location\":\"01\"},\"Type\":\"Pick\",\"Beam\":{\"BackAzimuth\":2.65,"
+			+ "\"BackAzimuthError\":3.8,\"Slowness\":1.44,\"SlownessError\":0.4,"
+			+ "\"PowerRatio\":12.18,\"PowerRatioError\":0.557},"
 			+ "\"ID\":\"12GFH48776857\",\"Polarity\":\"up\",\"Phase\":\"P\","
 			+ "\"Picker\":\"manual\",\"AssociationInfo\":{\"Distance\":0.442559,"
 			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":"
@@ -25,7 +27,6 @@ public class PickerTest {
 	public static String CHANNEL = "HHZ";
 	public static String NETWORK = "LB";
 	public static String LOCATION = "01";
-	public static String SITEID = "BMN.HHZ.LB.01";
 	public static String AGENCYID = "US";
 	public static String AUTHOR = "TestAuthor";
 	public static Date TIME = Utility.getDate("2015-12-28T21:32:24.017Z");
@@ -38,6 +39,12 @@ public class PickerTest {
 	public static double AMPLITUDE = 21.5;
 	public static double PERIOD = 2.65;
 	public static double SNR = 3.8;
+	public static double BACKAZIMUTH = 2.65;
+	public static double BACKAZIMUTHERROR = 3.8;
+	public static double SLOWNESS = 1.44;
+	public static double SLOWNESSERROR = 0.4;
+	public static double POWERRATIO = 12.18;
+	public static double POWERRATIOERROR = 0.557;
 	public static String ASSOCPHASE = "P";
 	public static double ASSOCDISTANCE = 0.442559;
 	public static double ASSOCAZIMUTH = 0.418479;
@@ -50,10 +57,12 @@ public class PickerTest {
 	@Test
 	public void writesJSON() {
 
-		Pick pickObject = new Pick(ID, SITEID, STATION, CHANNEL, NETWORK,
-				LOCATION, TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET,
-				PICKER, HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+		Pick pickObject = new Pick(ID, STATION, CHANNEL, NETWORK, LOCATION,
+				TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET, PICKER,
+				HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, BACKAZIMUTH,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+				POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
+				ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(pickObject.toJSON());
@@ -90,31 +99,37 @@ public class PickerTest {
 	public void altConstructors() {
 
 		// use constructor
-		Pick pickObject = new Pick(ID, SITEID, STATION, CHANNEL, NETWORK,
-				LOCATION, TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET,
-				PICKER, HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR);
+		Pick pickObject = new Pick(ID, STATION, CHANNEL, NETWORK, LOCATION,
+				TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET, PICKER,
+				HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, BACKAZIMUTH,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+				POWERRATIOERROR);
 
 		// check data values
 		checkData(pickObject, "Alternate Constructor 1");
 
 		// use constructor
 		Pick altPickObject = new Pick(ID,
-				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION), TIME,
+				new Site(STATION, CHANNEL, NETWORK, LOCATION), TIME,
 				new Source(AGENCYID, AUTHOR), PHASE, POLARITY, ONSET, PICKER,
 				new ArrayList<Filter>(
 						Arrays.asList(new Filter(HIGHPASS, LOWPASS))),
-				new Amplitude(AMPLITUDE, PERIOD, SNR));
+				new Amplitude(AMPLITUDE, PERIOD, SNR),
+				new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+						POWERRATIO, POWERRATIOERROR));
 
 		// check data values
 		checkData(altPickObject, "Alternate Constructor 2");
 
 		// use constructor
 		Pick altAltPickObject = new Pick(ID,
-				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION), TIME,
+				new Site(STATION, CHANNEL, NETWORK, LOCATION), TIME,
 				new Source(AGENCYID, AUTHOR), PHASE, POLARITY, ONSET, PICKER,
 				new ArrayList<Filter>(
 						Arrays.asList(new Filter(HIGHPASS, LOWPASS))),
 				new Amplitude(AMPLITUDE, PERIOD, SNR),
+				new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
+						POWERRATIO, POWERRATIOERROR),
 				new Associated(ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
 						ASSOCRESIDUAL, ASSOCSIGMA));
 
@@ -128,10 +143,12 @@ public class PickerTest {
 	@Test
 	public void validate() {
 
-		Pick pickObject = new Pick(ID, SITEID, STATION, CHANNEL, NETWORK,
-				LOCATION, TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET,
-				PICKER, HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+		Pick pickObject = new Pick(ID, STATION, CHANNEL, NETWORK, LOCATION,
+				TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET, PICKER,
+				HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, BACKAZIMUTH,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+				POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
+				ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// Successful validation
 		boolean rc = pickObject.isValid();
@@ -140,10 +157,12 @@ public class PickerTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad Pick object
-		Pick badPickObject = new Pick("", SITEID, null, CHANNEL, NETWORK,
-				LOCATION, null, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET,
-				PICKER, HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+		Pick badPickObject = new Pick("", null, CHANNEL, NETWORK, LOCATION,
+				null, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET, PICKER,
+				HIGHPASS, LOWPASS, AMPLITUDE, PERIOD, SNR, BACKAZIMUTH,
+				BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+				POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
+				ASSOCRESIDUAL, ASSOCSIGMA);
 
 		rc = badPickObject.isValid();
 
@@ -172,10 +191,6 @@ public class PickerTest {
 		assertEquals(TestName + " Location Equals", LOCATION,
 				pickObject.getSite().getLocation());
 
-		// check pickObject.site.SiteID
-		assertEquals(TestName + " SiteID Equals", SITEID,
-				pickObject.getSite().getSiteID());
-
 		// check pickObject.Source.AgencyID
 		assertEquals(TestName + " AgencyID Equals", AGENCYID,
 				pickObject.getSource().getAgencyID());
@@ -202,22 +217,26 @@ public class PickerTest {
 				pickObject.getPicker());
 
 		// check pickObject.FilterList
-		ArrayList<Filter> filterList = pickObject.getFilterList();
-		if (!filterList.isEmpty()) {
+		if (pickObject.getFilterList() != null) {
 
-			// get the first filter in the list
-			Filter aFilter = filterList.get(0);
+			ArrayList<Filter> filterList = pickObject.getFilterList();
+			if (!filterList.isEmpty()) {
 
-			// check aFilter.HighPass
-			assertEquals(TestName + " HighPass Equals", HIGHPASS,
-					aFilter.getHighPass(), 0);
+				// get the first filter in the list
+				Filter aFilter = filterList.get(0);
 
-			// check aFilter.LowPass
-			assertEquals(TestName + " LowPass Equals", LOWPASS,
-					aFilter.getLowPass(), 0);
+				// check aFilter.HighPass
+				assertEquals(TestName + " HighPass Equals", HIGHPASS,
+						aFilter.getHighPass(), 0);
+
+				// check aFilter.LowPass
+				assertEquals(TestName + " LowPass Equals", LOWPASS,
+						aFilter.getLowPass(), 0);
+			}
 		}
 
-		if (!pickObject.getAmplitude().isEmpty()) {
+		if ((pickObject.getAmplitude() != null)
+				&& (!pickObject.getAmplitude().isEmpty())) {
 			// check pickObject.Amplitude.Amplitude
 			assertEquals(TestName + " Amplitude Equals", AMPLITUDE,
 					pickObject.getAmplitude().getAmplitude(), 0);
@@ -229,6 +248,42 @@ public class PickerTest {
 			// check pickObject.Amplitude.SNR
 			assertEquals(TestName + " SNR Equals", SNR,
 					pickObject.getAmplitude().getSNR(), 0);
+		}
+
+		if (pickObject.getBeam() != null) {
+			// check pickObject.getBeam().BackAzimuth
+			assertEquals(TestName + " BackAzimuth Equals", BACKAZIMUTH,
+					pickObject.getBeam().getBackAzimuth(), 0);
+
+			// check pickObject.getBeam().BackAzimuthError
+			if (pickObject.getBeam().getBackAzimuthError() != null) {
+				assertEquals(TestName + " BackAzimuthError Equals",
+						BACKAZIMUTHERROR,
+						pickObject.getBeam().getBackAzimuthError(), 0);
+			}
+
+			// check pickObject.getBeam().Slowness
+			assertEquals(TestName + " Slowness Equals", SLOWNESS,
+					pickObject.getBeam().getSlowness(), 0);
+
+			// check pickObject.getBeam().SlownessError
+			if (pickObject.getBeam().getSlownessError() != null) {
+				assertEquals(TestName + " SlownessError Equals", SLOWNESSERROR,
+						pickObject.getBeam().getSlownessError(), 0);
+			}
+
+			// check pickObject.getBeam().PowerRatio
+			if (pickObject.getBeam().getPowerRatio() != null) {
+				assertEquals(TestName + " PowerRatio Equals", POWERRATIO,
+						pickObject.getBeam().getPowerRatio(), 0);
+			}
+
+			// check pickObject.getBeam().PowerRatioError
+			if (pickObject.getBeam().getPowerRatioError() != null) {
+				assertEquals(TestName + " PowerRatioError Equals",
+						POWERRATIOERROR,
+						pickObject.getBeam().getPowerRatioError(), 0);
+			}
 		}
 
 		if (!pickObject.getAssociationInfo().isEmpty()) {

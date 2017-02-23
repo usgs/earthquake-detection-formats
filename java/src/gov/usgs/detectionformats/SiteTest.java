@@ -8,13 +8,11 @@ import static org.junit.Assert.*;
 public class SiteTest {
 
 	public static final String SITE_STRING = "{\"Station\":\"BMN\",\"Channel\":"
-			+ "\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":"
-			+ "\"BMN.HHZ.LB.01\"}";
+			+ "\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"}";
 	public static final String STATION = "BMN";
 	public static final String CHANNEL = "HHZ";
 	public static final String NETWORK = "LB";
 	public static final String LOCATION = "01";
-	public static final String SITEID = "BMN.HHZ.LB.01";
 
 	/**
 	 * Able to write a JSON string
@@ -22,7 +20,7 @@ public class SiteTest {
 	@Test
 	public void writesJSON() {
 
-		Site SiteObject = new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION);
+		Site SiteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(SiteObject.toJSON());
@@ -59,7 +57,7 @@ public class SiteTest {
 	@Test
 	public void validate() {
 
-		Site siteObject = new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION);
+		Site siteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
 
 		// Successful validation
 		boolean rc = siteObject.isValid();
@@ -68,7 +66,7 @@ public class SiteTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad source object
-		Site badSiteObject = new Site(SITEID, null, null, null, null);
+		Site badSiteObject = new Site(null, null, null, null);
 
 		rc = badSiteObject.isValid();
 
@@ -96,10 +94,6 @@ public class SiteTest {
 		// check SiteObject.Location
 		assertEquals(TestName + " Location Equals", LOCATION,
 				SiteObject.getLocation());
-
-		// check SiteObject.SiteID
-		assertEquals(TestName + " SiteID Equals", SITEID,
-				SiteObject.getSiteID());
 
 	}
 

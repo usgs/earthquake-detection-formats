@@ -85,11 +85,6 @@ public class Detection implements DetectionInt {
 	private final ArrayList<Pick> pickData;
 
 	/**
-	 * An optional vector of Beam objects used to generate this origin
-	 */
-	private final ArrayList<Beam> beamData;
-
-	/**
 	 * An optional vector of Detection objects used to generate this origin
 	 */
 	private final ArrayList<Correlation> correlationData;
@@ -111,7 +106,6 @@ public class Detection implements DetectionInt {
 		rms = null;
 		gap = null;
 		pickData = null;
-		beamData = null;
 		correlationData = null;
 	}
 
@@ -159,9 +153,6 @@ public class Detection implements DetectionInt {
 	 * @param newPickData
 	 *            - A ArrayList&lt;Pick&gt; newPickData containing the data that
 	 *            went into this origin, null to omit
-	 * @param newBeamData
-	 *            - A ArrayList&lt;Beam&gt; newBeamData containing the data that
-	 *            went into this origin, null to omit
 	 * @param newCorrelationData
 	 *            - A ArrayList&lt;Detection&gt; newCorrelationData containing
 	 *            the data that went into this origin, null to omit
@@ -172,7 +163,6 @@ public class Detection implements DetectionInt {
 			Double newTimeError, Double newDepthError, String newDetectionType,
 			String newEventType, Double newBayes, Double newMinimumDistance,
 			Double newRMS, Double newGap, ArrayList<Pick> newPickData,
-			ArrayList<Beam> newBeamData,
 			ArrayList<Correlation> newCorrelationData) {
 
 		this(newID, new Source(newAgencyID, newAuthor),
@@ -180,7 +170,7 @@ public class Detection implements DetectionInt {
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
 				newDetectionType, newEventType, newBayes, newMinimumDistance,
-				newRMS, newGap, newPickData, newBeamData, newCorrelationData);
+				newRMS, newGap, newPickData, newCorrelationData);
 	}
 
 	/**
@@ -209,19 +199,16 @@ public class Detection implements DetectionInt {
 	 * @param newGap
 	 *            - A Double containing the gap to use, null to omit
 	 * @param newPickData
-	 *            - A Vector&lt;Pick&gt; newPickData containing the data that
-	 *            went into this origin, null to omit
-	 * @param newBeamData
-	 *            - A Vector&lt;Beam&gt; newBeamData containing the data that
+	 *            - A ArrayList&lt;Pick&gt; newPickData containing the data that
 	 *            went into this origin, null to omit
 	 * @param newCorrelationData
-	 *            - A Vector&lt;Detection&gt; newCorrelationData containing the
+	 *            - A ArrayList&lt;Detection&gt; newCorrelationData containing the
 	 *            data that went into this origin, null to omit
 	 */
 	public Detection(String newID, Source newSource, Hypocenter newHypocenter,
 			String newDetectionType, String newEventType, Double newBayes,
 			Double newMinimumDistance, Double newRMS, Double newGap,
-			ArrayList<Pick> newPickData, ArrayList<Beam> newBeamData,
+			ArrayList<Pick> newPickData,
 			ArrayList<Correlation> newCorrelationData) {
 
 		type = "Detection";
@@ -236,7 +223,6 @@ public class Detection implements DetectionInt {
 		gap = newGap;
 
 		pickData = newPickData;
-		beamData = newBeamData;
 		correlationData = newCorrelationData;
 	}
 
@@ -325,7 +311,6 @@ public class Detection implements DetectionInt {
 		if (newJSONObject.containsKey(DATA_KEY)) {
 
 			pickData = new ArrayList<Pick>();
-			beamData = new ArrayList<Beam>();
 			correlationData = new ArrayList<Correlation>();
 
 			// get the array
@@ -348,10 +333,6 @@ public class Detection implements DetectionInt {
 
 							// add to vector
 							pickData.add(new Pick(dataObject));
-						} else if (TypeString.equals("Beam")) {
-
-							// add to vector
-							beamData.add(new Beam(dataObject));
 						} else if (TypeString.equals("Correlation")) {
 
 							// add to vector
@@ -363,7 +344,6 @@ public class Detection implements DetectionInt {
 			}
 		} else {
 			pickData = null;
-			beamData = null;
 			correlationData = null;
 		}
 
@@ -390,7 +370,6 @@ public class Detection implements DetectionInt {
 		Double jsonRMS = getRMS();
 		Double jsonGap = getGap();
 		ArrayList<Pick> jsonPickData = getPickData();
-		ArrayList<Beam> jsonBeamData = getBeamData();
 		ArrayList<Correlation> jsonCorrelationData = getCorrelationData();
 
 		// Required values
@@ -460,20 +439,6 @@ public class Detection implements DetectionInt {
 			}
 		}
 
-		// Beams
-		if ((jsonBeamData != null) && (!jsonBeamData.isEmpty())) {
-
-			// enumerate through the whole arraylist
-			for (Iterator<Beam> beamIterator = jsonBeamData
-					.iterator(); beamIterator.hasNext();) {
-
-				// convert beam to JSON object
-				JSONObject beamObject = ((Beam) beamIterator.next()).toJSON();
-
-				dataArray.add(beamObject);
-			}
-		}
-
 		// Correlation
 		if ((jsonCorrelationData != null) && (!jsonCorrelationData.isEmpty())) {
 
@@ -529,7 +494,6 @@ public class Detection implements DetectionInt {
 		Double jsonMinimumDistance = getMinimumDistance();
 		Double jsonGap = getGap();
 		ArrayList<Pick> jsonPickData = getPickData();
-		ArrayList<Beam> jsonBeamData = getBeamData();
 		ArrayList<Correlation> jsonCorrelationData = getCorrelationData();
 
 		ArrayList<String> errorList = new ArrayList<String>();
@@ -661,24 +625,6 @@ public class Detection implements DetectionInt {
 			}
 		}
 
-		// Beams
-		if ((jsonBeamData != null) && (!jsonBeamData.isEmpty())) {
-
-			// enumerate through the whole arraylist
-			for (Iterator<Beam> beamIterator = jsonBeamData
-					.iterator(); beamIterator.hasNext();) {
-
-				// convert beam to JSON object
-				Beam jsonBeam = ((Beam) beamIterator.next());
-
-				if (!jsonBeam.isValid()) {
-					errorList
-							.add("Invalid Beam in BeamData in Detection Class");
-					break;
-				}
-			}
-		}
-
 		// Correlation
 		if ((jsonCorrelationData != null) && (!jsonCorrelationData.isEmpty())) {
 
@@ -776,13 +722,6 @@ public class Detection implements DetectionInt {
 	 */
 	public ArrayList<Pick> getPickData() {
 		return pickData;
-	}
-
-	/**
-	 * @return the beamData
-	 */
-	public ArrayList<Beam> getBeamData() {
-		return beamData;
 	}
 
 	/**
