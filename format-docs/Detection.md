@@ -36,7 +36,7 @@ applications.
       "MinimumDistance" : Number,
       "RMS"             : Number,
       "Gap"             : Number,
-      "Data"            : [PickJSON, BeamJSON, and / or CorrelationJSON Objects, ...]
+      "Data"            : [PickJSON and/or CorrelationJSON Objects, ...]
     }
 ```
 
@@ -57,6 +57,6 @@ Optional Values:
 * Bayes - A decimal number that identifies bayesian statistic for this Detection.
 * Sigma - A decimal number indicating the standard deviation of the hypocenter
 time measurement.
-* Data - An array of [Pick](Pick.md), [Beam](Beam.md), and / or
+* Data - An array of [Pick](Pick.md), and / or
 [Correlation](Correlation.md) objects used to generate this Detection.
 * MinimumDistance - The minimum distance to the closest station.

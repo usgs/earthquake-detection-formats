@@ -15,10 +15,8 @@ applications and organizations.
     {
       "Type"      : "Pick",
       "ID"        : String,
-      "SiteID"    : String,
       "Site"      :
       {
-         "SiteID"    : String,
          "Station"   : String,
          "Channel"   : String,
          "Network"   : String,
@@ -40,6 +38,15 @@ applications and organizations.
          "Amplitude" : Number,
          "Period"    : Number,
          "SNR"       : Number
+      },
+      "Beam" :
+      {    
+        "BackAzimuth"      : Number,
+        "BackAzimuthError" : Number,
+        "Slowness"         : Number,
+        "SlownessError"    : Number,
+        "PowerRatio"       : Number,
+        "PowerRatioError"  : Number,      
       },
       "AssociationInfo" :
       {
@@ -80,6 +87,8 @@ was made, see
 [Filter](Filter.md).
 * Amplitude - An object containing the amplitude associated with the pick, see
 [Amplitude](Amplitude.md).
+* Beam - An object containing the waveform beam information associated with the
+pick, see [Beam](Beam.md).
 * AssociationInfo - An object containing the association information if this
 pick is used as data in a [Detection](Detection.md), see
 [Associated](Associated.md).

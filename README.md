@@ -20,8 +20,6 @@ seismic event detections.
 ## Defined formats:
 * [Pick](format-docs/Pick.md) Format - A format for unassociated picks from a
 waveform arrival time picking algorithm.
-* [Beam](format-docs/Beam.md) Format  - A format for unassociated beams from
-seismic array beamforming algorithm.
 * [Correlation](format-docs/Correlation.md) Format - A format to contain a
 seismic event detection made using a cross correlation algorithm.
 * [Detection](format-docs/Detection.md) Format - A format to contain a seismic
@@ -30,18 +28,20 @@ event detection generated using an event detection or association algorithm.
 retraction made using an event detection algorithm.
 
 ## Supporting objects:
-* [Hypocenter](format-docs/Hypocenter.md) Object - An object that contains information about
-a hypocenter as part of a detection.
+* [Hypocenter](format-docs/Hypocenter.md) Object - An object that contains
+information about a hypocenter as part of a detection.
 * [Amplitude](format-docs/Amplitude.md) Object - An object that contains
 information about an amplitude as part of a pick.
+* [Beam](format-docs/Beam.md) Object  - An object that contains information
+about a waveform beam as part of a pick.
 * [Associated](format-docs/Associated.md) Object - An object that contains
-associated information if a pick, beam, or correlation is included in an origin.
+associated information if a pick, beam, or correlation is included in an detection.
 * [Filter](format-docs/Filter.md) Object - An object that contains filter
 information as part of a pick.
 * [Site](format-docs/Site.md) Object - An object that defines the station used
 to create a pick, beam, correlation,
 * [Source](format-docs/Source.md) Object - An object that defines the
-creator/source of a pick, beam, correlation, or origin
+creator/source of a pick, correlation, or detection
 
 ## Supported Languages:
 Currently a library written in C++11, and a Java 1.7 jar file exist to generate
