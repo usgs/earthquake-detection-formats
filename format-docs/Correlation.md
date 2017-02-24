@@ -16,7 +16,6 @@ applications and organizations.
       "ID"        : String,
       "Site"      :
       {
-         "SiteID"   : String,
          "Station"  : String,
          "Channel"  : String,
          "Network"  : String,

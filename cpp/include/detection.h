@@ -10,18 +10,18 @@
 #include <string>
 #include <vector>
 
+#include "source.h"
 #include "hypocenter.h"
 #include "pick.h"
-#include "beam.h"
 #include "correlation.h"
 
 namespace detectionformats {
 /**
  * \brief detectionformats detection conversion class
  *
- * The detectionformats detection class is a conversion class used to create, parse,
- * and validate the event detection data format detection.  The detection format uses
- * the JSON standard (www.json.org)
+ * The detectionformats detection class is a conversion class used to create,
+ * parse, and validate the event detection data format detection.  The detection
+ * format uses the JSON standard (www.json.org)
  *
  * detection is intended for use in seismic data messaging between seismic
  * applications and organizations.
@@ -49,7 +49,8 @@ public:
 	 * \param newauthor - A std::string containing the author to use
 	 * \param newlatitude - A double containing the latitude to use
 	 * \param newlongitude - A double containing the longitude to use
-	 * \param newdetectiontime - A double containing the new detection time to use
+	 * \param newdetectiontime - A double containing the new detection time to
+	 * use
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -70,12 +71,11 @@ public:
 	 * \param newgap - A double containing the gap to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newpickdata - A std::vector<detectionformats::pickjson> newdata
-	 * 		containing the data that went into this detection, empty vector to omit
-	 * \param newbeamdata - A std::vector<detectionformats::beamjson> newdata
-	 * 		containing the data that went into this detection, empty vector to omit
+	 * 		containing the data that went into this detection, empty vector to
+	 * 		omit
 	 * \param newcorrelationdata - A std::vector<detectionformats::correlationjson>
-	 * 		newdata containing the data that went into this detection, empty vector
-	 * 		to omit
+	 * 		newdata containing the data that went into this detection, empty
+	 * 		vector to omit
 	 */
 	detection(std::string newid, std::string newagencyid, std::string newauthor,
 			double newlatitude, double newlongitude, double newdetectiontime,
@@ -84,7 +84,6 @@ public:
 			std::string newdetectiontype, std::string neweventtype,
 			double newbayes, double newminimumdistance, double newrms,
 			double newgap, std::vector<detectionformats::pick> newpickdata,
-			std::vector<detectionformats::beam> newbeamdata,
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
@@ -96,10 +95,10 @@ public:
 	 * \param newid - A std::string containing the id to use
 	 * \param newsource - A detectionformats::source containing the source to
 	 * 		use
-	 * \param newhypocenter - A detectionformats::hypocenter containing the hypocenter
-	 * 		to use
-	 * \param newdetectiontype - A std::string containing the detection type to use,
-	 * 		empty string to omit
+	 * \param newhypocenter - A detectionformats::hypocenter containing the
+	 * 		hypocenter to use
+	 * \param newdetectiontype - A std::string containing the detection type to
+	 * 		use, empty string to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
@@ -111,19 +110,17 @@ public:
 	 * \param newgap - A double containing the gap to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newpickdata - A std::vector<detectionformats::pickjson> newdata
-	 * 		containing the data that went into this detection, empty vector to omit
-	 * \param newbeamdata - A std::vector<detectionformats::beamjson> newdata
-	 * 		containing the data that went into this detection, empty vector to omit
+	 * 		containing the data that went into this detection, empty vector to
+	 * 		omit
 	 * \param newcorrelationdata - A std::vector<detectionformats::correlationjson>
-	 * 		newdata containing the data that went into this detection, empty vector
-	 * 		to omit
+	 * 		newdata containing the data that went into this detection, empty
+	 * 		vector to omit
 	 */
 	detection(std::string newid, detectionformats::source newsource,
 			detectionformats::hypocenter newhypocenter,
 			std::string newdetectiontype, std::string neweventtype,
 			double newbayes, double newminimumdistance, double newrms,
 			double newgap, std::vector<detectionformats::pick> newpickdata,
-			std::vector<detectionformats::beam> newbeamdata,
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
@@ -185,7 +182,7 @@ public:
 	detectionformats::source source;
 
 	/**
-	 * \brief correlation hypocenter
+	 * \brief detection hypocenter
 	 *
 	 * A required detectionformats::hypocenter defining the hypocenter of this
 	 * detection message
@@ -242,13 +239,6 @@ public:
 	 * An optional vector of pick objects used to generate this detection
 	 */
 	std::vector<detectionformats::pick> pickdata;
-
-	/**
-	 * \brief beam data vector
-	 *
-	 * An optional vector of beam objects used to generate this detection
-	 */
-	std::vector<detectionformats::beam> beamdata;
 
 	/**
 	 * \brief correlation data vector

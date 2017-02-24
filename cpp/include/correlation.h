@@ -45,7 +45,6 @@ public:
 	 * Initilizes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
-	 * \param newsiteid - A std::string containing the siteid to use
 	 * \param newstation - A std::string containing the station to use
 	 * \param newchannel - A std::string containing the channel to use
 	 * \param newnetwork - A std::string containing the network to use
@@ -80,16 +79,16 @@ public:
 	 * \param newthresholdtype - A std::string containing the threshold type to
 	 * 		use, empty string to omit
 	 */
-	correlation(std::string newid, std::string newsiteid,
-			std::string newstation, std::string newchannel,
-			std::string newnetwork, std::string newlocation,
-			std::string newagencyid, std::string newauthor,
-			std::string newphase, double newtime, double newcorrelation,
-			double newlatitude, double newlongitude, double neworigintime,
-			double newdepth, double newlatitudeerror, double newlongitudeerror,
-			double newtimeerror, double newdeptherror, std::string neweventtype,
-			double newmagnitude, double newsnr, double newzscore,
-			double newdetectionthreshold, std::string newthresholdtype);
+	correlation(std::string newid, std::string newstation,
+			std::string newchannel, std::string newnetwork,
+			std::string newlocation, std::string newagencyid,
+			std::string newauthor, std::string newphase, double newtime,
+			double newcorrelation, double newlatitude, double newlongitude,
+			double neworigintime, double newdepth, double newlatitudeerror,
+			double newlongitudeerror, double newtimeerror, double newdeptherror,
+			std::string neweventtype, double newmagnitude, double newsnr,
+			double newzscore, double newdetectionthreshold,
+			std::string newthresholdtype);
 
 	/**
 	 * \brief correlation advanced constructor
@@ -98,7 +97,6 @@ public:
 	 * Initilizes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
-	 * \param newsiteid - A std::string containing the siteid to use
 	 * \param newstation - A std::string containing the station to use
 	 * \param newchannel - A std::string containing the channel to use
 	 * \param newnetwork - A std::string containing the network to use
@@ -143,19 +141,18 @@ public:
 	 * \param newassociatedsigma - A double containing the associated sigma to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
-	correlation(std::string newid, std::string newsiteid,
-			std::string newstation, std::string newchannel,
-			std::string newnetwork, std::string newlocation,
-			std::string newagencyid, std::string newauthor,
-			std::string newphase, double newtime, double newcorrelation,
-			double newlatitude, double newlongitude, double neworigintime,
-			double newdepth, double newlatitudeerror, double newlongitudeerror,
-			double newtimeerror, double newdeptherror, std::string neweventtype,
-			double newmagnitude, double newsnr, double newzscore,
-			double newdetectionthreshold, std::string newthresholdtype,
-			std::string newassociatedphase, double newassociateddistance,
-			double newassociatedazimuth, double newassociatedresidual,
-			double newassociatedsigma);
+	correlation(std::string newid, std::string newstation,
+			std::string newchannel, std::string newnetwork,
+			std::string newlocation, std::string newagencyid,
+			std::string newauthor, std::string newphase, double newtime,
+			double newcorrelation, double newlatitude, double newlongitude,
+			double neworigintime, double newdepth, double newlatitudeerror,
+			double newlongitudeerror, double newtimeerror, double newdeptherror,
+			std::string neweventtype, double newmagnitude, double newsnr,
+			double newzscore, double newdetectionthreshold,
+			std::string newthresholdtype, std::string newassociatedphase,
+			double newassociateddistance, double newassociatedazimuth,
+			double newassociatedresidual, double newassociatedsigma);
 
 	/**
 	 * \brief correlation alternate advanced constructor

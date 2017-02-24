@@ -14,7 +14,6 @@ applications and organizations.
 ## Output
 ```json
     {
-      "SiteID"    : String,
       "Station"   : String,
       "Channel"   : String,
       "Network"   : String,
@@ -27,11 +26,8 @@ applications and organizations.
 
 These are the values **required** to define a Site.
 
-* SiteID -  A unique string containing an unique identifier for this station
-usually formatted to contain the available station, channel, network, and/or
-location codes.
 * Station - A string the station code.
-* Site:Network - A string containing network code.
+* Network - A string containing network code.
 
 **Optional Values:**
 

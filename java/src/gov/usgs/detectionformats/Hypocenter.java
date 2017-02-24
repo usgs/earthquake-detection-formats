@@ -275,10 +275,6 @@ public class Hypocenter implements DetectionInt {
 		Double jsonLongitude = getLongitude();
 		Date jsonTime = getTime();
 		Double jsonDepth = getDepth();
-		Double jsonLatitudeError = getLatitudeError();
-		Double jsonLongitudeError = getLongitudeError();
-		Double jsonTimeError = getTimeError();
-		Double jsonDepthError = getDepthError();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 

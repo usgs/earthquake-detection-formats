@@ -38,18 +38,18 @@ correlation::correlation() {
 	associationinfo = detectionformats::associated();
 }
 
-correlation::correlation(std::string newid, std::string newsiteid,
-		std::string newstation, std::string newchannel, std::string newnetwork,
-		std::string newlocation, std::string newagencyid, std::string newauthor,
-		std::string newphase, double newtime, double newcorrelation,
-		double newlatitude, double newlongitude, double neworigintime,
-		double newdepth, double newlatitudeerror, double newlongitudeerror,
-		double newtimeerror, double newdeptherror, std::string neweventtype,
-		double newmagnitude, double newsnr, double newzscore,
-		double newdetectionthreshold, std::string newthresholdtype) {
+correlation::correlation(std::string newid, std::string newstation,
+		std::string newchannel, std::string newnetwork, std::string newlocation,
+		std::string newagencyid, std::string newauthor, std::string newphase,
+		double newtime, double newcorrelation, double newlatitude,
+		double newlongitude, double neworigintime, double newdepth,
+		double newlatitudeerror, double newlongitudeerror, double newtimeerror,
+		double newdeptherror, std::string neweventtype, double newmagnitude,
+		double newsnr, double newzscore, double newdetectionthreshold,
+		std::string newthresholdtype) {
 	type = CORRELATION_TYPE;
 	id = newid;
-	site = detectionformats::site(newsiteid, newstation, newchannel, newnetwork,
+	site = detectionformats::site(newstation, newchannel, newnetwork,
 			newlocation);
 	source = detectionformats::source(newagencyid, newauthor);
 	phase = newphase;
@@ -67,21 +67,20 @@ correlation::correlation(std::string newid, std::string newsiteid,
 	associationinfo = detectionformats::associated();
 }
 
-correlation::correlation(std::string newid, std::string newsiteid,
-		std::string newstation, std::string newchannel, std::string newnetwork,
-		std::string newlocation, std::string newagencyid, std::string newauthor,
-		std::string newphase, double newtime, double newcorrelation,
-		double newlatitude, double newlongitude, double neworigintime,
-		double newdepth, double newlatitudeerror, double newlongitudeerror,
-		double newtimeerror, double newdeptherror, std::string neweventtype,
-		double newmagnitude, double newsnr, double newzscore,
-		double newdetectionthreshold, std::string newthresholdtype,
-		std::string newassociatedphase, double newassociateddistance,
-		double newassociatedazimuth, double newassociatedresidual,
-		double newassociatedsigma) {
+correlation::correlation(std::string newid, std::string newstation,
+		std::string newchannel, std::string newnetwork, std::string newlocation,
+		std::string newagencyid, std::string newauthor, std::string newphase,
+		double newtime, double newcorrelation, double newlatitude,
+		double newlongitude, double neworigintime, double newdepth,
+		double newlatitudeerror, double newlongitudeerror, double newtimeerror,
+		double newdeptherror, std::string neweventtype, double newmagnitude,
+		double newsnr, double newzscore, double newdetectionthreshold,
+		std::string newthresholdtype, std::string newassociatedphase,
+		double newassociateddistance, double newassociatedazimuth,
+		double newassociatedresidual, double newassociatedsigma) {
 	type = CORRELATION_TYPE;
 	id = newid;
-	site = detectionformats::site(newsiteid, newstation, newchannel, newnetwork,
+	site = detectionformats::site(newstation, newchannel, newnetwork,
 			newlocation);
 	source = detectionformats::source(newagencyid, newauthor);
 	phase = newphase;

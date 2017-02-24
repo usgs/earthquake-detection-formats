@@ -11,8 +11,7 @@ public class CorrelationTest {
 
 	public static String CORRELATION_STRING = "{\"ZScore\":33.67,"
 			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\","
-			+ "\"Network\":\"LB\",\"Location\":\"01\","
-			+ "\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,"
+			+ "\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,"
 			+ "\"Type\":\"Correlation\",\"Correlation\":2.65,"
 			+ "\"EventType\":\"earthquake\","
 			+ "\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,"
@@ -32,7 +31,6 @@ public class CorrelationTest {
 	public static String CHANNEL = "HHZ";
 	public static String NETWORK = "LB";
 	public static String LOCATION = "01";
-	public static String SITEID = "BMN.HHZ.LB.01";
 	public static String AGENCYID = "US";
 	public static String AUTHOR = "TestAuthor";
 	public static Date TIME = Utility.getDate("2015-12-28T21:32:24.017Z");
@@ -64,13 +62,12 @@ public class CorrelationTest {
 	@Test
 	public void writesJSON() {
 
-		Correlation correlationObject = new Correlation(ID, SITEID, STATION,
-				CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME,
-				CORRELATION, LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
-				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE,
-				MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE,
-				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL,
-				ASSOCSIGMA);
+		Correlation correlationObject = new Correlation(ID, STATION, CHANNEL,
+				NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
+				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
+				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(correlationObject.toJSON());
@@ -109,23 +106,22 @@ public class CorrelationTest {
 	public void altConstructors() {
 
 		// use constructor
-		Correlation correlationObject = new Correlation(ID, SITEID, STATION,
-				CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME,
-				CORRELATION, LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
-				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE,
-				MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE,
-				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL,
-				ASSOCSIGMA);
+		Correlation correlationObject = new Correlation(ID, STATION, CHANNEL,
+				NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
+				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
+				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// check data values
 		checkData(correlationObject, "Alternate Constructor 1");
 
 		// use constructor
 		Correlation altCorrelationObject = new Correlation(ID,
-				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION),
+				new Site(STATION, CHANNEL, NETWORK, LOCATION),
 				new Source(AGENCYID, AUTHOR), PHASE, TIME, CORRELATION,
-				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
-						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
+						LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 				EVENTTYPE, MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 				THRESHOLDTYPE);
 
@@ -134,10 +130,10 @@ public class CorrelationTest {
 
 		// use constructor
 		Correlation altAltCorrelationObject = new Correlation(ID,
-				new Site(SITEID, STATION, CHANNEL, NETWORK, LOCATION),
+				new Site(STATION, CHANNEL, NETWORK, LOCATION),
 				new Source(AGENCYID, AUTHOR), PHASE, TIME, CORRELATION,
-				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
-						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
+						LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 				EVENTTYPE, MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 				THRESHOLDTYPE, new Associated(ASSOCPHASE, ASSOCDISTANCE,
 						ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
@@ -152,13 +148,12 @@ public class CorrelationTest {
 	@Test
 	public void validate() {
 
-		Correlation correlationObject = new Correlation(ID, SITEID, STATION,
-				CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME,
-				CORRELATION, LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
-				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE,
-				MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE,
-				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL,
-				ASSOCSIGMA);
+		Correlation correlationObject = new Correlation(ID, STATION, CHANNEL,
+				NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
+				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
+				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		// Successful validation
 		boolean rc = correlationObject.isValid();
@@ -167,13 +162,12 @@ public class CorrelationTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad Correlation object
-		Correlation badCorrelationObject = new Correlation("", null, "",
-				CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME,
-				CORRELATION, LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
-				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE,
-				MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE,
-				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL,
-				ASSOCSIGMA);
+		Correlation badCorrelationObject = new Correlation("", "", CHANNEL,
+				null, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
+				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
+				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
 		rc = badCorrelationObject.isValid();
 
@@ -201,10 +195,6 @@ public class CorrelationTest {
 		// check correlationObject.site.Location
 		assertEquals(TestName + " Location Equals", LOCATION,
 				correlationObject.getSite().getLocation());
-
-		// check correlationObject.site.SiteID
-		assertEquals(TestName + " SiteID Equals", SITEID,
-				correlationObject.getSite().getSiteID());
 
 		// check correlationObject.Source.AgencyID
 		assertEquals(TestName + " AgencyID Equals", AGENCYID,
@@ -283,7 +273,8 @@ public class CorrelationTest {
 		assertEquals(TestName + " ThresholdType Equals", THRESHOLDTYPE,
 				correlationObject.getThresholdType());
 
-		if (!correlationObject.getAssociationInfo().isEmpty()) {
+		if ((correlationObject.getAssociationInfo() != null)
+				&& (!correlationObject.getAssociationInfo().isEmpty())) {
 			// check correlationObject.Associated.Phase
 			assertEquals(TestName + " Phase Equals", ASSOCPHASE,
 					correlationObject.getAssociationInfo().getPhase());

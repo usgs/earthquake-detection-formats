@@ -3,7 +3,7 @@
 ## Description
 
 The Associated object is an object designed to encode information provided when
-a [Pick](Pick.md), [Beam](Beam.md), or [Correlation](Correlation.md) is included
+a [Pick](Pick.md) or [Correlation](Correlation.md) is included
 as supporting data in a [Detection](Detection.md).  Associated uses the
 [JSON standard](http://www.json.org).
 
