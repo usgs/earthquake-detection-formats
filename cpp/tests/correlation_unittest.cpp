@@ -4,13 +4,12 @@
 #include <string>
 
 // test data
-#define CORRELATIONSTRING "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
+#define CORRELATIONSTRING "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
 #define ID "12GFH48776857"
 #define STATION "BMN"
 #define CHANNEL "HHZ"
 #define NETWORK "LB"
 #define LOCATION "01"
-#define SITEID "BMN.HHZ.LB.01"
 #define AGENCYID "US"
 #define AUTHOR "TestAuthor"
 #define TIME "2015-12-28T21:32:24.017Z"
@@ -62,11 +61,6 @@ void checkdata(detectionformats::correlation correlationobject,
 	std::string sitelocation = correlationobject.site.location;
 	std::string expectedlocation = std::string(LOCATION);
 	ASSERT_STREQ(sitelocation.c_str(), expectedlocation.c_str());
-
-	// check siteid
-	std::string sitesiteid = correlationobject.site.siteid;
-	std::string expectedsiteid = std::string(SITEID);
-	ASSERT_STREQ(sitesiteid.c_str(), expectedsiteid.c_str());
 
 	// check agencyid
 	std::string sourceagencyid = correlationobject.source.agencyid;
@@ -202,7 +196,6 @@ TEST(CorrelationTest, WritesJSON) {
 	correlationobject.id = std::string(ID);
 
 	// site subobject
-	correlationobject.site.siteid = std::string(SITEID);
 	correlationobject.site.station = std::string(STATION);
 	correlationobject.site.channel = std::string(CHANNEL);
 	correlationobject.site.network = std::string(NETWORK);
@@ -274,7 +267,7 @@ TEST(CorrelationTest, ReadsJSON) {
 TEST(CorrelationTest, Constructor) {
 	// use constructor
 	detectionformats::correlation correlationobject(std::string(ID),
-			std::string(SITEID), std::string(STATION), std::string(CHANNEL),
+			std::string(STATION), std::string(CHANNEL),
 			std::string(NETWORK), std::string(LOCATION), std::string(AGENCYID),
 			std::string(AUTHOR), std::string(PHASE),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
@@ -290,7 +283,7 @@ TEST(CorrelationTest, Constructor) {
 	checkdata(correlationobject, "Tested Constructor");
 
 	detectionformats::correlation correlationobject_altc(std::string(ID),
-			detectionformats::site(std::string(SITEID), std::string(STATION),
+			detectionformats::site(std::string(STATION),
 					std::string(CHANNEL), std::string(NETWORK),
 					std::string(LOCATION)),
 			detectionformats::source(std::string(AGENCYID),
@@ -316,7 +309,7 @@ TEST(CorrelationTest, Constructor) {
 TEST(CorrelationTest, CopyConstructor) {
 	// use constructor
 	detectionformats::correlation fromcorrelationobject(std::string(ID),
-			std::string(SITEID), std::string(STATION), std::string(CHANNEL),
+			std::string(STATION), std::string(CHANNEL),
 			std::string(NETWORK), std::string(LOCATION), std::string(AGENCYID),
 			std::string(AUTHOR), std::string(PHASE),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
@@ -343,7 +336,6 @@ TEST(CorrelationTest, Validate) {
 	correlationobject.id = std::string(ID);
 
 	// site subobject
-	correlationobject.site.siteid = std::string(SITEID);
 	correlationobject.site.station = std::string(STATION);
 	correlationobject.site.channel = std::string(CHANNEL);
 	correlationobject.site.network = std::string(NETWORK);

@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define DETECTIONSTRING "{\"Type\":\"Detection\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"DetectionType\":\"New\",\"EventType\":\"earthquake\",\"Bayes\":2.65,\"MinimumDistance\":2.14,\"RMS\":3.8,\"Gap\":33.67,\"Data\":[{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}]}"
+#define DETECTIONSTRING "{\"Type\":\"Detection\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"DetectionType\":\"New\",\"EventType\":\"earthquake\",\"Bayes\":2.65,\"MinimumDistance\":2.14,\"RMS\":3.8,\"Gap\":33.67,\"Data\":[{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}]}"
 #define ID "12GFH48776857"
 #define AGENCYID "US"
 #define AUTHOR "TestAuthor"
@@ -22,9 +22,8 @@
 #define MINIMUMDISTANCE 2.14
 #define RMS 3.8
 #define GAP 33.67
-#define PICKDATA "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-#define BEAMDATA "{\"Type\":\"Beam\",\"ID\":\"12GFH48776857\",\"Site\":{\"SiteID\":\"BMN.HHZ.LB.01\",\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"StartTime\":\"2015-12-28T21:32:24.017Z\",\"EndTime\":\"2015-12-28T21:32:30.017Z\",\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557,\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-#define CORRELATIONDATA "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"SiteID\":\"BMN.HHZ.LB.01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
+#define PICKDATA "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65},{\"HighPass\":2.10,\"LowPass\":3.58}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557}}"
+#define CORRELATIONDATA "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
 
 std::vector<detectionformats::pick> buildpickdata() {
 	std::vector<detectionformats::pick> newpickdata;
@@ -37,19 +36,6 @@ std::vector<detectionformats::pick> buildpickdata() {
 	newpickdata.push_back(pickobject);
 
 	return (newpickdata);
-}
-
-std::vector<detectionformats::beam> buildbeamdata() {
-	std::vector<detectionformats::beam> newbeamdata;
-
-	// beam ?need one more?
-	rapidjson::Document beamdocument;
-	detectionformats::beam beamobject(
-			detectionformats::FromJSONString(std::string(BEAMDATA),
-					beamdocument));
-	newbeamdata.push_back(beamobject);
-
-	return (newbeamdata);
 }
 
 std::vector<detectionformats::correlation> buildcorrleationdata() {
@@ -65,7 +51,8 @@ std::vector<detectionformats::correlation> buildcorrleationdata() {
 	return (newcorrelationdata);
 }
 
-void checkdata(detectionformats::detection detectionobject, std::string testinfo) {
+void checkdata(detectionformats::detection detectionobject,
+		std::string testinfo) {
 	// check id
 	std::string detectionid = detectionobject.id;
 	std::string expectedid = std::string(ID);
@@ -103,39 +90,53 @@ void checkdata(detectionformats::detection detectionobject, std::string testinfo
 	ASSERT_EQ(depth, expecteddepth);
 
 	// check latitude error
-	double latitudeerror = detectionobject.hypocenter.latitudeerror;
-	double expectedlatitudeerror = LATITUDEERROR;
-	ASSERT_EQ(latitudeerror, expectedlatitudeerror);
+	if (std::isnan(detectionobject.hypocenter.latitudeerror) != true) {
+		double latitudeerror = detectionobject.hypocenter.latitudeerror;
+		double expectedlatitudeerror = LATITUDEERROR;
+		ASSERT_EQ(latitudeerror, expectedlatitudeerror);
+	}
 
 	// check longitude error
-	double longitdeerror = detectionobject.hypocenter.longitudeerror;
-	double expectedlongitudeerror = LONGITUDEERROR;
-	ASSERT_EQ(longitdeerror, expectedlongitudeerror);
+	if (std::isnan(detectionobject.hypocenter.longitudeerror) != true) {
+		double longitdeerror = detectionobject.hypocenter.longitudeerror;
+		double expectedlongitudeerror = LONGITUDEERROR;
+		ASSERT_EQ(longitdeerror, expectedlongitudeerror);
+	}
 
 	// check time error
-	double timeerror = detectionobject.hypocenter.timeerror;
-	double expectedtimeerror = TIMEERROR;
-	ASSERT_EQ(timeerror, expectedtimeerror);
+	if (std::isnan(detectionobject.hypocenter.timeerror) != true) {
+		double timeerror = detectionobject.hypocenter.timeerror;
+		double expectedtimeerror = TIMEERROR;
+		ASSERT_EQ(timeerror, expectedtimeerror);
+	}
 
 	// check depth error
-	double deptherror = detectionobject.hypocenter.deptherror;
-	double expecteddeptherror = DEPTHERROR;
-	ASSERT_EQ(deptherror, expecteddeptherror);
+	if (std::isnan(detectionobject.hypocenter.deptherror) != true) {
+		double deptherror = detectionobject.hypocenter.deptherror;
+		double expecteddeptherror = DEPTHERROR;
+		ASSERT_EQ(deptherror, expecteddeptherror);
+	}
 
 	// check detectiontype
-	std::string detectiondetectiontype = detectionobject.detectiontype;
-	std::string expecteddetectiontype = std::string(DETECTIONTYPE);
-	ASSERT_STREQ(detectiondetectiontype.c_str(), expecteddetectiontype.c_str());
-
+	if (detectionobject.detectiontype.compare("") != true) {
+		std::string detectiondetectiontype = detectionobject.detectiontype;
+		std::string expecteddetectiontype = std::string(DETECTIONTYPE);
+		ASSERT_STREQ(detectiondetectiontype.c_str(),
+				expecteddetectiontype.c_str());
+	}
 	// check eventtype
-	std::string detectioneventtype = detectionobject.eventtype;
-	std::string expectedeventtype = std::string(EVENTTYPE);
-	ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
+	if (detectionobject.eventtype.compare("") != true) {
+		std::string detectioneventtype = detectionobject.eventtype;
+		std::string expectedeventtype = std::string(EVENTTYPE);
+		ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
+	}
 
 	// check bayes
-	double detectionbayes = detectionobject.bayes;
-	double expectedbayes = BAYES;
-	ASSERT_EQ(detectionbayes, expectedbayes);
+	if (std::isnan(detectionobject.bayes) != true) {
+		double detectionbayes = detectionobject.bayes;
+		double expectedbayes = BAYES;
+		ASSERT_EQ(detectionbayes, expectedbayes);
+	}
 
 	// check minimumdistance
 	double detectionminimumdistance = detectionobject.minimumdistance;
@@ -170,8 +171,8 @@ TEST(DetectionTest, WritesJSON) {
 
 	detectionobject.hypocenter.latitude = LATITUDE;
 	detectionobject.hypocenter.longitude = LONGITUDE;
-	detectionobject.hypocenter.time = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
+	detectionobject.hypocenter.time =
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
 	detectionobject.hypocenter.depth = DEPTH;
 	detectionobject.hypocenter.latitudeerror = LATITUDEERROR;
 	detectionobject.hypocenter.longitudeerror = LONGITUDEERROR;
@@ -187,18 +188,19 @@ TEST(DetectionTest, WritesJSON) {
 
 	// data
 	detectionobject.pickdata = buildpickdata();
-	detectionobject.beamdata = buildbeamdata();
 	detectionobject.correlationdata = buildcorrleationdata();
 
 	// build json string
 	rapidjson::Document detectiondocument;
 	std::string detectionjson = detectionformats::ToJSONString(
-			detectionobject.tojson(detectiondocument, detectiondocument.GetAllocator()));
+			detectionobject.tojson(detectiondocument,
+					detectiondocument.GetAllocator()));
 
 	// read it back in
 	rapidjson::Document detectiondocument2;
 	detectionformats::detection detectionobject2(
-			detectionformats::FromJSONString(detectionjson, detectiondocument2));
+			detectionformats::FromJSONString(detectionjson,
+					detectiondocument2));
 
 	// check data values
 	checkdata(detectionobject2, "");
@@ -226,7 +228,7 @@ TEST(DetectionTest, Constructor) {
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR,
 			std::string(DETECTIONTYPE), std::string(EVENTTYPE),
-			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(),
 			buildcorrleationdata());
 
 	// check data values
@@ -240,8 +242,7 @@ TEST(DetectionTest, Constructor) {
 							std::string(TIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 			std::string(DETECTIONTYPE), std::string(EVENTTYPE), BAYES,
-			MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(),
-			buildcorrleationdata());
+			MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildcorrleationdata());
 
 	// check data values
 	checkdata(detectionobject_altc, "Tested Alternate Constructor");
@@ -256,7 +257,7 @@ TEST(DetectionTest, CopyConstructor) {
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR,
 			std::string(DETECTIONTYPE), std::string(EVENTTYPE),
-			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(), buildbeamdata(),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(),
 			buildcorrleationdata());
 
 	detectionformats::detection detectionobject(fromdetectionobject);
@@ -279,8 +280,8 @@ TEST(DetectionTest, Validate) {
 
 	detectionobject.hypocenter.latitude = LATITUDE;
 	detectionobject.hypocenter.longitude = LONGITUDE;
-	detectionobject.hypocenter.time = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
+	detectionobject.hypocenter.time =
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME));
 	detectionobject.hypocenter.depth = DEPTH;
 	detectionobject.hypocenter.latitudeerror = LATITUDEERROR;
 	detectionobject.hypocenter.longitudeerror = LONGITUDEERROR;
@@ -296,7 +297,6 @@ TEST(DetectionTest, Validate) {
 
 	// data
 	detectionobject.pickdata = buildpickdata();
-	detectionobject.beamdata = buildbeamdata();
 	detectionobject.correlationdata = buildcorrleationdata();
 
 	// successful validation

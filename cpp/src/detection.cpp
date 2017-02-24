@@ -28,7 +28,6 @@ detection::detection() {
 	rms = std::numeric_limits<double>::quiet_NaN();
 	gap = std::numeric_limits<double>::quiet_NaN();
 	pickdata.clear();
-	beamdata.clear();
 	correlationdata.clear();
 }
 
@@ -39,7 +38,6 @@ detection::detection(std::string newid, std::string newagencyid,
 		std::string newdetectiontype, std::string neweventtype, double newbayes,
 		double newminimumdistance, double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
-		std::vector<detectionformats::beam> newbeamdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
 	id = newid;
@@ -60,11 +58,6 @@ detection::detection(std::string newid, std::string newagencyid,
 		pickdata.push_back(newpickdata[i]);
 	}
 
-	beamdata.clear();
-	for (int i = 0; i < (int) newbeamdata.size(); i++) {
-		beamdata.push_back(newbeamdata[i]);
-	}
-
 	correlationdata.clear();
 	for (int i = 0; i < (int) newcorrelationdata.size(); i++) {
 		correlationdata.push_back(newcorrelationdata[i]);
@@ -72,11 +65,10 @@ detection::detection(std::string newid, std::string newagencyid,
 }
 
 detection::detection(std::string newid, detectionformats::source newsource,
-		detectionformats::hypocenter newhypocenter, std::string newdetectiontype,
-		std::string neweventtype, double newbayes, double newminimumdistance,
-		double newrms, double newgap,
+		detectionformats::hypocenter newhypocenter,
+		std::string newdetectiontype, std::string neweventtype, double newbayes,
+		double newminimumdistance, double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
-		std::vector<detectionformats::beam> newbeamdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
 	id = newid;
@@ -93,11 +85,6 @@ detection::detection(std::string newid, detectionformats::source newsource,
 	pickdata.clear();
 	for (int i = 0; i < (int) newpickdata.size(); i++) {
 		pickdata.push_back(newpickdata[i]);
-	}
-
-	beamdata.clear();
-	for (int i = 0; i < (int) newbeamdata.size(); i++) {
-		beamdata.push_back(newbeamdata[i]);
 	}
 
 	correlationdata.clear();
@@ -188,7 +175,6 @@ detection::detection(rapidjson::Value &json) {
 
 	// data
 	pickdata.clear();
-	beamdata.clear();
 	correlationdata.clear();
 
 	if ((json.HasMember(DATA_KEY) == true)
@@ -209,11 +195,6 @@ detection::detection(rapidjson::Value &json) {
 
 				// add to vector
 				pickdata.push_back(newpickdata);
-			} else if (typestring == BEAM_TYPE) {
-				detectionformats::beam newbeamdata(datavalue);
-
-				// add to vector
-				beamdata.push_back(newbeamdata);
 			} else if (typestring == CORRELATION_TYPE) {
 				detectionformats::correlation newcorrelationdata(datavalue);
 
@@ -243,11 +224,6 @@ detection::detection(const detection & newdetection) {
 		pickdata.push_back(newdetection.pickdata[i]);
 	}
 
-	beamdata.clear();
-	for (int i = 0; i < (int) newdetection.beamdata.size(); i++) {
-		beamdata.push_back(newdetection.beamdata[i]);
-	}
-
 	correlationdata.clear();
 	for (int i = 0; i < (int) newdetection.correlationdata.size(); i++) {
 		correlationdata.push_back(newdetection.correlationdata[i]);
@@ -256,7 +232,6 @@ detection::detection(const detection & newdetection) {
 
 detection::~detection() {
 	pickdata.clear();
-	beamdata.clear();
 	correlationdata.clear();
 }
 
@@ -291,8 +266,8 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 	// detectiontype
 	if (detectiontype != "") {
 		rapidjson::Value detectiontypevalue;
-		detectiontypevalue.SetString(rapidjson::StringRef(detectiontype.c_str()),
-				allocator);
+		detectiontypevalue.SetString(
+				rapidjson::StringRef(detectiontype.c_str()), allocator);
 		json.AddMember(DETECTIONTYPE_KEY, detectiontypevalue, allocator);
 	}
 
@@ -333,15 +308,6 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 		}
 	}
 
-	// beamdata
-	if (beamdata.size() > 0) {
-		for (int i = 0; i < (int) beamdata.size(); i++) {
-			rapidjson::Value beamvalue(rapidjson::kObjectType);
-			beamdata[i].tojson(beamvalue, allocator);
-			dataarray.PushBack(beamvalue, allocator);
-		}
-	}
-
 	// correlationdata
 	if (correlationdata.size() > 0) {
 		for (int i = 0; i < (int) correlationdata.size(); i++) {
@@ -379,7 +345,8 @@ std::vector<std::string> detection::geterrors() {
 	// source
 	if (source.isvalid() != true) {
 		// bad source
-		errorlist.push_back("Source object did not validate in detection class.");
+		errorlist.push_back(
+				"Source object did not validate in detection class.");
 	}
 
 	// hypocenter
@@ -395,7 +362,8 @@ std::vector<std::string> detection::geterrors() {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::detectiontypeindex::newdetection;
-				i < detectionformats::detectiontypeindex::detectiontypecount; i++) {
+				i < detectionformats::detectiontypeindex::detectiontypecount;
+				i++) {
 			if (detectiontype == detectionformats::detectiontypevalues[i]) {
 				match = true;
 				break;
@@ -459,16 +427,6 @@ std::vector<std::string> detection::geterrors() {
 			if (pickdata[i].isvalid() != true) {
 				// bad source
 				errorlist.push_back("Invalid pick in detection class.");
-			}
-		}
-	}
-
-	// beamdata
-	if (beamdata.size() > 0) {
-		for (int i = 0; i < (int) beamdata.size(); i++) {
-			if (beamdata[i].isvalid() != true) {
-				// bad source
-				errorlist.push_back("Invalid beam in detection class.");
 			}
 		}
 	}
