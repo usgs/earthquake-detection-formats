@@ -17,11 +17,13 @@
 #define RETRACTEXTENSION "jsonrtct"
 #define PICKEXTENSION "jsonpick"
 #define CORRELATIONEXTENSION "jsoncorl"
+#define STATIONEXTENSION "jsonsta"
 
 #define DETECTION_TYPE "Detection"
 #define CORRELATION_TYPE "Correlation"
 #define PICK_TYPE "Pick"
 #define RETRACT_TYPE "Retract"
+#define STATION_TYPE "Station"
 
 /**
 * @namespace detectionformats
@@ -83,7 +85,7 @@ namespace detectionformats
 	/**
 	* \brief detectionformats format types
 	*/
-	enum formattypes { picktype = 0, correlationtype = 1, detectiontype = 2, retracttype = 3, unknown = -1 };
+	enum formattypes { picktype = 0, correlationtype = 1, detectiontype = 2, retracttype = 3, stationtype = 4, unknown = -1 };
 
 	/**
 	* \brief detectionformats function to get the detection type for a provided json formatted string

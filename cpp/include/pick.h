@@ -21,8 +21,8 @@ namespace detectionformats {
 /**
  * \brief detectionformats pick conversion class
  *
- * The detectionformats pick class is a conversion class used to create, parse, and
- * validate the unassociated pick data format pick.  The pick format uses
+ * The detectionformats pick class is a conversion class used to create, parse,
+ * and validate the unassociated pick data format pick.  The pick format uses
  * the JSON standard (www.json.org)
  *
  * pick is intended for use in seismic data messaging between seismic
@@ -36,7 +36,7 @@ public:
 	 * \brief pick constructor
 	 *
 	 * The constructor for the pick class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	pick();
 
