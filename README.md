@@ -26,6 +26,8 @@ seismic event detection made using a cross correlation algorithm.
 event detection generated using an event detection or association algorithm.
 * [Retract](format-docs/Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
+* [Station](format-docs/Station.md) Format - A format to contain basic station
+location and quality information.
 
 ## Supporting objects:
 * [Hypocenter](format-docs/Hypocenter.md) Object - An object that contains
@@ -35,13 +37,13 @@ information about an amplitude as part of a pick.
 * [Beam](format-docs/Beam.md) Object  - An object that contains information
 about a waveform beam as part of a pick.
 * [Associated](format-docs/Associated.md) Object - An object that contains
-associated information if a pick, beam, or correlation is included in an detection.
+associated information if a pick or correlation is included in a detection.
 * [Filter](format-docs/Filter.md) Object - An object that contains filter
 information as part of a pick.
 * [Site](format-docs/Site.md) Object - An object that defines the station used
-to create a pick, beam, correlation,
+to create a pick, correlation, or station.
 * [Source](format-docs/Source.md) Object - An object that defines the
-creator/source of a pick, correlation, or detection
+creator/source of a pick, correlation, or detection.
 
 ## Supported Languages:
 Currently a library written in C++11, and a Java 1.7 jar file exist to generate

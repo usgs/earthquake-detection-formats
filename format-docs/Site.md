@@ -3,13 +3,14 @@
 ## Description
 
 The Site object is an object designed to define the seismic station used to
-produce a [Pick](Pick.md), [Beam](Beam.md), or [Correlation](Correlation.md)
-message.  Site uses the [JSON standard](http://www.json.org).
+produce a [Pick](Pick.md), [Correlation](Correlation.md), or
+[Station](Station.md) message.  Site uses the
+[JSON standard](http://www.json.org).
 
 ## Usage
-Site is intended for use as part of the [Pick](Pick.md), [Beam](Beam.md), or
-[Correlation](Correlation.md) Formats in seismic data messaging between seismic
-applications and organizations.
+Site is intended for use as part of the [Pick](Pick.md),
+[Correlation](Correlation.md), or [Station](Station.md) Formats in seismic data
+messaging between seismic applications and organizations.
 
 ## Output
 ```json

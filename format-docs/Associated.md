@@ -8,7 +8,7 @@ as supporting data in a [Detection](Detection.md).  Associated uses the
 [JSON standard](http://www.json.org).
 
 ## Usage
-Pick is intended for use as part of the [Pick](Pick.md), [Beam](Beam.md), or
+Pick is intended for use as part of the [Pick](Pick.md) or
 [Correlation](Correlation.md) Formats in seismic data messaging between seismic
 applications and organizations.
 
