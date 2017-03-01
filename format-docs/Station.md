@@ -41,7 +41,7 @@ degrees.
 * Longitude - A decimal number that identifies the longitude of this station
 in degrees.
 * Elevation - A decimal number that identifies the elevation of this station in
-kilometers.
+meters.
 
 **Optional Values:**
 
