@@ -2,7 +2,7 @@
 
 ## Description
 
-Pick is a format designed to encode the basic information of a station location
+Station is a format designed to encode the basic information of a station location
 and quality.  Station uses the [JSON standard](http://www.json.org).
 
 ## Usage
@@ -47,8 +47,7 @@ kilometers.
 
 The following are supplementary values that **may or may not** be provided as
 part of a station.
-* Quality - A decimal number that indicates the quality of the station,
-defaults to 1.0
+* Quality - A decimal number that indicates the quality of the station
 * Enable - A boolean flag indicating whether use of the station is enabled or
 not, defaults to true.
 * UseForTeleseismic - A boolean flag indicating whether to use the station for
