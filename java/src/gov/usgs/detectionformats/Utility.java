@@ -25,7 +25,6 @@ public class Utility {
 	 */
 	public static final String DETECTIONEXTENSION = "jsondetect";
 	public static final String PICKEXTENSION = "jsonpick";
-	public static final String BEAMEXTENSION = "jsonbeam";
 	public static final String CORRELATIONEXTENSION = "jsoncorl";
 
 	/** Converts the provided string from a serialized JSON string, populating
