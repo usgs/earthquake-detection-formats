@@ -84,7 +84,6 @@ void checkdata(detectionformats::detection detectionobject,
 	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
 			std::string(ORIGINTIME));
 	ASSERT_NEAR(time, expectedtime, 0.0001);
-	//ASSERT_EQ(time, expectedtime);
 
 	// check depth
 	double depth = detectionobject.hypocenter.depth;
@@ -134,7 +133,6 @@ void checkdata(detectionformats::detection detectionobject,
 				detectionformats::ConvertISO8601ToEpochTime(
 						std::string(DETECTIONTIME));
 		ASSERT_NEAR(detectiontime, expecteddetectiontime, 0.0001);
-		//ASSERT_EQ(detectiontime, expecteddetectiontime);
 	}
 
 	// check eventtype
