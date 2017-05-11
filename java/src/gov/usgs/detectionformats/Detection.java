@@ -55,7 +55,8 @@ public class Detection implements DetectionInt {
 	private final String detectionType;
 
 	/**
-	 * Optional detection time for this detection
+	 * Optional double containing the time the detection was made, i.e. how
+	 * quickly after origin time.
 	 */
 	private final Date detectionTime;
 
@@ -147,7 +148,8 @@ public class Detection implements DetectionInt {
 	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
 	 * @param newDetectionTime
-	 *            - A Date containing the detection time to use, null to omit
+	 *            - A Date containing the time the detection was made, i.e. how
+	 *            quickly after origin time, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
 	 * @param newBayes
@@ -197,7 +199,8 @@ public class Detection implements DetectionInt {
 	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
 	 * @param newDetectionTime
-	 *            - A Date containing the detection time to use, null to omit
+	 *            - A Date containing the time the detection was made, i.e. how
+	 *            quickly after origin time, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
 	 * @param newBayes

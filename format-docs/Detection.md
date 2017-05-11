@@ -53,8 +53,9 @@ Required Values:
 Optional Values:
 * DetectionType - A string that identifies whether the Detection is `New`,
 `Update`, or `Final`.
-* DetectionTime - A string containing the UTC detection time of this detection,
-in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
+* DetectionTime - A string containing the UTC time this detection was made,
+i.e. how quickly after origin time was this detection created, in the ISO8601
+format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 * EventType - A string containing the type of Event that was detected;
 `earthquake` or `blast`.
 * Bayes - A decimal number that identifies bayesian statistic for this Detection.

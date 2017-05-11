@@ -61,8 +61,9 @@ public:
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newdetectiontype - A std::string containing the detection type to
 	 * 		use, empty string to omit
-	 * \param newdetectiontime - A double containing the new detection time to
-	 * use std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newdetectiontime - A double containing the new time the detection
+	 * was made, i.e. how quickly after origin time, use
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
@@ -103,6 +104,9 @@ public:
 	 * 		hypocenter to use
 	 * \param newdetectiontype - A std::string containing the detection type to
 	 * 		use, empty string to omit
+	 * \param newdetectiontime - A double containing the new time the detection
+	 * was made, i.e. how quickly after origin time, use
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
@@ -241,7 +245,8 @@ public:
 	/**
 	 * \brief detectiontime value
 	 *
-	 * An optional double containing the detection time for this detetion
+	 * An optional double containing the time the detection was made, i.e.
+	 * how quickly after origin time.
 	 */
 	double detectiontime;
 
