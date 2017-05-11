@@ -9,7 +9,7 @@ import java.util.Date;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
-public class StationTest {
+public class StationInfoTest {
 	public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
 			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
 			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\","

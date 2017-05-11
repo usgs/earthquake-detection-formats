@@ -23,7 +23,6 @@ hypocenter::hypocenter() {
 	longitudeerror = std::numeric_limits<double>::quiet_NaN();
 	deptherror = std::numeric_limits<double>::quiet_NaN();
 	timeerror = std::numeric_limits<double>::quiet_NaN();
-
 }
 
 hypocenter::hypocenter(double newlatitude, double newlongitude, double newtime,
