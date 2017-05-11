@@ -646,7 +646,7 @@ public class Pick implements DetectionInt {
 			errorList.add("Empty Type in Pick Class.");
 		} else if (!jsonType.equals("Pick")) {
 			// wrong type
-			errorList.add("Non-Beam type in Pick Class.");
+			errorList.add("Non-Pick type in Pick Class.");
 		}
 
 		// id
@@ -683,7 +683,6 @@ public class Pick implements DetectionInt {
 		}
 
 		// Optional Keys
-		// phase
 		// phase
 		if (jsonPhase != null) {
 			if (jsonPhase.isEmpty()) {

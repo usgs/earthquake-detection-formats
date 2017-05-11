@@ -11,5 +11,6 @@
 #include "util.h"
 #include "base.h"
 #include "retract.h"
+#include "stationInfo.h"
 
 #endif

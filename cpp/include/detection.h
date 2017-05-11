@@ -49,8 +49,7 @@ public:
 	 * \param newauthor - A std::string containing the author to use
 	 * \param newlatitude - A double containing the latitude to use
 	 * \param newlongitude - A double containing the longitude to use
-	 * \param newdetectiontime - A double containing the new detection time to
-	 * use
+	 * \param newtime - A double containing the new time to use
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -60,6 +59,11 @@ public:
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newdeptherror - A double containing the depth error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newdetectiontype - A std::string containing the detection type to
+	 * 		use, empty string to omit
+	 * \param newdetectiontime - A double containing the new time the detection
+	 * was made, i.e. how quickly after origin time, use
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
@@ -78,12 +82,13 @@ public:
 	 * 		vector to omit
 	 */
 	detection(std::string newid, std::string newagencyid, std::string newauthor,
-			double newlatitude, double newlongitude, double newdetectiontime,
+			double newlatitude, double newlongitude, double newtime,
 			double newdepth, double newlatitudeerror, double newlongitudeerror,
 			double newtimeerror, double newdeptherror,
-			std::string newdetectiontype, std::string neweventtype,
-			double newbayes, double newminimumdistance, double newrms,
-			double newgap, std::vector<detectionformats::pick> newpickdata,
+			std::string newdetectiontype, double newdetectiontime,
+			std::string neweventtype, double newbayes,
+			double newminimumdistance, double newrms, double newgap,
+			std::vector<detectionformats::pick> newpickdata,
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
@@ -99,6 +104,9 @@ public:
 	 * 		hypocenter to use
 	 * \param newdetectiontype - A std::string containing the detection type to
 	 * 		use, empty string to omit
+	 * \param newdetectiontime - A double containing the new time the detection
+	 * was made, i.e. how quickly after origin time, use
+	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
@@ -118,9 +126,10 @@ public:
 	 */
 	detection(std::string newid, detectionformats::source newsource,
 			detectionformats::hypocenter newhypocenter,
-			std::string newdetectiontype, std::string neweventtype,
-			double newbayes, double newminimumdistance, double newrms,
-			double newgap, std::vector<detectionformats::pick> newpickdata,
+			std::string newdetectiontype, double newdetectiontime,
+			std::string neweventtype, double newbayes,
+			double newminimumdistance, double newrms, double newgap,
+			std::vector<detectionformats::pick> newpickdata,
 			std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
@@ -232,6 +241,14 @@ public:
 	 * A required double defining the gap value for this detection
 	 */
 	double gap;
+
+	/**
+	 * \brief detectiontime value
+	 *
+	 * An optional double containing the time the detection was made, i.e.
+	 * how quickly after origin time.
+	 */
+	double detectiontime;
 
 	/**
 	 * \brief pick data vector

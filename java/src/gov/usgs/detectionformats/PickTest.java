@@ -8,7 +8,7 @@ import java.util.Date;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
-public class PickerTest {
+public class PickTest {
 
 	public static String PICK_STRING = "{\"Source\":{\"Author\":\"TestAuthor\","
 			+ "\"AgencyID\":\"US\"},\"Filter\":[{\"HighPass\":1.05,\"LowPass\":"

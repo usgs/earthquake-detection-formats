@@ -36,7 +36,8 @@ public class DetectionTest {
 			+ "\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,"
 			+ "\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,"
 			+ "\"Longitude\":-121.44,\"Depth\":32.44},\"Type\":\"Detection\","
-			+ "\"RMS\":3.8,\"Bayes\":2.65,\"DetectionType\":\"New\",\"ID\":"
+			+ "\"RMS\":3.8,\"Bayes\":2.65,\"DetectionType\":\"New\","
+			+ "\"DetectionTime\":\"2015-12-28T21:32:28.017Z\",\"ID\":"
 			+ "\"12GFH48776857\",\"EventType\":\"earthquake\","
 			+ "\"MinimumDistance\":2.14}";
 	public static String ID = "12GFH48776857";
@@ -51,6 +52,7 @@ public class DetectionTest {
 	public static double DEPTHERROR = 2.44;
 	public static double TIMEERROR = 1.984;
 	public static String DETECTIONTYPE = "New";
+	public static Date DETECTIONTIME = Utility.getDate("2015-12-28T21:32:28.017Z");
 	public static String EVENTTYPE = "earthquake";
 	public static double BAYES = 2.65;
 	public static double MINIMUMDISTANCE = 2.14;
@@ -91,7 +93,7 @@ public class DetectionTest {
 
 		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
-				TIMEERROR, DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES,
+				TIMEERROR, DEPTHERROR, DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(),
 				buildCorrelationData());
 
@@ -133,8 +135,8 @@ public class DetectionTest {
 		Detection originObject = new Detection(ID, new Source(AGENCYID, AUTHOR),
 				new Hypocenter(LATITUDE, LONGITUDE, TIME, DEPTH, LATITUDEERROR,
 						LONGITUDEERROR, TIMEERROR, DEPTHERROR),
-				DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS, GAP,
-				buildPickData(), buildCorrelationData());
+				DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, BAYES, MINIMUMDISTANCE, RMS,
+				GAP, buildPickData(), buildCorrelationData());
 
 		// check data values
 		checkData(originObject, "Alternate Constructor 1");
@@ -148,7 +150,7 @@ public class DetectionTest {
 
 		Detection originObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 				LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
-				TIMEERROR, DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES,
+				TIMEERROR, DEPTHERROR, DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, BAYES,
 				MINIMUMDISTANCE, RMS, GAP, buildPickData(),
 				buildCorrelationData());
 
@@ -161,8 +163,8 @@ public class DetectionTest {
 		// build bad Detection object
 		Detection badOriginObject = new Detection("", AGENCYID, null, LATITUDE,
 				null, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR,
-				DEPTHERROR, DETECTIONTYPE, EVENTTYPE, BAYES, MINIMUMDISTANCE,
-				RMS, GAP, buildPickData(), buildCorrelationData());
+				DEPTHERROR, DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, BAYES,
+				MINIMUMDISTANCE, RMS, GAP, buildPickData(), buildCorrelationData());
 
 		rc = badOriginObject.isValid();
 
@@ -210,6 +212,10 @@ public class DetectionTest {
 		// check OriginObject.DetectionType
 		assertEquals(TestName + " DetectionType Equals", DETECTIONTYPE,
 				originObject.getDetectionType());
+
+		// check originObject.hypocenter.Time
+		assertEquals(TestName + " DetectionTime Equals", DETECTIONTIME,
+						originObject.getDetectionTime());
 
 		// check originObject.EventType
 		assertEquals(TestName + " EventType Equals", EVENTTYPE,

@@ -71,20 +71,8 @@ if (RUN_TESTS)
     enable_testing()
 
     # ----- TEST SOURCES ----- #
-    set (UNITTEST_SOURCES ${PROJECT_SOURCE_DIR}/tests/correlation_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/detection_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/pick_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/beam_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/retract_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/associated_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/site_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/source_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/amplitude_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/filter_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/hypocenter_unittest.cpp
-        ${PROJECT_SOURCE_DIR}/tests/main.cpp
-    )
-    
+    file(GLOB UNITTEST_SOURCES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
+
     if (NOT MSVC)
         set(PTHREADLIB -pthread)
     endif (NOT MSVC)

@@ -23,7 +23,6 @@ hypocenter::hypocenter() {
 	longitudeerror = std::numeric_limits<double>::quiet_NaN();
 	deptherror = std::numeric_limits<double>::quiet_NaN();
 	timeerror = std::numeric_limits<double>::quiet_NaN();
-
 }
 
 hypocenter::hypocenter(double newlatitude, double newlongitude, double newtime,
@@ -177,8 +176,7 @@ std::vector<std::string> hypocenter::geterrors() {
 	if (std::isnan(latitude) == true) {
 		// latitude not found
 		errorlist.push_back("No Latitude in hypocenter class.");
-	}
-	if ((latitude < -90) || (latitude > 90)) {
+	} else if ((latitude < -90) || (latitude > 90)) {
 		errorlist.push_back("Invalid Latitude in hypocenter class.");
 	}
 
@@ -186,8 +184,7 @@ std::vector<std::string> hypocenter::geterrors() {
 	if (std::isnan(longitude) == true) {
 		// longitude not found
 		errorlist.push_back("No Longitude in hypocenter class.");
-	}
-	if ((longitude < -180) || (longitude > 180)) {
+	} else if ((longitude < -180) || (longitude > 180)) {
 		errorlist.push_back("Invalid Longitude in hypocenter class.");
 	}
 
@@ -211,8 +208,7 @@ std::vector<std::string> hypocenter::geterrors() {
 	if (std::isnan(depth) == true) {
 		// depth not found
 		errorlist.push_back("No Depth in hypocenter class.");
-	}
-	if ((depth < -100) || (depth > 1500)) {
+	} else if ((depth < -100) || (depth > 1500)) {
 		errorlist.push_back("Invalid Depth in hypocenter class.");
 	}
 

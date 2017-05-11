@@ -1,0 +1,180 @@
+/*****************************************
+ * This file is documented for Doxygen.
+ * If you modify this file please update
+ * the comments so that Doxygen will still
+ * be able to work.
+ ****************************************/
+#ifndef STATION_PICK_H
+#define STATION_PICK_H
+
+#include <string>
+
+#include "site.h"
+
+namespace detectionformats {
+
+/**
+ * \brief detectionformats stationInfo conversion class
+ *
+ * The detectionformats stationInfo class is a conversion class used to create,
+ * parse, and validate the stationInfo data format.  The stationInfo format uses
+ * the JSON standard (www.json.org)
+ *
+ * stationInfo is intended for use in seismic data messaging between seismic
+ * applications and organizations.
+ *
+ * stationInfo uses the Site common object.
+ */
+class stationInfo : public detectionbase {
+public:
+	/**
+	 * \brief stationInfo constructor
+	 *
+	 * The constructor for the stationInfo class.
+	 * Initializes members to null values.
+	 */
+	stationInfo();
+
+	/**
+	 * \brief stationInfo advanced constructor
+	 *
+	 * The advanced constructor for the stationInfo class.
+	 * Initializes members to provided values.
+	 *
+	 * \param newstation - A std::string containing the station to use
+	 * \param newchannel - A std::string containing the channel to use
+	 * \param newnetwork - A std::string containing the network to use
+	 * \param newlocation - A std::string containing the location to use
+	 * \param newlatitude - A double containing the latitude to use
+	 * \param newlongitude - A double containing the longitude to use
+	 * \param newelevation - A double containing the elevation to use
+	 * \param newquality - A double containing the quality to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newenable - A bool containing the enable flag to use
+	 * \param newuseforteleseismic - A bool containing the use for teleseismic
+	 * to use
+	 */
+	stationInfo(std::string newstation, std::string newchannel,
+			std::string newnetwork, std::string newlocation, double newlatitude,
+			double newlongitude, double newelevation, double newquality,
+			bool newenable, bool newuseforteleseismic);
+
+	/**
+	 * \brief stationInfo alternate advanced constructor
+	 *
+	 * The alternate advanced constructor for the stationInfo class.
+	 * Initializes members to provided values.
+	 *
+	 * \param newsite - A detectionformats::site containing the site to use
+	 * \param newlatitude - A double containing the latitude to use
+	 * \param newlongitude - A double containing the longitude to use
+	 * \param newelevation - A double containing the elevation to use
+	 * \param newquality - A double containing the quality to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newenable - A bool containing the enable flag to use
+	 * \param newuseforteleseismic - A bool containing the use for teleseismic
+	 * to use
+	 */
+	stationInfo(detectionformats::site newsite, double newlatitude,
+			double newlongitude, double newelevation, double newquality,
+			bool newenable, bool newuseforteleseismic);
+
+	/**
+	 * \brief stationInfo advanced constructor
+	 *
+	 * The advanced constructor for the stationInfo class.
+	 * Converts the provided object from a json::Object, populating members
+	 * \param jsondocument - A json document.
+	 */
+	stationInfo(rapidjson::Value &json);
+
+	/**
+	 * \brief stationInfo copy constructor
+	 *
+	 * The copy constructor for the stationInfo class.
+	 * Copys members from provided stationInfo.
+	 *
+	 * \param newstation - A detectionformats::stationInfo to copy from
+	 */
+	stationInfo(const stationInfo &newstation);
+
+	/**
+	 * \brief stationInfo destructor
+	 *
+	 * The destructor for the stationInfo class.
+	 */
+	~stationInfo();
+
+	/**
+	 * \brief Convert to json object function
+	 *
+	 * Converts the contents of the class to a json object
+	 * \return Returns a json::Object containing the class contents
+	 */
+	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+					override;
+
+	/**
+	 * \brief Gets any errors in the class
+	 *
+	 * Gets any formatting errors in the class
+	 * \return Returns a std::vector<std::string> containing the errors
+	 */
+	virtual std::vector<std::string> geterrors() override;
+
+	/**
+	 * \brief stationInfo site
+	 *
+	 * A required detectionformats::site containing the site for this stationInfo
+	 * message
+	 */
+	detectionformats::site site;
+
+	/**
+	 * \brief latitude value
+	 *
+	 * A required double defining the latitude of this stationInfo
+	 */
+	double latitude;
+
+	/**
+	 * \brief longitude value
+	 *
+	 * A required double defining the longitude of this stationInfo
+	 */
+	double longitude;
+
+	/**
+	 * \brief elevation value
+	 *
+	 * A required double containing the elevation for this stationInfo
+	 */
+	double elevation;
+
+	/**
+	 * \brief quality value
+	 *
+	 * An optional double containing the quality for this stationInfo
+	 */
+	double quality;
+
+	/**
+	 * \brief quality value
+	 *
+	 * An optional bool containing the enable flag for this stationInfo
+	 */
+	bool enable;
+
+	/**
+	 * \brief use for teleseismic value
+	 *
+	 * An optional bool containing the use for teleseismic flag for this stationInfo
+	 */
+	bool useforteleseismic;
+
+protected:
+
+};
+}
+#endif

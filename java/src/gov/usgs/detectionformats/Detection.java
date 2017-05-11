@@ -7,7 +7,7 @@ import org.json.simple.JSONArray;
 
 /**
  * a conversion class used to create, parse, and validate origin detection data
- * 
+ *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Detection implements DetectionInt {
@@ -21,6 +21,7 @@ public class Detection implements DetectionInt {
 	public static final String HYPOCENTER_KEY = "Hypocenter";
 	public static final String DETECTIONTYPE_KEY = "DetectionType";
 	public static final String EVENTTYPE_KEY = "EventType";
+	public static final String DETECTIONTIME_KEY = "DetectionTime";
 	public static final String BAYES_KEY = "Bayes";
 	public static final String MINIMUMDISTANCE_KEY = "MinimumDistance";
 	public static final String RMS_KEY = "RMS";
@@ -52,6 +53,12 @@ public class Detection implements DetectionInt {
 	 * are "new" "Update", "Final", or "Retract"
 	 */
 	private final String detectionType;
+
+	/**
+	 * Optional double containing the time the detection was made, i.e. how
+	 * quickly after origin time.
+	 */
+	private final Date detectionTime;
 
 	/**
 	 * Optional String containing the event type of this Detection valid values
@@ -100,6 +107,7 @@ public class Detection implements DetectionInt {
 		id = null;
 		hypocenter = null;
 		detectionType = null;
+		detectionTime = null;
 		eventType = null;
 		bayes = null;
 		minimumDistance = null;
@@ -111,10 +119,10 @@ public class Detection implements DetectionInt {
 
 	/**
 	 * Advanced constructor
-	 * 
+	 *
 	 * The advanced constructor for the Detection class. Initializes members to
 	 * provided values.
-	 * 
+	 *
 	 * @param newID
 	 *            - A String containing the id to use
 	 * @param newAgencyID
@@ -126,7 +134,7 @@ public class Detection implements DetectionInt {
 	 * @param newLongitude
 	 *            - A Double containing the longitude to use
 	 * @param newOrigintime
-	 *            - A Date containing the origin time string to use
+	 *            - A Date containing the origin time to use
 	 * @param newDepth
 	 *            - A Double containing the depth to use
 	 * @param newLatitudeError
@@ -139,6 +147,9 @@ public class Detection implements DetectionInt {
 	 *            - A Double containing the depth error to use, null to omit
 	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
+	 * @param newDetectionTime
+	 *            - A Date containing the time the detection was made, i.e. how
+	 *            quickly after origin time, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
 	 * @param newBayes
@@ -161,24 +172,24 @@ public class Detection implements DetectionInt {
 			Double newLatitude, Double newLongitude, Date newOrigintime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
 			Double newTimeError, Double newDepthError, String newDetectionType,
-			String newEventType, Double newBayes, Double newMinimumDistance,
-			Double newRMS, Double newGap, ArrayList<Pick> newPickData,
-			ArrayList<Correlation> newCorrelationData) {
+			Date newDetectionTime, String newEventType, Double newBayes,
+			Double newMinimumDistance, Double newRMS, Double newGap,
+			ArrayList<Pick> newPickData, ArrayList<Correlation> newCorrelationData) {
 
 		this(newID, new Source(newAgencyID, newAuthor),
 				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
-				newDetectionType, newEventType, newBayes, newMinimumDistance,
-				newRMS, newGap, newPickData, newCorrelationData);
+				newDetectionType, newDetectionTime, newEventType, newBayes,
+				newMinimumDistance, newRMS, newGap, newPickData, newCorrelationData);
 	}
 
 	/**
 	 * Alternate advanced constructor
-	 * 
+	 *
 	 * The alternate advanced constructor for the Detection class. Initializes
 	 * members to provided values.
-	 * 
+	 *
 	 * @param newID
 	 *            - A String containing the id to use
 	 * @param newSource
@@ -187,6 +198,9 @@ public class Detection implements DetectionInt {
 	 *            - A Hypo containing the hypocenter to use
 	 * @param newDetectionType
 	 *            - A String containing the origin type to use, null to omit
+	 * @param newDetectionTime
+	 *            - A Date containing the time the detection was made, i.e. how
+	 *            quickly after origin time, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
 	 * @param newBayes
@@ -206,16 +220,16 @@ public class Detection implements DetectionInt {
 	 *            data that went into this origin, null to omit
 	 */
 	public Detection(String newID, Source newSource, Hypocenter newHypocenter,
-			String newDetectionType, String newEventType, Double newBayes,
-			Double newMinimumDistance, Double newRMS, Double newGap,
-			ArrayList<Pick> newPickData,
-			ArrayList<Correlation> newCorrelationData) {
+			String newDetectionType, Date newDetectionTime, String newEventType,
+			Double newBayes, Double newMinimumDistance, Double newRMS, Double newGap,
+			ArrayList<Pick> newPickData, ArrayList<Correlation> newCorrelationData) {
 
 		type = "Detection";
 		id = newID;
 		source = newSource;
 		hypocenter = newHypocenter;
 		detectionType = newDetectionType;
+		detectionTime = newDetectionTime;
 		eventType = newEventType;
 		bayes = newBayes;
 		minimumDistance = newMinimumDistance;
@@ -228,7 +242,7 @@ public class Detection implements DetectionInt {
 
 	/**
 	 * Constructs the class from a JSONObject, populating members
-	 * 
+	 *
 	 * @param newJSONObject
 	 *            - A JSONObject.
 	 */
@@ -270,6 +284,14 @@ public class Detection implements DetectionInt {
 			detectionType = (String) newJSONObject.get(DETECTIONTYPE_KEY);
 		} else {
 			detectionType = null;
+		}
+
+		// detectionTime
+		if (newJSONObject.containsKey(DETECTIONTIME_KEY)) {
+			detectionTime = Utility.getDate(newJSONObject.get(DETECTIONTIME_KEY)
+				.toString());
+		} else {
+			detectionTime = null;
 		}
 
 		// eventType
@@ -351,7 +373,7 @@ public class Detection implements DetectionInt {
 
 	/**
 	 * Converts the contents of the class to a json object
-	 * 
+	 *
 	 * @return Returns a JSONObject containing the class contents
 	 */
 	@SuppressWarnings("unchecked")
@@ -364,6 +386,7 @@ public class Detection implements DetectionInt {
 		Source jsonSource = getSource();
 		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonDetectionType = getDetectionType();
+		Date jsonDetectionTime = getDetectionTime();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
@@ -395,6 +418,12 @@ public class Detection implements DetectionInt {
 		// detectionType
 		if (jsonDetectionType != null) {
 			newJSONObject.put(DETECTIONTYPE_KEY, jsonDetectionType);
+		}
+
+		// detectionTime
+		if (jsonDetectionTime != null) {
+			newJSONObject.put(DETECTIONTIME_KEY, Utility
+				.formatDate(jsonDetectionTime));
 		}
 
 		// eventType
@@ -464,7 +493,7 @@ public class Detection implements DetectionInt {
 
 	/**
 	 * Validates the class.
-	 * 
+	 *
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
@@ -479,7 +508,7 @@ public class Detection implements DetectionInt {
 
 	/**
 	 * Gets any validation errors in the class.
-	 * 
+	 *
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
@@ -489,6 +518,7 @@ public class Detection implements DetectionInt {
 		Source jsonSource = getSource();
 		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonDetectionType = getDetectionType();
+		Date jsonDetectionTime = getDetectionTime();
 		String jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
@@ -560,6 +590,9 @@ public class Detection implements DetectionInt {
 				errorList.add("Invalid DetectionType in Detection Class.");
 			}
 		}
+
+		// detectionTime
+		// no time validation
 
 		// eventType
 		if (jsonEventType != null) {
@@ -675,11 +708,19 @@ public class Detection implements DetectionInt {
 	public Hypocenter getHypocenter() {
 		return hypocenter;
 	}
+
 	/**
 	 * @return the detectionType
 	 */
 	public String getDetectionType() {
 		return detectionType;
+	}
+
+	/**
+	 * @return the detectionTime
+	 */
+	public Date getDetectionTime() {
+		return detectionTime;
 	}
 
 	/**

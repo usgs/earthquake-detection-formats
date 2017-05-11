@@ -42,14 +42,14 @@ namespace detectionformats
 			// return appropriate type
 			if (typestring == PICK_TYPE)
 				return(formattypes::picktype);
-			else if (typestring == BEAM_TYPE)
-				return(formattypes::beamtype);
 			else if (typestring == CORRELATION_TYPE)
 				return(formattypes::correlationtype);
 			else if (typestring == DETECTION_TYPE)
 				return(formattypes::detectiontype);
 			else if (typestring == RETRACT_TYPE)
 				return(formattypes::retracttype);
+			else if (typestring == STATION_TYPE)
+				return(formattypes::stationtype);
 
 		}
 

@@ -10,6 +10,8 @@ event detection made using a cross correlation algorithm.
 event detection generated using an event detection or association algorithm.
 * [Retract](Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
+* [Station](Station.md) Format - A format to contain basic station location
+and quality information.
 
 ## Supporting objects:
 * [Hypocenter](Hypocenter.md) Object - An object that contains information about
@@ -23,6 +25,6 @@ information if a pick, beam, or correlation is included in an detection.
 * [Filter](Filter.md) Object - An object that contains filter information as
 part of a pick.
 * [Site](Site.md) Object - An object that defines the station used to create a
-pick, beam, correlation.
+pick, correlation, or station.
 * [Source](Source.md) Object - An object that defines the creator/source of a
-pick, beam, correlation, or detection.
+pick, correlation, or detection.

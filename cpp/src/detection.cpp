@@ -8,6 +8,7 @@
 #define SOURCE_KEY "Source"
 #define HYPOCENTER_KEY "Hypocenter"
 #define DETECTIONTYPE_KEY "DetectionType"
+#define DETECTIONTIME_KEY "DetectionTime"
 #define EVENTTYPE_KEY "EventType"
 #define BAYES_KEY "Bayes"
 #define MINIMUMDISTANCE_KEY "MinimumDistance"
@@ -22,6 +23,7 @@ detection::detection() {
 	source = detectionformats::source();
 	hypocenter = detectionformats::hypocenter();
 	detectiontype = "";
+	detectiontime = std::numeric_limits<double>::quiet_NaN();
 	eventtype = "";
 	bayes = std::numeric_limits<double>::quiet_NaN();
 	minimumdistance = std::numeric_limits<double>::quiet_NaN();
@@ -33,19 +35,21 @@ detection::detection() {
 
 detection::detection(std::string newid, std::string newagencyid,
 		std::string newauthor, double newlatitude, double newlongitude,
-		double newdetectiontime, double newdepth, double newlatitudeerror,
+		double newtime, double newdepth, double newlatitudeerror,
 		double newlongitudeerror, double newtimeerror, double newdeptherror,
-		std::string newdetectiontype, std::string neweventtype, double newbayes,
-		double newminimumdistance, double newrms, double newgap,
+		std::string newdetectiontype, double newdetectiontime,
+		std::string neweventtype, double newbayes, double newminimumdistance,
+		double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
 	id = newid;
 	detection::source = detectionformats::source(newagencyid, newauthor);
 	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
-			newdetectiontime, newdepth, newlatitudeerror, newlongitudeerror,
+			newtime, newdepth, newlatitudeerror, newlongitudeerror,
 			newtimeerror, newdeptherror);
 	detectiontype = newdetectiontype;
+	detectiontime = newdetectiontime;
 	eventtype = neweventtype;
 	bayes = newbayes;
 	minimumdistance = newminimumdistance;
@@ -66,8 +70,9 @@ detection::detection(std::string newid, std::string newagencyid,
 
 detection::detection(std::string newid, detectionformats::source newsource,
 		detectionformats::hypocenter newhypocenter,
-		std::string newdetectiontype, std::string neweventtype, double newbayes,
-		double newminimumdistance, double newrms, double newgap,
+		std::string newdetectiontype, double newdetectiontime,
+		std::string neweventtype, double newbayes, double newminimumdistance,
+		double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
@@ -75,6 +80,7 @@ detection::detection(std::string newid, detectionformats::source newsource,
 	detection::source = newsource;
 	hypocenter = newhypocenter;
 	detectiontype = newdetectiontype;
+	detectiontime = newdetectiontime;
 	eventtype = neweventtype;
 	bayes = newbayes;
 	minimumdistance = newminimumdistance;
@@ -134,6 +140,14 @@ detection::detection(rapidjson::Value &json) {
 				json[DETECTIONTYPE_KEY].GetStringLength());
 	else
 		detectiontype = "";
+
+	// detectiontime
+	if ((json.HasMember(DETECTIONTIME_KEY) == true)
+			&& (json[DETECTIONTIME_KEY].IsNumber() == true)
+			&& (json[DETECTIONTIME_KEY].IsDouble() == true))
+		detectiontime = json[DETECTIONTIME_KEY].GetDouble();
+	else
+		detectiontime = std::numeric_limits<double>::quiet_NaN();
 
 	// eventtype
 	if ((json.HasMember(EVENTTYPE_KEY) == true)
@@ -212,6 +226,7 @@ detection::detection(const detection & newdetection) {
 	detection::source = newdetection.source;
 	hypocenter = newdetection.hypocenter;
 	detectiontype = newdetection.detectiontype;
+	detectiontime = newdetection.detectiontime;
 	eventtype = newdetection.eventtype;
 	bayes = newdetection.bayes;
 	minimumdistance = newdetection.minimumdistance;
@@ -270,6 +285,10 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 				rapidjson::StringRef(detectiontype.c_str()), allocator);
 		json.AddMember(DETECTIONTYPE_KEY, detectiontypevalue, allocator);
 	}
+
+	// detectiontime
+	if (std::isnan(detectiontime) != true)
+		json.AddMember(DETECTIONTIME_KEY, detectiontime, allocator);
 
 	// eventtype
 	if (eventtype != "") {
@@ -372,6 +391,20 @@ std::vector<std::string> detection::geterrors() {
 
 		if (match == false) {
 			errorlist.push_back("Invalid DetectionType in detection class.");
+		}
+	}
+
+	// detectiontime
+	if (std::isnan(detectiontime) != true) {
+		try {
+			if (detectionformats::IsStringISO8601(
+					detectionformats::ConvertEpochTimeToISO8601(detectiontime))
+					== false) {
+				errorlist.push_back(
+						"Detection Time did not validate in detection class.");
+			}
+		} catch (const std::exception & e) {
+			errorlist.push_back(std::string(e.what()));
 		}
 	}
 
