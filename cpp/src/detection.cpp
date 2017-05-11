@@ -143,9 +143,10 @@ detection::detection(rapidjson::Value &json) {
 
 	// detectiontime
 	if ((json.HasMember(DETECTIONTIME_KEY) == true)
-			&& (json[DETECTIONTIME_KEY].IsNumber() == true)
-			&& (json[DETECTIONTIME_KEY].IsDouble() == true))
-		detectiontime = json[DETECTIONTIME_KEY].GetDouble();
+			&& (json[DETECTIONTIME_KEY].IsString() == true))
+		detectiontime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(json[DETECTIONTIME_KEY].GetString(),
+						json[DETECTIONTIME_KEY].GetStringLength()));
 	else
 		detectiontime = std::numeric_limits<double>::quiet_NaN();
 
@@ -287,8 +288,14 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 	}
 
 	// detectiontime
-	if (std::isnan(detectiontime) != true)
-		json.AddMember(DETECTIONTIME_KEY, detectiontime, allocator);
+	if (std::isnan(detectiontime) != true) {
+		std::string timestring = detectionformats::ConvertEpochTimeToISO8601(
+				detectiontime);
+		rapidjson::Value timevalue;
+		timevalue.SetString(rapidjson::StringRef(timestring.c_str()),
+				allocator);
+		json.AddMember(DETECTIONTIME_KEY, timevalue, allocator);
+	}
 
 	// eventtype
 	if (eventtype != "") {
