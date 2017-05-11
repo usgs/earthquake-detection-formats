@@ -23,7 +23,7 @@
 #define CORRELATION_TYPE "Correlation"
 #define PICK_TYPE "Pick"
 #define RETRACT_TYPE "Retract"
-#define STATION_TYPE "Station"
+#define STATION_TYPE "StationInfo"
 
 /**
 * @namespace detectionformats

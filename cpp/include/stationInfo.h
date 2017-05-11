@@ -14,31 +14,31 @@
 namespace detectionformats {
 
 /**
- * \brief detectionformats station conversion class
+ * \brief detectionformats stationInfo conversion class
  *
- * The detectionformats station class is a conversion class used to create,
- * parse, and validate the station data format.  The station format uses
+ * The detectionformats stationInfo class is a conversion class used to create,
+ * parse, and validate the stationInfo data format.  The stationInfo format uses
  * the JSON standard (www.json.org)
  *
- * station is intended for use in seismic data messaging between seismic
+ * stationInfo is intended for use in seismic data messaging between seismic
  * applications and organizations.
  *
- * station uses the Site common object.
+ * stationInfo uses the Site common object.
  */
-class station: public detectionbase {
+class stationInfo : public detectionbase {
 public:
 	/**
-	 * \brief station constructor
+	 * \brief stationInfo constructor
 	 *
-	 * The constructor for the station class.
+	 * The constructor for the stationInfo class.
 	 * Initializes members to null values.
 	 */
-	station();
+	stationInfo();
 
 	/**
-	 * \brief station advanced constructor
+	 * \brief stationInfo advanced constructor
 	 *
-	 * The advanced constructor for the station class.
+	 * The advanced constructor for the stationInfo class.
 	 * Initializes members to provided values.
 	 *
 	 * \param newstation - A std::string containing the station to use
@@ -54,15 +54,15 @@ public:
 	 * \param newuseforteleseismic - A bool containing the use for teleseismic
 	 * to use
 	 */
-	station(std::string newstation, std::string newchannel,
+	stationInfo(std::string newstation, std::string newchannel,
 			std::string newnetwork, std::string newlocation, double newlatitude,
 			double newlongitude, double newelevation, double newquality,
 			bool newenable, bool newuseforteleseismic);
 
 	/**
-	 * \brief station alternate advanced constructor
+	 * \brief stationInfo alternate advanced constructor
 	 *
-	 * The alternate advanced constructor for the station class.
+	 * The alternate advanced constructor for the stationInfo class.
 	 * Initializes members to provided values.
 	 *
 	 * \param newsite - A detectionformats::site containing the site to use
@@ -75,35 +75,35 @@ public:
 	 * \param newuseforteleseismic - A bool containing the use for teleseismic
 	 * to use
 	 */
-	station(detectionformats::site newsite, double newlatitude,
+	stationInfo(detectionformats::site newsite, double newlatitude,
 			double newlongitude, double newelevation, double newquality,
 			bool newenable, bool newuseforteleseismic);
 
 	/**
-	 * \brief station advanced constructor
+	 * \brief stationInfo advanced constructor
 	 *
-	 * The advanced constructor for the station class.
+	 * The advanced constructor for the stationInfo class.
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	station(rapidjson::Value &json);
+	stationInfo(rapidjson::Value &json);
 
 	/**
-	 * \brief station copy constructor
+	 * \brief stationInfo copy constructor
 	 *
-	 * The copy constructor for the station class.
-	 * Copys members from provided station.
+	 * The copy constructor for the stationInfo class.
+	 * Copys members from provided stationInfo.
 	 *
-	 * \param newstation - A detectionformats::station to copy from
+	 * \param newstation - A detectionformats::stationInfo to copy from
 	 */
-	station(const station &newstation);
+	stationInfo(const stationInfo &newstation);
 
 	/**
-	 * \brief station destructor
+	 * \brief stationInfo destructor
 	 *
-	 * The destructor for the station class.
+	 * The destructor for the stationInfo class.
 	 */
-	~station();
+	~stationInfo();
 
 	/**
 	 * \brief Convert to json object function
@@ -124,9 +124,9 @@ public:
 	virtual std::vector<std::string> geterrors() override;
 
 	/**
-	 * \brief station site
+	 * \brief stationInfo site
 	 *
-	 * A required detectionformats::site containing the site for this station
+	 * A required detectionformats::site containing the site for this stationInfo
 	 * message
 	 */
 	detectionformats::site site;
@@ -134,42 +134,42 @@ public:
 	/**
 	 * \brief latitude value
 	 *
-	 * A required double defining the latitude of this station
+	 * A required double defining the latitude of this stationInfo
 	 */
 	double latitude;
 
 	/**
 	 * \brief longitude value
 	 *
-	 * A required double defining the longitude of this station
+	 * A required double defining the longitude of this stationInfo
 	 */
 	double longitude;
 
 	/**
 	 * \brief elevation value
 	 *
-	 * A required double containing the elevation for this station
+	 * A required double containing the elevation for this stationInfo
 	 */
 	double elevation;
 
 	/**
 	 * \brief quality value
 	 *
-	 * An optional double containing the quality for this station
+	 * An optional double containing the quality for this stationInfo
 	 */
 	double quality;
 
 	/**
 	 * \brief quality value
 	 *
-	 * An optional bool containing the enable flag for this station
+	 * An optional bool containing the enable flag for this stationInfo
 	 */
 	bool enable;
 
 	/**
 	 * \brief use for teleseismic value
 	 *
-	 * An optional bool containing the use for teleseismic flag for this station
+	 * An optional bool containing the use for teleseismic flag for this stationInfo
 	 */
 	bool useforteleseismic;
 

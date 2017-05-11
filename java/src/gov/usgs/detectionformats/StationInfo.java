@@ -7,10 +7,10 @@ import org.json.simple.JSONObject;
 /**
  * a conversion class used to create, parse, and validate station location and
  * quality data
- * 
+ *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
-public class Station implements DetectionInt {
+public class StationInfo implements DetectionInt {
 
 	/**
 	 * JSON Keys
@@ -25,7 +25,7 @@ public class Station implements DetectionInt {
 	public static final String USEFORTELESEISMIC_KEY = "UseForTeleseismic";
 
 	/**
-	 * Required type identifier for this Station
+	 * Required type identifier for this StationInfo
 	 */
 	private final String type;
 
@@ -65,12 +65,12 @@ public class Station implements DetectionInt {
 	private final Boolean useForTeleseismic;
 
 	/**
-	 * The constructor for the Station class. Initializes members to null
+	 * The constructor for the StationInfo class. Initializes members to null
 	 * values.
 	 */
-	public Station() {
+	public StationInfo() {
 
-		type = "Station";
+		type = "StationInfo";
 		site = null;
 		latitude = null;
 		longitude = null;
@@ -81,9 +81,9 @@ public class Station implements DetectionInt {
 	}
 
 	/**
-	 * The advanced constructor for the Station class. Initializes members to
+	 * The advanced constructor for the StationInfo class. Initializes members to
 	 * provided values.
-	 * 
+	 *
 	 * @param newStation
 	 *            - A String containing the station to use
 	 * @param newChannel
@@ -106,7 +106,7 @@ public class Station implements DetectionInt {
 	 *            - A Boolean containing the use for teleseismic flag to use,
 	 *            null to omit
 	 */
-	public Station(String newStation, String newChannel, String newNetwork,
+	public StationInfo(String newStation, String newChannel, String newNetwork,
 			String newLocation, Double newLatitude, Double newLongitude,
 			Double newElevation, Double newQuality, Boolean newEnable,
 			Boolean newUseForTeleseismic) {
@@ -117,9 +117,9 @@ public class Station implements DetectionInt {
 	}
 
 	/**
-	 * The alternate advanced constructor for the Station class. Initializes
+	 * The alternate advanced constructor for the StationInfo class. Initializes
 	 * members to provided values.
-	 * 
+	 *
 	 * @param newSite
 	 *            - A Site containing the site to use
 	 * @param newLatitude
@@ -136,11 +136,11 @@ public class Station implements DetectionInt {
 	 *            - A Boolean containing the use for teleseismic flag to use,
 	 *            null to omit
 	 */
-	public Station(Site newSite, Double newLatitude, Double newLongitude,
+	public StationInfo(Site newSite, Double newLatitude, Double newLongitude,
 			Double newElevation, Double newQuality, Boolean newEnable,
 			Boolean newUseForTeleseismic) {
 
-		type = "Station";
+		type = "StationInfo";
 		site = newSite;
 		latitude = newLatitude;
 		longitude = newLongitude;
@@ -152,11 +152,11 @@ public class Station implements DetectionInt {
 
 	/**
 	 * Constructs the class from a JSONObject, populating members
-	 * 
+	 *
 	 * @param newJSONObject
 	 *            - A JSONObject.
 	 */
-	public Station(JSONObject newJSONObject) {
+	public StationInfo(JSONObject newJSONObject) {
 
 		// Required values
 		// type
@@ -221,7 +221,7 @@ public class Station implements DetectionInt {
 	/**
 	 * Converts the contents of the class to a json object Overridden from
 	 * DetectionBase.
-	 * 
+	 *
 	 * @return Returns a JSONObject containing the class contents
 	 */
 	@SuppressWarnings("unchecked")
@@ -261,7 +261,7 @@ public class Station implements DetectionInt {
 		if (jsonElevation != null) {
 			newJSONObject.put(ELEVATION_KEY, jsonElevation);
 		}
-		
+
 		// Optional values
 		// quality
 		if (jsonQuality != null) {
@@ -279,11 +279,11 @@ public class Station implements DetectionInt {
 		}
 
 		return (newJSONObject);
-	}	
-	
+	}
+
 	/**
 	 * Validates the class.
-	 * 
+	 *
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
@@ -295,10 +295,10 @@ public class Station implements DetectionInt {
 			return (false);
 		}
 	}
-	
+
 	/**
 	 * Gets any validation errors in the class.
-	 * 
+	 *
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
@@ -318,50 +318,50 @@ public class Station implements DetectionInt {
 		// type
 		if (jsonType == null) {
 			// type not found
-			errorList.add("No Type in Station Class.");
+			errorList.add("No Type in StationInfo Class.");
 		} else if (jsonType.isEmpty()) {
 			// type empty
-			errorList.add("Empty Type in Station Class.");
-		} else if (!jsonType.equals("Station")) {
+			errorList.add("Empty Type in StationInfo Class.");
+		} else if (!jsonType.equals("StationInfo")) {
 			// wrong type
-			errorList.add("Non-Station type in Station Class.");
+			errorList.add("Non-StationInfo type in StationInfo Class.");
 		}
 
 		// site
 		if (jsonSite == null) {
 			// site not found
-			errorList.add("No Site in Station Class.");
+			errorList.add("No Site in StationInfo Class.");
 		} else if (!jsonSite.isValid()) {
 			// site invalid
-			errorList.add("Invalid Site in Station Class.");
+			errorList.add("Invalid Site in StationInfo Class.");
 		}
 
 		// latitude
 		if (jsonLatitude == null) {
 			// latitude not found
-			errorList.add("No Latitude in Station Class.");
+			errorList.add("No Latitude in StationInfo Class.");
 		} else if ((jsonLatitude < -90) || (jsonLatitude > 90)) {
 			// invalid latitude
 			errorList.add(
-					"Latitude in Station Class not in the range of -90 to 90.");
+					"Latitude in StationInfo Class not in the range of -90 to 90.");
 		}
 
 		// longitude
 		if (jsonLongitude == null) {
 			// longitude not found
-			errorList.add("No Longitude in Station Class.");
+			errorList.add("No Longitude in StationInfo Class.");
 		} else if ((jsonLongitude < -180) || (jsonLongitude > 180)) {
 			// invalid longitude
 			errorList.add(
-					"Longitude in Station Class not in the range of -180 to 180.");
+					"Longitude in StationInfo Class not in the range of -180 to 180.");
 		}
-		
+
 		// elevation
 		if (jsonElevation == null) {
 			// elevation not found
-			errorList.add("No Elevation in Station Class.");
-		} 
-		
+			errorList.add("No Elevation in StationInfo Class.");
+		}
+
 
 		// Optional Keys
 		// Currently no validation criteria for optional values Quality,
@@ -369,8 +369,8 @@ public class Station implements DetectionInt {
 
 		// success
 		return (errorList);
-	}	
-	
+	}
+
 	/**
 	 * @return the type
 	 */
@@ -426,6 +426,6 @@ public class Station implements DetectionInt {
 	public Boolean getUseForTeleseismic() {
 		return useForTeleseismic;
 	}
-	
-	
+
+
 }

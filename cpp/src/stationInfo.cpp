@@ -1,4 +1,4 @@
-#include "station.h"
+#include "stationInfo.h"
 
 #include <limits>
 
@@ -13,7 +13,7 @@
 #define USEFORTELESEISMIC_KEY "UseForTeleseismic"
 
 namespace detectionformats {
-station::station() {
+stationInfo::stationInfo() {
 	type = STATION_TYPE;
 	site = detectionformats::site();
 	latitude = std::numeric_limits<double>::quiet_NaN();
@@ -24,7 +24,7 @@ station::station() {
 	useforteleseismic = false;
 }
 
-station::station(std::string newstation, std::string newchannel,
+stationInfo::stationInfo(std::string newstation, std::string newchannel,
 		std::string newnetwork, std::string newlocation, double newlatitude,
 		double newlongitude, double newelevation, double newquality,
 		bool newenable, bool newuseforteleseismic) {
@@ -39,11 +39,11 @@ station::station(std::string newstation, std::string newchannel,
 	useforteleseismic = newuseforteleseismic;
 }
 
-station::station(detectionformats::site newsite, double newlatitude,
+stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
 		double newlongitude, double newelevation, double newquality,
 		bool newenable, bool newuseforteleseismic) {
 	type = STATION_TYPE;
-	station::site = newsite;
+	stationInfo::site = newsite;
 	latitude = newlatitude;
 	longitude = newlongitude;
 	elevation = newelevation;
@@ -52,7 +52,7 @@ station::station(detectionformats::site newsite, double newlatitude,
 	useforteleseismic = newuseforteleseismic;
 }
 
-station::station(rapidjson::Value &json) {
+stationInfo::stationInfo(rapidjson::Value &json) {
 	// required values
 	// type
 	if ((json.HasMember(TYPE_KEY) == true)
@@ -118,7 +118,7 @@ station::station(rapidjson::Value &json) {
 		useforteleseismic = false;
 }
 
-station::station(const station &newstation) {
+stationInfo::stationInfo(const stationInfo &newstation) {
 	type = STATION_TYPE;
 	site = newstation.site;
 	latitude = newstation.latitude;
@@ -129,10 +129,10 @@ station::station(const station &newstation) {
 	useforteleseismic = newstation.useforteleseismic;
 }
 
-station::~station() {
+stationInfo::~stationInfo() {
 }
 
-rapidjson::Value & station::tojson(rapidjson::Value &json,
+rapidjson::Value & stationInfo::tojson(rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -173,42 +173,42 @@ rapidjson::Value & station::tojson(rapidjson::Value &json,
 	return (json);
 }
 
-std::vector<std::string> station::geterrors() {
+std::vector<std::string> stationInfo::geterrors() {
 	std::vector<std::string> errorlist;
 
 	// check for required data
 	// Type
 	if (type != STATION_TYPE) {
 		// wrong type
-		errorlist.push_back("Non-station type in station class.");
+		errorlist.push_back("Non-stationInfo type in stationInfo class.");
 	}
 
 	// site
 	if (site.isvalid() != true) {
 		// site not found
-		errorlist.push_back("Site object did not validate in station class.");
+		errorlist.push_back("Site object did not validate in stationInfo class.");
 	}
 
 	// latitude
 	if (std::isnan(latitude) == true) {
 		// latitude not found
-		errorlist.push_back("No Latitude in station class.");
+		errorlist.push_back("No Latitude in stationInfo class.");
 	} else if ((latitude < -90) || (latitude > 90)) {
-		errorlist.push_back("Invalid Latitude in station class.");
+		errorlist.push_back("Invalid Latitude in stationInfo class.");
 	}
 
 	// longitude
 	if (std::isnan(longitude) == true) {
 		// longitude not found
-		errorlist.push_back("No Longitude in station class.");
+		errorlist.push_back("No Longitude in stationInfo class.");
 	} else if ((longitude < -180) || (longitude > 180)) {
-		errorlist.push_back("Invalid Longitude in station class.");
+		errorlist.push_back("Invalid Longitude in stationInfo class.");
 	}
 
 	// elevation
 	if (std::isnan(elevation) == true) {
 		// elevation not found
-		errorlist.push_back("No Elevation in station class.");
+		errorlist.push_back("No Elevation in stationInfo class.");
 	}
 
 	// optional data

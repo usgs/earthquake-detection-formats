@@ -12,7 +12,7 @@ import org.junit.Test;
 public class StationTest {
 	public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
 			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
-			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"Station\","
+			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\","
 			+ "\"Elevation\":1589.0,\"UseForTeleseismic\":true,"
 			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967}";
 
@@ -33,7 +33,7 @@ public class StationTest {
 	@Test
 	public void writesJSON() {
 
-		Station stationObject = new Station(STATION, CHANNEL, NETWORK, LOCATION,
+		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK, LOCATION,
 				LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
 				USEFORTELESEISM);
 
@@ -42,7 +42,7 @@ public class StationTest {
 
 		// check the data
 		try {
-			checkData(new Station(Utility.fromJSONString(jsonString)),
+			checkData(new StationInfo(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class StationTest {
 		// build Correlation object
 		try {
 
-			checkData(new Station(Utility.fromJSONString(STATION_STRING)),
+			checkData(new StationInfo(Utility.fromJSONString(STATION_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class StationTest {
 	public void altConstructors() {
 
 		// use constructor
-		Station stationObject = new Station(
+		StationInfo stationObject = new StationInfo(
 				new Site(STATION, CHANNEL, NETWORK, LOCATION), LATITUDE,
 				LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
 
@@ -86,7 +86,7 @@ public class StationTest {
 	@Test
 	public void validate() {
 
-		Station stationObject = new Station(STATION, CHANNEL, NETWORK, LOCATION,
+		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK, LOCATION,
 				LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
 				USEFORTELESEISM);
 
@@ -96,8 +96,8 @@ public class StationTest {
 		// check return code
 		assertEquals("Successful Validation", true, rc);
 
-		// build bad Station object
-		Station badStationObject = new Station(null, CHANNEL, NETWORK, LOCATION,
+		// build bad StationInfo object
+		StationInfo badStationObject = new StationInfo(null, CHANNEL, NETWORK, LOCATION,
 				null, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
 
 		rc = badStationObject.isValid();
@@ -106,7 +106,7 @@ public class StationTest {
 		assertEquals("Unsuccessful Validation", false, rc);
 	}
 
-	public void checkData(Station stationObject, String TestName) {
+	public void checkData(StationInfo stationObject, String TestName) {
 
 		// check stationObject.site.Station
 		assertEquals(TestName + " Station Equals", STATION,

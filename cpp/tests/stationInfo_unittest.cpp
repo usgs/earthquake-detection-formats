@@ -17,7 +17,7 @@
 #define ENABLE true
 #define USEFORTELESEISM true
 
-void checkdata(detectionformats::station stationobject, std::string testinfo) {
+void checkdata(detectionformats::stationInfo stationobject, std::string testinfo) {
 
 	// check station
 	std::string sitestation = stationobject.site.station;
@@ -75,9 +75,9 @@ void checkdata(detectionformats::station stationobject, std::string testinfo) {
 // tests to see if pick can successfully
 // write json output
 TEST(StationTest, WritesJSON) {
-	detectionformats::station stationobject;
+	detectionformats::stationInfo stationobject;
 
-	// build station object
+	// build stationInfo object
 	// site subobject
 	stationobject.site.station = std::string(STATION);
 	stationobject.site.channel = std::string(CHANNEL);
@@ -100,7 +100,7 @@ TEST(StationTest, WritesJSON) {
 
 	// read it back in
 	rapidjson::Document stationdocument2;
-	detectionformats::station stationobject2(
+	detectionformats::stationInfo stationobject2(
 			detectionformats::FromJSONString(pickjson, stationdocument2));
 
 	// check data values
@@ -112,7 +112,7 @@ TEST(StationTest, WritesJSON) {
 TEST(StationTest, ReadsJSON) {
 	// build pick object
 	rapidjson::Document stationdocument;
-	detectionformats::station stationobject(
+	detectionformats::stationInfo stationobject(
 			detectionformats::FromJSONString(std::string(STATIONSTRING),
 					stationdocument));
 
@@ -124,7 +124,7 @@ TEST(StationTest, ReadsJSON) {
 // be constructed
 TEST(StationTest, Constructor) {
 	// use constructor
-	detectionformats::station stationobject(std::string(STATION),
+	detectionformats::stationInfo stationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
 			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
 
@@ -132,7 +132,7 @@ TEST(StationTest, Constructor) {
 	checkdata(stationobject, "Tested Constructor");
 
 	// use alternate constructor
-	detectionformats::station stationobject_altc(
+	detectionformats::stationInfo stationobject_altc(
 			detectionformats::site(std::string(STATION), std::string(CHANNEL),
 					std::string(NETWORK), std::string(LOCATION)),
 			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
@@ -145,11 +145,11 @@ TEST(StationTest, Constructor) {
 // be copy constructed
 TEST(StationTest, CopyConstructor) {
 	// use constructor
-	detectionformats::station fromstationobject(std::string(STATION),
+	detectionformats::stationInfo fromstationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
 			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
 
-	detectionformats::station stationobject(fromstationobject);
+	detectionformats::stationInfo stationobject(fromstationobject);
 
 	// check data values
 	checkdata(stationobject, "");
@@ -158,7 +158,7 @@ TEST(StationTest, CopyConstructor) {
 // tests to see if pick can successfully
 // validate
 TEST(StationTest, Validate) {
-	detectionformats::station stationobject;
+	detectionformats::stationInfo stationobject;
 
 	// build pick object
 	// site subobject
@@ -182,7 +182,7 @@ TEST(StationTest, Validate) {
 	ASSERT_EQ(result, true)<< "Tested for successful validation.";
 
 	// build bad pick object
-	detectionformats::station badstationobject;
+	detectionformats::stationInfo badstationobject;
 	stationobject.site.station = "";
 
 	result = false;
