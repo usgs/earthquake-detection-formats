@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define STATIONSTRING "{\"Site\":{\"Station\":\"BOZ\",\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},\"Enable\":true,\"Quality\":1.0,\"Type\":\"Station\",\"Elevation\":1589.0,\"UseForTeleseismic\":true,\"Latitude\":45.59697,\"Longitude\":-111.62967}"
+#define STATIONSTRING "{\"Site\":{\"Station\":\"BOZ\",\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},\"Enable\":true,\"Quality\":1.0,\"Type\":\"Station\",\"Elevation\":1589.0,\"UseForTeleseismic\":true,\"Latitude\":45.59697,\"Longitude\":-111.62967,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}"
 
 #define STATION "BOZ"
 #define CHANNEL "BHZ"
@@ -16,8 +16,11 @@
 #define QUALITY 1.0
 #define ENABLE true
 #define USEFORTELESEISM true
+#define AGENCYID "US"
+#define AUTHOR "TestAuthor"
 
-void checkdata(detectionformats::stationInfo stationobject, std::string testinfo) {
+void checkdata(detectionformats::stationInfo stationobject,
+		std::string testinfo) {
 
 	// check station
 	std::string sitestation = stationobject.site.station;
@@ -70,6 +73,21 @@ void checkdata(detectionformats::stationInfo stationobject, std::string testinfo
 	bool stationuseforteleseismic = stationobject.useforteleseismic;
 	bool expecteduseforteleseismic = USEFORTELESEISM;
 	ASSERT_EQ(stationuseforteleseismic, expecteduseforteleseismic);
+
+	// check informationRequestor
+	if (stationobject.informationRequestor.isempty() != true) {
+
+		// check agencyid
+		std::string sourceagencyid = stationobject.informationRequestor.agencyid;
+		std::string expectedagencyid = std::string(AGENCYID);
+		ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str())<< testinfo.c_str();
+
+		// check author
+		std::string sourceauthor = stationobject.informationRequestor.author;
+		std::string expectedauthor = std::string(AUTHOR);
+		ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str())<< testinfo.c_str();
+
+	}
 }
 
 // tests to see if pick can successfully
@@ -91,6 +109,10 @@ TEST(StationTest, WritesJSON) {
 	stationobject.quality = QUALITY;
 	stationobject.enable = ENABLE;
 	stationobject.useforteleseismic = USEFORTELESEISM;
+
+	// source informationRequestor
+	stationobject.informationRequestor.agencyid = std::string(AGENCYID);
+	stationobject.informationRequestor.author = std::string(AUTHOR);
 
 	// build json string
 	rapidjson::Document stationdocument;
@@ -126,16 +148,28 @@ TEST(StationTest, Constructor) {
 	// use constructor
 	detectionformats::stationInfo stationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			std::string(AGENCYID), std::string(AUTHOR));
 
 	// check data values
 	checkdata(stationobject, "Tested Constructor");
+
+	// use constructor
+	detectionformats::stationInfo stationobject2(std::string(STATION),
+			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			"", "");
+
+	// check data values
+	checkdata(stationobject2, "Tested Constructor (without informationRequestor");
 
 	// use alternate constructor
 	detectionformats::stationInfo stationobject_altc(
 			detectionformats::site(std::string(STATION), std::string(CHANNEL),
 					std::string(NETWORK), std::string(LOCATION)),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			detectionformats::source(std::string(AGENCYID),
+					std::string(AUTHOR)));
 
 	// check data values
 	checkdata(stationobject_altc, "Tested alternate constructor");
@@ -147,7 +181,8 @@ TEST(StationTest, CopyConstructor) {
 	// use constructor
 	detectionformats::stationInfo fromstationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			std::string(AGENCYID), std::string(AUTHOR));
 
 	detectionformats::stationInfo stationobject(fromstationobject);
 
@@ -179,7 +214,17 @@ TEST(StationTest, Validate) {
 	bool result = stationobject.isvalid();
 
 	// check return code
-	ASSERT_EQ(result, true)<< "Tested for successful validation.";
+	ASSERT_EQ(result, true)<< "Tested for successful validation (Without informationRequestor).";
+
+	// source informationRequestor
+	stationobject.informationRequestor.agencyid = std::string(AGENCYID);
+	stationobject.informationRequestor.author = std::string(AUTHOR);
+
+	result = false;
+	result = stationobject.isvalid();
+
+	// check return code
+	ASSERT_EQ(result, true)<< "Tested for successful validation (With informationRequestor).";
 
 	// build bad pick object
 	detectionformats::stationInfo badstationobject;
