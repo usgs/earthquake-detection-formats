@@ -66,7 +66,7 @@ public class StationInfo implements DetectionInt {
 	private final Boolean useForTeleseismic;
 
 	/**
-	 * Required source.
+	 * Optional informationRequestor.
 	 */
 	private final Source informationRequestor;
 

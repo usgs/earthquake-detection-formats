@@ -45,7 +45,7 @@ These are the values **required** to define a StationInfo.
 degrees.
 * Longitude - A decimal number that identifies the longitude of this station
 in degrees.
-* Elevation - A decimal number that identifies the elevation of this sation in
+* Elevation - A decimal number that identifies the elevation of this station in
 meters.
 
 **Optional Values:**

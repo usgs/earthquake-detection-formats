@@ -2,10 +2,6 @@ package gov.usgs.detectionformats;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
@@ -59,7 +55,7 @@ public class StationInfoTest {
 	@Test
 	public void readsJSON() {
 
-		// build Correlation object
+		// build StationInfo object
 		try {
 
 			checkData(new StationInfo(Utility.fromJSONString(STATION_STRING)),
