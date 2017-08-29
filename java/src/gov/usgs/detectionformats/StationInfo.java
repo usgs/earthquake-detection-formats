@@ -23,6 +23,7 @@ public class StationInfo implements DetectionInt {
 	public static final String QUALITY_KEY = "Quality";
 	public static final String ENABLE_KEY = "Enable";
 	public static final String USEFORTELESEISMIC_KEY = "UseForTeleseismic";
+	public static final String INFORMATIONREQUESTOR_KEY = "InformationRequestor";
 
 	/**
 	 * Required type identifier for this StationInfo
@@ -65,6 +66,11 @@ public class StationInfo implements DetectionInt {
 	private final Boolean useForTeleseismic;
 
 	/**
+	 * Required source.
+	 */
+	private final Source informationRequestor;
+
+	/**
 	 * The constructor for the StationInfo class. Initializes members to null
 	 * values.
 	 */
@@ -78,11 +84,12 @@ public class StationInfo implements DetectionInt {
 		quality = null;
 		enable = null;
 		useForTeleseismic = null;
+		informationRequestor = null;
 	}
 
 	/**
-	 * The advanced constructor for the StationInfo class. Initializes members to
-	 * provided values.
+	 * The advanced constructor for the StationInfo class. Initializes members
+	 * to provided values.
 	 *
 	 * @param newStation
 	 *            - A String containing the station to use
@@ -105,15 +112,20 @@ public class StationInfo implements DetectionInt {
 	 * @param newUseForTeleseismic
 	 *            - A Boolean containing the use for teleseismic flag to use,
 	 *            null to omit
+	 * @param newAgencyID
+	 *            - A String containing the agencyid to use, null to omit
+	 * @param newAuthor
+	 *            - A String containing the author to use, null to omit
 	 */
 	public StationInfo(String newStation, String newChannel, String newNetwork,
 			String newLocation, Double newLatitude, Double newLongitude,
 			Double newElevation, Double newQuality, Boolean newEnable,
-			Boolean newUseForTeleseismic) {
+			Boolean newUseForTeleseismic, String newAgencyID,
+			String newAuthor) {
 
 		this(new Site(newStation, newChannel, newNetwork, newLocation),
 				newLatitude, newLongitude, newElevation, newQuality, newEnable,
-				newUseForTeleseismic);
+				newUseForTeleseismic, new Source(newAgencyID, newAuthor));
 	}
 
 	/**
@@ -135,10 +147,13 @@ public class StationInfo implements DetectionInt {
 	 * @param newUseForTeleseismic
 	 *            - A Boolean containing the use for teleseismic flag to use,
 	 *            null to omit
+	 * @param newInformationRequestor
+	 *            - A Source containing the information requestor to use, null
+	 *            to omit
 	 */
 	public StationInfo(Site newSite, Double newLatitude, Double newLongitude,
 			Double newElevation, Double newQuality, Boolean newEnable,
-			Boolean newUseForTeleseismic) {
+			Boolean newUseForTeleseismic, Source newInformationRequestor) {
 
 		type = "StationInfo";
 		site = newSite;
@@ -148,6 +163,7 @@ public class StationInfo implements DetectionInt {
 		quality = newQuality;
 		enable = newEnable;
 		useForTeleseismic = newUseForTeleseismic;
+		informationRequestor = newInformationRequestor;
 	}
 
 	/**
@@ -216,6 +232,14 @@ public class StationInfo implements DetectionInt {
 		} else {
 			useForTeleseismic = null;
 		}
+
+		// informationRequestor
+		if (newJSONObject.containsKey(INFORMATIONREQUESTOR_KEY)) {
+			informationRequestor = new Source(
+					(JSONObject) newJSONObject.get(INFORMATIONREQUESTOR_KEY));
+		} else {
+			informationRequestor = null;
+		}
 	}
 
 	/**
@@ -237,6 +261,7 @@ public class StationInfo implements DetectionInt {
 		Double jsonQuality = getQuality();
 		Boolean jsonEnable = getEnable();
 		Boolean jsonUseForTeleseismic = getUseForTeleseismic();
+		Source jsonInformationRequestor = getInformationRequestor();
 
 		// Required values
 		// Type
@@ -278,6 +303,12 @@ public class StationInfo implements DetectionInt {
 			newJSONObject.put(USEFORTELESEISMIC_KEY, jsonUseForTeleseismic);
 		}
 
+		// informationRequestor
+		if (jsonInformationRequestor != null) {
+			newJSONObject.put(INFORMATIONREQUESTOR_KEY,
+					jsonInformationRequestor.toJSON());
+		}
+
 		return (newJSONObject);
 	}
 
@@ -308,9 +339,10 @@ public class StationInfo implements DetectionInt {
 		Double jsonLatitude = getLatitude();
 		Double jsonLongitude = getLongitude();
 		Double jsonElevation = getElevation();
-//		Double jsonQuality = getQuality();
-//		Boolean jsonEnable = getEnable();
-//		Boolean jsonUseForTeleseismic = getUseForTeleseismic();
+		// Double jsonQuality = getQuality();
+		// Boolean jsonEnable = getEnable();
+		// Boolean jsonUseForTeleseismic = getUseForTeleseismic();
+		Source jsonInformationRequestor = getInformationRequestor();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
@@ -362,11 +394,18 @@ public class StationInfo implements DetectionInt {
 			errorList.add("No Elevation in StationInfo Class.");
 		}
 
-
 		// Optional Keys
 		// Currently no validation criteria for optional values Quality,
 		// Enable, and UseForTeleseismic.
 
+		// informationRequestor
+		if (jsonInformationRequestor != null) {
+
+			if (!jsonInformationRequestor.isValid()) {
+				// informationRequestor invalid
+				errorList.add("Invalid InformationRequestor in StationInfo Class.");
+			}
+		}
 		// success
 		return (errorList);
 	}
@@ -427,5 +466,11 @@ public class StationInfo implements DetectionInt {
 		return useForTeleseismic;
 	}
 
+	/**
+	 * @return the useForTeleseismic
+	 */
+	public Source getInformationRequestor() {
+		return informationRequestor;
+	}
 
 }
