@@ -1,4 +1,4 @@
-# Station Format Specification
+# Station Information Format Specification
 
 ## Description
 
@@ -25,7 +25,12 @@ applications and organizations.
       "Elevation"     : Number,
       "Quality"       : Number,                  
       "Enable"        : Boolean,
-      "UseForTeleseismic" : Boolean
+      "UseForTeleseismic" : Boolean,
+      "InformationRequestor" :
+      {
+         "AgencyID"  : String,
+         "Author"    : String
+      }
     }
 ```
 
@@ -54,3 +59,5 @@ used.
 not, defaults to true.
 * UseForTeleseismic - A boolean flag indicating whether to use the station for
 teleseismic algorithms, defaults to false.
+* InformationRequestor - An object containing the source who requested the
+information, see [Source](Source.md).
