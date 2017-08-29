@@ -4,8 +4,8 @@
  * the comments so that Doxygen will still
  * be able to work.
  ****************************************/
-#ifndef STATION_PICK_H
-#define STATION_PICK_H
+#ifndef STATION_INFO_H
+#define STATION_INFO_H
 
 #include <string>
 
@@ -24,7 +24,7 @@ namespace detectionformats {
  * stationInfo is intended for use in seismic data messaging between seismic
  * applications and organizations.
  *
- * stationInfo uses the Site common object.
+ * stationInfo uses the Site and Source common objects.
  */
 class stationInfo: public detectionbase {
 public:
@@ -101,7 +101,7 @@ public:
 	 * \brief stationInfo copy constructor
 	 *
 	 * The copy constructor for the stationInfo class.
-	 * Copys members from provided stationInfo.
+	 * Copies members from provided stationInfo.
 	 *
 	 * \param newstation - A detectionformats::stationInfo to copy from
 	 */

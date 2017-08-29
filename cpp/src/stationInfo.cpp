@@ -15,7 +15,7 @@
 
 namespace detectionformats {
 stationInfo::stationInfo() {
-	type = STATION_TYPE;
+	type = STATIONINFO_TYPE;
 	site = detectionformats::site();
 	latitude = std::numeric_limits<double>::quiet_NaN();
 	longitude = std::numeric_limits<double>::quiet_NaN();
@@ -31,7 +31,7 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 		double newlongitude, double newelevation, double newquality,
 		bool newenable, bool newuseforteleseismic, std::string newagencyid,
 		std::string newauthor) {
-	type = STATION_TYPE;
+	type = STATIONINFO_TYPE;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
 			newlocation);
 	latitude = newlatitude;
@@ -47,7 +47,7 @@ stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
 		double newlongitude, double newelevation, double newquality,
 		bool newenable, bool newuseforteleseismic,
 		detectionformats::source newinformationrequestor) {
-	type = STATION_TYPE;
+	type = STATIONINFO_TYPE;
 	stationInfo::site = newsite;
 	latitude = newlatitude;
 	longitude = newlongitude;
@@ -133,7 +133,7 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 }
 
 stationInfo::stationInfo(const stationInfo &newstation) {
-	type = STATION_TYPE;
+	type = STATIONINFO_TYPE;
 	site = newstation.site;
 	latitude = newstation.latitude;
 	longitude = newstation.longitude;
@@ -199,7 +199,7 @@ std::vector<std::string> stationInfo::geterrors() {
 
 	// check for required data
 	// Type
-	if (type != STATION_TYPE) {
+	if (type != STATIONINFO_TYPE) {
 		// wrong type
 		errorlist.push_back("Non-stationInfo type in stationInfo class.");
 	}

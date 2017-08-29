@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define STATIONSTRING "{\"Site\":{\"Station\":\"BOZ\",\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},\"Enable\":true,\"Quality\":1.0,\"Type\":\"Station\",\"Elevation\":1589.0,\"UseForTeleseismic\":true,\"Latitude\":45.59697,\"Longitude\":-111.62967,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}"
+#define STATIONSTRING "{\"Site\":{\"Station\":\"BOZ\",\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\",\"Elevation\":1589.0,\"UseForTeleseismic\":true,\"Latitude\":45.59697,\"Longitude\":-111.62967,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}"
 
 #define STATION "BOZ"
 #define CHANNEL "BHZ"
@@ -92,7 +92,7 @@ void checkdata(detectionformats::stationInfo stationobject,
 
 // tests to see if pick can successfully
 // write json output
-TEST(StationTest, WritesJSON) {
+TEST(StationInfoTest, WritesJSON) {
 	detectionformats::stationInfo stationobject;
 
 	// build stationInfo object
@@ -131,7 +131,7 @@ TEST(StationTest, WritesJSON) {
 
 // tests to see if pick can successfully
 // read json output
-TEST(StationTest, ReadsJSON) {
+TEST(StationInfoTest, ReadsJSON) {
 	// build pick object
 	rapidjson::Document stationdocument;
 	detectionformats::stationInfo stationobject(
@@ -144,7 +144,7 @@ TEST(StationTest, ReadsJSON) {
 
 // tests to see if pick can successfully
 // be constructed
-TEST(StationTest, Constructor) {
+TEST(StationInfoTest, Constructor) {
 	// use constructor
 	detectionformats::stationInfo stationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
@@ -177,7 +177,7 @@ TEST(StationTest, Constructor) {
 
 // tests to see if pick can successfully
 // be copy constructed
-TEST(StationTest, CopyConstructor) {
+TEST(StationInfoTest, CopyConstructor) {
 	// use constructor
 	detectionformats::stationInfo fromstationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
@@ -192,7 +192,7 @@ TEST(StationTest, CopyConstructor) {
 
 // tests to see if pick can successfully
 // validate
-TEST(StationTest, Validate) {
+TEST(StationInfoTest, Validate) {
 	detectionformats::stationInfo stationobject;
 
 	// build pick object
