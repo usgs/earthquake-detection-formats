@@ -86,6 +86,14 @@ namespace detectionformats
 		virtual std::vector<std::string> geterrors() override;
 
 		/**
+		* \brief Empty check
+		*
+		* Checks to see if this object is empty
+		* \return Returns true if empty, false otherwise.
+		*/
+		bool isempty();
+
+		/**
 		* \brief source agency identifyer
 		*
 		* A required std::string containing an agency identifier for this source.

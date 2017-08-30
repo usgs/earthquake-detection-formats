@@ -1,4 +1,4 @@
-# Station Format Specification
+# Station Information Format Specification
 
 ## Description
 
@@ -7,7 +7,8 @@ location and quality.  StationInfo uses the [JSON standard](http://www.json.org)
 
 ## Usage
 StationInfo is intended for use in seismic data messaging between seismic
-applications and organizations.
+applications and organizations. The [StationInfoRequest](StationInfoRequest.md)
+Format is intended as a method of requesting a StationInfo message.
 
 ## Output
 ```json
@@ -25,7 +26,12 @@ applications and organizations.
       "Elevation"     : Number,
       "Quality"       : Number,                  
       "Enable"        : Boolean,
-      "UseForTeleseismic" : Boolean
+      "UseForTeleseismic" : Boolean,
+      "InformationRequestor" :
+      {
+         "AgencyID"  : String,
+         "Author"    : String
+      }
     }
 ```
 
@@ -40,7 +46,7 @@ These are the values **required** to define a StationInfo.
 degrees.
 * Longitude - A decimal number that identifies the longitude of this station
 in degrees.
-* Elevation - A decimal number that identifies the elevation of this sation in
+* Elevation - A decimal number that identifies the elevation of this station in
 meters.
 
 **Optional Values:**
@@ -54,3 +60,5 @@ used.
 not, defaults to true.
 * UseForTeleseismic - A boolean flag indicating whether to use the station for
 teleseismic algorithms, defaults to false.
+* InformationRequestor - An object containing the source who requested the
+information, see [Source](Source.md).

@@ -4,12 +4,13 @@
  * the comments so that Doxygen will still
  * be able to work.
  ****************************************/
-#ifndef STATION_PICK_H
-#define STATION_PICK_H
+#ifndef STATION_INFO_H
+#define STATION_INFO_H
 
 #include <string>
 
 #include "site.h"
+#include "source.h"
 
 namespace detectionformats {
 
@@ -23,9 +24,9 @@ namespace detectionformats {
  * stationInfo is intended for use in seismic data messaging between seismic
  * applications and organizations.
  *
- * stationInfo uses the Site common object.
+ * stationInfo uses the Site and Source common objects.
  */
-class stationInfo : public detectionbase {
+class stationInfo: public detectionbase {
 public:
 	/**
 	 * \brief stationInfo constructor
@@ -53,11 +54,16 @@ public:
 	 * \param newenable - A bool containing the enable flag to use
 	 * \param newuseforteleseismic - A bool containing the use for teleseismic
 	 * to use
+	 * \param newagencyid - A std::string containing the agencyid to use, empty
+	 * string to omit
+	 * \param newauthor - A std::string containing the author to use, empty
+	 * string to omit
 	 */
 	stationInfo(std::string newstation, std::string newchannel,
 			std::string newnetwork, std::string newlocation, double newlatitude,
 			double newlongitude, double newelevation, double newquality,
-			bool newenable, bool newuseforteleseismic);
+			bool newenable, bool newuseforteleseismic, std::string newagencyid,
+			std::string newauthor);
 
 	/**
 	 * \brief stationInfo alternate advanced constructor
@@ -74,10 +80,13 @@ public:
 	 * \param newenable - A bool containing the enable flag to use
 	 * \param newuseforteleseismic - A bool containing the use for teleseismic
 	 * to use
+	 * \param newinformationrequestor - A detectionformats::source containing
+	 * the information requestor to use
 	 */
 	stationInfo(detectionformats::site newsite, double newlatitude,
 			double newlongitude, double newelevation, double newquality,
-			bool newenable, bool newuseforteleseismic);
+			bool newenable, bool newuseforteleseismic,
+			detectionformats::source newinformationrequestor);
 
 	/**
 	 * \brief stationInfo advanced constructor
@@ -92,7 +101,7 @@ public:
 	 * \brief stationInfo copy constructor
 	 *
 	 * The copy constructor for the stationInfo class.
-	 * Copys members from provided stationInfo.
+	 * Copies members from provided stationInfo.
 	 *
 	 * \param newstation - A detectionformats::stationInfo to copy from
 	 */
@@ -126,8 +135,8 @@ public:
 	/**
 	 * \brief stationInfo site
 	 *
-	 * A required detectionformats::site containing the site for this stationInfo
-	 * message
+	 * A required detectionformats::site containing the site for this
+	 * stationInfo message
 	 */
 	detectionformats::site site;
 
@@ -169,9 +178,18 @@ public:
 	/**
 	 * \brief use for teleseismic value
 	 *
-	 * An optional bool containing the use for teleseismic flag for this stationInfo
+	 * An optional bool containing the use for teleseismic flag for this
+	 * stationInfo
 	 */
 	bool useforteleseismic;
+
+	/**
+	 * \brief pick requestor
+	 *
+	 * An optional detectionformats::source containing the requestor for this
+	 * stationInfo
+	 */
+	detectionformats::source informationRequestor;
 
 protected:
 

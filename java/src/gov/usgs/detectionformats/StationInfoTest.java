@@ -2,10 +2,6 @@ package gov.usgs.detectionformats;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
@@ -14,7 +10,9 @@ public class StationInfoTest {
 			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
 			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\","
 			+ "\"Elevation\":1589.0,\"UseForTeleseismic\":true,"
-			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967}";
+			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,"
+			+ "\"InformationRequestor\":{\"Author\":\"TestAuthor\","
+			+ "\"AgencyID\":\"US\"}}";
 
 	public static final String STATION = "BOZ";
 	public static final String CHANNEL = "BHZ";
@@ -26,6 +24,8 @@ public class StationInfoTest {
 	public static double QUALITY = 1.0;
 	public static boolean ENABLE = true;
 	public static boolean USEFORTELESEISM = true;
+	public static String AGENCYID = "US";
+	public static String AUTHOR = "TestAuthor";
 
 	/**
 	 * Able to write a JSON string
@@ -33,9 +33,9 @@ public class StationInfoTest {
 	@Test
 	public void writesJSON() {
 
-		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK, LOCATION,
-				LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
-				USEFORTELESEISM);
+		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK,
+				LOCATION, LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
+				USEFORTELESEISM, AGENCYID, AUTHOR);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(stationObject.toJSON());
@@ -55,7 +55,7 @@ public class StationInfoTest {
 	@Test
 	public void readsJSON() {
 
-		// build Correlation object
+		// build StationInfo object
 		try {
 
 			checkData(new StationInfo(Utility.fromJSONString(STATION_STRING)),
@@ -74,7 +74,8 @@ public class StationInfoTest {
 		// use constructor
 		StationInfo stationObject = new StationInfo(
 				new Site(STATION, CHANNEL, NETWORK, LOCATION), LATITUDE,
-				LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
+				LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+				new Source(AGENCYID, AUTHOR));
 
 		// check data values
 		checkData(stationObject, "Alternate Constructor 1");
@@ -86,9 +87,9 @@ public class StationInfoTest {
 	@Test
 	public void validate() {
 
-		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK, LOCATION,
-				LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
-				USEFORTELESEISM);
+		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK,
+				LOCATION, LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
+				USEFORTELESEISM, AGENCYID, AUTHOR);
 
 		// Successful validation
 		boolean rc = stationObject.isValid();
@@ -97,8 +98,9 @@ public class StationInfoTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad StationInfo object
-		StationInfo badStationObject = new StationInfo(null, CHANNEL, NETWORK, LOCATION,
-				null, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM);
+		StationInfo badStationObject = new StationInfo(null, CHANNEL, NETWORK,
+				LOCATION, null, LONGITUDE, ELEVATION, QUALITY, ENABLE,
+				USEFORTELESEISM, AGENCYID, AUTHOR);
 
 		rc = badStationObject.isValid();
 
@@ -154,6 +156,18 @@ public class StationInfoTest {
 			assertEquals(TestName + " UseForTeleseism Equals", USEFORTELESEISM,
 					stationObject.getUseForTeleseismic());
 		}
+		// check stationObject.informationRequestor
+		if (stationObject.getInformationRequestor() != null) {
+
+			// check stationObject.InformationRequestor.AgencyID
+			assertEquals(TestName + " AgencyID Equals", AGENCYID,
+					stationObject.getInformationRequestor().getAgencyID());
+
+			// check pickObject.Source.Author
+			assertEquals(TestName + " Author Equals", AUTHOR,
+					stationObject.getInformationRequestor().getAuthor());
+		}
+
 	}
 
 }

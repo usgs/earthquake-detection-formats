@@ -90,4 +90,14 @@ namespace detectionformats
 		// return the list of errors
 		return (errorlist);
 	}
+
+	bool source::isempty()
+    {
+		if (agencyid != "")
+			return(false);
+		if (author != "")
+			return(false);
+
+		return (true);
+	}
 }

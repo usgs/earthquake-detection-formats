@@ -48,8 +48,10 @@ namespace detectionformats
 				return(formattypes::detectiontype);
 			else if (typestring == RETRACT_TYPE)
 				return(formattypes::retracttype);
-			else if (typestring == STATION_TYPE)
-				return(formattypes::stationtype);
+			else if (typestring == STATIONINFO_TYPE)
+				return(formattypes::stationinfotype);
+			else if (typestring == STATIONINFOREQUEST_TYPE)
+				return(formattypes::stationinforequesttype);
 
 		}
 

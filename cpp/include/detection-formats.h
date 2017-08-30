@@ -12,5 +12,6 @@
 #include "base.h"
 #include "retract.h"
 #include "stationInfo.h"
+#include "stationInfoRequest.h"
 
 #endif

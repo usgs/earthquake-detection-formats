@@ -11,10 +11,11 @@
 #define QUALITY_KEY "Quality"
 #define ENABLE_KEY "Enable"
 #define USEFORTELESEISMIC_KEY "UseForTeleseismic"
+#define INFORMATIONREQUESTOR_KEY "InformationRequestor"
 
 namespace detectionformats {
 stationInfo::stationInfo() {
-	type = STATION_TYPE;
+	type = STATIONINFO_TYPE;
 	site = detectionformats::site();
 	latitude = std::numeric_limits<double>::quiet_NaN();
 	longitude = std::numeric_limits<double>::quiet_NaN();
@@ -22,13 +23,15 @@ stationInfo::stationInfo() {
 	quality = std::numeric_limits<double>::quiet_NaN();
 	enable = true;
 	useforteleseismic = false;
+	informationRequestor = detectionformats::source();
 }
 
 stationInfo::stationInfo(std::string newstation, std::string newchannel,
 		std::string newnetwork, std::string newlocation, double newlatitude,
 		double newlongitude, double newelevation, double newquality,
-		bool newenable, bool newuseforteleseismic) {
-	type = STATION_TYPE;
+		bool newenable, bool newuseforteleseismic, std::string newagencyid,
+		std::string newauthor) {
+	type = STATIONINFO_TYPE;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
 			newlocation);
 	latitude = newlatitude;
@@ -37,12 +40,14 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 	quality = newquality;
 	enable = newenable;
 	useforteleseismic = newuseforteleseismic;
+	informationRequestor = detectionformats::source(newagencyid, newauthor);
 }
 
 stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
 		double newlongitude, double newelevation, double newquality,
-		bool newenable, bool newuseforteleseismic) {
-	type = STATION_TYPE;
+		bool newenable, bool newuseforteleseismic,
+		detectionformats::source newinformationrequestor) {
+	type = STATIONINFO_TYPE;
 	stationInfo::site = newsite;
 	latitude = newlatitude;
 	longitude = newlongitude;
@@ -50,6 +55,7 @@ stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
 	quality = newquality;
 	enable = newenable;
 	useforteleseismic = newuseforteleseismic;
+	informationRequestor = newinformationrequestor;
 }
 
 stationInfo::stationInfo(rapidjson::Value &json) {
@@ -116,10 +122,18 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 		useforteleseismic = json[USEFORTELESEISMIC_KEY].GetBool();
 	else
 		useforteleseismic = false;
+
+	// informationRequestor
+	if ((json.HasMember(INFORMATIONREQUESTOR_KEY) == true)
+			&& (json[INFORMATIONREQUESTOR_KEY].IsObject() == true)) {
+		rapidjson::Value & sourcevalue = json[INFORMATIONREQUESTOR_KEY];
+		informationRequestor = detectionformats::source(sourcevalue);
+	} else
+		informationRequestor = detectionformats::source();
 }
 
 stationInfo::stationInfo(const stationInfo &newstation) {
-	type = STATION_TYPE;
+	type = STATIONINFO_TYPE;
 	site = newstation.site;
 	latitude = newstation.latitude;
 	longitude = newstation.longitude;
@@ -127,6 +141,7 @@ stationInfo::stationInfo(const stationInfo &newstation) {
 	quality = newstation.quality;
 	enable = newstation.enable;
 	useforteleseismic = newstation.useforteleseismic;
+	informationRequestor = newstation.informationRequestor;
 }
 
 stationInfo::~stationInfo() {
@@ -170,6 +185,12 @@ rapidjson::Value & stationInfo::tojson(rapidjson::Value &json,
 	// useforteleseismic
 	json.AddMember(USEFORTELESEISMIC_KEY, useforteleseismic, allocator);
 
+	// informationRequestor
+	if (informationRequestor.isempty() != true) {
+		rapidjson::Value sourcevalue(rapidjson::kObjectType);
+		informationRequestor.tojson(sourcevalue, allocator);
+		json.AddMember(INFORMATIONREQUESTOR_KEY, sourcevalue, allocator);
+	}
 	return (json);
 }
 
@@ -178,7 +199,7 @@ std::vector<std::string> stationInfo::geterrors() {
 
 	// check for required data
 	// Type
-	if (type != STATION_TYPE) {
+	if (type != STATIONINFO_TYPE) {
 		// wrong type
 		errorlist.push_back("Non-stationInfo type in stationInfo class.");
 	}
@@ -186,7 +207,8 @@ std::vector<std::string> stationInfo::geterrors() {
 	// site
 	if (site.isvalid() != true) {
 		// site not found
-		errorlist.push_back("Site object did not validate in stationInfo class.");
+		errorlist.push_back(
+				"Site object did not validate in stationInfo class.");
 	}
 
 	// latitude
@@ -214,6 +236,15 @@ std::vector<std::string> stationInfo::geterrors() {
 	// optional data
 	// Currently no validation criteria for optional values Quality,
 	// Enable, and UseForTeleseismic.
+
+	// informationRequestor
+	if (informationRequestor.isempty() != true) {
+		if (informationRequestor.isvalid() != true) {
+			// site not found
+			errorlist.push_back(
+					"InformationRequestor object did not validate in stationInfo class.");
+		}
+	}
 
 	// return the list of errors
 	return (errorlist);
