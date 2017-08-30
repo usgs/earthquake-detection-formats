@@ -1,0 +1,34 @@
+{
+  "name": "earthquake-detection-formats",
+  "organization": "U.S. Geological Survey",
+  "description": "REPOSITORY_DESCRIPTION",
+  "status": "Beta",
+  "homepage": "https://github.com/usgs/earthquake-detection-formats",
+  "downloadURL": "https://github.com/usgs/earthquake-detection-formats/archive/master.zip",
+
+  "openSourceProject": 1,
+  "license": "https://github.com/usgs/earthquake-detection-formats/blob/master/LICENSE.md",
+  "vcs": "git",
+  "repository": "https://github.com/usgs/earthquake-detection-formats.git",
+
+  "tags": [
+    "earthquake",
+    "formats",
+    "detection",
+    "processing"
+  ],
+  "languages": [
+    "c++",
+    "java",
+    "ant",
+    "cmake"
+  ],
+
+  "contact": {
+    "name": "John Patton",
+    "email": "jpatton@usgs.gov"
+  },
+  "updated": {
+    "metadataLastUpdated": "2017-08-29"
+  }
+}
