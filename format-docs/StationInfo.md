@@ -7,7 +7,8 @@ location and quality.  StationInfo uses the [JSON standard](http://www.json.org)
 
 ## Usage
 StationInfo is intended for use in seismic data messaging between seismic
-applications and organizations.
+applications and organizations. The [StationInfoRequest](StationInfoRequest.md)
+Format is intended as a method of requesting a StationInfo message.
 
 ## Output
 ```json

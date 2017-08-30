@@ -8,7 +8,9 @@ station information request.  StationInfoRequest uses the
 
 ## Usage
 StationInfoRequest is intended for use by seismic applications requesting
-station information from a station information data service or services.
+station information from a station information data service or services. The
+[StationInfo](StationInfo.md) Format is intended as the response to a
+StationInfoRequest message.
 
 ## Output
 ```json
