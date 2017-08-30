@@ -10,8 +10,10 @@ event detection made using a cross correlation algorithm.
 event detection generated using an event detection or association algorithm.
 * [Retract](Retract.md) Format - A format to contain a seismic event
 retraction made using an event detection algorithm.
-* [Station](Station.md) Format - A format to contain basic station location
-and quality information.
+* [StationInfo](StationInfo.md) Format - A format to contain basic station
+location and quality information.
+* [StationInfoRequest](StationInfoRequest.md) Format - A format for requesting
+basic station location and quality information.
 
 ## Supporting objects:
 * [Hypocenter](Hypocenter.md) Object - An object that contains information about
