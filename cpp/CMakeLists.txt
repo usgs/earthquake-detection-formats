@@ -12,10 +12,19 @@ include(internal_utils.cmake)
 
 fix_default_compiler_settings()  # Defined in internal_utils.cmake.
 
-# ----- SET FOR C++14 STANDARD ----- #
-if (NOT MSVC)
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-endif (NOT MSVC)
+# ----- NON WINDOWS CONFIG ----- #
+if (CMAKE_COMPILER_IS_GNUCXX)
+    # Coverage
+    SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+    SET(GCC_COVERAGE_LINK_FLAGS "-lgcov")
+
+    # C++ 14 Standard
+    SET(GCC_CXX_14_FLAGS "-std=c++14")
+
+    # set flags
+    SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
+    SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
+endif (CMAKE_COMPILER_IS_GNUCXX)
 
 # ----- CMAKE CONFIG HEADER ----- #
 # pass some of the CMake settings
