@@ -50,7 +50,7 @@ before_script:
 
 script:
   - cd ${TRAVIS_BUILD_DIR}/java
-  - ant test
+  - ant coverage
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
@@ -58,8 +58,8 @@ script:
 
 after_success:
     # Creating report
-  - cd ${TRAVIS_BUILD_DIR}/cpp/build/ #cpp/CMakeFiles/DetectionFormatsTests.dir/tests
-  - ls -la
+  - cd ${TRAVIS_BUILD_DIR} #/cpp/build/cpp/CMakeFiles/DetectionFormats-tests.dir/tests
+  # - ls -la
   - lcov --directory . --capture --output-file coverage.info # capture coverage info
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system
   - lcov --list coverage.info # debug info
