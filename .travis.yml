@@ -17,11 +17,11 @@ addons:
       - ubuntu-toolchain-r-test
 
 install:
-  # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
+    # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
     - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
     - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
 
-  # Install a recent CMake (unless already installed on OS X)
+    # Install a recent CMake (unless already installed on OS X)
     - |
       if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
         if [[ -z "$(ls -A ${DEPS_DIR}/cmake/bin)" ]]; then
@@ -32,14 +32,14 @@ install:
       else
         if ! brew ls --version cmake &>/dev/null; then brew install cmake; fi
       fi
-  # Build gtest
+    # Build gtest
     - cd ${DEPS_DIR}
     - mkdir gtest && cd gtest
     - export GTEST_ROOT=$(pwd)
     - cp -r /usr/src/gtest/* ./
     - cmake -D CMAKE_INSTALL_PREFIX:PATH=./ ./
     - make
-  # set compilers
+    # set compilers
     - export CXX="g++-5"
     - export CC="gcc-5"
 
@@ -49,8 +49,10 @@ before_script:
     - g++-5 --version 2>&1 | grep g++-5
 
 script:
+  # Java build, tests, and coverage
   - cd ${TRAVIS_BUILD_DIR}/java
   - ant coverage
+  # C++ build, tests, and coverage
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
@@ -64,9 +66,9 @@ after_success:
   # filter out system
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info
   # filter out external libraries
-  - lcov --remove coverage.info '${TRAVIS_BUILD_DIR}/cpp/lib/*' --output-file coverage.info
+  - lcov --remove coverage.info '/home/travis/build/usgs/earthquake-detection-formats/cpp/lib/*' --output-file coverage.info
   # filter out tests
-  - lcov --remove coverage.info '${TRAVIS_BUILD_DIR}/cpp/tests/*' --output-file coverage.info
+  - lcov --remove coverage.info '/home/travis/build/usgs/earthquake-detection-formats/cpp/tests/*' --output-file coverage.info
   # print report for debugging
   - lcov --list coverage.info
   # Uploading report to CodeCov
