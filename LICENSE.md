@@ -60,12 +60,14 @@ Libraries used at runtime
 * Java
  - json-simple-1.1.1.jar   (https://code.google.com/p/json-simple/)
 
-Libraries used to build/test package
-------------------------------------
+Libraries and tools used to build/test package
+----------------------------------------------
 
 * C++
  - googletest                  (https://github.com/google/googletest)
  - cmake                       (http://www.cmake.org)
+ - cpplint                     (https://github.com/google/styleguide)
+ - cppcheck                    (http://cppcheck.sourceforge.net/)
 
 * Java
  - apache ant                  (http://ant.apache.org)
