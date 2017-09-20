@@ -13,16 +13,21 @@ include(internal_utils.cmake)
 fix_default_compiler_settings()  # Defined in internal_utils.cmake.
 
 # ----- NON WINDOWS CONFIG ----- #
+if (NOT MSVC)
+    # C++ 14 Standard
+    SET(GCC_CXX_14_FLAGS "-std=c++14")
+
+    # set flags
+    SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS}" )
+endif (NOT MSVC)
+
 if (CMAKE_COMPILER_IS_GNUCXX)
     # Coverage
     SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
     SET(GCC_COVERAGE_LINK_FLAGS "-lgcov")
 
-    # C++ 14 Standard
-    SET(GCC_CXX_14_FLAGS "-std=c++14")
-
     # set flags
-    SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
+    SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
     SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
@@ -92,7 +97,7 @@ if (RUN_TESTS)
     # ----- CREATE TEST EXE ----- #
     add_executable(DetectionFormatsTests ${UNITTEST_SOURCES})
     set_target_properties(DetectionFormatsTests PROPERTIES OUTPUT_NAME DetectionFormats-tests)
-    target_link_libraries(DetectionFormatsTests ${PTHREADLIB} ${GTEST_BOTH_LIBRARIES})
+    target_link_libraries(DetectionFormatsTests ${PTHREADLIB} ${GCC_COVERAGE_LINK_FLAGS} ${GTEST_BOTH_LIBRARIES})
     target_link_libraries(DetectionFormatsTests DetectionFormats)
 
     # ----- TESTS ----- #
