@@ -12,6 +12,7 @@ addons:
       - g++-5
       - gcc-5
       - libgtest-dev
+      - lcov
     sources:
       - ubuntu-toolchain-r-test
 
@@ -57,7 +58,7 @@ script:
 
 after_success:
     # Creating report
-  - cd ${TRAVIS_BUILD_DIR}/cpp/build/cpp
+  - cd ${TRAVIS_BUILD_DIR}/cpp/build/cpp/CMakeFiles/DetectionFormatsTests.dir/tests
   - lcov --directory . --capture --output-file coverage.info coverage info
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info
   - lcov --list coverage.info
