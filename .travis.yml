@@ -66,9 +66,9 @@ after_success:
   # filter out system
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info
   # filter out external libraries
-  - lcov --remove coverage.info ${TRAVIS_BUILD_DIR}/cpp/lib/* --output-file coverage.info
+  - lcov --remove coverage.info 'lib/*' --output-file coverage.info
   # filter out tests
-  - lcov --remove coverage.info '/home/travis/build/usgs/earthquake-detection-formats/cpp/tests/*' --output-file coverage.info
+  - lcov --remove coverage.info 'tests/*' --output-file coverage.info
   # print report for debugging
   - lcov --list coverage.info
   # Uploading report to CodeCov
