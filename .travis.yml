@@ -13,6 +13,7 @@ addons:
       - gcc-5
       - libgtest-dev
       - lcov
+      - cppcheck
     sources:
       - ubuntu-toolchain-r-test
 
@@ -57,6 +58,8 @@ script:
   - mkdir build
   - cd build
   - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
+  # cppcheck
+  - cppcheck --quiet --error-exitcode=1 .
 
 after_success:
   # Creating code coverage report
