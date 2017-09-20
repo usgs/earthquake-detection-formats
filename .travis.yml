@@ -57,11 +57,17 @@ script:
   - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
 
 after_success:
-    # Creating report
-  - cd ${TRAVIS_BUILD_DIR} #/cpp/build/cpp/CMakeFiles/DetectionFormats-tests.dir/tests
-  # - ls -la
-  - lcov --directory . --capture --output-file coverage.info # capture coverage info
-  - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system
-  - lcov --list coverage.info # debug info
+  # Creating code coverage report
+  - cd ${TRAVIS_BUILD_DIR}
+  # capture coverage info
+  - lcov --directory . --capture --output-file coverage.info
+  # filter out system
+  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
+  # filter out external libraries
+  - lcov --remove coverage.info '${TRAVIS_BUILD_DIR}/cpp/lib/*' --output-file coverage.info
+  # filter out tests
+  - lcov --remove coverage.info '${TRAVIS_BUILD_DIR}/cpp/tests/*' --output-file coverage.info
+  # print report for debugging
+  - lcov --list coverage.info
   # Uploading report to CodeCov
   #- bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
