@@ -134,7 +134,7 @@ option(RUN_CPPCHECK "Run CPP Checks (requires cppcheck installed)" OFF)
 
 if(RUN_CPPCHECK)
 
-    set(CPPCHECK_SRCS  "${HDRS} ${SRCS}")
+    file(GLOB CPPCHECK_SRCS "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
     add_custom_target(cppcheck ALL
       DEPENDS DetectionFormats
@@ -157,12 +157,12 @@ option(RUN_CPPLINT "Run CPP Checks (requires cpplint and python installed)" OFF)
 if(RUN_CPPLINT)
 
     set(CPPLINT_PATH "${CURRENT_SOURCE_DIR}/lib/cpplint/cpplint.py" CACHE FILEPATH "Path to cpplint")
-    set(CPPLINT_SRCS  "${HDRS} ${SRCS}")
+    file(GLOB CPPLINT_SRCS "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
     add_custom_target(cpplint ALL
       DEPENDS DetectionFormats
       COMMAND "${CPPLINT_PATH}"
-      --filter=-whitespace/tab,-legal/copyright
+      --filter=-whitespace/tab,-legal/copyright,-build/c++11
       ${CPPCHECK_SRCS}
       COMMENT "Running cpplint" VERBATIM
     )
