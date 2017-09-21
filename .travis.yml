@@ -57,22 +57,8 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake -DRUN_TESTS=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
-  # cppcheck
-  - cppcheck --quiet --error-exitcode=1 .
+  - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
 
 after_success:
-  # Creating code coverage report
-  - cd ${TRAVIS_BUILD_DIR}
-  # capture coverage info
-  - lcov --directory . --capture --output-file coverage.info
-  # filter out system
-  - lcov --remove coverage.info '/usr/*' --output-file coverage.info
-  # filter out external libraries
-  - lcov --remove coverage.info 'lib/*' --output-file coverage.info
-  # filter out tests
-  - lcov --remove coverage.info 'tests/*' --output-file coverage.info
-  # print report for debugging
-  - lcov --list coverage.info
-  # Uploading report to CodeCov
+  # Uploading coverage report to CodeCov
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"

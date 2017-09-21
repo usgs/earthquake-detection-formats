@@ -16,14 +16,19 @@ fix_default_compiler_settings()  # Defined in internal_utils.cmake.
 if (NOT MSVC)
     # C++ 14 Standard
     SET(GCC_CXX_14_FLAGS "-std=c++14")
+    SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS} ")
 
-    # Coverage
-    SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-    SET(GCC_COVERAGE_LINK_FLAGS "--coverage")
+    option(SUPPORT_COVERAGE "Instrument for Coverage" ON)
 
-    # set flags
-    SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
-    SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
+    if(SUPPORT_COVERAGE)
+        # Coverage
+        SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+        SET(GCC_COVERAGE_LINK_FLAGS "--coverage")
+
+        # set flags
+        SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+        SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+    endif (SUPPORT_COVERAGE)
 endif (NOT MSVC)
 
 # ----- CMAKE CONFIG HEADER ----- #
@@ -105,6 +110,62 @@ if (RUN_TESTS)
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Running DetectionFormatsTests" VERBATIM
     )
+
+    # ----- RUN COVERAGE ----- #
+    if(SUPPORT_COVERAGE)
+
+        option(RUN_COVERAGE "Run Coverage Report (requires lcov installed)" OFF)
+
+        if(RUN_COVERAGE)
+            add_custom_target(coverage-report ALL
+              DEPENDS DetectionFormatsTests
+              COMMAND /bin/sh
+              ${PROJECT_SOURCE_DIR}/generate_coverage.sh
+              COMMENT "Capture/Report Coverage Info" VERBATIM
+            )
+
+        endif (RUN_COVERAGE)
+
+    endif (SUPPORT_COVERAGE)
+endif()
+
+# ----- CPPCHECK ----- #
+option(RUN_CPPCHECK "Run CPP Checks (requires cppcheck installed)" OFF)
+
+if(RUN_CPPCHECK)
+
+    set(CPPCHECK_SRCS  "${HDRS} ${SRCS}")
+
+    add_custom_target(cppcheck ALL
+      DEPENDS DetectionFormats
+      COMMAND /usr/local/bin/cppcheck
+      --enable=warning,performance,portability
+      --language=c++
+      --std=c++11
+      --template="[{severity}][{id}] {message} {callstack} \(On {file}:{line}\)"
+      --verbose
+      --suppress=nullPointerRedundantCheck
+      --error-exitcode=1
+      ${CPPCHECK_SRCS}
+      COMMENT "Running cppcheck" VERBATIM
+    )
+endif()
+
+# ----- CPPLINT ----- #
+option(RUN_CPPLINT "Run CPP Checks (requires cpplint and python installed)" OFF)
+
+if(RUN_CPPLINT)
+
+    set(CPPLINT_PATH "${CURRENT_SOURCE_DIR}/lib/cpplint/cpplint.py" CACHE FILEPATH "Path to cpplint")
+    set(CPPLINT_SRCS  "${HDRS} ${SRCS}")
+
+    add_custom_target(cpplint ALL
+      DEPENDS DetectionFormats
+      COMMAND "${CPPLINT_PATH}"
+      --filter=-whitespace/tab,-legal/copyright
+      ${CPPCHECK_SRCS}
+      COMMENT "Running cpplint" VERBATIM
+    )
 endif()
 
 # ----- DOCUMENTATION ----- #
@@ -129,40 +190,6 @@ if(GENERATE_DOCUMENTATION)
     install(
         DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
         DESTINATION doc/${PROJECT_NAME}
-    )
-endif()
-
-option(RUN_CPPCHECK "Run CPP Checks (requires cppcheck installed)" OFF)
-
-if(RUN_CPPCHECK)
-
-    set(CPPCHECK_SRCS  "${HDRS} ${SRCS}")
-
-    add_custom_target(cppcheck ALL
-      DEPENDS DetectionFormats
-      COMMAND /usr/local/bin/cppcheck
-      --enable=warning,performance,portability
-      --std=c++11
-      --template="[{severity}][{id}] {message} {callstack} \(On {file}:{line}\)"
-      --verbose
-      ${CPPCHECK_SRCS}
-      COMMENT "Running cppcheck" VERBATIM
-    )
-endif()
-
-option(RUN_CPPLINT "Run CPP Checks (requires cpplint and python installed)" OFF)
-
-if(RUN_CPPLINT)
-
-    set(CPPLINT_PATH "${CURRENT_SOURCE_DIR}/lib/cpplint/cpplint.py" CACHE FILEPATH "Path to cpplint")
-    set(CPPLINT_SRCS  "${HDRS} ${SRCS}")
-
-    add_custom_target(cpplint ALL
-      DEPENDS DetectionFormats
-      COMMAND "${CPPLINT_PATH}"
-      --filter=-whitespace/tab,-legal/copyright
-      ${CPPCHECK_SRCS}
-      COMMENT "Running cpplint" VERBATIM
     )
 endif()
 
