@@ -138,7 +138,7 @@ if(RUN_CPPCHECK)
 
     add_custom_target(cppcheck ALL
       DEPENDS DetectionFormats
-      COMMAND /usr/local/bin/cppcheck
+      COMMAND cppcheck
       --enable=warning,performance,portability
       --language=c++
       --std=c++11
