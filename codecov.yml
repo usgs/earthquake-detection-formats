@@ -1,0 +1,3 @@
+ignore:
+  - "cpp/tests"  # ignore tests
+  - "cpp/lib"    # ignore external libraries
