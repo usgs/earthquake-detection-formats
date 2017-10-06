@@ -64,7 +64,7 @@ set_target_properties(DetectionFormats PROPERTIES
 
 # ----- GENERATE ----- #
 include(GenerateExportHeader)
-generate_export_header(DetectionFormats)
+generate_export_header(DetectionFormats EXPORT_FILE_NAME ${CMAKE_CURRENT_BINARY_DIR}/DetectionFormats_export.h)
 
 # ----- GLOBAL INCLUDES ----- #
 target_include_directories(
