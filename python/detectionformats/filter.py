@@ -11,6 +11,7 @@ class Filter:
 
     # init
     def __init__(self, newHighPass=None, newLowPass=None) :
+        # all members optional
         if newHighPass is not None:
             self.highPass = newHighPass
         if newLowPass is not None:
@@ -23,6 +24,7 @@ class Filter:
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        # all members optional
         if self.HIGHPASS_KEY in aDict:
             self.highPass = aDict[self.HIGHPASS_KEY]
         if self.LOWPASS_KEY in aDict:
@@ -37,6 +39,8 @@ class Filter:
     # convert class to a dictonary
     def toDict(self) :
         aDict = {}
+
+        # all members optional
         try:
             aDict[self.HIGHPASS_KEY] = self.highPass
         except:
@@ -62,13 +66,12 @@ class Filter:
     def getErrors(self) :
         errorList = []
 
-        # all members are optional
+        # all members optional
 
         return errorList
 
     # test to see if class is empty
     def isEmpty(self) :
-        errorList = self.getErrors()
         try:
             self.highPass
             return False
