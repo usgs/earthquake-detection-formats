@@ -3,8 +3,8 @@
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate source data as part of
-# detection data.
+# a conversion class used to create, parse, and validate association data as
+# part of detection data.
 class Associated:
     PHASE_KEY = "Phase"
     DISTANCE_KEY = "Distance"

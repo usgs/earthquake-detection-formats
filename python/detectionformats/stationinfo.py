@@ -21,15 +21,21 @@ class StationInfo:
     INFORMATIONREQUESTOR_KEY = "InformationRequestor"
 
     # init
-    def __init__(self, newSite, newLatitude, newLongitude, newElevation,
-        newQuality=None, newEnable=None, newUseForTeleseismic=None,
-        newInformationRequestor=None) :
+    def __init__(self, newSite=None, newLatitude=None, newLongitude=None,
+        newElevation=None, newQuality=None, newEnable=None,
+        newUseForTeleseismic=None, newInformationRequestor=None) :
         # first required keys
         self.type = 'StationInfo'
-        self.site = newSite
-        self.latitude = newLatitude
-        self.longitude = newLongitude
-        self.elevation = newElevation
+        if newSite is not None:
+            self.site = newSite
+        else:
+            self.site = detectionformats.site.Site()
+        if newLatitude is not None:
+            self.latitude = newLatitude
+        if newLongitude is not None:
+            self.longitude = newLongitude
+        if newElevation is not None:
+            self.elevation = newElevation
 
         # second optional keys
         if newQuality is not None:
@@ -130,6 +136,7 @@ class StationInfo:
     def getErrors(self) :
         errorList = []
 
+        # first required keys
         try:
             self.type
         except NameError:
@@ -170,11 +177,9 @@ class StationInfo:
             errorList.append('No Elevation in StationInfo Class.')
 
         try:
-            self.informationRequestor
+            if self.informationRequestor.isValid() == False:
+                errorList.append('Invalid InformationRequestor in StationInfo Class.')
         except NameError:
             pass
-
-        if self.informationRequestor.isValid() == False:
-            errorList.append('Invalid InformationRequestor in StationInfo Class.')
 
         return errorList

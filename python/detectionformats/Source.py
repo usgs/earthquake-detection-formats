@@ -10,9 +10,11 @@ class Source:
     AUTHOR_KEY = "Author"
 
     # init
-    def __init__(self, newAgencyID, newAuthor) :
-        self.agencyID = newAgencyID
-        self.author = newAuthor
+    def __init__(self, newAgencyID=None, newAuthor=None) :
+        if newAgencyID is not None:
+            self.agencyID = newAgencyID
+        if newAuthor is not None:
+            self.author = newAuthor
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :

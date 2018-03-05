@@ -15,11 +15,17 @@ class StationInfoRequest:
     SOURCE_KEY = "Source"
 
     # init
-    def __init__(self, newSite, newSource) :
-        # first required keys
+    def __init__(self, newSite=None, newSource=None) :
+        # required keys
         self.type = 'StationInfoRequest'
-        self.site = newSite
-        self.source = newSource
+        if newSite is not None:
+            self.site = newSite
+        else:
+            self.site = detectionformats.site.Site()
+        if newSource is not None:
+            self.source = newSource
+        else:
+            self.source = detectionformats.source.Source()
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :

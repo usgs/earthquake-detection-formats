@@ -12,10 +12,13 @@ class Site:
     LOCATION_KEY = "Location"
 
     # init
-    def __init__(self, newStation, newNetwork, newChannel=None, newLocation=None) :
+    def __init__(self, newStation=None, newNetwork=None, newChannel=None,
+        newLocation=None) :
         # first required keys
-        self.station = newStation
-        self.network = newNetwork
+        if newStation is not None:
+            self.station = newStation
+        if newNetwork is not None:
+            self.network = newNetwork
 
         # second optional keys
         if newChannel is not None:
