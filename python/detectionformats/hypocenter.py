@@ -131,27 +131,21 @@ class Hypocenter:
 
         # required values
         try:
-            self.latitude
-        except NameError:
+            if self.latitude < -90 or self.latitude > 90:
+                errorList.append('Latitude in Hypocenter Class not in the range of -90 to 90.')
+        except (NameError, AttributeError):
             errorList.append('No Latitude in Hypocenter Class.')
 
-        if self.latitude < -90 or self.latitude > 90:
-            errorList.append('Latitude in Hypocenter Class not in the range of -90 to 90.')
-
         try:
-            self.longitude
-        except NameError:
+            if self.longitude < -180 or self.longitude > 180:
+                errorList.append('Longitude in Hypocenter Class not in the range of -180 to 180.')
+        except (NameError, AttributeError):
             errorList.append('No Longitude in Hypocenter Class.')
 
-        if self.longitude < -180 or self.longitude > 180:
-            errorList.append('Longitude in Hypocenter Class not in the range of -180 to 180.')
-
         try:
-            self.depth
-        except NameError:
+            if self.depth < -100 or self.depth > 1500:
+                errorList.append('Depth in Hypocenter Class not in the range of -100 to 1500.')
+        except (NameError, AttributeError):
             errorList.append('No Depth in Hypocenter Class.')
-
-        if self.depth < -100 or self.depth > 1500:
-            errorList.append('Depth in Hypocenter Class not in the range of -100 to 1500.')
 
         return errorList

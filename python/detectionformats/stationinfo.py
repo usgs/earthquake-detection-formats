@@ -49,6 +49,8 @@ class StationInfo:
 
         if newInformationRequestor is not None:
             self.informationRequestor = newInformationRequestor
+        else:
+            self.informationRequestor = detectionformats.source.Source()
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
@@ -138,48 +140,40 @@ class StationInfo:
 
         # first required keys
         try:
-            self.type
-        except NameError:
+            if self.type == '':
+                errorList.append('Empty Type in StationInfo Class.')
+            elif self.type != 'StationInfo':
+                errorList.append('Non-StationInfo Type in StationInfo Class.')
+        except (NameError, AttributeError):
             errorList.append('No Type in StationInfo Class.')
 
-        if self.type == '':
-            errorList.append('Empty Type in StationInfo Class.')
-        elif self.type != 'StationInfo':
-            errorList.append('Non-StationInfo Type in StationInfo Class.')
-
         try:
-            self.site
-        except NameError:
+            if self.site.isValid() == False:
+                errorList.append('Invalid Site in StationInfo Class.')
+        except (NameError, AttributeError):
             errorList.append('No Site in StationInfo Class.')
 
-        if self.site.isValid() == False:
-            errorList.append('Invalid Site in StationInfo Class.')
-
         try:
-            self.latitude
-        except NameError:
+            if self.latitude < -90 or self.latitude > 90:
+                errorList.append('Latitude in StationInfo Class not in the range of -90 to 90.')
+        except (NameError, AttributeError):
             errorList.append('No Latitude in StationInfo Class.')
 
-        if self.latitude < -90 or self.latitude > 90:
-            errorList.append('Latitude in StationInfo Class not in the range of -90 to 90.')
-
         try:
-            self.longitude
-        except NameError:
+            if self.longitude < -180 or self.longitude > 180:
+                errorList.append('Longitude in StationInfo Class not in the range of -180 to 180.')
+        except (NameError, AttributeError):
             errorList.append('No Longitude in StationInfo Class.')
-
-        if self.longitude < -180 or self.longitude > 180:
-            errorList.append('Longitude in StationInfo Class not in the range of -180 to 180.')
 
         try:
             self.elevation
-        except NameError:
+        except (NameError, AttributeError):
             errorList.append('No Elevation in StationInfo Class.')
 
         try:
             if self.informationRequestor.isValid() == False:
                 errorList.append('Invalid InformationRequestor in StationInfo Class.')
-        except NameError:
+        except (NameError, AttributeError):
             pass
 
         return errorList

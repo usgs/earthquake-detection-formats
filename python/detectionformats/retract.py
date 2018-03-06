@@ -14,11 +14,17 @@ class Retract:
     SOURCE_KEY = "Source"
 
     # init
-    def __init__(self, newID, newSource) :
+    def __init__(self, newID=None, newSource=None) :
         # first required keys
         self.type = 'Retract'
-        self.id = newID
-        self.source = newSource
+
+        if newID is not None:
+            self.id = newID
+
+        if newSource is not None:
+            self.source = newSource
+        else:
+            self.source = detectionformats.source.Source()
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
@@ -69,29 +75,23 @@ class Retract:
         errorList = []
 
         try:
-            self.type
-        except NameError:
+            if self.type == '':
+                errorList.append('Empty Type in Retract Class.')
+            elif self.type != 'Retract':
+                errorList.append('Non-Retract Type in Retract Class.')
+        except (NameError, AttributeError):
             errorList.append('No Type in Retract Class.')
 
-        if self.type == '':
-            errorList.append('Empty Type in Retract Class.')
-        elif self.type != 'Retract':
-            errorList.append('Non-Retract Type in Retract Class.')
-
         try:
-            self.id
-        except NameError:
+            if self.id == '':
+                errorList.append('Empty ID in Retract Class.')
+        except (NameError, AttributeError):
             errorList.append('No ID in Retract Class.')
 
-        if self.id == '':
-            errorList.append('Empty ID in Retract Class.')
-
         try:
-            self.source
-        except NameError:
+            if self.source.isValid() == False:
+                errorList.append('Invalid Source in Retract Class.')
+        except (NameError, AttributeError):
             errorList.append('No Source in Retract Class.')
-
-        if self.source.isValid() == False:
-            errorList.append('Invalid Source in Retract Class.')
 
         return errorList
