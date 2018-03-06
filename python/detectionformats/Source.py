@@ -61,19 +61,15 @@ class Source:
         errorList = []
 
         try:
-            self.agencyID
-        except NameError:
+            if self.agencyID == '':
+                errorList.append('Empty AgencyID in Source Class.')
+        except (NameError, AttributeError):
             errorList.append('No AgencyID in Source Class.')
 
-        if self.agencyID == '':
-            errorList.append('Empty AgencyID in Source Class.')
-
         try:
-            self.author
-        except NameError:
+            if self.author == '':
+                errorList.append('Empty Author in Source Class.')
+        except (NameError, AttributeError):
             errorList.append('No Author in Source Class.')
-
-        if self.author == '':
-            errorList.append('Empty Author in Source Class.')
 
         return errorList

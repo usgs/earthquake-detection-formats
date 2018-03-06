@@ -112,20 +112,17 @@ class Beam:
 
         # first required keys
         try:
-            self.backAzimuth
-        except NameError:
+            if self.backAzimuth < 0:
+                errorList.append('Invalid BackAzimuth in Beam Class.')
+        except (NameError, AttributeError):
             errorList.append('No BackAzimuth in Beam Class.')
 
-        if self.backAzimuth < 0:
-            errorList.append('Invalid BackAzimuth in Beam Class.')
-
         try:
-            self.slowness
-        except NameError:
+            if self.slowness < 0:
+                errorList.append('Invalid Slowness in Beam Class.')
+        except (NameError, AttributeError):
             errorList.append('No Slowness in Beam Class.')
 
-        if self.slowness < 0:
-            errorList.append('Invalid Slowness in Beam Class.')
 
         # second optional keys
         try:
