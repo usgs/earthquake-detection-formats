@@ -95,19 +95,15 @@ class Site:
         errorList = []
 
         try:
-            self.station
-        except NameError:
+            if self.station == '':
+                errorList.append('Empty Station in Site Class.')
+        except (NameError, AttributeError):
             errorList.append('No Station in Site Class.')
 
-        if self.station == '':
-            errorList.append('Empty Station in Site Class.')
-
         try:
-            self.network
-        except NameError:
+            if self.network == '':
+                errorList.append('Empty Network in Site Class.')
+        except (NameError, AttributeError):
             errorList.append('No Network in Site Class.')
-
-        if self.network == '':
-            errorList.append('Empty Network in Site Class.')
 
         return errorList
