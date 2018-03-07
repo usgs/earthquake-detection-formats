@@ -76,29 +76,23 @@ class StationInfoRequest:
         errorList = []
 
         try:
-            self.type
-        except NameError:
+            if self.type == '':
+                errorList.append('Empty Type in StationInfoRequest Class.')
+            elif self.type != 'StationInfoRequest':
+                errorList.append('Non-StationInfoRequest Type in StationInfoRequest Class.')
+        except (NameError, AttributeError):
             errorList.append('No Type in StationInfoRequest Class.')
 
-        if self.type == '':
-            errorList.append('Empty Type in StationInfoRequest Class.')
-        elif self.type != 'StationInfoRequest':
-            errorList.append('Non-StationInfoRequest Type in StationInfoRequest Class.')
-
         try:
-            self.site
-        except NameError:
+            if self.site.isValid() == False:
+                errorList.append('Invalid Site in StationInfoRequest Class.')
+        except (NameError, AttributeError):
             errorList.append('No Site in StationInfoRequest Class.')
 
-        if self.site.isValid() == False:
-            errorList.append('Invalid Site in StationInfoRequest Class.')
-
         try:
-            self.source
-        except NameError:
+            if self.source.isValid() == False:
+                errorList.append('Invalid Source in StationInfoRequest Class.')
+        except (NameError, AttributeError):
             errorList.append('No Source in StationInfoRequest Class.')
-
-        if self.source.isValid() == False:
-            errorList.append('Invalid Source in StationInfoRequest Class.')
 
         return errorList

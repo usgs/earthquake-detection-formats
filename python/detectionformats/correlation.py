@@ -210,86 +210,76 @@ class Correlation:
 
         # required values
         try:
-            self.type
-        except AttributeError:
+            if self.type == '':
+                errorList.append('Empty Type in Correlation Class.')
+            elif self.type != 'Correlation':
+                errorList.append('Non-Correlation Type in Correlation Class.')
+        except (NameError, AttributeError):
             errorList.append('No Type in Correlation Class.')
 
-        if self.type == '':
-            errorList.append('Empty Type in Correlation Class.')
-        elif self.type != 'Correlation':
-            errorList.append('Non-Correlation Type in Correlation Class.')
-
         try:
-            self.id
-        except AttributeError:
+            if self.id == '':
+                errorList.append('Empty ID in Correlation Class.')
+        except (NameError, AttributeError):
             errorList.append('No ID in Correlation Class.')
 
-        if self.id == '':
-            errorList.append('Empty ID in Correlation Class.')
-
         try:
-            self.site
-        except AttributeError:
+            if self.site.isValid() == False:
+                errorList.append('Invalid Site in Correlation Class.')
+        except (NameError, AttributeError):
             errorList.append('No Site in Correlation Class.')
 
-        if self.site.isValid() == False:
-            errorList.append('Invalid Site in Correlation Class.')
-
         try:
-            self.source
-        except AttributeError:
+            if self.source.isValid() == False:
+                errorList.append('Invalid Source in Correlation Class.')
+        except (NameError, AttributeError):
             errorList.append('No Source in Correlation Class.')
-
-        if self.source.isValid() == False:
-            errorList.append('Invalid Source in Correlation Class.')
 
         try:
             self.phase
-        except AttributeError:
+        except (NameError, AttributeError):
             errorList.append('No Phase in Correlation Class.')
 
         try:
             self.time
-        except AttributeError:
+        except (NameError, AttributeError):
             errorList.append('No Time in Correlation Class.')
 
         try:
             if self.correlation < 0:
                 errorList.append('Correlation in Correlation Class not in greater than 0.')
-        except AttributeError:
+        except (NameError, AttributeError):
             errorList.append('No Correlation in Correlation Class.')
 
         try:
-            self.hypocenter
-        except AttributeError:
+            if self.hypocenter.isValid() == False:
+                errorList.append('Invalid Hypocenter in Correlation Class.')
+        except (NameError, AttributeError):
             errorList.append('No Hypocenter in Correlation Class.')
-
-        if self.hypocenter.isValid() == False:
-            errorList.append('Invalid Hypocenter in Correlation Class.')
 
         # optional values
         try:
             if self.eventType != 'earthquake' and self.eventType != 'blast' :
                 errorList.append('Invalid EventType in Correlation Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.magnitude < -2 or self.magnitude > 10:
                 errorList.append('Magnitude in Correlation Class not in the range of -2 to 10.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.thresholdType == '':
                 errorList.append('Empty ThresholdType in Correlation Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.associationInfo.isValid() == False:
                 errorList.append('Invalid AssociationInfo in Correlation Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         return errorList
