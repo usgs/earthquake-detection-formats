@@ -129,7 +129,7 @@ class Detection:
                         elif aData[self.TYPE_KEY] == 'Correlation':
                             newCorrelation = detectionformats.correlation.Correlation()
                             newCorrelation.fromDict(aData)
-                            self.newCorrelation.append(newCorrelation)
+                            self.correlationData.append(newCorrelation)
 
     # convert class to a json string
     def toJSONString(self) :
@@ -157,7 +157,7 @@ class Detection:
             pass
 
         try:
-            aDict[self.EVENTTYPE_KEY] = self.EventType
+            aDict[self.EVENTTYPE_KEY] = self.eventType
         except:
             pass
 
@@ -219,74 +219,66 @@ class Detection:
 
         # required values
         try:
-            self.type
-        except AttributeError:
+            if self.type == '':
+                errorList.append('Empty Type in Detection Class.')
+            elif self.type != 'Detection':
+                errorList.append('Non-Detection Type in Detection Class.')
+        except (NameError, AttributeError):
             errorList.append('No Type in Detection Class.')
 
-        if self.type == '':
-            errorList.append('Empty Type in Detection Class.')
-        elif self.type != 'Detection':
-            errorList.append('Non-Detection Type in Detection Class.')
-
         try:
-            self.id
-        except AttributeError:
+            if self.id == '':
+                errorList.append('Empty ID in Detection Class.')
+        except (NameError, AttributeError):
             errorList.append('No ID in Detection Class.')
 
-        if self.id == '':
-            errorList.append('Empty ID in Detection Class.')
-
         try:
-            self.source
-        except AttributeError:
+            if self.source.isValid() == False:
+                errorList.append('Invalid Source in Detection Class.')
+        except (NameError, AttributeError):
             errorList.append('No Source in Detection Class.')
 
-        if self.source.isValid() == False:
-            errorList.append('Invalid Source in Detection Class.')
-
         try:
-            self.hypocenter
-        except AttributeError:
+            if self.hypocenter.isValid() == False:
+                errorList.append('Invalid Hypocenter in Detection Class.')
+        except (NameError, AttributeError):
             errorList.append('No Hypocenter in Detection Class.')
-
-        if self.hypocenter.isValid() == False:
-            errorList.append('Invalid Hypocenter in Detection Class.')
 
         # optional values
         try:
             self.detectionType
             if self.detectionType != 'New' and self.detectionType != 'Update' and self.detectionType != 'Final' and self.detectionType != 'Retract':
                 errorList.append('Invalid DetectionType in Detection Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.eventType != 'earthquake' and self.eventType != 'blast' :
                 errorList.append('Invalid EventType in Correlation Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             self.detectionTime
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.bayes < 0:
                 errorList.append('Bayes in Detection Class not in greater than 0.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.minimumDistance < 0:
                 errorList.append('MinimumDistance in Detection Class not in greater than 0.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.gap < 0 or self.gap > 360:
                 errorList.append('Gap in Detection Class not in the range of 0 to 360.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
@@ -294,7 +286,7 @@ class Detection:
                 for aPick in self.pickData:
                     if aPick.isValid() == False:
                         errorList.append('Invalid Pick in Detection Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
@@ -302,7 +294,7 @@ class Detection:
                 for aCorrelation in self.correlationData:
                     if aCorrelation.isValid() == False:
                         errorList.append('Invalid Correlation in Detection Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         return errorList
