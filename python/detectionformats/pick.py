@@ -32,7 +32,7 @@ class Pick:
     # init
     def __init__(self, newID=None, newSite=None, newSource=None, newTime=None,
         newPhase=None, newPolarity=None, newOnset=None, newPicker=None,
-        newFilterList=None,newAmplitude=None, newBeam=None,
+        newFilterList=None, newAmplitude=None, newBeam=None,
         newAssociatioInfo=None) :
 
         # first required keys
@@ -55,7 +55,7 @@ class Pick:
 
         # second optional keys
         if newPhase is not None:
-            self.phase = phase
+            self.phase = newPhase
 
         if newPolarity is not None:
             self.polarity = newPolarity
@@ -69,12 +69,18 @@ class Pick:
         if newFilterList is not None:
             if newFilterList and len(newFilterList) > 0:
                 self.filterList = newFilterList
+        else:
+            self.filterlist = []
 
         if newAmplitude is not None:
             self.amplitude = newAmplitude
+        else:
+            self.amplitude = detectionformats.amplitude.Amplitude()
 
         if newBeam is not None:
             self.beam = newBeam
+        else:
+            self.beam = detectionformats.beam.Beam()
 
         if newAssociatioInfo is not None:
             self.associationInfo = newAssociatioInfo
@@ -179,14 +185,16 @@ class Pick:
             aFilterList = []
             if self.filterList and len(self.filerList) > 0:
                 for aFilter in self.filterList:
-                    aFilterList.append(aFilter.toDict())
+                    if aFilter.isEmpty() == False:
+                        aFilterList.append(aFilter.toDict())
 
                 aDict[self.FILTER_KEY] = aFilterList
         except:
             pass
 
         try:
-            aDict[self.AMPLITUDE_KEY] = self.amplitude.toDict()
+            if self.amplitude.isEmpty() == False:
+                aDict[self.AMPLITUDE_KEY] = self.amplitude.toDict()
         except:
             pass
 
@@ -196,7 +204,8 @@ class Pick:
             pass
 
         try:
-            aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
+            if self.associationInfo.isEmpty() == False:
+                aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
         except:
             pass
 
@@ -217,42 +226,34 @@ class Pick:
 
         # required values
         try:
-            self.type
-        except AttributeError:
+            if self.type == '':
+                errorList.append('Empty Type in Pick Class.')
+            elif self.type != 'Pick':
+                errorList.append('Non-Pick Type in Pick Class.')
+        except (NameError, AttributeError):
             errorList.append('No Type in Pick Class.')
 
-        if self.type == '':
-            errorList.append('Empty Type in Pick Class.')
-        elif self.type != 'Pick':
-            errorList.append('Non-Pick Type in Pick Class.')
-
         try:
-            self.id
-        except AttributeError:
+            if self.id == '':
+                errorList.append('Empty ID in Pick Class.')
+        except (NameError, AttributeError):
             errorList.append('No ID in Pick Class.')
 
-        if self.id == '':
-            errorList.append('Empty ID in Pick Class.')
-
         try:
-            self.site
-        except AttributeError:
+            if self.site.isValid() == False:
+                errorList.append('Invalid Site in Pick Class.')
+        except (NameError, AttributeError):
             errorList.append('No Site in Pick Class.')
 
-        if self.site.isValid() == False:
-            errorList.append('Invalid Site in Pick Class.')
-
         try:
-            self.source
-        except AttributeError:
+            if self.source.isValid() == False:
+                errorList.append('Invalid Source in Pick Class.')
+        except (NameError, AttributeError):
             errorList.append('No Source in Pick Class.')
-
-        if self.source.isValid() == False:
-            errorList.append('Invalid Source in Pick Class.')
 
         try:
             self.time
-        except AttributeError:
+        except (NameError, AttributeError):
             errorList.append('No Time in Pick Class.')
 
         # optional values
@@ -260,47 +261,51 @@ class Pick:
             self.polarity
             if self.polarity != 'up' and self.polarity != 'down' :
                 errorList.append('Invalid Polarity in Pick Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             self.onset
             if self.onset != 'impulsive' and self.onset != 'emergent' and self.onset != 'questionable':
                 errorList.append('Invalid Onset in Pick Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             self.picker
             if self.picker != 'manual' and self.picker != 'raypicker' and self.picker != 'filterpicker' and self.picker != 'earthworm' and self.picker != 'other':
                 errorList.append('Invalid Picker in Pick Class.')
-        except AttributeError:
+        except (NameError, AttributeError):
             pass
 
         try:
             if self.filterList and len(self.filerList) > 0:
                 for aFilter in self.filterList:
-                    if aFilter.isValid() == False:
-                        errorList.append('Invalid Filter in Pick Class.')
-        except AttributeError:
+                    if aFilter.isEmpty() == False:
+                        if aFilter.isValid() == False:
+                            errorList.append('Invalid Filter in Pick Class.')
+        except (NameError, AttributeError):
             pass
 
         try:
-            if self.amplitude.isValid() == False:
-                errorList.append('Invalid Amplitude in Pick Class.')
-        except AttributeError:
+            if self.amplitude.isEmpty() == False:
+                if self.amplitude.isValid() == False:
+                    errorList.append('Invalid Amplitude in Pick Class.')
+        except (NameError, AttributeError):
             pass
 
         try:
-            if self.beam.isValid() == False:
-                errorList.append('Invalid Beam in Pick Class.')
-        except AttributeError:
+            if self.beam.isEmpty() == False:
+                if self.beam.isValid() == False:
+                    errorList.append('Invalid Beam in Pick Class.')
+        except (NameError, AttributeError):
             pass
 
         try:
-            if self.associationInfo.isValid() == False:
-                errorList.append('Invalid AssociationInfo in Pick Class.')
-        except AttributeError:
+            if self.associationInfo.isEmpty() == False:
+                if self.associationInfo.isValid() == False:
+                    errorList.append('Invalid AssociationInfo in Pick Class.')
+        except (NameError, AttributeError):
             pass
 
         return errorList

@@ -189,7 +189,8 @@ class Correlation:
             pass
 
         try:
-            aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
+            if self.associationInfo.isEmpty() == False:
+                aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
         except:
             pass
 
@@ -277,8 +278,9 @@ class Correlation:
             pass
 
         try:
-            if self.associationInfo.isValid() == False:
-                errorList.append('Invalid AssociationInfo in Correlation Class.')
+            if self.associationInfo.isEmpty() == False:
+                if self.associationInfo.isValid() == False:
+                    errorList.append('Invalid AssociationInfo in Correlation Class.')
         except (NameError, AttributeError):
             pass
 
