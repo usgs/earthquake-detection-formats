@@ -15,6 +15,25 @@ class Associated:
     # init
     def __init__(self, newPhase=None, newDistance=None, newAzimuth=None,
         newResidual=None, newSigma=None) :
+        """Initialize the associated object. Constructs an empty object
+           if all arguments are None
+
+        Args:
+            newPhase: an optional String containing the desired phase
+                identification
+            newDistance: an optional Number containing the desired distance
+                measurement as a float
+            newAzimuth: an optional Number containing the desired azimuth
+                measurement as a float
+            newResidual: an optional Number containing the desired residual
+                measurement as a float
+            newSigma: an optional Number containing the desired sigma measurement
+                as a float
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # all members optional
         if newPhase is not None:
             self.phase = newPhase
@@ -29,11 +48,29 @@ class Associated:
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
-            jsonObject = json.loads(jsonString)
-            self.fromDict(jsonObject)
+        """Populates the object from a json formatted string
+
+        Args:
+            jsonString: a required String containing the json formatted text
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
+        jsonObject = json.loads(jsonString)
+        self.fromDict(jsonObject)
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        """Populates the object from a dictonary
+
+        Args:
+            aDict: a required Dictonary
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # all members optional
         if self.PHASE_KEY in aDict:
             self.phase = aDict[self.PHASE_KEY]
@@ -48,12 +85,30 @@ class Associated:
 
     # convert class to a json string
     def toJSONString(self) :
+        """Converts the object to a json formatted string
+
+        Args:
+            None
+        Returns:
+            The JSON formatted message as a String
+        Raises:
+            Nothing
+        """
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
     # convert class to a dictonary
     def toDict(self) :
+        """Converts the object to a dictonary
+
+        Args:
+            None
+        Returns:
+            The Dictonary
+        Raises:
+            Nothing
+        """
         aDict = {}
 
         # all members optional
@@ -86,6 +141,15 @@ class Associated:
 
     # test to see if class is valid
     def isValid(self) :
+        """Checks to see if the object is valid
+
+        Args:
+            None
+        Returns:
+            True if the object is valid, False otherwise
+        Raises:
+            Nothing
+        """
         errorList = self.getErrors()
 
         if len(errorList) == 0:
@@ -95,6 +159,15 @@ class Associated:
 
     # get list of validation errors
     def getErrors(self) :
+        """Gets a list of object validation errors
+
+        Args:
+            None
+        Returns:
+            A List of Strings containing the validation error messages
+        Raises:
+            Nothing
+        """
         errorList = []
 
         # optional
@@ -118,6 +191,15 @@ class Associated:
 
     # test to see if class is empty
     def isEmpty(self) :
+        """Checks to see if the object is empty
+
+        Args:
+            None
+        Returns:
+            True if the object is empty, False otherwise
+        Raises:
+            Nothing
+        """
         try:
             self.phase
             return False

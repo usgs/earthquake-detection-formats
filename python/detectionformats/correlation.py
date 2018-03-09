@@ -35,6 +35,36 @@ class Correlation:
         newMagnitude=None, newSNR=None, newZScore=None,
         newDetectionThreshold=None, newThresholdType=None,
         newAssociatioInfo=None) :
+        """Initialize the correlation object. Constructs an empty object
+           if all arguments are None
+
+        Args:
+            newID: a required String containing the desired ID
+            newSite: a required detectionformats.site.Site containing the desired
+                site
+            newSource: a required detectionformats.source.Source containing the
+                desired source
+            newPhase: a required String containing the desired phase identifier
+            newHypocenter: a required detectionformats.hypocenter.Hypocenter
+                containing the desired hypocenter
+            newEventType: an optional String containing the desired event type
+            newMagnitude: an optional Number containing the desired magnitude
+                estimate as a float
+            newSNR: an optional Number containing the desired signal to noise
+                measurement as a float
+            newZScore: an optional Number containing the desired z score
+                measurement as a float
+            newDetectionThreshold: an optional Number containing the detection
+                threshold used as a float
+            newThresholdType: an optional String containing the type of detection
+                threshold used
+            newAssociatioInfo: an optional detectionformats.associated.Associated
+                containing association information
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
 
         # first required keys
         self.type = 'Correlation'
@@ -91,11 +121,29 @@ class Correlation:
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
+        """Populates the object from a json formatted string
+
+        Args:
+            jsonString: a required String containing the json formatted text
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        """Populates the object from a dictonary
+
+        Args:
+            aDict: a required Dictonary
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         try:
             self.type = aDict[self.TYPE_KEY]
@@ -135,12 +183,30 @@ class Correlation:
 
     # convert class to a json string
     def toJSONString(self) :
+        """Converts the object to a json formatted string
+
+        Args:
+            None
+        Returns:
+            The JSON formatted message as a String
+        Raises:
+            Nothing
+        """
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
     # convert class to a dictonary
     def toDict(self) :
+        """Converts the object to a dictonary
+
+        Args:
+            None
+        Returns:
+            The Dictonary
+        Raises:
+            Nothing
+        """
         aDict = {}
 
         # first required keys
@@ -198,6 +264,15 @@ class Correlation:
 
     # test to see if class is valid
     def isValid(self) :
+        """Checks to see if the object is valid
+
+        Args:
+            None
+        Returns:
+            True if the object is valid, False otherwise
+        Raises:
+            Nothing
+        """
         errorList = self.getErrors()
 
         if len(errorList) == 0:
@@ -207,6 +282,15 @@ class Correlation:
 
     # get list of validation errors
     def getErrors(self) :
+        """Gets a list of object validation errors
+
+        Args:
+            None
+        Returns:
+            A List of Strings containing the validation error messages
+        Raises:
+            Nothing
+        """
         errorList = []
 
         # required values

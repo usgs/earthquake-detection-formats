@@ -17,6 +17,27 @@ class Beam:
     def __init__(self, newBackAzimuth=None, newSlowness=None, newPowerRatio=None,
         newBackAzimuthError=None, newSlownessError=None,
         newPowerRatioError=None) :
+        """Initialize the beam object. Constructs an empty object
+           if all arguments are None
+
+        Args:
+            newBackAzimuth: a required Number containing the desired back
+                azimuth measurement as a float
+            newSlowness: a required Number containing the desired slowness
+                measurement as a float
+            newPowerRatio: an optional Number containing the desired power ratio
+                measurement as a float
+            newBackAzimuthError: an optional Number containing the desired back
+                azimuth error measurement as a float
+            newSlownessError: an optional Number containing the desired slowness
+                error measurement as a float
+            newPowerRatioError: an optional Number containing the desired power
+                ratio error measurement as a float
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         if newBackAzimuth is not None:
             self.backAzimuth = newBackAzimuth
@@ -35,11 +56,29 @@ class Beam:
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
-            jsonObject = json.loads(jsonString)
-            self.fromDict(jsonObject)
+        """Populates the object from a json formatted string
+
+        Args:
+            jsonString: a required String containing the json formatted text
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
+        jsonObject = json.loads(jsonString)
+        self.fromDict(jsonObject)
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        """Populates the object from a dictonary
+
+        Args:
+            aDict: a required Dictonary
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         try:
             self.backAzimuth = aDict[self.BACKAZIMUTH_KEY]
@@ -59,12 +98,30 @@ class Beam:
 
     # convert class to a json string
     def toJSONString(self) :
+        """Converts the object to a json formatted string
+
+        Args:
+            None
+        Returns:
+            The JSON formatted message as a String
+        Raises:
+            Nothing
+        """
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
     # convert class to a dictonary
     def toDict(self) :
+        """Converts the object to a dictonary
+
+        Args:
+            None
+        Returns:
+            The Dictonary
+        Raises:
+            Nothing
+        """
         aDict = {}
 
         # first required keys
@@ -99,6 +156,15 @@ class Beam:
 
     # test to see if class is valid
     def isValid(self) :
+        """Checks to see if the object is valid
+
+        Args:
+            None
+        Returns:
+            True if the object is valid, False otherwise
+        Raises:
+            Nothing
+        """
         errorList = self.getErrors()
 
         if len(errorList) == 0:
@@ -108,6 +174,15 @@ class Beam:
 
     # get list of validation errors
     def getErrors(self) :
+        """Gets a list of object validation errors
+
+        Args:
+            None
+        Returns:
+            A List of Strings containing the validation error messages
+        Raises:
+            Nothing
+        """
         errorList = []
 
         # first required keys
