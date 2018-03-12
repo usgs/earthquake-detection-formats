@@ -1,6 +1,7 @@
 # Java 1.7 Detection Formats Library
 
-This is the Java implementation of the library used to generate and parse the Detection Formats.
+This is the Java implementation of the library used to generate and parse the
+Detection Formats.
 
 Dependencies
 ------
@@ -22,11 +23,11 @@ The steps to get and build detection-formats.jar using ant are as follows:
 
 1. Clone detection-formats.
 2. Open a command window and change directories to /java/
-3. To build the jar file, run the command ant jar
-4. To run junit tests, run the command ant test.
-5. To generate javadocs, run the command ant javadoc
+3. To build the jar file, run the command `ant jar`
+4. To run junit tests, run the command `ant test`.
+5. To generate javadocs, run the command `ant javadoc`
 6. To compile, instrument, test, run coverage report, generate javadocs, build
-jar, run the command ant all
+jar, run the command `ant all`
 
 Using
 -----

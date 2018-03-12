@@ -5,7 +5,7 @@ jdk:
   - openjdk7
 
 sudo: false
-# add modern c++ and gtest
+# add modern c++, gtest, and python3
 addons:
   apt:
     packages:
@@ -43,6 +43,15 @@ install:
     # set compilers
     - export CXX="g++-5"
     - export CC="gcc-5"
+    # get conda
+    - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    # Useful for debugging any issues with conda
+    - conda info -a
 
 before_script:
     - uname -a
@@ -58,6 +67,9 @@ script:
   - mkdir build
   - cd build
   - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
+  # python tests
+  - cd ${TRAVIS_BUILD_DIR}/python
+  - python -m unittest discover test/
 
 after_success:
   # Uploading coverage report to CodeCov
