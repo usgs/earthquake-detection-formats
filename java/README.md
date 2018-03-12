@@ -1,6 +1,7 @@
 # Java 1.7 Detection Formats Library
 
-This is the Java implementation of the library used to generate and parse the Detection Formats.
+This is the Java implementation of the library used to generate and parse the
+Detection Formats.
 
 Dependencies
 ------

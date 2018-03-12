@@ -49,8 +49,8 @@ to create a pick, correlation, or station.
 creator/source of a pick, correlation, or detection.
 
 ## Supported Languages:
-Currently a library written in C++11, and a Java 1.7 jar file exist to generate
-and parse these formats.
+Currently a library written in C++11, a Java 1.7 jar file, and a Python 3.6
+implementation exist to generate and parse these formats.
 
 Getting Started
 =====
@@ -60,3 +60,6 @@ Getting Started
 
 ## Java 1.7 jar
 * See the [Java README](java/README.md).
+
+## Python 3.6
+* See the [Java README](python/README.md).
