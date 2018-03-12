@@ -5,7 +5,7 @@ jdk:
   - openjdk7
 
 sudo: false
-# add modern c++ and gtest
+# add modern c++, gtest, and python3
 addons:
   apt:
     packages:
@@ -14,6 +14,7 @@ addons:
       - libgtest-dev
       - lcov
       - cppcheck
+      - python3
     sources:
       - ubuntu-toolchain-r-test
 
@@ -58,7 +59,10 @@ script:
   - mkdir build
   - cd build
   - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
-
+  # python tests
+  - cd ${TRAVIS_BUILD_DIR}/python
+  - python -m unittest discover test/
+  
 after_success:
   # Uploading coverage report to CodeCov
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
