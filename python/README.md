@@ -21,4 +21,4 @@ The steps to get and use the python detection-formats are as follows:
 
 Using
 -----
-Once you have the python distribution, simply import detctionformats
+Once you have the python distribution, simply import detectionformats

@@ -62,4 +62,4 @@ Getting Started
 * See the [Java README](java/README.md).
 
 ## Python 3.6
-* See the [Java README](python/README.md).
+* See the [Python README](python/README.md).
