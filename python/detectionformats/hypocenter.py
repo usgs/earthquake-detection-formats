@@ -20,6 +20,31 @@ class Hypocenter:
     def __init__(self, newLatitude=None, newLongitude=None, newDepth=None,
         newTime=None, newLatitudeError=None, newLongitudeError=None,
         newDepthError=None, newTimeError=None) :
+        """Initialize the hypocenter object. Constructs an empty object
+           if all arguments are None
+
+        Args:
+            newLatitude: a required Number containing the latitude as a float in
+                degrees
+            newLongitude: a required Number containing the longitude as a float
+                in degrees
+            newDepth: a required Number containing the depth as a float in km
+            newTime: a required datetime containing the correlation time
+            newMagnitude: an optional Number containing the desired magnitude
+                estimate as a float
+            newLatitudeError: an optional Number containing the latitude error
+                measurement as a float
+            newLongitudeError: an optional Number containing the longitude error
+                measurement as a float
+            newDepthError: an optional Number containing the depth error
+                measurement as a float
+            newTimeError: an optional Number containing the time error measurement
+                as a float
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         if newLatitude is not None:
             self.latitude = newLatitude
@@ -45,11 +70,29 @@ class Hypocenter:
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
+        """Populates the object from a json formatted string
+
+        Args:
+            jsonString: a required String containing the json formatted text
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        """Populates the object from a dictonary
+
+        Args:
+            aDict: a required Dictonary
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         try:
             self.latitude = aDict[self.LATITUDE_KEY]
@@ -75,12 +118,30 @@ class Hypocenter:
 
     # convert class to a json string
     def toJSONString(self) :
+        """Converts the object to a json formatted string
+
+        Args:
+            None
+        Returns:
+            The JSON formatted message as a String
+        Raises:
+            Nothing
+        """
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
     # convert class to a dictonary
     def toDict(self) :
+        """Converts the object to a dictonary
+
+        Args:
+            None
+        Returns:
+            The Dictonary
+        Raises:
+            Nothing
+        """
         aDict = {}
 
         # first required keys
@@ -118,6 +179,15 @@ class Hypocenter:
 
     # test to see if class is valid
     def isValid(self) :
+        """Checks to see if the object is valid
+
+        Args:
+            None
+        Returns:
+            True if the object is valid, False otherwise
+        Raises:
+            Nothing
+        """
         errorList = self.getErrors()
 
         if len(errorList) == 0:
@@ -127,6 +197,15 @@ class Hypocenter:
 
     # get list of validation errors
     def getErrors(self) :
+        """Gets a list of object validation errors
+
+        Args:
+            None
+        Returns:
+            A List of Strings containing the validation error messages
+        Raises:
+            Nothing
+        """
         errorList = []
 
         # required values

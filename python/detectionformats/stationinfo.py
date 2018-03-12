@@ -24,6 +24,29 @@ class StationInfo:
     def __init__(self, newSite=None, newLatitude=None, newLongitude=None,
         newElevation=None, newQuality=None, newEnable=None,
         newUseForTeleseismic=None, newInformationRequestor=None) :
+        """Initialize the station info object. Constructs an empty object
+           if all arguments are None
+
+        Args:
+            newSite: a required detectionformats.site.Site containing the desired
+                site
+            newLatitude: a required Number containing the latitude as a float in
+                degrees
+            newLongitude: a required Number containing the longitude as a float
+                in degrees
+            newElevation: a required Number containing the elevation as a float
+            newQuality: an optional Number containing the station quality
+            newEnable: an optional Boolean indicating whether the station should
+                be used or not
+            newUseForTeleseismic: an optional Boolean indicating whether the
+                station should for teleseismic calculations or not
+            newInformationRequestor: an optional detectionformats.source.Source
+                containing the source of the information
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         self.type = 'StationInfo'
         if newSite is not None:
@@ -54,11 +77,29 @@ class StationInfo:
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
+        """Populates the object from a json formatted string
+
+        Args:
+            jsonString: a required String containing the json formatted text
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        """Populates the object from a dictonary
+
+        Args:
+            aDict: a required Dictonary
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         # first required keys
         try:
             self.type = aDict[self.TYPE_KEY]
@@ -84,12 +125,30 @@ class StationInfo:
 
     # convert class to a json string
     def toJSONString(self) :
+        """Converts the object to a json formatted string
+
+        Args:
+            None
+        Returns:
+            The JSON formatted message as a String
+        Raises:
+            Nothing
+        """
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
     # convert class to a dictonary
     def toDict(self) :
+        """Converts the object to a dictonary
+
+        Args:
+            None
+        Returns:
+            The Dictonary
+        Raises:
+            Nothing
+        """
         aDict = {}
 
         # first required keys
@@ -127,6 +186,15 @@ class StationInfo:
 
     # test to see if class is valid
     def isValid(self) :
+        """Checks to see if the object is valid
+
+        Args:
+            None
+        Returns:
+            True if the object is valid, False otherwise
+        Raises:
+            Nothing
+        """
         errorList = self.getErrors()
 
         if len(errorList) == 0:
@@ -136,6 +204,15 @@ class StationInfo:
 
     # get list of validation errors
     def getErrors(self) :
+        """Gets a list of object validation errors
+
+        Args:
+            None
+        Returns:
+            A List of Strings containing the validation error messages
+        Raises:
+            Nothing
+        """
         errorList = []
 
         # first required keys

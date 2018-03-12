@@ -45,6 +45,7 @@ class Correlation:
             newSource: a required detectionformats.source.Source containing the
                 desired source
             newPhase: a required String containing the desired phase identifier
+            newTime: a required datetime containing the correlation time
             newHypocenter: a required detectionformats.hypocenter.Hypocenter
                 containing the desired hypocenter
             newEventType: an optional String containing the desired event type

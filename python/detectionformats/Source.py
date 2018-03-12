@@ -11,6 +11,17 @@ class Source:
 
     # init
     def __init__(self, newAgencyID=None, newAuthor=None) :
+        """Initialize the source object. Constructs an empty object
+           if all arguments are None
+
+        Args:
+            newAgencyID: a required String containing the agency identifier
+            newAuthor: a required String containing the author name
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         if newAgencyID is not None:
             self.agencyID = newAgencyID
         if newAuthor is not None:
@@ -18,11 +29,29 @@ class Source:
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
-            jsonObject = json.loads(jsonString)
-            self.fromDict(jsonObject)
+        """Populates the object from a json formatted string
+
+        Args:
+            jsonString: a required String containing the json formatted text
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
+        jsonObject = json.loads(jsonString)
+        self.fromDict(jsonObject)
 
     # populate class from a dictonary
     def fromDict(self, aDict) :
+        """Populates the object from a dictonary
+
+        Args:
+            aDict: a required Dictonary
+        Returns:
+            Nothing
+        Raises:
+            Nothing
+        """
         try:
             self.agencyID = aDict[self.AGENCYID_KEY]
             self.author = aDict[self.AUTHOR_KEY]
@@ -32,12 +61,30 @@ class Source:
 
     # convert class to a json string
     def toJSONString(self) :
+        """Converts the object to a json formatted string
+
+        Args:
+            None
+        Returns:
+            The JSON formatted message as a String
+        Raises:
+            Nothing
+        """
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
     # convert class to a dictonary
     def toDict(self) :
+        """Converts the object to a dictonary
+
+        Args:
+            None
+        Returns:
+            The Dictonary
+        Raises:
+            Nothing
+        """
         aDict = {}
         try:
             aDict[self.AGENCYID_KEY] = self.agencyID
@@ -49,6 +96,15 @@ class Source:
 
     # test to see if class is valid
     def isValid(self) :
+        """Checks to see if the object is valid
+
+        Args:
+            None
+        Returns:
+            True if the object is valid, False otherwise
+        Raises:
+            Nothing
+        """
         errorList = self.getErrors()
 
         if len(errorList) == 0:
@@ -58,6 +114,15 @@ class Source:
 
     # get list of validation errors
     def getErrors(self) :
+        """Gets a list of object validation errors
+
+        Args:
+            None
+        Returns:
+            A List of Strings containing the validation error messages
+        Raises:
+            Nothing
+        """
         errorList = []
 
         try:
