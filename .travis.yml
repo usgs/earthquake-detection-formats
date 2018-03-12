@@ -17,6 +17,7 @@ addons:
       - python3.6
     sources:
       - ubuntu-toolchain-r-test
+      - deadsnakes
 
 install:
     # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
