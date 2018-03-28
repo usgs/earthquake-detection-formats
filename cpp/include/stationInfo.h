@@ -7,10 +7,12 @@
 #ifndef STATION_INFO_H
 #define STATION_INFO_H
 
-#include <string>
+#include <site.h>
+#include <source.h>
 
-#include "site.h"
-#include "source.h"
+#include <string>
+#include <exception>
+#include <vector>
 
 namespace detectionformats {
 
@@ -26,8 +28,8 @@ namespace detectionformats {
  *
  * stationInfo uses the Site and Source common objects.
  */
-class stationInfo: public detectionbase {
-public:
+class stationInfo : public detectionbase {
+ public:
 	/**
 	 * \brief stationInfo constructor
 	 *
@@ -60,10 +62,10 @@ public:
 	 * string to omit
 	 */
 	stationInfo(std::string newstation, std::string newchannel,
-			std::string newnetwork, std::string newlocation, double newlatitude,
-			double newlongitude, double newelevation, double newquality,
-			bool newenable, bool newuseforteleseismic, std::string newagencyid,
-			std::string newauthor);
+				std::string newnetwork, std::string newlocation,
+				double newlatitude, double newlongitude, double newelevation,
+				double newquality, bool newenable, bool newuseforteleseismic,
+				std::string newagencyid, std::string newauthor);
 
 	/**
 	 * \brief stationInfo alternate advanced constructor
@@ -84,9 +86,9 @@ public:
 	 * the information requestor to use
 	 */
 	stationInfo(detectionformats::site newsite, double newlatitude,
-			double newlongitude, double newelevation, double newquality,
-			bool newenable, bool newuseforteleseismic,
-			detectionformats::source newinformationrequestor);
+				double newlongitude, double newelevation, double newquality,
+				bool newenable, bool newuseforteleseismic,
+				detectionformats::source newinformationrequestor);
 
 	/**
 	 * \brief stationInfo advanced constructor
@@ -95,7 +97,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	stationInfo(rapidjson::Value &json);
+	explicit stationInfo(rapidjson::Value &json);
 
 	/**
 	 * \brief stationInfo copy constructor
@@ -120,7 +122,8 @@ public:
 	 * Converts the contents of the class to a json object
 	 * \return Returns a json::Object containing the class contents
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -130,7 +133,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief stationInfo site
@@ -190,9 +193,6 @@ public:
 	 * stationInfo
 	 */
 	detectionformats::source informationRequestor;
-
-protected:
-
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // STATION_INFO_H

@@ -1,6 +1,8 @@
-#include "pick.h"
+#include <pick.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define TYPE_KEY "Type"
@@ -35,20 +37,20 @@ pick::pick() {
 }
 
 pick::pick(std::string newid, std::string newstation, std::string newchannel,
-		std::string newnetwork, std::string newlocation, double newtime,
-		std::string newagencyid, std::string newauthor, std::string newphase,
-		std::string newpolarity, std::string newonset, std::string newpicker,
-		double newhighpass, double newlowpass, double newamplitude,
-		double newperiod, double newsnr, double newbackazimuth,
-		double newbackazimutherror, double newslowness, double newslownesserror,
-		double newpowerratio, double newpowerratioerror,
-		std::string newassociatedphase, double newassociateddistance,
-		double newassociatedazimuth, double newassociatedresidual,
-		double newassociatedsigma) {
+			std::string newnetwork, std::string newlocation, double newtime,
+			std::string newagencyid, std::string newauthor,
+			std::string newphase, std::string newpolarity, std::string newonset,
+			std::string newpicker, double newhighpass, double newlowpass,
+			double newamplitude, double newperiod, double newsnr,
+			double newbackazimuth, double newbackazimutherror,
+			double newslowness, double newslownesserror, double newpowerratio,
+			double newpowerratioerror, std::string newassociatedphase,
+			double newassociateddistance, double newassociatedazimuth,
+			double newassociatedresidual, double newassociatedsigma) {
 	type = PICK_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-			newlocation);
+									newlocation);
 	time = newtime;
 	source = detectionformats::source(newagencyid, newauthor);
 	phase = newphase;
@@ -62,26 +64,29 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 	amplitude = detectionformats::amplitude(newamplitude, newperiod, newsnr);
 
 	beam = detectionformats::beam(newbackazimuth, newbackazimutherror,
-			newslowness, newslownesserror, newpowerratio, newpowerratioerror);
+									newslowness, newslownesserror,
+									newpowerratio, newpowerratioerror);
 
 	associationinfo = detectionformats::associated(newassociatedphase,
-			newassociateddistance, newassociatedazimuth, newassociatedresidual,
-			newassociatedsigma);
+													newassociateddistance,
+													newassociatedazimuth,
+													newassociatedresidual,
+													newassociatedsigma);
 }
 
-pick::pick(std::string newid, std::string newstation,
-		std::string newchannel, std::string newnetwork, std::string newlocation,
-		double newtime, std::string newagencyid, std::string newauthor,
-		std::string newphase, std::string newpolarity, std::string newonset,
-		std::string newpicker, double newhighpass, double newlowpass,
-		double newamplitude, double newperiod, double newsnr,
-		double newbackazimuth, double newbackazimutherror, double newslowness,
-		double newslownesserror, double newpowerratio,
-		double newpowerratioerror) {
+pick::pick(std::string newid, std::string newstation, std::string newchannel,
+			std::string newnetwork, std::string newlocation, double newtime,
+			std::string newagencyid, std::string newauthor,
+			std::string newphase, std::string newpolarity, std::string newonset,
+			std::string newpicker, double newhighpass, double newlowpass,
+			double newamplitude, double newperiod, double newsnr,
+			double newbackazimuth, double newbackazimutherror,
+			double newslowness, double newslownesserror, double newpowerratio,
+			double newpowerratioerror) {
 	type = PICK_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-			newlocation);
+									newlocation);
 	time = newtime;
 	source = detectionformats::source(newagencyid, newauthor);
 	phase = newphase;
@@ -95,17 +100,19 @@ pick::pick(std::string newid, std::string newstation,
 	amplitude = detectionformats::amplitude(newamplitude, newperiod, newsnr);
 
 	beam = detectionformats::beam(newbackazimuth, newbackazimutherror,
-			newslowness, newslownesserror, newpowerratio, newpowerratioerror);
+									newslowness, newslownesserror,
+									newpowerratio, newpowerratioerror);
 
 	associationinfo = detectionformats::associated();
 }
 
 pick::pick(std::string newid, detectionformats::site newsite, double newtime,
-		detectionformats::source newsource, std::string newphase,
-		std::string newpolarity, std::string newonset, std::string newpicker,
-		std::vector<detectionformats::filter> newfilterdata,
-		detectionformats::amplitude newamplitude,
-		detectionformats::beam newbeam) {
+			detectionformats::source newsource, std::string newphase,
+			std::string newpolarity, std::string newonset,
+			std::string newpicker,
+			std::vector<detectionformats::filter> newfilterdata,
+			detectionformats::amplitude newamplitude,
+			detectionformats::beam newbeam) {
 	type = PICK_TYPE;
 	id = newid;
 	pick::site = newsite;
@@ -117,7 +124,7 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 	picker = newpicker;
 
 	filterdata.clear();
-	for (int i = 0; i < (int) newfilterdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newfilterdata.size()); i++) {
 		filterdata.push_back(newfilterdata[i]);
 	}
 
@@ -129,12 +136,13 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 }
 
 pick::pick(std::string newid, detectionformats::site newsite, double newtime,
-		detectionformats::source newsource, std::string newphase,
-		std::string newpolarity, std::string newonset, std::string newpicker,
-		std::vector<detectionformats::filter> newfilterdata,
-		detectionformats::amplitude newamplitude,
-		detectionformats::beam newbeam,
-		detectionformats::associated newassociated) {
+			detectionformats::source newsource, std::string newphase,
+			std::string newpolarity, std::string newonset,
+			std::string newpicker,
+			std::vector<detectionformats::filter> newfilterdata,
+			detectionformats::amplitude newamplitude,
+			detectionformats::beam newbeam,
+			detectionformats::associated newassociated) {
 	type = PICK_TYPE;
 	id = newid;
 	site = newsite;
@@ -146,7 +154,7 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 	picker = newpicker;
 
 	filterdata.clear();
-	for (int i = 0; i < (int) newfilterdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newfilterdata.size()); i++) {
 		filterdata.push_back(newfilterdata[i]);
 	}
 
@@ -161,76 +169,85 @@ pick::pick(rapidjson::Value &json) {
 	// required values
 	// type
 	if ((json.HasMember(TYPE_KEY) == true)
-			&& (json[TYPE_KEY].IsString() == true))
+			&& (json[TYPE_KEY].IsString() == true)) {
 		type = std::string(json[TYPE_KEY].GetString(),
-				json[TYPE_KEY].GetStringLength());
-	else
+							json[TYPE_KEY].GetStringLength());
+	} else {
 		type = "";
+	}
 
 	// id
-	if ((json.HasMember(ID_KEY) == true) && (json[ID_KEY].IsString() == true))
+	if ((json.HasMember(ID_KEY) == true) && (json[ID_KEY].IsString() == true)) {
 		id = std::string(json[ID_KEY].GetString(),
-				json[ID_KEY].GetStringLength());
-	else
+							json[ID_KEY].GetStringLength());
+	} else {
 		id = "";
+	}
 
 	// site
 	if ((json.HasMember(SITE_KEY) == true)
 			&& (json[SITE_KEY].IsObject() == true)) {
 		rapidjson::Value & sitevalue = json["Site"];
 		site = detectionformats::site(sitevalue);
-	} else
+	} else {
 		site = detectionformats::site();
+	}
 
 	// source
 	if ((json.HasMember(SOURCE_KEY) == true)
 			&& (json[SOURCE_KEY].IsObject() == true)) {
 		rapidjson::Value & sourcevalue = json[SOURCE_KEY];
 		source = detectionformats::source(sourcevalue);
-	} else
+	} else {
 		source = detectionformats::source();
+	}
 
 	// time
 	if ((json.HasMember(TIME_KEY) == true)
-			&& (json[TIME_KEY].IsString() == true))
+			&& (json[TIME_KEY].IsString() == true)) {
 		time = detectionformats::ConvertISO8601ToEpochTime(
 				std::string(json[TIME_KEY].GetString(),
-						json[TIME_KEY].GetStringLength()));
-	else
+							json[TIME_KEY].GetStringLength()));
+	} else {
 		time = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// optional values
 	// phase
 	if ((json.HasMember(PHASE_KEY) == true)
-			&& (json[PHASE_KEY].IsString() == true))
+			&& (json[PHASE_KEY].IsString() == true)) {
 		phase = std::string(json[PHASE_KEY].GetString(),
-				json[PHASE_KEY].GetStringLength());
-	else
+							json[PHASE_KEY].GetStringLength());
+	} else {
 		phase = "";
+	}
 
 	// polarity
 	if ((json.HasMember(POLARITY_KEY) == true)
-			&& (json[POLARITY_KEY].IsString() == true))
+			&& (json[POLARITY_KEY].IsString() == true)) {
 		polarity = std::string(json[POLARITY_KEY].GetString(),
-				json[POLARITY_KEY].GetStringLength());
-	else
+								json[POLARITY_KEY].GetStringLength());
+	} else {
 		polarity = "";
+	}
 
 	// onset
 	if ((json.HasMember(ONSET_KEY) == true)
-			&& (json[ONSET_KEY].IsString() == true))
+			&& (json[ONSET_KEY].IsString() == true)) {
 		onset = std::string(json[ONSET_KEY].GetString(),
-				json[ONSET_KEY].GetStringLength());
-	else
+							json[ONSET_KEY].GetStringLength());
+	} else {
 		onset = "";
+	}
 
 	// picker
 	if ((json.HasMember(PICKER_KEY) == true)
-			&& (json[PICKER_KEY].IsString() == true))
+			&& (json[PICKER_KEY].IsString() == true)) {
 		picker = std::string(json[PICKER_KEY].GetString(),
-				json[PICKER_KEY].GetStringLength());
-	else
+								json[PICKER_KEY].GetStringLength());
+	} else {
 		picker = "";
+	}
 
 	// filter
 	filterdata.clear();
@@ -254,24 +271,27 @@ pick::pick(rapidjson::Value &json) {
 			&& (json[AMPLITUDE_KEY].IsObject() == true)) {
 		rapidjson::Value & amplitudevalue = json[AMPLITUDE_KEY];
 		amplitude = detectionformats::amplitude(amplitudevalue);
-	} else
+	} else {
 		amplitude = detectionformats::amplitude();
+	}
 
 	// beam
 	if ((json.HasMember(BEAM_KEY) == true)
 			&& (json[BEAM_KEY].IsObject() == true)) {
 		rapidjson::Value & beamvalue = json[BEAM_KEY];
 		beam = detectionformats::beam(beamvalue);
-	} else
+	} else {
 		beam = detectionformats::beam();
+	}
 
 	// associated
 	if ((json.HasMember(ASSOCIATIONINFO_KEY) == true)
 			&& (json[ASSOCIATIONINFO_KEY].IsObject() == true)) {
 		rapidjson::Value & associatedvalue = json[ASSOCIATIONINFO_KEY];
 		associationinfo = detectionformats::associated(associatedvalue);
-	} else
+	} else {
 		associationinfo = detectionformats::associated();
+	}
 }
 
 pick::pick(const pick &newpick) {
@@ -286,7 +306,7 @@ pick::pick(const pick &newpick) {
 	picker = newpick.picker;
 
 	filterdata.clear();
-	for (int i = 0; i < (int) newpick.filterdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newpick.filterdata.size()); i++) {
 		filterdata.push_back(newpick.filterdata[i]);
 	}
 
@@ -300,7 +320,8 @@ pick::pick(const pick &newpick) {
 pick::~pick() {
 }
 
-rapidjson::Value & pick::tojson(rapidjson::Value &json,
+rapidjson::Value & pick::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -333,7 +354,7 @@ rapidjson::Value & pick::tojson(rapidjson::Value &json,
 				time);
 		rapidjson::Value timevalue;
 		timevalue.SetString(rapidjson::StringRef(timestring.c_str()),
-				allocator);
+							allocator);
 		json.AddMember(TIME_KEY, timevalue, allocator);
 	}
 
@@ -349,7 +370,7 @@ rapidjson::Value & pick::tojson(rapidjson::Value &json,
 	if (polarity != "") {
 		rapidjson::Value polarityvalue;
 		polarityvalue.SetString(rapidjson::StringRef(polarity.c_str()),
-				allocator);
+								allocator);
 		json.AddMember(POLARITY_KEY, polarityvalue, allocator);
 	}
 
@@ -372,7 +393,7 @@ rapidjson::Value & pick::tojson(rapidjson::Value &json,
 		// build json array
 		rapidjson::Value dataarray(rapidjson::kArrayType);
 
-		for (int i = 0; i < (int) filterdata.size(); i++) {
+		for (int i = 0; i < static_cast<int>(filterdata.size()); i++) {
 			rapidjson::Value filtervalue(rapidjson::kObjectType);
 			filterdata[i].tojson(filtervalue, allocator);
 			dataarray.PushBack(filtervalue, allocator);
@@ -425,14 +446,31 @@ std::vector<std::string> pick::geterrors() {
 
 	// site
 	if (site.isvalid() != true) {
-		// site not found
-		errorlist.push_back("Site object did not validate in pick class.");
+		std::vector<std::string> siteErrors = site.geterrors();
+
+		std::string errorString = "Site object did not validate in pick class:";
+
+		for (int i = 0; i < siteErrors.size(); i++) {
+			errorString += " " + siteErrors[i];
+		}
+
+		// bad site
+		errorlist.push_back(errorString);
 	}
 
 	// source
 	if (source.isvalid() != true) {
+		std::vector<std::string> sourceErrors = source.geterrors();
+
+		std::string errorString =
+				"Source object did not validate in pick class:";
+
+		for (int i = 0; i < sourceErrors.size(); i++) {
+			errorString += " " + sourceErrors[i];
+		}
+
 		// bad source
-		errorlist.push_back("Source object did not validate in pick class.");
+		errorlist.push_back(errorString);
 	}
 
 	// time
@@ -511,11 +549,19 @@ std::vector<std::string> pick::geterrors() {
 
 	// filter
 	if (filterdata.size() > 0) {
-		for (int i = 0; i < (int) filterdata.size(); i++) {
+		for (int i = 0; i < static_cast<int>(filterdata.size()); i++) {
 			if (filterdata[i].isvalid() != true) {
+				std::vector<std::string> filterErrors =
+						filterdata[i].geterrors();
+
+				std::string errorString = "Invalid filter object in pick class:";
+
+				for (int j = 0; j < filterErrors.size(); j++) {
+					errorString += " " + filterErrors[j];
+				}
+
 				// bad filter
-				errorlist.push_back("Invalid filter object in pick class.");
-				break;
+				errorlist.push_back(errorString);
 			}
 		}
 	}
@@ -523,35 +569,60 @@ std::vector<std::string> pick::geterrors() {
 	// amplitude
 	if (amplitude.isempty() == false) {
 		if (amplitude.isvalid() != true) {
-			// amplitude invalid
-			errorlist.push_back(
-					"Amplitude object did not validate in pick class.");
+			std::vector<std::string> ampErrors = amplitude.geterrors();
+
+			std::string errorString =
+					"Amplitude object did not validate in pick class:";
+
+			for (int i = 0; i < ampErrors.size(); i++) {
+				errorString += " " + ampErrors[i];
+			}
+
+			// bad amplitude
+			errorlist.push_back(errorString);
 		}
 	}
 
 	// beam
 	if (beam.isempty() == false) {
 		if (beam.isvalid() != true) {
-			// beam invalid
-			errorlist.push_back(
-					"Beam object did not validate in pick class.");
+			std::vector<std::string> beamErrors = beam.geterrors();
+
+			std::string errorString =
+					"Beam object did not validate in pick class:";
+
+			for (int i = 0; i < beamErrors.size(); i++) {
+				errorString += " " + beamErrors[i];
+			}
+
+			// bad beam
+			errorlist.push_back(errorString);
 		}
 	}
 
 	// associated
 	if (associationinfo.isempty() == false) {
 		if (associationinfo.isvalid() != true) {
-			// site not found
-			errorlist.push_back(
-					"AssociationInfo object did not validate in pick class.");
+			std::vector<std::string> assocErrors = associationinfo.geterrors();
+
+			std::string errorString =
+					"AssociationInfo object did not validate in pick class:";
+
+			for (int i = 0; i < assocErrors.size(); i++) {
+				errorString += " " + assocErrors[i];
+			}
+
+			// bad associated
+			errorlist.push_back(errorString);
 		}
 	}
 
-	// since id and phase are free text strings, no further validation is required.
-	// NOTE: Further validation COULD be done to confirm that phase is a valid phase name
+	// since id and phase are free text strings, no further validation is
+	// required.
+	// NOTE: Further validation COULD be done to confirm that phase is a valid
+	// phase name
 
 	// return the list of errors
 	return (errorlist);
 }
-
-}
+}  // namespace detectionformats

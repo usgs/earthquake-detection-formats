@@ -7,10 +7,11 @@
 #ifndef DETECTION_HYPOCENTER_H
 #define DETECTION_HYPOCENTER_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
-
-#include "base.h"
+#include <vector>
 
 namespace detectionformats {
 /**
@@ -20,8 +21,8 @@ namespace detectionformats {
  * and validate hypocenter data as part of detectionformats data.
  *
  */
-class hypocenter: public detectionbase {
-public:
+class hypocenter : public detectionbase {
+ public:
 	/**
 	 * \brief hypocenter constructor
 	 *
@@ -50,8 +51,9 @@ public:
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	hypocenter(double newlatitude, double newlongitude, double newtime,
-			double newdepth, double newlatitudeerror, double newlongitudeerror,
-			double newtimeerror, double newdeptherror);
+				double newdepth, double newlatitudeerror,
+				double newlongitudeerror, double newtimeerror,
+				double newdeptherror);
 
 	/**
 	 * \brief hypocenter advanced constructor
@@ -60,16 +62,16 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	hypocenter(rapidjson::Value &json);
+	explicit hypocenter(rapidjson::Value &json);
 
 	/**
 	 * \brief hypocenter copy constructor
 	 *
 	 * The copy constructor for the hypocenter class.
 	 * Copies the provided object from a hypocenter, populating members
-	 * \param newfilter - A hypocenter.
+	 * \param newhypo - A hypocenter.
 	 */
-	hypocenter(const hypocenter & newfilter);
+	hypocenter(const hypocenter & newhypo);
 
 	/**
 	 * \brief hypocenter destructor
@@ -86,7 +88,8 @@ public:
 	 * 		the class contents.
 	 * \return Returns rapidjson::Value & if successful
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -96,7 +99,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief latitude value
@@ -153,9 +156,6 @@ public:
 	 * An optional double defining the depth error of this hypocenter
 	 */
 	double deptherror;
-
 };
-
-}
-
-#endif
+}  // namespace detectionformats
+#endif  // DETECTION_HYPOCENTER_H

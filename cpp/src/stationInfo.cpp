@@ -1,6 +1,8 @@
-#include "stationInfo.h"
+#include <stationInfo.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define TYPE_KEY "Type"
@@ -27,13 +29,14 @@ stationInfo::stationInfo() {
 }
 
 stationInfo::stationInfo(std::string newstation, std::string newchannel,
-		std::string newnetwork, std::string newlocation, double newlatitude,
-		double newlongitude, double newelevation, double newquality,
-		bool newenable, bool newuseforteleseismic, std::string newagencyid,
-		std::string newauthor) {
+							std::string newnetwork, std::string newlocation,
+							double newlatitude, double newlongitude,
+							double newelevation, double newquality,
+							bool newenable, bool newuseforteleseismic,
+							std::string newagencyid, std::string newauthor) {
 	type = STATIONINFO_TYPE;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-			newlocation);
+									newlocation);
 	latitude = newlatitude;
 	longitude = newlongitude;
 	elevation = newelevation;
@@ -44,9 +47,10 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 }
 
 stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
-		double newlongitude, double newelevation, double newquality,
-		bool newenable, bool newuseforteleseismic,
-		detectionformats::source newinformationrequestor) {
+							double newlongitude, double newelevation,
+							double newquality, bool newenable,
+							bool newuseforteleseismic,
+							detectionformats::source newinformationrequestor) {
 	type = STATIONINFO_TYPE;
 	stationInfo::site = newsite;
 	latitude = newlatitude;
@@ -64,7 +68,7 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 	if ((json.HasMember(TYPE_KEY) == true)
 			&& (json[TYPE_KEY].IsString() == true))
 		type = std::string(json[TYPE_KEY].GetString(),
-				json[TYPE_KEY].GetStringLength());
+							json[TYPE_KEY].GetStringLength());
 	else
 		type = "";
 
@@ -73,63 +77,71 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 			&& (json[SITE_KEY].IsObject() == true)) {
 		rapidjson::Value & sitevalue = json["Site"];
 		site = detectionformats::site(sitevalue);
-	} else
+	} else {
 		site = detectionformats::site();
+	}
 
 	// latitude
 	if ((json.HasMember(LATITUDE_KEY) == true)
 			&& (json[LATITUDE_KEY].IsNumber() == true)
-			&& (json[LATITUDE_KEY].IsDouble() == true))
+			&& (json[LATITUDE_KEY].IsDouble() == true)) {
 		latitude = json[LATITUDE_KEY].GetDouble();
-	else
+	} else {
 		latitude = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// longitude
 	if ((json.HasMember(LONGITUDE_KEY) == true)
 			&& (json[LONGITUDE_KEY].IsNumber() == true)
-			&& (json[LONGITUDE_KEY].IsDouble() == true))
+			&& (json[LONGITUDE_KEY].IsDouble() == true)) {
 		longitude = json[LONGITUDE_KEY].GetDouble();
-	else
+	} else {
 		longitude = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// elevation
 	if ((json.HasMember(ELEVATION_KEY) == true)
 			&& (json[ELEVATION_KEY].IsNumber() == true)
-			&& (json[ELEVATION_KEY].IsDouble() == true))
+			&& (json[ELEVATION_KEY].IsDouble() == true)) {
 		elevation = json[ELEVATION_KEY].GetDouble();
-	else
+	} else {
 		elevation = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// optional values
 	// quality
 	if ((json.HasMember(QUALITY_KEY) == true)
 			&& (json[QUALITY_KEY].IsNumber() == true)
-			&& (json[QUALITY_KEY].IsDouble() == true))
+			&& (json[QUALITY_KEY].IsDouble() == true)) {
 		quality = json[QUALITY_KEY].GetDouble();
-	else
+	} else {
 		quality = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// enable
 	if ((json.HasMember(ENABLE_KEY) == true)
-			&& (json[ENABLE_KEY].IsBool() == true))
+			&& (json[ENABLE_KEY].IsBool() == true)) {
 		enable = json[ENABLE_KEY].GetBool();
-	else
+	} else {
 		enable = true;
+	}
 
 	// useforteleseismic
 	if ((json.HasMember(USEFORTELESEISMIC_KEY) == true)
-			&& (json[USEFORTELESEISMIC_KEY].IsBool() == true))
+			&& (json[USEFORTELESEISMIC_KEY].IsBool() == true)) {
 		useforteleseismic = json[USEFORTELESEISMIC_KEY].GetBool();
-	else
+	} else {
 		useforteleseismic = false;
+	}
 
 	// informationRequestor
 	if ((json.HasMember(INFORMATIONREQUESTOR_KEY) == true)
 			&& (json[INFORMATIONREQUESTOR_KEY].IsObject() == true)) {
 		rapidjson::Value & sourcevalue = json[INFORMATIONREQUESTOR_KEY];
 		informationRequestor = detectionformats::source(sourcevalue);
-	} else
+	} else {
 		informationRequestor = detectionformats::source();
+	}
 }
 
 stationInfo::stationInfo(const stationInfo &newstation) {
@@ -147,7 +159,8 @@ stationInfo::stationInfo(const stationInfo &newstation) {
 stationInfo::~stationInfo() {
 }
 
-rapidjson::Value & stationInfo::tojson(rapidjson::Value &json,
+rapidjson::Value & stationInfo::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -249,5 +262,4 @@ std::vector<std::string> stationInfo::geterrors() {
 	// return the list of errors
 	return (errorlist);
 }
-
-}
+}  // namespace detectionformats

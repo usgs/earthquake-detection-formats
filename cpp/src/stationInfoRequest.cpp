@@ -1,6 +1,8 @@
-#include "stationInfoRequest.h"
+#include <stationInfoRequest.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define TYPE_KEY "Type"
@@ -15,16 +17,19 @@ stationInfoRequest::stationInfoRequest() {
 }
 
 stationInfoRequest::stationInfoRequest(std::string newstation,
-		std::string newchannel, std::string newnetwork, std::string newlocation,
-		std::string newagencyid, std::string newauthor) {
+										std::string newchannel,
+										std::string newnetwork,
+										std::string newlocation,
+										std::string newagencyid,
+										std::string newauthor) {
 	type = STATIONINFOREQUEST_TYPE;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-			newlocation);
+									newlocation);
 	source = detectionformats::source(newagencyid, newauthor);
 }
 
 stationInfoRequest::stationInfoRequest(detectionformats::site newsite,
-		detectionformats::source newsource) {
+										detectionformats::source newsource) {
 	type = STATIONINFOREQUEST_TYPE;
 	site = newsite;
 	source = newsource;
@@ -34,28 +39,30 @@ stationInfoRequest::stationInfoRequest(rapidjson::Value &json) {
 	// required values
 	// type
 	if ((json.HasMember(TYPE_KEY) == true)
-			&& (json[TYPE_KEY].IsString() == true))
+			&& (json[TYPE_KEY].IsString() == true)) {
 		type = std::string(json[TYPE_KEY].GetString(),
-				json[TYPE_KEY].GetStringLength());
-	else
+							json[TYPE_KEY].GetStringLength());
+	} else {
 		type = "";
+	}
 
 	// site
 	if ((json.HasMember(SITE_KEY) == true)
 			&& (json[SITE_KEY].IsObject() == true)) {
 		rapidjson::Value & sitevalue = json["Site"];
 		site = detectionformats::site(sitevalue);
-	} else
+	} else {
 		site = detectionformats::site();
+	}
 
 	// source
 	if ((json.HasMember(SOURCE_KEY) == true)
 			&& (json[SOURCE_KEY].IsObject() == true)) {
 		rapidjson::Value & sourcevalue = json[SOURCE_KEY];
 		source = detectionformats::source(sourcevalue);
-	} else
+	} else {
 		source = detectionformats::source();
-
+	}
 }
 
 stationInfoRequest::stationInfoRequest(const stationInfoRequest &newstation) {
@@ -67,7 +74,8 @@ stationInfoRequest::stationInfoRequest(const stationInfoRequest &newstation) {
 stationInfoRequest::~stationInfoRequest() {
 }
 
-rapidjson::Value & stationInfoRequest::tojson(rapidjson::Value &json,
+rapidjson::Value & stationInfoRequest::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -118,5 +126,4 @@ std::vector<std::string> stationInfoRequest::geterrors() {
 	// return the list of errors
 	return (errorlist);
 }
-
-}
+}  // namespace detectionformats

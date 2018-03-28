@@ -7,10 +7,12 @@
 #ifndef STATION_INFO_REQUEST_H
 #define STATION_INFO_REQUEST_H
 
-#include <string>
+#include <site.h>
+#include <source.h>
 
-#include "site.h"
-#include "source.h"
+#include <string>
+#include <exception>
+#include <vector>
 
 namespace detectionformats {
 
@@ -26,8 +28,8 @@ namespace detectionformats {
  *
  * stationInfoReqest uses the Site and Source common objects.
  */
-class stationInfoRequest: public detectionbase {
-public:
+class stationInfoRequest : public detectionbase {
+ public:
 	/**
 	 * \brief stationInfo constructor
 	 *
@@ -50,8 +52,8 @@ public:
 	 * \param newauthor - A std::string containing the author to use
 	 */
 	stationInfoRequest(std::string newstation, std::string newchannel,
-			std::string newnetwork, std::string newlocation,
-			std::string newagencyid, std::string newauthor);
+						std::string newnetwork, std::string newlocation,
+						std::string newagencyid, std::string newauthor);
 
 	/**
 	 * \brief stationInfoRequest alternate advanced constructor
@@ -64,7 +66,7 @@ public:
 	 * use
 	 */
 	stationInfoRequest(detectionformats::site newsite,
-			detectionformats::source newsource);
+						detectionformats::source newsource);
 
 	/**
 	 * \brief stationInfoRequest advanced constructor
@@ -73,7 +75,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	stationInfoRequest(rapidjson::Value &json);
+	explicit stationInfoRequest(rapidjson::Value &json);
 
 	/**
 	 * \brief stationInfoRequest copy constructor
@@ -98,7 +100,8 @@ public:
 	 * Converts the contents of the class to a json object
 	 * \return Returns a json::Object containing the class contents
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -108,7 +111,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief stationInfoRequest site
@@ -125,9 +128,6 @@ public:
 	 * stationInfoRequest message
 	 */
 	detectionformats::source source;
-
-protected:
-
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // STATION_INFO_REQUEST_H

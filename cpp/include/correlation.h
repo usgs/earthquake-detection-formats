@@ -7,12 +7,13 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
-#include <string>
+#include <hypocenter.h>
+#include <site.h>
+#include <source.h>
+#include <associated.h>
 
-#include "hypocenter.h"
-#include "site.h"
-#include "source.h"
-#include "associated.h"
+#include <string>
+#include <vector>
 
 namespace detectionformats {
 
@@ -28,8 +29,8 @@ namespace detectionformats {
  *
  * correlation uses the Source and Site common objects.
  */
-class correlation: public detectionbase {
-public:
+class correlation : public detectionbase {
+ public:
 	/**
 	 * \brief correlation constructor
 	 *
@@ -80,15 +81,15 @@ public:
 	 * 		use, empty string to omit
 	 */
 	correlation(std::string newid, std::string newstation,
-			std::string newchannel, std::string newnetwork,
-			std::string newlocation, std::string newagencyid,
-			std::string newauthor, std::string newphase, double newtime,
-			double newcorrelation, double newlatitude, double newlongitude,
-			double neworigintime, double newdepth, double newlatitudeerror,
-			double newlongitudeerror, double newtimeerror, double newdeptherror,
-			std::string neweventtype, double newmagnitude, double newsnr,
-			double newzscore, double newdetectionthreshold,
-			std::string newthresholdtype);
+				std::string newchannel, std::string newnetwork,
+				std::string newlocation, std::string newagencyid,
+				std::string newauthor, std::string newphase, double newtime,
+				double newcorrelation, double newlatitude, double newlongitude,
+				double neworigintime, double newdepth, double newlatitudeerror,
+				double newlongitudeerror, double newtimeerror,
+				double newdeptherror, std::string neweventtype,
+				double newmagnitude, double newsnr, double newzscore,
+				double newdetectionthreshold, std::string newthresholdtype);
 
 	/**
 	 * \brief correlation advanced constructor
@@ -142,17 +143,18 @@ public:
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	correlation(std::string newid, std::string newstation,
-			std::string newchannel, std::string newnetwork,
-			std::string newlocation, std::string newagencyid,
-			std::string newauthor, std::string newphase, double newtime,
-			double newcorrelation, double newlatitude, double newlongitude,
-			double neworigintime, double newdepth, double newlatitudeerror,
-			double newlongitudeerror, double newtimeerror, double newdeptherror,
-			std::string neweventtype, double newmagnitude, double newsnr,
-			double newzscore, double newdetectionthreshold,
-			std::string newthresholdtype, std::string newassociatedphase,
-			double newassociateddistance, double newassociatedazimuth,
-			double newassociatedresidual, double newassociatedsigma);
+				std::string newchannel, std::string newnetwork,
+				std::string newlocation, std::string newagencyid,
+				std::string newauthor, std::string newphase, double newtime,
+				double newcorrelation, double newlatitude, double newlongitude,
+				double neworigintime, double newdepth, double newlatitudeerror,
+				double newlongitudeerror, double newtimeerror,
+				double newdeptherror, std::string neweventtype,
+				double newmagnitude, double newsnr, double newzscore,
+				double newdetectionthreshold, std::string newthresholdtype,
+				std::string newassociatedphase, double newassociateddistance,
+				double newassociatedazimuth, double newassociatedresidual,
+				double newassociatedsigma);
 
 	/**
 	 * \brief correlation alternate advanced constructor
@@ -167,8 +169,8 @@ public:
 	 * \param newphase - A std::string containing the phase to use
 	 * \param newtime - A double containing the new phase time to use
 	 * \param newcorrelation - A double containing the correlation value to use
-	 * \param newhypocenter - A detectionformats::hypocenter containing the hypocenter
-	 * 		to use
+	 * \param newhypocenter - A detectionformats::hypocenter containing the
+	 * 		hypocenter to use
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
@@ -183,12 +185,12 @@ public:
 	 * 		use, empty string to omit
 	 */
 	correlation(std::string newid, detectionformats::site newsite,
-			detectionformats::source newsource, std::string newphase,
-			double newtime, double newcorrelation,
-			detectionformats::hypocenter newhypocenter,
-			std::string neweventtype, double newmagnitude, double newsnr,
-			double newzscore, double newdetectionthreshold,
-			std::string newthresholdtype);
+				detectionformats::source newsource, std::string newphase,
+				double newtime, double newcorrelation,
+				detectionformats::hypocenter newhypocenter,
+				std::string neweventtype, double newmagnitude, double newsnr,
+				double newzscore, double newdetectionthreshold,
+				std::string newthresholdtype);
 
 	/**
 	 * \brief correlation alternate advanced constructor
@@ -203,8 +205,8 @@ public:
 	 * \param newphase - A std::string containing the phase to use
 	 * \param newtime - A double containing the new phase time to use
 	 * \param newcorrelation - A double containing the correlation value to use
-	 * \param newhypocenter - A etectionformats::hypocenter containing the hypocenter
-	 * 		to use
+	 * \param newhypocenter - A etectionformats::hypocenter containing the
+	 * 		hypocenter to use
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
@@ -221,13 +223,13 @@ public:
 	 * 		associated to use
 	 */
 	correlation(std::string newid, detectionformats::site newsite,
-			detectionformats::source newsource, std::string newphase,
-			double newtime, double newcorrelation,
-			detectionformats::hypocenter newhypocenter,
-			std::string neweventtype, double newmagnitude, double newsnr,
-			double newzscore, double newdetectionthreshold,
-			std::string newthresholdtype,
-			detectionformats::associated newassociated);
+				detectionformats::source newsource, std::string newphase,
+				double newtime, double newcorrelation,
+				detectionformats::hypocenter newhypocenter,
+				std::string neweventtype, double newmagnitude, double newsnr,
+				double newzscore, double newdetectionthreshold,
+				std::string newthresholdtype,
+				detectionformats::associated newassociated);
 
 	/**
 	 * \brief correlation advanced constructor
@@ -236,7 +238,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	correlation(rapidjson::Value &json);
+	explicit correlation(rapidjson::Value &json);
 
 	/**
 	 * \brief correlation copy constructor
@@ -261,7 +263,8 @@ public:
 	 * Converts the contents of the class to a json object
 	 * \return Returns a json::Object containing the class contents
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -271,7 +274,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief correlation id
@@ -378,9 +381,6 @@ public:
 	 * information for this correlation message
 	 */
 	detectionformats::associated associationinfo;
-
-protected:
-
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // DETECTION_CORRELATION_H

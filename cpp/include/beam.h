@@ -7,10 +7,11 @@
 #ifndef DETECTION_BEAM_H
 #define DETECTION_BEAM_H
 
-#include <string>
+#include <site.h>
+#include <source.h>
 
-#include "site.h"
-#include "source.h"
+#include <string>
+#include <vector>
 
 namespace detectionformats {
 
@@ -26,8 +27,8 @@ namespace detectionformats {
  *
  * beam uses the Source and Site common objects.
  */
-class beam: public detectionbase {
-public:
+class beam : public detectionbase {
+ public:
 	/**
 	 * \brief beam constructor
 	 *
@@ -64,7 +65,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	beam(rapidjson::Value &json);
+	explicit beam(rapidjson::Value &json);
 
 	/**
 	 * \brief beam copy constructor
@@ -89,7 +90,8 @@ public:
 	 * Converts the contents of the class to a json object
 	 * \return Returns rapidjson::Value & if successful
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -99,14 +101,14 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
-	* \brief Empty check
-	*
-	* Checks to see if this object is empty
-	* \return Returns true if empty, false otherwise.
-	*/
+	 * \brief Empty check
+	 *
+	 * Checks to see if this object is empty
+	 * \return Returns true if empty, false otherwise.
+	 */
 	bool isempty();
 
 	/**
@@ -150,9 +152,6 @@ public:
 	 * An optional double defining the powerratio error of this beam message
 	 */
 	double powerratioerror;
-
-protected:
-
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // DETECTION_BEAM_H

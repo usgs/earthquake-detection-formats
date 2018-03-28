@@ -1,42 +1,29 @@
-#include "base.h"
+#include <base.h>
 
-namespace detectionformats
-{
-	detectionbase::detectionbase()
-	{
-		type = "";
-	}
+#include <string>
+#include <vector>
 
-	detectionbase::detectionbase(std::string newtype)
-	{
-		type = newtype;
-	}
+namespace detectionformats {
+detectionbase::detectionbase() {
+	type = "";
+}
 
-	detectionbase::~detectionbase()
-	{
-	}
+detectionbase::detectionbase(std::string newtype) {
+	type = newtype;
+}
 
-	bool detectionbase::isvalid()
-	{
-		std::vector<std::string> errorlist = geterrors();
-		std::string errorstring = "";
+detectionbase::~detectionbase() {
+}
 
-		if (errorlist.size() == 0)
-		{
-			// no errors
-			return (true);
-		}
-		else
-		{
-/*			// found at least one error, build a string
-			// for the exception
-			for (int i = 0; i < (int)errorlist.size(); i++)
-			{
-				errorstring += errorlist[i] + "; ";
-			}
+bool detectionbase::isvalid() {
+	std::vector<std::string> errorlist = geterrors();
+	std::string errorstring = "";
 
-			throw std::invalid_argument::exception(errorstring.c_str());*/
-			return (false);
-		}
+	if (errorlist.size() == 0) {
+		// no errors
+		return (true);
+	} else {
+		return (false);
 	}
 }
+}  // namespace detectionformats
