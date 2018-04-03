@@ -1,6 +1,8 @@
-#include "correlation.h"
+#include <correlation.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define TYPE_KEY "Type"
@@ -39,25 +41,31 @@ correlation::correlation() {
 }
 
 correlation::correlation(std::string newid, std::string newstation,
-		std::string newchannel, std::string newnetwork, std::string newlocation,
-		std::string newagencyid, std::string newauthor, std::string newphase,
-		double newtime, double newcorrelation, double newlatitude,
-		double newlongitude, double neworigintime, double newdepth,
-		double newlatitudeerror, double newlongitudeerror, double newtimeerror,
-		double newdeptherror, std::string neweventtype, double newmagnitude,
-		double newsnr, double newzscore, double newdetectionthreshold,
-		std::string newthresholdtype) {
+							std::string newchannel, std::string newnetwork,
+							std::string newlocation, std::string newagencyid,
+							std::string newauthor, std::string newphase,
+							double newtime, double newcorrelation,
+							double newlatitude, double newlongitude,
+							double neworigintime, double newdepth,
+							double newlatitudeerror, double newlongitudeerror,
+							double newtimeerror, double newdeptherror,
+							std::string neweventtype, double newmagnitude,
+							double newsnr, double newzscore,
+							double newdetectionthreshold,
+							std::string newthresholdtype) {
 	type = CORRELATION_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-			newlocation);
+									newlocation);
 	source = detectionformats::source(newagencyid, newauthor);
 	phase = newphase;
 	time = newtime;
 	correlationvalue = newcorrelation;
 	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
-			neworigintime, newdepth, newlatitudeerror, newlongitudeerror,
-			newtimeerror, newdeptherror);
+												neworigintime, newdepth,
+												newlatitudeerror,
+												newlongitudeerror, newtimeerror,
+												newdeptherror);
 	eventtype = neweventtype;
 	magnitude = newmagnitude;
 	snr = newsnr;
@@ -68,27 +76,36 @@ correlation::correlation(std::string newid, std::string newstation,
 }
 
 correlation::correlation(std::string newid, std::string newstation,
-		std::string newchannel, std::string newnetwork, std::string newlocation,
-		std::string newagencyid, std::string newauthor, std::string newphase,
-		double newtime, double newcorrelation, double newlatitude,
-		double newlongitude, double neworigintime, double newdepth,
-		double newlatitudeerror, double newlongitudeerror, double newtimeerror,
-		double newdeptherror, std::string neweventtype, double newmagnitude,
-		double newsnr, double newzscore, double newdetectionthreshold,
-		std::string newthresholdtype, std::string newassociatedphase,
-		double newassociateddistance, double newassociatedazimuth,
-		double newassociatedresidual, double newassociatedsigma) {
+							std::string newchannel, std::string newnetwork,
+							std::string newlocation, std::string newagencyid,
+							std::string newauthor, std::string newphase,
+							double newtime, double newcorrelation,
+							double newlatitude, double newlongitude,
+							double neworigintime, double newdepth,
+							double newlatitudeerror, double newlongitudeerror,
+							double newtimeerror, double newdeptherror,
+							std::string neweventtype, double newmagnitude,
+							double newsnr, double newzscore,
+							double newdetectionthreshold,
+							std::string newthresholdtype,
+							std::string newassociatedphase,
+							double newassociateddistance,
+							double newassociatedazimuth,
+							double newassociatedresidual,
+							double newassociatedsigma) {
 	type = CORRELATION_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-			newlocation);
+									newlocation);
 	source = detectionformats::source(newagencyid, newauthor);
 	phase = newphase;
 	time = newtime;
 	correlationvalue = newcorrelation;
 	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
-			neworigintime, newdepth, newlatitudeerror, newlongitudeerror,
-			newtimeerror, newdeptherror);
+												neworigintime, newdepth,
+												newlatitudeerror,
+												newlongitudeerror, newtimeerror,
+												newdeptherror);
 	eventtype = neweventtype;
 	magnitude = newmagnitude;
 	snr = newsnr;
@@ -96,16 +113,21 @@ correlation::correlation(std::string newid, std::string newstation,
 	detectionthreshold = newdetectionthreshold;
 	thresholdtype = newthresholdtype;
 	associationinfo = detectionformats::associated(newassociatedphase,
-			newassociateddistance, newassociatedazimuth, newassociatedresidual,
-			newassociatedsigma);
+													newassociateddistance,
+													newassociatedazimuth,
+													newassociatedresidual,
+													newassociatedsigma);
 }
 
 correlation::correlation(std::string newid, detectionformats::site newsite,
-		detectionformats::source newsource, std::string newphase,
-		double newtime, double newcorrelation,
-		detectionformats::hypocenter newhypocenter, std::string neweventtype,
-		double newmagnitude, double newsnr, double newzscore,
-		double newdetectionthreshold, std::string newthresholdtype) {
+							detectionformats::source newsource,
+							std::string newphase, double newtime,
+							double newcorrelation,
+							detectionformats::hypocenter newhypocenter,
+							std::string neweventtype, double newmagnitude,
+							double newsnr, double newzscore,
+							double newdetectionthreshold,
+							std::string newthresholdtype) {
 	type = CORRELATION_TYPE;
 	id = newid;
 	site = newsite;
@@ -124,12 +146,15 @@ correlation::correlation(std::string newid, detectionformats::site newsite,
 }
 
 correlation::correlation(std::string newid, detectionformats::site newsite,
-		detectionformats::source newsource, std::string newphase,
-		double newtime, double newcorrelation,
-		detectionformats::hypocenter newhypocenter, std::string neweventtype,
-		double newmagnitude, double newsnr, double newzscore,
-		double newdetectionthreshold, std::string newthresholdtype,
-		detectionformats::associated newassociated) {
+							detectionformats::source newsource,
+							std::string newphase, double newtime,
+							double newcorrelation,
+							detectionformats::hypocenter newhypocenter,
+							std::string neweventtype, double newmagnitude,
+							double newsnr, double newzscore,
+							double newdetectionthreshold,
+							std::string newthresholdtype,
+							detectionformats::associated newassociated) {
 	type = CORRELATION_TYPE;
 	id = newid;
 	site = newsite;
@@ -153,14 +178,14 @@ correlation::correlation(rapidjson::Value &json) {
 	if ((json.HasMember(TYPE_KEY) == true)
 			&& (json[TYPE_KEY].IsString() == true))
 		type = std::string(json[TYPE_KEY].GetString(),
-				json[TYPE_KEY].GetStringLength());
+							json[TYPE_KEY].GetStringLength());
 	else
 		type = "";
 
 	// id
 	if ((json.HasMember(ID_KEY) == true) && (json[ID_KEY].IsString() == true))
 		id = std::string(json[ID_KEY].GetString(),
-				json[ID_KEY].GetStringLength());
+							json[ID_KEY].GetStringLength());
 	else
 		id = "";
 
@@ -169,105 +194,118 @@ correlation::correlation(rapidjson::Value &json) {
 			&& (json[SITE_KEY].IsObject() == true)) {
 		rapidjson::Value & sitevalue = json["Site"];
 		site = detectionformats::site(sitevalue);
-	} else
+	} else {
 		site = detectionformats::site();
+	}
 
 	// source
 	if ((json.HasMember(SOURCE_KEY) == true)
 			&& (json[SOURCE_KEY].IsObject() == true)) {
 		rapidjson::Value & sourcevalue = json[SOURCE_KEY];
 		source = detectionformats::source(sourcevalue);
-	} else
+	} else {
 		source = detectionformats::source();
+	}
 
 	// phase
 	if ((json.HasMember(PHASE_KEY) == true)
-			&& (json[PHASE_KEY].IsString() == true))
+			&& (json[PHASE_KEY].IsString() == true)) {
 		phase = std::string(json[PHASE_KEY].GetString(),
-				json[PHASE_KEY].GetStringLength());
-	else
+							json[PHASE_KEY].GetStringLength());
+	} else {
 		phase = "";
+	}
 
 	// time
 	if ((json.HasMember(TIME_KEY) == true)
-			&& (json[TIME_KEY].IsString() == true))
+			&& (json[TIME_KEY].IsString() == true)) {
 		time = detectionformats::ConvertISO8601ToEpochTime(
 				std::string(json[TIME_KEY].GetString(),
-						json[TIME_KEY].GetStringLength()));
-	else
+							json[TIME_KEY].GetStringLength()));
+	} else {
 		time = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// correlation
 	if ((json.HasMember(CORRELATION_KEY) == true)
 			&& (json[CORRELATION_KEY].IsNumber() == true)
-			&& (json[CORRELATION_KEY].IsDouble() == true))
+			&& (json[CORRELATION_KEY].IsDouble() == true)) {
 		correlationvalue = json[CORRELATION_KEY].GetDouble();
-	else
+	} else {
 		correlationvalue = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// hypocenter
 	if ((json.HasMember(HYPOCENTER_KEY) == true)
 			&& (json[HYPOCENTER_KEY].IsObject() == true)) {
 		rapidjson::Value & hypocentervalue = json[HYPOCENTER_KEY];
 		hypocenter = detectionformats::hypocenter(hypocentervalue);
-	} else
+	} else {
 		hypocenter = detectionformats::hypocenter();
+	}
 
 	// optional values
 	// eventtype
 	if ((json.HasMember(EVENTTYPE_KEY) == true)
-			&& (json[EVENTTYPE_KEY].IsString() == true))
+			&& (json[EVENTTYPE_KEY].IsString() == true)) {
 		eventtype = std::string(json[EVENTTYPE_KEY].GetString(),
-				json[EVENTTYPE_KEY].GetStringLength());
-	else
+								json[EVENTTYPE_KEY].GetStringLength());
+	} else {
 		eventtype = "";
+	}
 
 	// magnitude
 	if ((json.HasMember(MAGNITUDE_KEY) == true)
 			&& (json[MAGNITUDE_KEY].IsNumber() == true)
-			&& (json[MAGNITUDE_KEY].IsDouble() == true))
+			&& (json[MAGNITUDE_KEY].IsDouble() == true)) {
 		magnitude = json[MAGNITUDE_KEY].GetDouble();
-	else
+	} else {
 		magnitude = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// snr
 	if ((json.HasMember(SNR_KEY) == true) && (json[SNR_KEY].IsNumber() == true)
-			&& (json[SNR_KEY].IsDouble() == true))
+			&& (json[SNR_KEY].IsDouble() == true)) {
 		snr = json[SNR_KEY].GetDouble();
-	else
+	} else {
 		snr = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// zscore
 	if ((json.HasMember(ZSCORE_KEY) == true)
 			&& (json[ZSCORE_KEY].IsNumber() == true)
-			&& (json[ZSCORE_KEY].IsDouble() == true))
+			&& (json[ZSCORE_KEY].IsDouble() == true)) {
 		zscore = json[ZSCORE_KEY].GetDouble();
-	else
+	} else {
 		zscore = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// detectionthreshold
 	if ((json.HasMember(DETECTIONTHRESHOLD_KEY) == true)
 			&& (json[DETECTIONTHRESHOLD_KEY].IsNumber() == true)
-			&& (json[DETECTIONTHRESHOLD_KEY].IsDouble() == true))
+			&& (json[DETECTIONTHRESHOLD_KEY].IsDouble() == true)) {
 		detectionthreshold = json[DETECTIONTHRESHOLD_KEY].GetDouble();
-	else
+	} else {
 		detectionthreshold = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// thresholdtype
 	if ((json.HasMember(THRESHOLDTYPE_KEY) == true)
-			&& (json[THRESHOLDTYPE_KEY].IsString() == true))
+			&& (json[THRESHOLDTYPE_KEY].IsString() == true)) {
 		thresholdtype = std::string(json[THRESHOLDTYPE_KEY].GetString(),
-				json[THRESHOLDTYPE_KEY].GetStringLength());
-	else
+									json[THRESHOLDTYPE_KEY].GetStringLength());
+	} else {
 		thresholdtype = "";
+	}
 
 	// associated
 	if ((json.HasMember(ASSOCIATIONINFO_KEY) == true)
 			&& (json[ASSOCIATIONINFO_KEY].IsObject() == true)) {
 		rapidjson::Value & associatedvalue = json[ASSOCIATIONINFO_KEY];
 		associationinfo = detectionformats::associated(associatedvalue);
-	} else
+	} else {
 		associationinfo = detectionformats::associated();
+	}
 }
 
 correlation::correlation(const correlation &newcorrelation) {
@@ -291,7 +329,8 @@ correlation::correlation(const correlation &newcorrelation) {
 correlation::~correlation() {
 }
 
-rapidjson::Value & correlation::tojson(rapidjson::Value &json,
+rapidjson::Value & correlation::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -331,7 +370,7 @@ rapidjson::Value & correlation::tojson(rapidjson::Value &json,
 				time);
 		rapidjson::Value timevalue;
 		timevalue.SetString(rapidjson::StringRef(timestring.c_str()),
-				allocator);
+							allocator);
 		json.AddMember(TIME_KEY, timevalue, allocator);
 	}
 
@@ -349,7 +388,7 @@ rapidjson::Value & correlation::tojson(rapidjson::Value &json,
 	if (eventtype != "") {
 		rapidjson::Value eventtypevalue;
 		eventtypevalue.SetString(rapidjson::StringRef(eventtype.c_str()),
-				allocator);
+									allocator);
 		json.AddMember(EVENTTYPE_KEY, eventtypevalue, allocator);
 	}
 
@@ -478,7 +517,16 @@ std::vector<std::string> correlation::geterrors() {
 	// magnitude
 	if (std::isnan(magnitude) != true) {
 		if ((magnitude < -2) || (magnitude > 10)) {
-			errorlist.push_back("Invalid Magnitude in corrleation class.");
+			errorlist.push_back("Invalid Magnitude in correlation class.");
+		}
+	}
+
+	if (std::isnan(snr) != true) {
+		// Limit SNR to between 0 and 10 digits after the decimal point
+		if ((snr < 0) || (snr > 9999999999.999)) {
+			errorlist.push_back(
+					"SNR in correlation class is not in the valid range of 0 to "
+					"9999999999.999");
 		}
 	}
 
@@ -500,5 +548,4 @@ std::vector<std::string> correlation::geterrors() {
 	// return the list of errors
 	return (errorlist);
 }
-
-}
+}  // namespace detectionformats

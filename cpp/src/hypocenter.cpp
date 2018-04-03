@@ -1,6 +1,8 @@
-#include "hypocenter.h"
+#include <hypocenter.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define LATITUDE_KEY "Latitude"
@@ -26,8 +28,9 @@ hypocenter::hypocenter() {
 }
 
 hypocenter::hypocenter(double newlatitude, double newlongitude, double newtime,
-		double newdepth, double newlatitudeerror, double newlongitudeerror,
-		double newtimeerror, double newdeptherror) {
+						double newdepth, double newlatitudeerror,
+						double newlongitudeerror, double newtimeerror,
+						double newdeptherror) {
 	latitude = newlatitude;
 	longitude = newlongitude;
 	depth = newdepth;
@@ -61,7 +64,7 @@ hypocenter::hypocenter(rapidjson::Value &json) {
 			&& (json[TIME_KEY].IsString() == true))
 		time = detectionformats::ConvertISO8601ToEpochTime(
 				std::string(json[TIME_KEY].GetString(),
-						json[TIME_KEY].GetStringLength()));
+							json[TIME_KEY].GetStringLength()));
 	else
 		time = std::numeric_limits<double>::quiet_NaN();
 
@@ -121,7 +124,8 @@ hypocenter::hypocenter(const hypocenter & newhypocenter) {
 hypocenter::~hypocenter() {
 }
 
-rapidjson::Value & hypocenter::tojson(rapidjson::Value &json,
+rapidjson::Value & hypocenter::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -140,7 +144,7 @@ rapidjson::Value & hypocenter::tojson(rapidjson::Value &json,
 				time);
 		rapidjson::Value timevalue;
 		timevalue.SetString(rapidjson::StringRef(timestring.c_str()),
-				allocator);
+							allocator);
 		json.AddMember(TIME_KEY, timevalue, allocator);
 	}
 
@@ -219,5 +223,4 @@ std::vector<std::string> hypocenter::geterrors() {
 	// return the list of errors
 	return (errorlist);
 }
-
-}
+}  // namespace detectionformats

@@ -7,14 +7,15 @@
 #ifndef DETECTION_PICK_H
 #define DETECTION_PICK_H
 
-#include <string>
+#include <site.h>
+#include <source.h>
+#include <amplitude.h>
+#include <filter.h>
+#include <beam.h>
+#include <associated.h>
 
-#include "site.h"
-#include "source.h"
-#include "amplitude.h"
-#include "filter.h"
-#include "beam.h"
-#include "associated.h"
+#include <string>
+#include <vector>
 
 namespace detectionformats {
 
@@ -30,8 +31,8 @@ namespace detectionformats {
  *
  * pick uses the Source and Site common objects.
  */
-class pick: public detectionbase {
-public:
+class pick : public detectionbase {
+ public:
 	/**
 	 * \brief pick constructor
 	 *
@@ -234,7 +235,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	pick(rapidjson::Value &json);
+	explicit pick(rapidjson::Value &json);
 
 	/**
 	 * \brief pick copy constructor
@@ -251,7 +252,7 @@ public:
 	 *
 	 * The destructor for the pick class.
 	 */
-	 ~pick();
+	~pick();
 
 	/**
 	 * \brief Convert to json object function
@@ -259,7 +260,8 @@ public:
 	 * Converts the contents of the class to a json object
 	 * \return Returns a json::Object containing the class contents
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -269,7 +271,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief pick id
@@ -364,9 +366,6 @@ public:
 	 * information for this pick message
 	 */
 	detectionformats::associated associationinfo;
-
-protected:
-
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // DETECTION_PICK_H

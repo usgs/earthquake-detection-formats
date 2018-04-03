@@ -18,7 +18,7 @@ if (NOT MSVC)
     SET(GCC_CXX_14_FLAGS "-std=c++14")
     SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_CXX_14_FLAGS} ")
 
-    option(SUPPORT_COVERAGE "Instrument for Coverage" ON)
+    option(SUPPORT_COVERAGE "Instrument for Coverage" OFF)
 
     if(SUPPORT_COVERAGE)
         # Coverage
@@ -157,13 +157,14 @@ option(RUN_CPPLINT "Run CPP Checks (requires cpplint and python installed)" OFF)
 if(RUN_CPPLINT)
 
     set(CPPLINT_PATH "${CURRENT_SOURCE_DIR}/lib/cpplint/cpplint.py" CACHE FILEPATH "Path to cpplint")
-    file(GLOB CPPLINT_SRCS "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/src/*.cpp")
+    file(GLOB CPPLINT_SRCS "${PROJECT_SOURCE_DIR}/include/*.h"
+                           "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
     add_custom_target(cpplint ALL
       DEPENDS DetectionFormats
-      COMMAND "${CPPLINT_PATH}"
-      --filter=-whitespace/tab,-legal/copyright,-build/c++11
-      ${CPPCHECK_SRCS}
+      COMMAND /usr/bin/python "${CPPLINT_PATH}"
+      --filter=-whitespace/tab,-legal/copyright,-build/c++11,-build/header_guard,-readability/fn_size,-runtime/references
+      ${CPPLINT_SRCS}
       COMMENT "Running cpplint" VERBATIM
     )
 endif()

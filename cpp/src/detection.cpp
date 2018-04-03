@@ -1,6 +1,8 @@
-#include "detection.h"
+#include <detection.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define TYPE_KEY "Type"
@@ -33,21 +35,23 @@ detection::detection() {
 	correlationdata.clear();
 }
 
-detection::detection(std::string newid, std::string newagencyid,
-		std::string newauthor, double newlatitude, double newlongitude,
-		double newtime, double newdepth, double newlatitudeerror,
-		double newlongitudeerror, double newtimeerror, double newdeptherror,
-		std::string newdetectiontype, double newdetectiontime,
-		std::string neweventtype, double newbayes, double newminimumdistance,
-		double newrms, double newgap,
+detection::detection(
+		std::string newid, std::string newagencyid, std::string newauthor,
+		double newlatitude, double newlongitude, double newtime,
+		double newdepth, double newlatitudeerror, double newlongitudeerror,
+		double newtimeerror, double newdeptherror, std::string newdetectiontype,
+		double newdetectiontime, std::string neweventtype, double newbayes,
+		double newminimumdistance, double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
 	id = newid;
 	detection::source = detectionformats::source(newagencyid, newauthor);
 	hypocenter = detectionformats::hypocenter(newlatitude, newlongitude,
-			newtime, newdepth, newlatitudeerror, newlongitudeerror,
-			newtimeerror, newdeptherror);
+												newtime, newdepth,
+												newlatitudeerror,
+												newlongitudeerror, newtimeerror,
+												newdeptherror);
 	detectiontype = newdetectiontype;
 	detectiontime = newdetectiontime;
 	eventtype = neweventtype;
@@ -58,17 +62,18 @@ detection::detection(std::string newid, std::string newagencyid,
 
 	// copy data
 	pickdata.clear();
-	for (int i = 0; i < (int) newpickdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newpickdata.size()); i++) {
 		pickdata.push_back(newpickdata[i]);
 	}
 
 	correlationdata.clear();
-	for (int i = 0; i < (int) newcorrelationdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newcorrelationdata.size()); i++) {
 		correlationdata.push_back(newcorrelationdata[i]);
 	}
 }
 
-detection::detection(std::string newid, detectionformats::source newsource,
+detection::detection(
+		std::string newid, detectionformats::source newsource,
 		detectionformats::hypocenter newhypocenter,
 		std::string newdetectiontype, double newdetectiontime,
 		std::string neweventtype, double newbayes, double newminimumdistance,
@@ -89,12 +94,12 @@ detection::detection(std::string newid, detectionformats::source newsource,
 
 	// copy data
 	pickdata.clear();
-	for (int i = 0; i < (int) newpickdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newpickdata.size()); i++) {
 		pickdata.push_back(newpickdata[i]);
 	}
 
 	correlationdata.clear();
-	for (int i = 0; i < (int) newcorrelationdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newcorrelationdata.size()); i++) {
 		correlationdata.push_back(newcorrelationdata[i]);
 	}
 }
@@ -103,50 +108,55 @@ detection::detection(rapidjson::Value &json) {
 	// required values
 	// type
 	if ((json.HasMember(TYPE_KEY) == true)
-			&& (json[TYPE_KEY].IsString() == true))
+			&& (json[TYPE_KEY].IsString() == true)) {
 		type = std::string(json[TYPE_KEY].GetString(),
-				json[TYPE_KEY].GetStringLength());
-	else
+							json[TYPE_KEY].GetStringLength());
+	} else {
 		type = "";
+	}
 
 	// id
-	if ((json.HasMember(ID_KEY) == true) && (json[ID_KEY].IsString() == true))
+	if ((json.HasMember(ID_KEY) == true) && (json[ID_KEY].IsString() == true)) {
 		id = std::string(json[ID_KEY].GetString(),
-				json[ID_KEY].GetStringLength());
-	else
+							json[ID_KEY].GetStringLength());
+	} else {
 		id = "";
+	}
 
 	// source
 	if ((json.HasMember(SOURCE_KEY) == true)
 			&& (json[SOURCE_KEY].IsObject() == true)) {
 		rapidjson::Value & sourcevalue = json[SOURCE_KEY];
 		source = detectionformats::source(sourcevalue);
-	} else
+	} else {
 		source = detectionformats::source();
+	}
 
 	// hypocenter
 	if ((json.HasMember(HYPOCENTER_KEY) == true)
 			&& (json[HYPOCENTER_KEY].IsObject() == true)) {
 		rapidjson::Value & hypocentervalue = json[HYPOCENTER_KEY];
 		hypocenter = detectionformats::hypocenter(hypocentervalue);
-	} else
+	} else {
 		hypocenter = detectionformats::hypocenter();
+	}
 
 	// optional values
 	// detectiontype
 	if ((json.HasMember(DETECTIONTYPE_KEY) == true)
-			&& (json[DETECTIONTYPE_KEY].IsString() == true))
+			&& (json[DETECTIONTYPE_KEY].IsString() == true)) {
 		detectiontype = std::string(json[DETECTIONTYPE_KEY].GetString(),
-				json[DETECTIONTYPE_KEY].GetStringLength());
-	else
+									json[DETECTIONTYPE_KEY].GetStringLength());
+	} else {
 		detectiontype = "";
+	}
 
 	// detectiontime
 	if ((json.HasMember(DETECTIONTIME_KEY) == true)
 			&& (json[DETECTIONTIME_KEY].IsString() == true))
 		detectiontime = detectionformats::ConvertISO8601ToEpochTime(
 				std::string(json[DETECTIONTIME_KEY].GetString(),
-						json[DETECTIONTIME_KEY].GetStringLength()));
+							json[DETECTIONTIME_KEY].GetStringLength()));
 	else
 		detectiontime = std::numeric_limits<double>::quiet_NaN();
 
@@ -154,39 +164,43 @@ detection::detection(rapidjson::Value &json) {
 	if ((json.HasMember(EVENTTYPE_KEY) == true)
 			&& (json[EVENTTYPE_KEY].IsString() == true))
 		eventtype = std::string(json[EVENTTYPE_KEY].GetString(),
-				json[EVENTTYPE_KEY].GetStringLength());
+								json[EVENTTYPE_KEY].GetStringLength());
 	else
 		eventtype = "";
 
 	// bayes
 	if ((json.HasMember(BAYES_KEY) == true)
 			&& (json[BAYES_KEY].IsNumber() == true)
-			&& (json[BAYES_KEY].IsDouble() == true))
+			&& (json[BAYES_KEY].IsDouble() == true)) {
 		bayes = json[BAYES_KEY].GetDouble();
-	else
+	} else {
 		bayes = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// minimumdistance
 	if ((json.HasMember(MINIMUMDISTANCE_KEY) == true)
 			&& (json[MINIMUMDISTANCE_KEY].IsNumber() == true)
-			&& (json[MINIMUMDISTANCE_KEY].IsDouble() == true))
+			&& (json[MINIMUMDISTANCE_KEY].IsDouble() == true)) {
 		minimumdistance = json[MINIMUMDISTANCE_KEY].GetDouble();
-	else
+	} else {
 		minimumdistance = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// rms
 	if ((json.HasMember(RMS_KEY) == true) && (json[RMS_KEY].IsNumber() == true)
-			&& (json[RMS_KEY].IsDouble() == true))
+			&& (json[RMS_KEY].IsDouble() == true)) {
 		rms = json[RMS_KEY].GetDouble();
-	else
+	} else {
 		rms = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// gap
 	if ((json.HasMember(GAP_KEY) == true) && (json[GAP_KEY].IsNumber() == true)
-			&& (json[GAP_KEY].IsDouble() == true))
+			&& (json[GAP_KEY].IsDouble() == true)) {
 		gap = json[GAP_KEY].GetDouble();
-	else
+	} else {
 		gap = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// data
 	pickdata.clear();
@@ -199,11 +213,13 @@ detection::detection(rapidjson::Value &json) {
 
 		for (rapidjson::SizeType i = 0; i < dataarray.Size(); i++) {
 			rapidjson::Value & datavalue = dataarray[i];
-			if (datavalue.HasMember(TYPE_KEY) == false)
+			if (datavalue.HasMember(TYPE_KEY) == false) {
 				continue;
+			}
 
 			// route based on typestring
-			std::string typestring = std::string(datavalue["Type"].GetString(),
+			std::string typestring = std::string(
+					datavalue["Type"].GetString(),
 					datavalue["Type"].GetStringLength());
 			if (typestring == PICK_TYPE) {
 				detectionformats::pick newpickdata(datavalue);
@@ -215,8 +231,9 @@ detection::detection(rapidjson::Value &json) {
 
 				// add to vector
 				correlationdata.push_back(newcorrelationdata);
-			} else
+			} else {
 				continue;
+			}
 		}
 	}
 }
@@ -236,12 +253,13 @@ detection::detection(const detection & newdetection) {
 
 	// copy data
 	pickdata.clear();
-	for (int i = 0; i < (int) newdetection.pickdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newdetection.pickdata.size()); i++) {
 		pickdata.push_back(newdetection.pickdata[i]);
 	}
 
 	correlationdata.clear();
-	for (int i = 0; i < (int) newdetection.correlationdata.size(); i++) {
+	for (int i = 0; i < static_cast<int>(newdetection.correlationdata.size());
+			i++) {
 		correlationdata.push_back(newdetection.correlationdata[i]);
 	}
 }
@@ -251,7 +269,8 @@ detection::~detection() {
 	correlationdata.clear();
 }
 
-rapidjson::Value & detection::tojson(rapidjson::Value &json,
+rapidjson::Value & detection::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -293,7 +312,7 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 				detectiontime);
 		rapidjson::Value timevalue;
 		timevalue.SetString(rapidjson::StringRef(timestring.c_str()),
-				allocator);
+							allocator);
 		json.AddMember(DETECTIONTIME_KEY, timevalue, allocator);
 	}
 
@@ -301,7 +320,7 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 	if (eventtype != "") {
 		rapidjson::Value eventtypevalue;
 		eventtypevalue.SetString(rapidjson::StringRef(eventtype.c_str()),
-				allocator);
+									allocator);
 		json.AddMember(EVENTTYPE_KEY, eventtypevalue, allocator);
 	}
 
@@ -327,7 +346,7 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 
 	// pickdata
 	if (pickdata.size() > 0) {
-		for (int i = 0; i < (int) pickdata.size(); i++) {
+		for (int i = 0; i < static_cast<int>(pickdata.size()); i++) {
 			rapidjson::Value pickvalue(rapidjson::kObjectType);
 			pickdata[i].tojson(pickvalue, allocator);
 			dataarray.PushBack(pickvalue, allocator);
@@ -336,7 +355,7 @@ rapidjson::Value & detection::tojson(rapidjson::Value &json,
 
 	// correlationdata
 	if (correlationdata.size() > 0) {
-		for (int i = 0; i < (int) correlationdata.size(); i++) {
+		for (int i = 0; i < static_cast<int>(correlationdata.size()); i++) {
 			rapidjson::Value correlationvalue(rapidjson::kObjectType);
 			correlationdata[i].tojson(correlationvalue, allocator);
 			dataarray.PushBack(correlationvalue, allocator);
@@ -370,16 +389,32 @@ std::vector<std::string> detection::geterrors() {
 
 	// source
 	if (source.isvalid() != true) {
+		std::vector<std::string> sourceErrors = source.geterrors();
+
+		std::string errorString =
+				"Source object did not validate in detection class:";
+
+		for (int i = 0; i < sourceErrors.size(); i++) {
+			errorString += " " + sourceErrors[i];
+		}
+
 		// bad source
-		errorlist.push_back(
-				"Source object did not validate in detection class.");
+		errorlist.push_back(errorString);
 	}
 
 	// hypocenter
 	if (hypocenter.isvalid() != true) {
-		// hypocenter not found
-		errorlist.push_back(
-				"hypocenter object did not validate in detection class.");
+		std::vector<std::string> hypoErrors = hypocenter.geterrors();
+
+		std::string errorString =
+				"Hypocenter object did not validate in detection class:";
+
+		for (int i = 0; i < hypoErrors.size(); i++) {
+			errorString += " " + hypoErrors[i];
+		}
+
+		// bad hypo
+		errorlist.push_back(errorString);
 	}
 
 	// optional keys
@@ -463,20 +498,38 @@ std::vector<std::string> detection::geterrors() {
 	// data
 	// pickdata
 	if (pickdata.size() > 0) {
-		for (int i = 0; i < (int) pickdata.size(); i++) {
+		for (int i = 0; i < static_cast<int>(pickdata.size()); i++) {
 			if (pickdata[i].isvalid() != true) {
-				// bad source
-				errorlist.push_back("Invalid pick in detection class.");
+				std::vector<std::string> pickErrors = pickdata[i].geterrors();
+
+				std::string errorString = "Invalid pick in detection class:";
+
+				for (int j = 0; j < pickErrors.size(); j++) {
+					errorString += " " + pickErrors[j];
+				}
+
+				// bad pick
+				errorlist.push_back(errorString);
 			}
 		}
 	}
 
 	// correlationdata
 	if (correlationdata.size() > 0) {
-		for (int i = 0; i < (int) correlationdata.size(); i++) {
+		for (int i = 0; i < static_cast<int>(correlationdata.size()); i++) {
 			if (correlationdata[i].isvalid() != true) {
-				// bad source
-				errorlist.push_back("Invalid correlation in detection class.");
+				std::vector<std::string> corrErrors = correlationdata[i]
+						.geterrors();
+
+				std::string errorString =
+						"Invalid correlation in detection class:";
+
+				for (int j = 0; j < corrErrors.size(); j++) {
+					errorString += " " + corrErrors[j];
+				}
+
+				// bad pick
+				errorlist.push_back(errorString);
 			}
 		}
 	}
@@ -484,5 +537,4 @@ std::vector<std::string> detection::geterrors() {
 	// return the list of errors
 	return (errorlist);
 }
-
-}
+}  // namespace detectionformats

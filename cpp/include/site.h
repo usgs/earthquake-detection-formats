@@ -7,10 +7,11 @@
 #ifndef DETECTION_SITE_H
 #define DETECTION_SITE_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
-
-#include "base.h"
+#include <vector>
 
 namespace detectionformats {
 /**
@@ -20,8 +21,8 @@ namespace detectionformats {
  * and validate site data as part of detection data.
  *
  */
-class site: public detectionbase {
-public:
+class site : public detectionbase {
+ public:
 	/**
 	 * \brief site constructor
 	 *
@@ -51,7 +52,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	site(rapidjson::Value &json);
+	explicit site(rapidjson::Value &json);
 
 	/**
 	 * \brief site copy constructor
@@ -77,7 +78,8 @@ public:
 	 * the class contents.
 	 * \return Returns rapidjson::Value & if successful
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -87,7 +89,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief site station code
@@ -117,5 +119,5 @@ public:
 	 */
 	std::string location;
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // DETECTION_SITE_H

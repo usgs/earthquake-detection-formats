@@ -7,13 +7,13 @@
 #ifndef DETECTION_ORIGIN_H
 #define DETECTION_ORIGIN_H
 
+#include <source.h>
+#include <hypocenter.h>
+#include <pick.h>
+#include <correlation.h>
+
 #include <string>
 #include <vector>
-
-#include "source.h"
-#include "hypocenter.h"
-#include "pick.h"
-#include "correlation.h"
 
 namespace detectionformats {
 /**
@@ -28,8 +28,8 @@ namespace detectionformats {
  *
  * detection uses the Source and Site common objects.
  */
-class detection: public detectionbase {
-public:
+class detection : public detectionbase {
+ public:
 	/**
 	 * \brief detection constructor
 	 *
@@ -82,14 +82,14 @@ public:
 	 * 		vector to omit
 	 */
 	detection(std::string newid, std::string newagencyid, std::string newauthor,
-			double newlatitude, double newlongitude, double newtime,
-			double newdepth, double newlatitudeerror, double newlongitudeerror,
-			double newtimeerror, double newdeptherror,
-			std::string newdetectiontype, double newdetectiontime,
-			std::string neweventtype, double newbayes,
-			double newminimumdistance, double newrms, double newgap,
-			std::vector<detectionformats::pick> newpickdata,
-			std::vector<detectionformats::correlation> newcorrelationdata);
+				double newlatitude, double newlongitude, double newtime,
+				double newdepth, double newlatitudeerror,
+				double newlongitudeerror, double newtimeerror,
+				double newdeptherror, std::string newdetectiontype,
+				double newdetectiontime, std::string neweventtype,
+				double newbayes, double newminimumdistance, double newrms,
+				double newgap, std::vector<detectionformats::pick> newpickdata,
+				std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
 	 * \brief detection alternate advanced constructor
@@ -125,12 +125,12 @@ public:
 	 * 		vector to omit
 	 */
 	detection(std::string newid, detectionformats::source newsource,
-			detectionformats::hypocenter newhypocenter,
-			std::string newdetectiontype, double newdetectiontime,
-			std::string neweventtype, double newbayes,
-			double newminimumdistance, double newrms, double newgap,
-			std::vector<detectionformats::pick> newpickdata,
-			std::vector<detectionformats::correlation> newcorrelationdata);
+				detectionformats::hypocenter newhypocenter,
+				std::string newdetectiontype, double newdetectiontime,
+				std::string neweventtype, double newbayes,
+				double newminimumdistance, double newrms, double newgap,
+				std::vector<detectionformats::pick> newpickdata,
+				std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
 	 * \brief detection advanced constructor
@@ -139,7 +139,7 @@ public:
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	detection(rapidjson::Value &json);
+	explicit detection(rapidjson::Value &json);
 
 	/**
 	 * \brief detection copy constructor
@@ -163,7 +163,8 @@ public:
 	 * Converts the contents of the class to a json object
 	 * \return Returns a json::Object containing the class contents
 	 */
-	virtual rapidjson::Value & tojson(rapidjson::Value &json,
+	rapidjson::Value & tojson(
+			rapidjson::Value &json,
 			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
 					override;
 
@@ -173,7 +174,7 @@ public:
 	 * Gets any formatting errors in the class
 	 * \return Returns a std::vector<std::string> containing the errors
 	 */
-	virtual std::vector<std::string> geterrors() override;
+	std::vector<std::string> geterrors() override;
 
 	/**
 	 * \brief detection id
@@ -263,9 +264,6 @@ public:
 	 * An optional vector of correlation objects used to generate this detection
 	 */
 	std::vector<detectionformats::correlation> correlationdata;
-
-protected:
-
 };
-}
-#endif
+}  // namespace detectionformats
+#endif  // DETECTION_ORIGIN_H

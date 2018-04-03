@@ -1,6 +1,8 @@
-#include "beam.h"
+#include <beam.h>
 
+#include <string>
 #include <limits>
+#include <vector>
 
 // JSON Keys
 #define BACKAZIMUTH_KEY "BackAzimuth"
@@ -21,8 +23,8 @@ beam::beam() {
 }
 
 beam::beam(double newbackazimuth, double newbackazimutherror,
-		double newslowness, double newslownesserror, double newpowerratio,
-		double newpowerratioerror) {
+			double newslowness, double newslownesserror, double newpowerratio,
+			double newpowerratioerror) {
 	backazimuth = newbackazimuth;
 	backazimutherror = newbackazimutherror;
 	slowness = newslowness;
@@ -84,7 +86,6 @@ beam::beam(rapidjson::Value &json) {
 }
 
 beam::beam(const beam &newbeam) {
-
 	backazimuth = newbeam.backazimuth;
 	backazimutherror = newbeam.backazimutherror;
 	slowness = newbeam.slowness;
@@ -96,7 +97,8 @@ beam::beam(const beam &newbeam) {
 beam::~beam() {
 }
 
-rapidjson::Value & beam::tojson(rapidjson::Value &json,
+rapidjson::Value & beam::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -182,22 +184,20 @@ std::vector<std::string> beam::geterrors() {
 	return (errorlist);
 }
 
-bool beam::isempty()
-{
+bool beam::isempty() {
 	if (std::isnan(backazimuth) != true)
-		return(false);
+		return (false);
 	if (std::isnan(slowness) != true)
-		return(false);
+		return (false);
 	if (std::isnan(powerratio) != true)
-		return(false);
+		return (false);
 	if (std::isnan(backazimutherror) != true)
-		return(false);
+		return (false);
 	if (std::isnan(slownesserror) != true)
-		return(false);
+		return (false);
 	if (std::isnan(powerratioerror) != true)
-		return(false);
+		return (false);
 
 	return (true);
 }
-
-}
+}  // namespace detectionformats

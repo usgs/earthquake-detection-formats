@@ -1,4 +1,9 @@
-#include "site.h"
+#include <site.h>
+
+#include <string>
+#include <limits>
+#include <vector>
+
 // JSON Keys
 #define STATION_KEY "Station"
 #define CHANNEL_KEY "Channel"
@@ -14,7 +19,7 @@ site::site() {
 }
 
 site::site(std::string newstation, std::string newchannel,
-		std::string newnetwork, std::string newlocation) {
+			std::string newnetwork, std::string newlocation) {
 	station = newstation;
 	channel = newchannel;
 	network = newnetwork;
@@ -22,40 +27,43 @@ site::site(std::string newstation, std::string newchannel,
 }
 
 site::site(rapidjson::Value &json) {
-
 	// required values
 	// station
 	if ((json.HasMember(STATION_KEY) == true)
-			&& (json[STATION_KEY].IsString() == true))
+			&& (json[STATION_KEY].IsString() == true)) {
 		station = std::string(json[STATION_KEY].GetString(),
-				json[STATION_KEY].GetStringLength());
-	else
+								json[STATION_KEY].GetStringLength());
+	} else {
 		station = "";
+	}
 
 	// network
 	if ((json.HasMember(NETWORK_KEY) == true)
-			&& (json[NETWORK_KEY].IsString() == true))
+			&& (json[NETWORK_KEY].IsString() == true)) {
 		network = std::string(json[NETWORK_KEY].GetString(),
-				json[NETWORK_KEY].GetStringLength());
-	else
+								json[NETWORK_KEY].GetStringLength());
+	} else {
 		network = "";
+	}
 
 	// optional values
 	// channel
 	if ((json.HasMember(CHANNEL_KEY) == true)
-			&& (json[CHANNEL_KEY].IsString() == true))
+			&& (json[CHANNEL_KEY].IsString() == true)) {
 		channel = std::string(json[CHANNEL_KEY].GetString(),
-				json[CHANNEL_KEY].GetStringLength());
-	else
+								json[CHANNEL_KEY].GetStringLength());
+	} else {
 		channel = "";
+	}
 
 	// location
 	if ((json.HasMember(LOCATION_KEY) == true)
-			&& (json[LOCATION_KEY].IsString() == true))
+			&& (json[LOCATION_KEY].IsString() == true)) {
 		location = std::string(json[LOCATION_KEY].GetString(),
-				json[LOCATION_KEY].GetStringLength());
-	else
+								json[LOCATION_KEY].GetStringLength());
+	} else {
 		location = "";
+	}
 }
 
 site::site(const site & newsite) {
@@ -68,7 +76,8 @@ site::site(const site & newsite) {
 site::~site() {
 }
 
-rapidjson::Value & site::tojson(rapidjson::Value &json,
+rapidjson::Value & site::tojson(
+		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
 
@@ -77,14 +86,14 @@ rapidjson::Value & site::tojson(rapidjson::Value &json,
 	if (station != "") {
 		rapidjson::Value stationvalue;
 		stationvalue.SetString(rapidjson::StringRef(station.c_str()),
-				allocator);
+								allocator);
 		json.AddMember(STATION_KEY, stationvalue, allocator);
 	}
 	// network
 	if (network != "") {
 		rapidjson::Value networkvalue;
 		networkvalue.SetString(rapidjson::StringRef(network.c_str()),
-				allocator);
+								allocator);
 		json.AddMember(NETWORK_KEY, networkvalue, allocator);
 	}
 
@@ -93,7 +102,7 @@ rapidjson::Value & site::tojson(rapidjson::Value &json,
 	if (channel != "") {
 		rapidjson::Value channelvalue;
 		channelvalue.SetString(rapidjson::StringRef(channel.c_str()),
-				allocator);
+								allocator);
 		json.AddMember(CHANNEL_KEY, channelvalue, allocator);
 	}
 
@@ -101,7 +110,7 @@ rapidjson::Value & site::tojson(rapidjson::Value &json,
 	if (location != "") {
 		rapidjson::Value locationvalue;
 		locationvalue.SetString(rapidjson::StringRef(location.c_str()),
-				allocator);
+								allocator);
 		json.AddMember(LOCATION_KEY, locationvalue, allocator);
 	}
 
@@ -132,4 +141,4 @@ std::vector<std::string> site::geterrors() {
 	// return the list of errors
 	return (errorlist);
 }
-}
+}  // namespace detectionformats
