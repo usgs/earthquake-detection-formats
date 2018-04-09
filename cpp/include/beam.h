@@ -7,11 +7,11 @@
 #ifndef DETECTION_BEAM_H
 #define DETECTION_BEAM_H
 
-#include <site.h>
-#include <source.h>
-
 #include <string>
 #include <vector>
+
+#include "./site.h"
+#include "./source.h"
 
 namespace detectionformats {
 

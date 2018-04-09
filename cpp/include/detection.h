@@ -7,13 +7,13 @@
 #ifndef DETECTION_ORIGIN_H
 #define DETECTION_ORIGIN_H
 
-#include <source.h>
-#include <hypocenter.h>
-#include <pick.h>
-#include <correlation.h>
-
 #include <string>
 #include <vector>
+
+#include "./source.h"
+#include "./hypocenter.h"
+#include "./pick.h"
+#include "./correlation.h"
 
 namespace detectionformats {
 /**

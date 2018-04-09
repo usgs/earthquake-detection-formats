@@ -7,11 +7,11 @@
 #ifndef DETECTION_FILTER_H
 #define DETECTION_FILTER_H
 
-#include <base.h>
-
 #include <string>
 #include <exception>
 #include <vector>
+
+#include "./base.h"
 
 namespace detectionformats {
 /**

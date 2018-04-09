@@ -7,15 +7,15 @@
 #ifndef DETECTION_PICK_H
 #define DETECTION_PICK_H
 
-#include <site.h>
-#include <source.h>
-#include <amplitude.h>
-#include <filter.h>
-#include <beam.h>
-#include <associated.h>
-
 #include <string>
 #include <vector>
+
+#include "./site.h"
+#include "./source.h"
+#include "./amplitude.h"
+#include "./filter.h"
+#include "./beam.h"
+#include "./associated.h"
 
 namespace detectionformats {
 
