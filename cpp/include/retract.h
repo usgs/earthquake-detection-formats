@@ -7,10 +7,10 @@
 #ifndef DETECTION_RETRACT_H
 #define DETECTION_RETRACT_H
 
-#include <source.h>
-
 #include <string>
 #include <vector>
+
+#include "./source.h"
 
 namespace detectionformats {
 /**

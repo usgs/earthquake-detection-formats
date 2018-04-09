@@ -7,13 +7,13 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
-#include <hypocenter.h>
-#include <site.h>
-#include <source.h>
-#include <associated.h>
-
 #include <string>
 #include <vector>
+
+#include "./hypocenter.h"
+#include "./site.h"
+#include "./source.h"
+#include "./associated.h"
 
 namespace detectionformats {
 

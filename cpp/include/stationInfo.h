@@ -7,12 +7,12 @@
 #ifndef STATION_INFO_H
 #define STATION_INFO_H
 
-#include <site.h>
-#include <source.h>
-
 #include <string>
 #include <exception>
 #include <vector>
+
+#include "./site.h"
+#include "./source.h"
 
 namespace detectionformats {
 
