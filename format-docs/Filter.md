@@ -23,5 +23,7 @@ in seismic data messaging between seismic applications and organizations.
 
 The following are values that **may or may not** be provided as part of a filter.
 
-* HighPass - A decimal number containing the high pass frequency.
-* LowPass - A decimal number containing the low pass frequency.
+* HighPass - A decimal number containing the high pass frequency in Hz.
+* LowPass - A decimal number containing the low pass frequency in Hz.
+
+Note: The type of filter is assumed to be band-pass.
