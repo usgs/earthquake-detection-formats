@@ -7,13 +7,13 @@
 #ifndef DETECTION_ORIGIN_H
 #define DETECTION_ORIGIN_H
 
+#include <source.h>
+#include <hypocenter.h>
+#include <pick.h>
+#include <correlation.h>
+
 #include <string>
 #include <vector>
-
-#include "./source.h"
-#include "./hypocenter.h"
-#include "./pick.h"
-#include "./correlation.h"
 
 namespace detectionformats {
 /**
@@ -139,7 +139,7 @@ class detection : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit detection(rapidjson::Value &json);
+	explicit detection(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief detection copy constructor
@@ -164,8 +164,8 @@ class detection : public detectionbase {
 	 * \return Returns a json::Object containing the class contents
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
@@ -203,7 +203,7 @@ class detection : public detectionbase {
 	 * \brief detection type
 	 *
 	 * An optional std::string containing the detection type of this detection
-	 * valid values are "New", "Update", "Final", or "Retract"
+	 * valid values are >New>, >Update>, >Final>, or >Retract>
 	 */
 	std::string detectiontype;
 
@@ -211,7 +211,7 @@ class detection : public detectionbase {
 	 * \brief detection event type
 	 *
 	 * An optional std::string containing the event type of this detection
-	 * valid values are "earthquake" or "blast"
+	 * valid values are >earthquake> or >blast>
 	 */
 	std::string eventtype;
 

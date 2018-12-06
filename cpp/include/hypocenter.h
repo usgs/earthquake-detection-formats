@@ -7,11 +7,11 @@
 #ifndef DETECTION_HYPOCENTER_H
 #define DETECTION_HYPOCENTER_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -62,7 +62,7 @@ class hypocenter : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit hypocenter(rapidjson::Value &json);
+	explicit hypocenter(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief hypocenter copy constructor
@@ -89,8 +89,8 @@ class hypocenter : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

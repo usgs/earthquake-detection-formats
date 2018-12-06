@@ -7,11 +7,11 @@
 #ifndef DETECTION_FILTER_H
 #define DETECTION_FILTER_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -49,7 +49,7 @@ class filter : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit filter(rapidjson::Value &json);
+	explicit filter(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief filter copy constructor
@@ -75,8 +75,8 @@ class filter : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

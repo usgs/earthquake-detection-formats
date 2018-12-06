@@ -7,10 +7,10 @@
 #ifndef DETECTION_RETRACT_H
 #define DETECTION_RETRACT_H
 
+#include <source.h>
+
 #include <string>
 #include <vector>
-
-#include "./source.h"
 
 namespace detectionformats {
 /**
@@ -65,7 +65,7 @@ class retract : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit retract(rapidjson::Value &json);
+	explicit retract(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief retract copy constructor
@@ -90,8 +90,8 @@ class retract : public detectionbase {
 	 * \return Returns a json::Object containing the class contents
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

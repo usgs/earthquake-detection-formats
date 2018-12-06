@@ -7,11 +7,11 @@
 #ifndef DETECTION_AMPLITUDE_H
 #define DETECTION_AMPLITUDE_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -53,7 +53,7 @@ class amplitude : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit amplitude(rapidjson::Value &json);
+	explicit amplitude(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief amplitude copy constructor
@@ -80,8 +80,8 @@ class amplitude : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

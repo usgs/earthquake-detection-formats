@@ -7,15 +7,15 @@
 #ifndef DETECTION_PICK_H
 #define DETECTION_PICK_H
 
+#include <site.h>
+#include <source.h>
+#include <amplitude.h>
+#include <filter.h>
+#include <beam.h>
+#include <associated.h>
+
 #include <string>
 #include <vector>
-
-#include "./site.h"
-#include "./source.h"
-#include "./amplitude.h"
-#include "./filter.h"
-#include "./beam.h"
-#include "./associated.h"
 
 namespace detectionformats {
 
@@ -235,7 +235,7 @@ class pick : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit pick(rapidjson::Value &json);
+	explicit pick(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief pick copy constructor
@@ -261,8 +261,8 @@ class pick : public detectionbase {
 	 * \return Returns a json::Object containing the class contents
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
@@ -314,7 +314,7 @@ class pick : public detectionbase {
 	 * \brief pick polarity
 	 *
 	 * An optional std::string containing the polarity for this pick message
-	 * valid values are "up" or "down"
+	 * valid values are >up> or >down>
 	 */
 	std::string polarity;
 
@@ -322,7 +322,7 @@ class pick : public detectionbase {
 	 * \brief pick onset
 	 *
 	 * An optional std::string containing the onset for this pick message
-	 * valid values are "impulsive", "emergent", or "questionable"
+	 * valid values are >impulsive>, >emergent>, or >questionable>
 	 */
 	std::string onset;
 
@@ -330,8 +330,8 @@ class pick : public detectionbase {
 	 * \brief pick picker type
 	 *
 	 * An optional std::string defining the picker that made this pick message
-	 * valid values are "manual", "raypicker", "filterpicker", "earthworm", or
-	 * "other"
+	 * valid values are >manual>, >raypicker>, >filterpicker>, >earthworm>, or
+	 * >other>
 	 */
 	std::string picker;
 

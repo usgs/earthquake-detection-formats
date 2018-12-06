@@ -7,11 +7,11 @@
 #ifndef DETECTION_SITE_H
 #define DETECTION_SITE_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -52,7 +52,7 @@ class site : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit site(rapidjson::Value &json);
+	explicit site(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief site copy constructor
@@ -79,8 +79,8 @@ class site : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

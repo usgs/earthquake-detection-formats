@@ -7,12 +7,12 @@
 #ifndef STATION_INFO_H
 #define STATION_INFO_H
 
+#include <site.h>
+#include <source.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./site.h"
-#include "./source.h"
 
 namespace detectionformats {
 
@@ -97,7 +97,7 @@ class stationInfo : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit stationInfo(rapidjson::Value &json);
+	explicit stationInfo(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief stationInfo copy constructor
@@ -123,8 +123,8 @@ class stationInfo : public detectionbase {
 	 * \return Returns a json::Object containing the class contents
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

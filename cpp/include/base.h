@@ -7,11 +7,11 @@
 #ifndef DETECTION_BASE_H
 #define DETECTION_BASE_H
 
+#include <util.h>
+
 #include <string>
 #include <vector>
 #include <cmath>
-
-#include "./util.h"
 
 namespace detectionformats {
 class detectionbase {
@@ -50,8 +50,8 @@ class detectionbase {
 	 * \return Returns 1 if successful, 0 otherwise
 	 */
 	virtual rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) = 0;
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) = 0; // NOLINT
 
 	/**
 	 * \brief Validates the values in the class

@@ -9,9 +9,14 @@
 
 #include <exception>
 #include <string>
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
+
+// needed to disable rapidjson warnings for clang
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wexpansion-to-defined"
+#include "document.h" // NOLINT
+#include "writer.h" // NOLINT
+#include "stringbuffer.h"  // NOLINT
+#pragma clang diagnostic pop
 
 #define DETECTIONEXTENSION "jsondetect"
 #define RETRACTEXTENSION "jsonrtct"
@@ -165,7 +170,7 @@ std::string ConvertEpochTimeToISO8601(double epochtime);
  * Converts the contents of the class to a serialized json string
  * \return Returns a std::string containing the serialized json string
  */
-std::string ToJSONString(rapidjson::Value &json);
+std::string ToJSONString(rapidjson::Value &json); // NOLINT
 
 /**
  * \brief Convert from json string function
@@ -176,6 +181,6 @@ std::string ToJSONString(rapidjson::Value &json);
  * \return Returns 1 if successful, 0 otherwise
  */
 rapidjson::Document & FromJSONString(std::string jsonstring,
-										rapidjson::Document & jsondocument);
+										rapidjson::Document & jsondocument); // NOLINT
 }  // namespace detectionformats
 #endif  // DETECTION_UTIL_H

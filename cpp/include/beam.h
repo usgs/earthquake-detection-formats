@@ -7,11 +7,11 @@
 #ifndef DETECTION_BEAM_H
 #define DETECTION_BEAM_H
 
+#include <site.h>
+#include <source.h>
+
 #include <string>
 #include <vector>
-
-#include "./site.h"
-#include "./source.h"
 
 namespace detectionformats {
 
@@ -65,7 +65,7 @@ class beam : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit beam(rapidjson::Value &json);
+	explicit beam(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief beam copy constructor
@@ -91,8 +91,8 @@ class beam : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

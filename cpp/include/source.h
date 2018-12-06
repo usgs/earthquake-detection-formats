@@ -7,11 +7,11 @@
 #ifndef DETECTION_SOURCE_H
 #define DETECTION_SOURCE_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -49,7 +49,7 @@ class source : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit source(rapidjson::Value &json);
+	explicit source(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief source copy constructor
@@ -76,8 +76,8 @@ class source : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

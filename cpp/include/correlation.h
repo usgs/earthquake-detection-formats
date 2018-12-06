@@ -7,13 +7,13 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
+#include <hypocenter.h>
+#include <site.h>
+#include <source.h>
+#include <associated.h>
+
 #include <string>
 #include <vector>
-
-#include "./hypocenter.h"
-#include "./site.h"
-#include "./source.h"
-#include "./associated.h"
 
 namespace detectionformats {
 
@@ -238,7 +238,7 @@ class correlation : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit correlation(rapidjson::Value &json);
+	explicit correlation(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief correlation copy constructor
@@ -264,8 +264,8 @@ class correlation : public detectionbase {
 	 * \return Returns a json::Object containing the class contents
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

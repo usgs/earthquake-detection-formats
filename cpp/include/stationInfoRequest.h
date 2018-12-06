@@ -7,12 +7,12 @@
 #ifndef STATION_INFO_REQUEST_H
 #define STATION_INFO_REQUEST_H
 
+#include <site.h>
+#include <source.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./site.h"
-#include "./source.h"
 
 namespace detectionformats {
 
@@ -75,7 +75,7 @@ class stationInfoRequest : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit stationInfoRequest(rapidjson::Value &json);
+	explicit stationInfoRequest(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief stationInfoRequest copy constructor
@@ -101,8 +101,8 @@ class stationInfoRequest : public detectionbase {
 	 * \return Returns a json::Object containing the class contents
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

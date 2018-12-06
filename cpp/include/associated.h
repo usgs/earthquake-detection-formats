@@ -7,11 +7,11 @@
 #ifndef DETECTION_ASSOCIATED_H
 #define DETECTION_ASSOCIATED_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -58,7 +58,7 @@ class associated : public detectionbase {
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit associated(rapidjson::Value &json);
+	explicit associated(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief associated copy constructor
@@ -85,8 +85,8 @@ class associated : public detectionbase {
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
