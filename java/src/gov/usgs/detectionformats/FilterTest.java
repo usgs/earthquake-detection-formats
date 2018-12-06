@@ -7,10 +7,14 @@ import org.junit.Test;
 
 public class FilterTest {
 
-	public static final String FILTER_STRING = "{\"HighPass\":1.05,"
-			+ "\"LowPass\":2.65}";
+	public static final String FILTER_STRING = "{\"Type\":\"BandPass\","
+			+ "\"HighPass\":1.05,"
+			+ "\"LowPass\":2.65,"
+			+ "\"Units\":\"Hertz\"}";
+	public static final String TYPE = "BandPass";
 	public static final double HIGHPASS = 1.05;
 	public static final double LOWPASS = 2.65;
+	public static final String UNITS = "Hertz";
 
 	/**
 	 * Able to write a JSON string
@@ -18,7 +22,7 @@ public class FilterTest {
 	@Test
 	public void WritesJSON() {
 
-		Filter filterObject = new Filter(HIGHPASS, LOWPASS);
+		Filter filterObject = new Filter(TYPE, HIGHPASS, LOWPASS, UNITS);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(filterObject.toJSON());
@@ -54,7 +58,7 @@ public class FilterTest {
 	@Test
 	public void validate() {
 
-		Filter filterObject = new Filter(HIGHPASS, LOWPASS);
+		Filter filterObject = new Filter(TYPE, HIGHPASS, LOWPASS, UNITS);
 
 		// Successful validation
 		boolean rc = filterObject.isValid();
@@ -66,12 +70,20 @@ public class FilterTest {
 	public void checkData(Filter FilterObject, String TestName) {
 
 		// check FilterObject.HighPass
+		assertEquals(TestName + " Type Equals", TYPE,
+				FilterObject.getType());
+
+		// check FilterObject.HighPass
 		assertEquals(TestName + " HighPass Equals", HIGHPASS,
 				FilterObject.getHighPass(), 0);
 
 		// check FilterObject.LowPass
 		assertEquals(TestName + " Azimuth Equals", LOWPASS,
 				FilterObject.getLowPass(), 0);
+
+				// check FilterObject.HighPass
+				assertEquals(TestName + " Units Equals", UNITS,
+						FilterObject.getUnits());
 
 	}
 

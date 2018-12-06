@@ -15,8 +15,15 @@ public class Filter implements DetectionInt {
 	/**
 	 * JSON Keys
 	 */
+	public static final String TYPE_KEY = "Type";
 	public static final String HIGHPASS_KEY = "HighPass";
 	public static final String LOWPASS_KEY = "LowPass";
+	public static final String UNITS_KEY = "Units";
+
+	/**
+	 * Optional string containing the type
+	 */
+	private final String type;
 
 	/**
 	 * Optional double containing the high pass
@@ -29,27 +36,40 @@ public class Filter implements DetectionInt {
 	private final Double lowPass;
 
 	/**
+	 * Optional string containing the units
+	 */
+	private final String units;
+
+	/**
 	 * The constructor for the Filter class. Initializes members to null values.
 	 */
 	public Filter() {
 
+		type = null;
 		highPass = null;
 		lowPass = null;
+		units = null;
 	}
 
 	/**
 	 * The advanced constructor for the Filter class. Initializes members to
 	 * provided values.
 	 *
+	 * @param newType
+	 *            - A String containing the filter type to use (null omit)
 	 * @param newHighPass
 	 *            - A Double containing the highPass to use (null omit)
 	 * @param newLowPass
 	 *            - A Double containing the lowPass to use (null omit)
+	 * @param newUnits
+	 *            - A String containing the filter units to use (null omit)
 	 */
-	public Filter(Double newHighPass, Double newLowPass) {
-
+	public Filter(String newType, Double newHighPass, Double newLowPass,
+		String newUnits) {
+		type = newType;
 		highPass = newHighPass;
 		lowPass = newLowPass;
+		units = newUnits;
 	}
 
 	/**
@@ -61,6 +81,13 @@ public class Filter implements DetectionInt {
 	public Filter(JSONObject newJSONObject) {
 
 		// optional values
+		// type
+		if (newJSONObject.containsKey(TYPE_KEY)) {
+			type = newJSONObject.get(TYPE_KEY).toString();
+		} else {
+			type = null;
+		}
+
 		// highPass
 		if (newJSONObject.containsKey(HIGHPASS_KEY)) {
 			highPass = Double
@@ -75,6 +102,13 @@ public class Filter implements DetectionInt {
 		} else {
 			lowPass = null;
 		}
+
+		// units
+		if (newJSONObject.containsKey(UNITS_KEY)) {
+			units = newJSONObject.get(UNITS_KEY).toString();
+		} else {
+			units = null;
+		}
 	}
 
 	/**
@@ -87,10 +121,17 @@ public class Filter implements DetectionInt {
 
 		JSONObject newJSONObject = new JSONObject();
 
+		String jsonType = getType();
 		Double jsonHighPass = getHighPass();
 		Double jsonLowPass = getLowPass();
+		String jsonUnits = getUnits();
 
 		// optional values
+		// type
+		if (jsonType != null) {
+			newJSONObject.put(TYPE_KEY, jsonType);
+		}
+
 		// highPass
 		if (jsonHighPass != null) {
 			newJSONObject.put(HIGHPASS_KEY, jsonHighPass);
@@ -99,6 +140,11 @@ public class Filter implements DetectionInt {
 		// lowPass
 		if (jsonLowPass != null) {
 			newJSONObject.put(LOWPASS_KEY, jsonLowPass);
+		}
+
+		// units
+		if (jsonUnits != null) {
+			newJSONObject.put(UNITS_KEY, jsonUnits);
 		}
 
 		// return valid object
@@ -137,14 +183,27 @@ public class Filter implements DetectionInt {
 	 * @return Returns true if empty, false otherwise.
 	 */
 	public boolean isEmpty() {
+		if (getType() != null) {
+			return (false);
+		}
 		if (getHighPass() != null) {
 			return (false);
 		}
 		if (getLowPass() != null) {
 			return (false);
 		}
+		if (getUnits() != null) {
+			return (false);
+		}
 
 		return (true);
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
 	}
 
 	/**
@@ -159,5 +218,12 @@ public class Filter implements DetectionInt {
 	 */
 	public Double getLowPass() {
 		return lowPass;
+	}
+
+	/**
+	 * @return the units
+	 */
+	public String getUnits() {
+		return units;
 	}
 }

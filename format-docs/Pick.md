@@ -32,7 +32,12 @@ applications and organizations.
       "Polarity"  : ("up" | "down"),
       "Onset"     : ("impulsive" | "emergent" | "questionable"),
       "Picker"    : ("manual" | "raypicker" | "filterpicker" | "earthworm" | "other"),
-      "Filter"    : [Filter Objects ...]
+      "Filter"    : [ {
+        "Type"     : String,
+        "HighPass" : Number,
+        "LowPass"  : Number,
+        "Units"    : String
+        }, ...]
       "Amplitude" :
       {
          "Amplitude" : Number,
