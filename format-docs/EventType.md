@@ -19,7 +19,7 @@ applications and organizations.
        "Type"      : String,
        "Certainty" : String
     }
-```git sta
+```
 
 ## Glossary
 

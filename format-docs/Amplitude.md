@@ -30,4 +30,4 @@ amplitude.
 
 * Amplitude - A decimal number containing the amplitude.
 * Period - A decimal number containing the amplitude period.
-* SNR - A decimal number containing the signal to noise ratio.
+* SNR - A decimal number containing the signal to noise ratio, capped at 1E9.

@@ -85,7 +85,7 @@ various correlation algorithms.
 
 * EventType - An object containing the event type of the correlation, see [EventType](EventType.md).
 * Magnitude - A decimal number identifying the relative magnitude of the correlation.
-* SNR - A decimal number identifying Signal to Noise Ratio at the time of the correlation.
+* SNR - A decimal number identifying Signal to Noise Ratio at the time of the correlation, capped at 1E9.
 * ZScore - A decimal number identifying Z Score at the time of the correlation.
 * DetectionThreshold - A decimal number identifying detection threshold that was used to declare this correlation.
 * ThresholdType - A string containing the type of detection threshold that was used.
