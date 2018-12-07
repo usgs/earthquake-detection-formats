@@ -7,10 +7,12 @@ frequencies that may or may not be part of the filter list in the [Pick](Pick.md
 Format. Filter uses the [JSON standard](http://www.json.org) .
 
 ## Usage
+
 The Filter object is intended for use as part of the [Pick](Pick.md) Format
 in seismic data messaging between seismic applications and organizations.
 
 ## Output
+
 ```json
    {
       "Type"     : String,
@@ -19,6 +21,7 @@ in seismic data messaging between seismic applications and organizations.
       "Units"    : String
    }
 ```
+
 ## Glossary
 
 **Optional Values:**

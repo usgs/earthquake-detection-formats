@@ -8,11 +8,13 @@ produce a [Pick](Pick.md), [Correlation](Correlation.md), or
 [JSON standard](http://www.json.org).
 
 ## Usage
+
 Site is intended for use as part of the [Pick](Pick.md),
 [Correlation](Correlation.md), or [Station](Station.md) Formats in seismic data
 messaging between seismic applications and organizations.
 
 ## Output
+
 ```json
     {
       "Station"   : String,
@@ -23,6 +25,7 @@ messaging between seismic applications and organizations.
 ```
 
 ## Glossary
+
 **Required Values:**
 
 These are the values **required** to define a Site.

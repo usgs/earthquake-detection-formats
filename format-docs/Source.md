@@ -8,11 +8,13 @@ organization that produced a [Pick](Pick.md),
 Site uses the [JSON standard](http://www.json.org).
 
 ## Usage
+
 Source is intended for use as part of the [Pick](Pick.md),
 [Correlation](Correlation.md), or [Origin](Origin.md) Formats in seismic data
 messaging between seismic applications and organizations.
 
 ## Output
+
 ```json
     {
       "AgencyID"  : String,
@@ -21,8 +23,10 @@ messaging between seismic applications and organizations.
 ```
 
 ## Glossary
+
 **Required Values:**
 
 These are the values **required** to define a Source
+
 * AgencyID - A string containing the originating agency FDSN ID.
 * Author - A string containing the source author.
