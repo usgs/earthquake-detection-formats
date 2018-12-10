@@ -26,7 +26,7 @@ detection::detection() {
 	hypocenter = detectionformats::hypocenter();
 	detectiontype = "";
 	detectiontime = std::numeric_limits<double>::quiet_NaN();
-	eventtype = "";
+	eventtype = detectionformats::eventtype();
 	bayes = std::numeric_limits<double>::quiet_NaN();
 	minimumdistance = std::numeric_limits<double>::quiet_NaN();
 	rms = std::numeric_limits<double>::quiet_NaN();
@@ -40,7 +40,8 @@ detection::detection(
 		double newlatitude, double newlongitude, double newtime,
 		double newdepth, double newlatitudeerror, double newlongitudeerror,
 		double newtimeerror, double newdeptherror, std::string newdetectiontype,
-		double newdetectiontime, std::string neweventtype, double newbayes,
+		double newdetectiontime, std::string neweventtype,
+		std::string neweventtypecertainty, double newbayes,
 		double newminimumdistance, double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
@@ -54,7 +55,7 @@ detection::detection(
 												newdeptherror);
 	detectiontype = newdetectiontype;
 	detectiontime = newdetectiontime;
-	eventtype = neweventtype;
+	eventtype = detectionformats::eventtype(neweventtype, neweventtypecertainty);
 	bayes = newbayes;
 	minimumdistance = newminimumdistance;
 	rms = newrms;
@@ -76,8 +77,8 @@ detection::detection(
 		std::string newid, detectionformats::source newsource,
 		detectionformats::hypocenter newhypocenter,
 		std::string newdetectiontype, double newdetectiontime,
-		std::string neweventtype, double newbayes, double newminimumdistance,
-		double newrms, double newgap,
+		detectionformats::eventtype neweventtype, double newbayes,
+		double newminimumdistance, double newrms, double newgap,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
@@ -153,20 +154,22 @@ detection::detection(rapidjson::Value &json) {
 
 	// detectiontime
 	if ((json.HasMember(DETECTIONTIME_KEY) == true)
-			&& (json[DETECTIONTIME_KEY].IsString() == true))
+			&& (json[DETECTIONTIME_KEY].IsString() == true)) {
 		detectiontime = detectionformats::ConvertISO8601ToEpochTime(
 				std::string(json[DETECTIONTIME_KEY].GetString(),
 							json[DETECTIONTIME_KEY].GetStringLength()));
-	else
+	} else {
 		detectiontime = std::numeric_limits<double>::quiet_NaN();
+	}
 
 	// eventtype
 	if ((json.HasMember(EVENTTYPE_KEY) == true)
-			&& (json[EVENTTYPE_KEY].IsString() == true))
-		eventtype = std::string(json[EVENTTYPE_KEY].GetString(),
-								json[EVENTTYPE_KEY].GetStringLength());
-	else
-		eventtype = "";
+			&& (json[EVENTTYPE_KEY].IsObject() == true)) {
+		rapidjson::Value & eventtypevalue = json[EVENTTYPE_KEY];
+		eventtype = detectionformats::eventtype(eventtypevalue);
+	} else {
+		eventtype = detectionformats::eventtype();
+	}
 
 	// bayes
 	if ((json.HasMember(BAYES_KEY) == true)
@@ -317,10 +320,9 @@ rapidjson::Value & detection::tojson(
 	}
 
 	// eventtype
-	if (eventtype != "") {
-		rapidjson::Value eventtypevalue;
-		eventtypevalue.SetString(rapidjson::StringRef(eventtype.c_str()),
-									allocator);
+	if (eventtype.isempty() == false) {
+		rapidjson::Value eventtypevalue(rapidjson::kObjectType);
+		eventtype.tojson(eventtypevalue, allocator);
 		json.AddMember(EVENTTYPE_KEY, eventtypevalue, allocator);
 	}
 
@@ -451,19 +453,19 @@ std::vector<std::string> detection::geterrors() {
 	}
 
 	// eventtype
-	if (eventtype != "") {
-		bool match = false;
-		// check all the valid types to see if this string matches
-		for (int i = detectionformats::eventtypeindex::earthquake;
-				i < detectionformats::eventtypeindex::eventtypecount; i++) {
-			if (eventtype == eventtypevalues[i]) {
-				match = true;
-				break;
-			}
-		}
+	if (eventtype.isempty() == false) {
+		if (eventtype.isvalid() != true) {
+			std::vector<std::string> eventtypeErrors = eventtype.geterrors();
 
-		if (match == false) {
-			errorlist.push_back("Invalid EventType in detection class.");
+			std::string errorString =
+					"EventType object did not validate in detection class:";
+
+			for (int i = 0; i < eventtypeErrors.size(); i++) {
+				errorString += " " + eventtypeErrors[i];
+			}
+
+			// bad eventtype
+			errorlist.push_back(errorString);
 		}
 	}
 

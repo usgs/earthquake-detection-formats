@@ -11,6 +11,7 @@
 #include <hypocenter.h>
 #include <pick.h>
 #include <correlation.h>
+#include <eventtype.h>
 
 #include <string>
 #include <vector>
@@ -66,6 +67,8 @@ class detection : public detectionbase {
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
+	 * \param neweventtypecertainty - A std::string containing the event type 
+	 * 		certainty to use, empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newminimumdistance - A double containing the minimum distance to
@@ -87,7 +90,8 @@ class detection : public detectionbase {
 				double newlongitudeerror, double newtimeerror,
 				double newdeptherror, std::string newdetectiontype,
 				double newdetectiontime, std::string neweventtype,
-				double newbayes, double newminimumdistance, double newrms,
+				std::string neweventtypecertainty, double newbayes,
+				double newminimumdistance, double newrms,
 				double newgap, std::vector<detectionformats::pick> newpickdata,
 				std::vector<detectionformats::correlation> newcorrelationdata);
 
@@ -105,10 +109,10 @@ class detection : public detectionbase {
 	 * \param newdetectiontype - A std::string containing the detection type to
 	 * 		use, empty string to omit
 	 * \param newdetectiontime - A double containing the new time the detection
-	 * was made, i.e. how quickly after origin time, use
-	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param neweventtype - A std::string containing the event type to use,
-	 * 		empty string to omit
+	 * 		was made, i.e. how quickly after origin time, use
+	 * 		std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param neweventtype - A detectionformats::eventtype containing the event
+	 * 		type to use
 	 * \param newbayes - A double containing the bayes to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newminimumdistance - A double containing the minimum distance to
@@ -127,7 +131,7 @@ class detection : public detectionbase {
 	detection(std::string newid, detectionformats::source newsource,
 				detectionformats::hypocenter newhypocenter,
 				std::string newdetectiontype, double newdetectiontime,
-				std::string neweventtype, double newbayes,
+				detectionformats::eventtype neweventtype, double newbayes,
 				double newminimumdistance, double newrms, double newgap,
 				std::vector<detectionformats::pick> newpickdata,
 				std::vector<detectionformats::correlation> newcorrelationdata);
@@ -210,10 +214,10 @@ class detection : public detectionbase {
 	/**
 	 * \brief detection event type
 	 *
-	 * An optional std::string containing the event type of this detection
-	 * valid values are >earthquake> or >blast>
+	 * An optional detectionformats::eventtype containing the event type of this 
+	 * detection
 	 */
-	std::string eventtype;
+	detectionformats::eventtype eventtype;
 
 	/**
 	 * \brief bayes value

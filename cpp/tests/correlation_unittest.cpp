@@ -4,7 +4,7 @@
 #include <string>
 
 // test data
-#define CORRELATIONSTRING "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":\"earthquake\",\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}"
+#define CORRELATIONSTRING "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}" // NOLINT
 #define ID "12GFH48776857"
 #define STATION "BMN"
 #define CHANNEL "HHZ"
@@ -23,7 +23,8 @@
 #define DEPTHERROR 2.44
 #define TIMEERROR 1.984
 #define DEPTH 32.44
-#define EVENTTYPE "earthquake"
+#define EVENTTYPE "Earthquake"
+#define CERTAINTY "Suspected"
 #define MAGNITUDE 2.14
 #define SNR 3.8
 #define ZSCORE 33.67
@@ -131,9 +132,20 @@ void checkdata(detectionformats::correlation correlationobject,
 	ASSERT_EQ(correlationdeptherror, expecteddeptherror);
 
 	// check eventtype
-	std::string correlationeventtype = correlationobject.eventtype;
-	std::string expectedeventtype = std::string(EVENTTYPE);
-	ASSERT_STREQ(correlationeventtype.c_str(), expectedeventtype.c_str());
+	if (correlationobject.eventtype.type.compare("") != true) {
+		std::string detectioneventtype = correlationobject.eventtype.type;
+		std::string expectedeventtype = std::string(EVENTTYPE);
+		ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
+	}
+
+	// check eventtype certainty
+	if (correlationobject.eventtype.certainty.compare("") != true) {
+		std::string detectioneventtypecertainty =
+			correlationobject.eventtype.certainty;
+		std::string expectedeventtypecertainty = std::string(CERTAINTY);
+		ASSERT_STREQ(detectioneventtypecertainty.c_str(),
+			expectedeventtypecertainty.c_str());
+	}
 
 	// check magnitude
 	double correlationmagnitude = correlationobject.magnitude;
@@ -219,7 +231,8 @@ TEST(CorrelationTest, WritesJSON) {
 	correlationobject.hypocenter.longitudeerror = LONGITUDEERROR;
 	correlationobject.hypocenter.timeerror = TIMEERROR;
 	correlationobject.hypocenter.deptherror = DEPTHERROR;
-	correlationobject.eventtype = std::string(EVENTTYPE);
+	correlationobject.eventtype.type = std::string(EVENTTYPE);
+	correlationobject.eventtype.certainty = std::string(CERTAINTY);
 	correlationobject.magnitude = MAGNITUDE;
 	correlationobject.snr = SNR;
 	correlationobject.zscore = ZSCORE;
@@ -275,7 +288,7 @@ TEST(CorrelationTest, Constructor) {
 			detectionformats::ConvertISO8601ToEpochTime(
 					std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
 			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
-			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(CERTAINTY), MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 			std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE,
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
@@ -294,7 +307,7 @@ TEST(CorrelationTest, Constructor) {
 					detectionformats::ConvertISO8601ToEpochTime(
 							std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
-			std::string(EVENTTYPE),
+			detectionformats::eventtype(std::string(EVENTTYPE), std::string(CERTAINTY)),
 			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 			std::string(THRESHOLDTYPE),
 			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
@@ -317,7 +330,7 @@ TEST(CorrelationTest, CopyConstructor) {
 			detectionformats::ConvertISO8601ToEpochTime(
 					std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
 			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
-			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(CERTAINTY), MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 			std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE,
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
 
@@ -359,7 +372,8 @@ TEST(CorrelationTest, Validate) {
 	correlationobject.hypocenter.longitudeerror = LONGITUDEERROR;
 	correlationobject.hypocenter.timeerror = TIMEERROR;
 	correlationobject.hypocenter.deptherror = DEPTHERROR;
-	correlationobject.eventtype = std::string(EVENTTYPE);
+	correlationobject.eventtype.type = std::string(EVENTTYPE);
+	correlationobject.eventtype.certainty = std::string(CERTAINTY);
 	correlationobject.magnitude = MAGNITUDE;
 	correlationobject.snr = SNR;
 	correlationobject.zscore = ZSCORE;

@@ -23,15 +23,10 @@ applications and organizations.
 
 ## Glossary
 
-**Required Values:**
-
-These are the values **required** to define an event type.
-
-* Type - A string containing the type of detection that was found; allowed type strings are: "Earthquake", "MineCollapse", "NuclearExplosion", "QuarryBlast", "InducedOrTriggered", "RockBurst", "FluidInjection", "IceQuake",and "VolcanicEruption"
-
 **Optional Values:**
 
 The following are values that **may or may not** be provided as part of
 event type.
 
+* Type - A string containing the type of detection that was found; allowed type strings are: "Earthquake", "MineCollapse", "NuclearExplosion", "QuarryBlast", "InducedOrTriggered", "RockBurst", "FluidInjection", "IceQuake",and "VolcanicEruption"
 * Certainty - A string containing the certainty of the event type; allowed strings are: "Suspected" and "Confirmed".

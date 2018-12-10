@@ -43,14 +43,38 @@ namespace detectionformats {
  */
 enum eventtypeindex {
 	earthquake = 0,
-	blast = 1,
-	eventtypecount = 2
+	minecollapse = 1,
+	nuclearexplosion = 2,
+	quarryblast = 3,
+	inducedortriggered = 4,
+	rockburst = 5,
+	fluidinjection = 6,
+	icequake = 7,
+	volcaniceruption = 8,
+	eventtypecount = 9
 };
 
 /**
  * \brief detectionformats valid event type values
  */
-static const char *eventtypevalues[] = { "earthquake", "blast", "" };
+static const char *eventtypevalues[] = { "Earthquake", "MineCollapse",
+		"NuclearExplosion", "QuarryBlast", "InducedOrTriggered",
+		"RockBurst", "FluidInjection", "IceQuake", "VolcanicEruption", "" };
+
+/**
+ * \brief detectionformats valid event type certainty index enum
+ */
+enum eventtypecertaintyindex {
+	suspected = 0,
+	confirmed = 1,
+	eventtypecertaintycount = 2
+};
+
+/**
+ * \brief detectionformats valid event type values
+ */
+static const char *eventtypecertaintyvalues[] = { "Suspected", "Confirmed",
+		 "" };
 
 /**
  * \brief detectionformats valid pick polarity index enum

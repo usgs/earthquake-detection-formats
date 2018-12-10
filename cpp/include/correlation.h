@@ -11,6 +11,7 @@
 #include <site.h>
 #include <source.h>
 #include <associated.h>
+#include <eventtype.h>
 
 #include <string>
 #include <vector>
@@ -69,6 +70,8 @@ class correlation : public detectionbase {
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
+	 * \param neweventtypecertainty - A std::string containing the event type 
+	 * 		certainty to use, empty string to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -88,7 +91,8 @@ class correlation : public detectionbase {
 				double neworigintime, double newdepth, double newlatitudeerror,
 				double newlongitudeerror, double newtimeerror,
 				double newdeptherror, std::string neweventtype,
-				double newmagnitude, double newsnr, double newzscore,
+				std::string neweventtypecertainty, double newmagnitude,
+				double newsnr, double newzscore,
 				double newdetectionthreshold, std::string newthresholdtype);
 
 	/**
@@ -121,6 +125,8 @@ class correlation : public detectionbase {
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
+	 * \param neweventtypecertainty - A std::string containing the event type 
+	 * 		certainty to use, empty string to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -150,7 +156,8 @@ class correlation : public detectionbase {
 				double neworigintime, double newdepth, double newlatitudeerror,
 				double newlongitudeerror, double newtimeerror,
 				double newdeptherror, std::string neweventtype,
-				double newmagnitude, double newsnr, double newzscore,
+				std::string neweventtypecertainty, double newmagnitude,
+				double newsnr, double newzscore,
 				double newdetectionthreshold, std::string newthresholdtype,
 				std::string newassociatedphase, double newassociateddistance,
 				double newassociatedazimuth, double newassociatedresidual,
@@ -171,8 +178,8 @@ class correlation : public detectionbase {
 	 * \param newcorrelation - A double containing the correlation value to use
 	 * \param newhypocenter - A detectionformats::hypocenter containing the
 	 * 		hypocenter to use
-	 * \param neweventtype - A std::string containing the event type to use,
-	 * 		empty string to omit
+	 * \param neweventtype - A detectionformats::eventtype containing the event
+	 * 		type to use
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -188,8 +195,8 @@ class correlation : public detectionbase {
 				detectionformats::source newsource, std::string newphase,
 				double newtime, double newcorrelation,
 				detectionformats::hypocenter newhypocenter,
-				std::string neweventtype, double newmagnitude, double newsnr,
-				double newzscore, double newdetectionthreshold,
+				detectionformats::eventtype neweventtype, double newmagnitude,
+				double newsnr, double newzscore, double newdetectionthreshold,
 				std::string newthresholdtype);
 
 	/**
@@ -207,8 +214,8 @@ class correlation : public detectionbase {
 	 * \param newcorrelation - A double containing the correlation value to use
 	 * \param newhypocenter - A etectionformats::hypocenter containing the
 	 * 		hypocenter to use
-	 * \param neweventtype - A std::string containing the event type to use,
-	 * 		empty string to omit
+	 * \param neweventtype - A detectionformats::eventtype containing the event
+	 * 		type to use
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -226,8 +233,8 @@ class correlation : public detectionbase {
 				detectionformats::source newsource, std::string newphase,
 				double newtime, double newcorrelation,
 				detectionformats::hypocenter newhypocenter,
-				std::string neweventtype, double newmagnitude, double newsnr,
-				double newzscore, double newdetectionthreshold,
+				detectionformats::eventtype neweventtype, double newmagnitude,
+				double newsnr, double newzscore, double newdetectionthreshold,
 				std::string newthresholdtype,
 				detectionformats::associated newassociated);
 
@@ -330,12 +337,12 @@ class correlation : public detectionbase {
 	detectionformats::hypocenter hypocenter;
 
 	/**
-	 * \brief correlation event type
+	 * \brief detection event type
 	 *
-	 * An optional std::string containing the event type of this correlation
-	 * message valid values are "earthquake" or "blast"
+	 * An optional detectionformats::eventtype containing the event type of this 
+	 * detection
 	 */
-	std::string eventtype;
+	detectionformats::eventtype eventtype;
 
 	/**
 	 * \brief magnitude value
