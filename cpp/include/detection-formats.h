@@ -12,4 +12,13 @@
 #include <stationInfo.h>
 #include <stationInfoRequest.h>
 
+#include <string>
+
+namespace detectionformats {
+    /**
+     * \brief detectionformats function to validate a provided
+     * json formatted string
+     */
+    bool ValidateJSON(std::string jsonstring);
+}  // namespace detectionformats
 #endif  // DETECTION_H

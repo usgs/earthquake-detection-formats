@@ -1,18 +1,13 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define ASSOCIATEDSTRING "{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}"
-#define PHASE "P"
-#define DISTANCE 0.442559
-#define AZIMUTH 0.418479
-#define RESIDUAL -0.025393
-#define SIGMA 0.086333
+#include "unittest_data.h" // NOLINT
 
-void checkdata(detectionformats::associated associatedobject, std::string testinfo)
-{
+void checkdata(detectionformats::associated associatedobject,
+	std::string testinfo) {
 	// check phase
 	std::string associatedphase = associatedobject.phase;
 	std::string expectedphase = std::string(PHASE);

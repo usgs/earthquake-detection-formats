@@ -7,8 +7,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#define TYPE_KEY "Type"
-
 namespace detectionformats {
 ////////////// functions //////////////
 
@@ -20,22 +18,26 @@ int GetDetectionType(std::string jsonstring) {
 		return (formattypes::unknown);
 	}
 
+	return(GetDetectionType(jsondocument));
+}
+
+int GetDetectionType(rapidjson::Value &json) { // NOLINT
 	// make sure we got valid json
-	if (jsondocument.IsObject() == false) {
+	if (json.IsObject() == false) {
 		return (formattypes::unknown);
 	}
 
 	// Type
-	if (jsondocument.HasMember(TYPE_KEY) == true) {
+	if (json.HasMember(TYPE_KEY) == true) {
 		// check type
-		if (jsondocument[TYPE_KEY].IsString() == false) {
+		if (json[TYPE_KEY].IsString() == false) {
 			return (formattypes::unknown);
 		}
 
 		// get type string
 		std::string typestring = std::string(
-				jsondocument[TYPE_KEY].GetString(),
-				jsondocument[TYPE_KEY].GetStringLength());
+				json[TYPE_KEY].GetString(),
+				json[TYPE_KEY].GetStringLength());
 
 		// return appropriate type
 		if (typestring == PICK_TYPE)

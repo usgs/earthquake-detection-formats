@@ -1,40 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define CORRELATIONSTRING "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}" // NOLINT
-#define ID "12GFH48776857"
-#define STATION "BMN"
-#define CHANNEL "HHZ"
-#define NETWORK "LB"
-#define LOCATION "01"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
-#define TIME "2015-12-28T21:32:24.017Z"
-#define PHASE "P"
-#define CORRELATION 2.65
-#define LATITUDE 40.3344
-#define LONGITUDE -121.44
-#define ORIGINTIME "2015-12-28T21:30:44.039Z"
-#define LATITUDEERROR 12.5
-#define LONGITUDEERROR 22.64
-#define DEPTHERROR 2.44
-#define TIMEERROR 1.984
-#define DEPTH 32.44
-#define EVENTTYPE "Earthquake"
-#define CERTAINTY "Suspected"
-#define MAGNITUDE 2.14
-#define SNR 3.8
-#define ZSCORE 33.67
-#define DETECTIONTHRESHOLD 1.5
-#define THRESHOLDTYPE "minimum"
-#define ASSOCPHASE "P"
-#define ASSOCDISTANCE 0.442559
-#define ASSOCAZIMUTH 0.418479
-#define ASSOCRESIDUAL -0.025393
-#define ASSOCSIGMA 0.086333
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::correlation correlationobject,
 		std::string testinfo) {
@@ -102,7 +72,7 @@ void checkdata(detectionformats::correlation correlationobject,
 	// check origintime
 	double correlationorigintime = correlationobject.hypocenter.time;
 	double expectedorigintime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(ORIGINTIME));
+			std::string(TIME));
 	ASSERT_EQ(correlationorigintime, expectedorigintime);
 
 	// check depth
@@ -175,27 +145,27 @@ void checkdata(detectionformats::correlation correlationobject,
 
 	// check phase
 	std::string associatedphase = correlationobject.associationinfo.phase;
-	std::string expectedassociatedphase = std::string(ASSOCPHASE);
+	std::string expectedassociatedphase = std::string(PHASE);
 	ASSERT_STREQ(associatedphase.c_str(), expectedassociatedphase.c_str());
 
 	// check distance
 	double associateddistance = correlationobject.associationinfo.distance;
-	double expecteddistance = ASSOCDISTANCE;
+	double expecteddistance = DISTANCE;
 	ASSERT_EQ(associateddistance, expecteddistance);
 
 	// check azimuth
 	double associatedazimuth = correlationobject.associationinfo.azimuth;
-	double expectedazimuth = ASSOCAZIMUTH;
+	double expectedazimuth = AZIMUTH;
 	ASSERT_EQ(associatedazimuth, expectedazimuth);
 
 	// check residual
 	double associatedresidual = correlationobject.associationinfo.residual;
-	double expectedresidual = ASSOCRESIDUAL;
+	double expectedresidual = RESIDUAL;
 	ASSERT_EQ(associatedresidual, expectedresidual);
 
 	// check sigma
 	double associatedsigma = correlationobject.associationinfo.sigma;
-	double expectedsigma = ASSOCSIGMA;
+	double expectedsigma = SIGMA;
 	ASSERT_EQ(associatedsigma, expectedsigma);
 }
 
@@ -225,7 +195,7 @@ TEST(CorrelationTest, WritesJSON) {
 	correlationobject.hypocenter.longitude = LONGITUDE;
 	correlationobject.hypocenter.time =
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME));
+					std::string(TIME));
 	correlationobject.hypocenter.depth = DEPTH;
 	correlationobject.hypocenter.latitudeerror = LATITUDEERROR;
 	correlationobject.hypocenter.longitudeerror = LONGITUDEERROR;
@@ -240,11 +210,11 @@ TEST(CorrelationTest, WritesJSON) {
 	correlationobject.thresholdtype = std::string(THRESHOLDTYPE);
 
 	// association subobject
-	correlationobject.associationinfo.phase = std::string(ASSOCPHASE);
-	correlationobject.associationinfo.distance = ASSOCDISTANCE;
-	correlationobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	correlationobject.associationinfo.residual = ASSOCRESIDUAL;
-	correlationobject.associationinfo.sigma = ASSOCSIGMA;
+	correlationobject.associationinfo.phase = std::string(PHASE);
+	correlationobject.associationinfo.distance = DISTANCE;
+	correlationobject.associationinfo.azimuth = AZIMUTH;
+	correlationobject.associationinfo.residual = RESIDUAL;
+	correlationobject.associationinfo.sigma = SIGMA;
 
 	// build json string
 	rapidjson::Document correlationdocument;
@@ -286,11 +256,11 @@ TEST(CorrelationTest, Constructor) {
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			CORRELATION, LATITUDE, LONGITUDE,
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+					std::string(TIME)), DEPTH, LATITUDEERROR,
 			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
 			std::string(CERTAINTY), MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
-			std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			std::string(THRESHOLDTYPE), std::string(PHASE), DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA);
 
 	// check data values
 	checkdata(correlationobject, "Tested Constructor");
@@ -305,13 +275,13 @@ TEST(CorrelationTest, Constructor) {
 			CORRELATION,
 			detectionformats::hypocenter(LATITUDE, LONGITUDE,
 					detectionformats::ConvertISO8601ToEpochTime(
-							std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+							std::string(TIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 			detectionformats::eventtype(std::string(EVENTTYPE), std::string(CERTAINTY)),
 			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 			std::string(THRESHOLDTYPE),
-			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+			detectionformats::associated(std::string(PHASE), DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA));
 
 	// check data values
 	checkdata(correlationobject_altc, "Tested Alternate Constructor");
@@ -328,11 +298,11 @@ TEST(CorrelationTest, CopyConstructor) {
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			CORRELATION, LATITUDE, LONGITUDE,
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+					std::string(TIME)), DEPTH, LATITUDEERROR,
 			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
 			std::string(CERTAINTY), MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
-			std::string(THRESHOLDTYPE), std::string(ASSOCPHASE), ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			std::string(THRESHOLDTYPE), std::string(PHASE), DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA);
 
 	detectionformats::correlation correlationobject(fromcorrelationobject);
 
@@ -366,7 +336,7 @@ TEST(CorrelationTest, Validate) {
 	correlationobject.hypocenter.longitude = LONGITUDE;
 	correlationobject.hypocenter.time =
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME));
+					std::string(TIME));
 	correlationobject.hypocenter.depth = DEPTH;
 	correlationobject.hypocenter.latitudeerror = LATITUDEERROR;
 	correlationobject.hypocenter.longitudeerror = LONGITUDEERROR;
@@ -381,11 +351,11 @@ TEST(CorrelationTest, Validate) {
 	correlationobject.thresholdtype = std::string(THRESHOLDTYPE);
 
 	// association subobject
-	correlationobject.associationinfo.phase = std::string(ASSOCPHASE);
-	correlationobject.associationinfo.distance = ASSOCDISTANCE;
-	correlationobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	correlationobject.associationinfo.residual = ASSOCRESIDUAL;
-	correlationobject.associationinfo.sigma = ASSOCSIGMA;
+	correlationobject.associationinfo.phase = std::string(PHASE);
+	correlationobject.associationinfo.distance = DISTANCE;
+	correlationobject.associationinfo.azimuth = AZIMUTH;
+	correlationobject.associationinfo.residual = RESIDUAL;
+	correlationobject.associationinfo.sigma = SIGMA;
 
 	// successful validation
 	bool result = correlationobject.isvalid();

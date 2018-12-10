@@ -5,7 +5,6 @@
 #include <vector>
 
 // JSON Keys
-#define TYPE_KEY "Type"
 #define ID_KEY "ID"
 #define SOURCE_KEY "Source"
 #define HYPOCENTER_KEY "Hypocenter"

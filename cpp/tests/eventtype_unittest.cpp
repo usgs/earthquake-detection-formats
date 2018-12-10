@@ -4,10 +4,7 @@
 #include <string>
 
 // test data
-#define EVENTTYPESTRING "{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"}"
-#define TYPE "Earthquake"
-#define BADTYPE "chair"
-#define CERTAINTY "Suspected"
+#include "unittest_data.h" // NOLINT
 
 // tests to see if eventtype can successfully
 // write json output
@@ -15,7 +12,7 @@ TEST(EventTypeTest, WritesJSON) {
 	detectionformats::eventtype eventtypeobject;
 
 	// build eventtype object
-	eventtypeobject.type = std::string(TYPE);
+	eventtypeobject.type = std::string(EVENTTYPE);
 	eventtypeobject.certainty = std::string(CERTAINTY);
 
 	// build json string
@@ -31,7 +28,7 @@ TEST(EventTypeTest, WritesJSON) {
 
     // check type
     std::string eventtypetype = eventtypeobject2.type;
-    std::string expectedtype = std::string(TYPE);
+    std::string expectedtype = std::string(EVENTTYPE);
     ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
 
     // check certainty
@@ -47,12 +44,12 @@ TEST(EventTypeTest, ReadsJSON) {
 	rapidjson::Document eventtypedocument;
 	detectionformats::eventtype eventtypeobject(detectionformats::FromJSONString(std::string(EVENTTYPESTRING), eventtypedocument)); // NOLINT
 
-	// check TYPE
+	// check type
 	std::string eventtypetype = eventtypeobject.type;
-	std::string expectedtype = std::string(TYPE);
+	std::string expectedtype = std::string(EVENTTYPE);
 	ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
 
-	// check CERTAINTY
+	// check certainty
 	std::string eventtypecertainty = eventtypeobject.certainty;
 	std::string expectedcertainty = std::string(CERTAINTY);
 	ASSERT_STREQ(eventtypecertainty.c_str(), expectedcertainty.c_str());
@@ -62,14 +59,14 @@ TEST(EventTypeTest, ReadsJSON) {
 // be constructed
 TEST(EventTypeTest, Constructor) {
 	// use constructor
-	detectionformats::eventtype eventtypeobject(TYPE, CERTAINTY);
+	detectionformats::eventtype eventtypeobject(EVENTTYPE, CERTAINTY);
 
-	// check TYPE
+	// check type
 	std::string eventtypetype = eventtypeobject.type;
-	std::string expectedtype = std::string(TYPE);
+	std::string expectedtype = std::string(EVENTTYPE);
 	ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
 
-	// check CERTAINTY
+	// check certainty
 	std::string eventtypecertainty = eventtypeobject.certainty;
 	std::string expectedcertainty = std::string(CERTAINTY);
 	ASSERT_STREQ(eventtypecertainty.c_str(), expectedcertainty.c_str());
@@ -81,7 +78,7 @@ TEST(EventTypeTest, Validate) {
 	detectionformats::eventtype eventtypeobject;
 
 	// build eventtype object
-	eventtypeobject.type = std::string(TYPE);
+	eventtypeobject.type = std::string(EVENTTYPE);
 	eventtypeobject.certainty = std::string(CERTAINTY);
 
 	// successful validation
@@ -92,7 +89,7 @@ TEST(EventTypeTest, Validate) {
 
 	// build bad eventtype object
 	detectionformats::eventtype badeventtypeobject;
-	badeventtypeobject.type = std::string(BADTYPE);
+	badeventtypeobject.type = std::string(BADEVENTTYPE);
 
 	result = false;
 	try {

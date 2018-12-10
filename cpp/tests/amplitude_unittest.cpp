@@ -1,13 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define AMPLITUDESTRING "{\"Amplitude\":1.05,\"Period\":2.65,\"SNR\":3.8}"
-#define AMPLITUDEVALUE 1.05
-#define PERIOD 2.65
-#define SNR 3.8
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::amplitude amplitudeobject, std::string testinfo)
 {

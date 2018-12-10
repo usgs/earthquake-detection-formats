@@ -5,7 +5,6 @@
 #include <vector>
 
 // JSON Keys
-#define TYPE_KEY "Type"
 #define SITE_KEY "Site"
 #define LATITUDE_KEY "Latitude"
 #define LONGITUDE_KEY "Longitude"

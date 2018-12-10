@@ -1,16 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define BEAMSTRING "{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557}"
-#define BACKAZIMUTH 2.65
-#define BACKAZIMUTHERROR 3.8
-#define SLOWNESS 1.44
-#define SLOWNESSERROR 0.4
-#define POWERRATIO 12.18
-#define POWERRATIOERROR 0.557
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::beam beamobject, std::string testinfo) {
 

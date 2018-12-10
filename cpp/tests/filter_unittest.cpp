@@ -1,12 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define FILTERSTRING "{\"HighPass\":1.05,\"LowPass\":2.65}"
-#define HIGHPASS 1.05
-#define LOWPASS 2.65
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::filter filterobject, std::string testinfo)
 {

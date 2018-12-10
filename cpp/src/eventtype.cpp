@@ -5,7 +5,6 @@
 #include <vector>
 
 // JSON Keys
-#define TYPE_KEY "Type"
 #define CERTAINTY_KEY "Certainty"
 
 namespace detectionformats {

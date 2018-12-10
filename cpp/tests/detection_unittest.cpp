@@ -1,31 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define DETECTIONSTRING "{\"Type\":\"Detection\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"DetectionType\":\"New\",\"DetectionTime\":\"2015-12-28T21:32:28.017Z\",\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},\"Bayes\":2.65,\"MinimumDistance\":2.14,\"RMS\":3.8,\"Gap\":33.67,\"Data\":[{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}},{\"Type\":\"Correlation\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Phase\":\"P\",\"Time\":\"2015-12-28T21:32:24.017Z\",\"Correlation\":2.65,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44,\"OriginTime\":\"2015-12-28T21:30:44.039Z\",\"EventType\":\"earthquake\",\"Magnitude\":2.14,\"SNR\":3.8,\"ZScore\":33.67,\"DetectionThreshold\":1.5,\"ThresholdType\":\"minimum\",\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}]}" // NOLINT
-#define ID "12GFH48776857"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
-#define LATITUDE 40.3344
-#define LONGITUDE -121.44
-#define ORIGINTIME "2015-12-28T21:32:24.017Z"
-#define DEPTH 32.44
-#define LATITUDEERROR 12.5
-#define LONGITUDEERROR 22.64
-#define DEPTHERROR 2.44
-#define TIMEERROR 1.984
-#define DETECTIONTYPE "New"
-#define DETECTIONTIME "2015-12-28T21:32:28.017Z"
-#define EVENTTYPE "Earthquake"
-#define CERTAINTY "Suspected"
-#define BAYES 2.65
-#define MINIMUMDISTANCE 2.14
-#define RMS 3.8
-#define GAP 33.67
-#define PICKDATA "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65},{\"HighPass\":2.10,\"LowPass\":3.58}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557}}" // NOLINT
-#define CORRELATIONDATA "{\"ZScore\":33.67,\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,\"Type\":\"Correlation\",\"Correlation\":2.65,\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},\"DetectionThreshold\":1.5,\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Hypocenter\":{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:30:44.039Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44},\"SNR\":3.8,\"ID\":\"12GFH48776857\",\"ThresholdType\":\"minimum\",\"Phase\":\"P\"}" // NOLINT
+#include "unittest_data.h" // NOLINT
 
 std::vector<detectionformats::pick> buildpickdata() {
 	std::vector<detectionformats::pick> newpickdata;
@@ -33,7 +12,7 @@ std::vector<detectionformats::pick> buildpickdata() {
 	// pick ?need one more?
 	rapidjson::Document pickdocument;
 	detectionformats::pick pickobject(
-			detectionformats::FromJSONString(std::string(PICKDATA),
+			detectionformats::FromJSONString(std::string(PICKSTRING),
 					pickdocument));
 	newpickdata.push_back(pickobject);
 
@@ -46,7 +25,7 @@ std::vector<detectionformats::correlation> buildcorrleationdata() {
 	// correlation ?need one more?
 	rapidjson::Document correlationdocument;
 	detectionformats::correlation correlationobject(
-			detectionformats::FromJSONString(std::string(CORRELATIONDATA),
+			detectionformats::FromJSONString(std::string(CORRELATIONSTRING),
 					correlationdocument));
 	newcorrelationdata.push_back(correlationobject);
 
@@ -83,7 +62,7 @@ void checkdata(detectionformats::detection detectionobject,
 	// check detectiontime
 	double time = detectionobject.hypocenter.time;
 	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(ORIGINTIME));
+			std::string(TIME));
 	ASSERT_NEAR(time, expectedtime, 0.0001);
 
 	// check depth
@@ -194,7 +173,7 @@ TEST(DetectionTest, WritesJSON) {
 	detectionobject.hypocenter.longitude = LONGITUDE;
 	detectionobject.hypocenter.time =
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME));
+					std::string(TIME));
 	detectionobject.hypocenter.depth = DEPTH;
 	detectionobject.hypocenter.latitudeerror = LATITUDEERROR;
 	detectionobject.hypocenter.longitudeerror = LONGITUDEERROR;
@@ -251,7 +230,7 @@ TEST(DetectionTest, Constructor) {
 	detectionformats::detection detectionobject(std::string(ID),
 			std::string(AGENCYID), std::string(AUTHOR), LATITUDE, LONGITUDE,
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME)),
+					std::string(TIME)),
 			DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR,
 			std::string(DETECTIONTYPE),
 			detectionformats::ConvertISO8601ToEpochTime(
@@ -268,7 +247,7 @@ TEST(DetectionTest, Constructor) {
 					std::string(AUTHOR)),
 			detectionformats::hypocenter(LATITUDE, LONGITUDE,
 					detectionformats::ConvertISO8601ToEpochTime(
-							std::string(ORIGINTIME)), DEPTH, LATITUDEERROR,
+							std::string(TIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 			std::string(DETECTIONTYPE),
 			detectionformats::ConvertISO8601ToEpochTime(
@@ -288,7 +267,7 @@ TEST(DetectionTest, CopyConstructor) {
 	detectionformats::detection fromdetectionobject(std::string(ID),
 			std::string(AGENCYID), std::string(AUTHOR), LATITUDE, LONGITUDE,
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME)),
+					std::string(TIME)),
 			DEPTH, LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR,
 			std::string(DETECTIONTYPE),
 			detectionformats::ConvertISO8601ToEpochTime(
@@ -319,7 +298,7 @@ TEST(DetectionTest, Validate) {
 	detectionobject.hypocenter.longitude = LONGITUDE;
 	detectionobject.hypocenter.time =
 			detectionformats::ConvertISO8601ToEpochTime(
-					std::string(ORIGINTIME));
+					std::string(TIME));
 	detectionobject.hypocenter.depth = DEPTH;
 	detectionobject.hypocenter.latitudeerror = LATITUDEERROR;
 	detectionobject.hypocenter.longitudeerror = LONGITUDEERROR;

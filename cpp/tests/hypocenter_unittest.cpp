@@ -1,16 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
-#define HYPOSTRING "{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44}"
-#define LATITUDE 40.3344
-#define LONGITUDE -121.44
-#define TIME "2015-12-28T21:32:24.017Z"
-#define DEPTH 32.44
-#define LATITUDEERROR 12.5
-#define LONGITUDEERROR 22.64
-#define DEPTHERROR 2.44
-#define TIMEERROR 1.984
+
+// test data
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::hypocenter hypoobject, std::string testinfo) {
 	// check latitude

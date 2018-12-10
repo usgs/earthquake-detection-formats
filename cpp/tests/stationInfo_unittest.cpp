@@ -1,23 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define STATIONSTRING "{\"Site\":{\"Station\":\"BOZ\",\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\",\"Elevation\":1589.0,\"UseForTeleseismic\":true,\"Latitude\":45.59697,\"Longitude\":-111.62967,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}"
-
-#define STATION "BOZ"
-#define CHANNEL "BHZ"
-#define NETWORK "US"
-#define LOCATION "00"
-#define LATITUDE 45.596970
-#define LONGITUDE -111.629670
-#define ELEVATION 1589.000000
-#define QUALITY 1.0
-#define ENABLE true
-#define USEFORTELESEISM true
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::stationInfo stationobject,
 		std::string testinfo) {

@@ -25,6 +25,7 @@
 #define STATIONINFOEXTENSION "jsonsta"
 #define STATIONINFOREQUESTEXTENSION "jsonstareq"
 
+#define TYPE_KEY "Type"
 #define DETECTION_TYPE "Detection"
 #define CORRELATION_TYPE "Correlation"
 #define PICK_TYPE "Pick"
@@ -159,6 +160,12 @@ enum formattypes {
  * json formatted string
  */
 int GetDetectionType(std::string jsonstring);
+
+/**
+ * \brief detectionformats function to get the detection type for a provided
+ * json value object
+ */
+int GetDetectionType(rapidjson::Value &json); // NOLINT
 
 /**
  * \brief detectionformats function to validate that a string contains just

@@ -1,42 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define PICKSTRING "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65},{\"HighPass\":2.10,\"LowPass\":3.58}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-#define PICKSTRINGNOFILTER "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-
-#define ID "12GFH48776857"
-#define STATION "BMN"
-#define CHANNEL "HHZ"
-#define NETWORK "LB"
-#define LOCATION "01"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
-#define TIME "2015-12-28T21:32:24.017Z"
-#define PHASE "P"
-#define POLARITY "up"
-#define ONSET "questionable"
-#define PICKER "manual"
-#define HIGHPASS 1.05
-#define LOWPASS 2.65
-#define HIGHPASS2 2.10
-#define LOWPASS2 3.58
-#define AMPLITUDEVALUE 21.5
-#define PERIOD 2.65
-#define SNR 3.8
-#define BACKAZIMUTH 2.65
-#define BACKAZIMUTHERROR 3.8
-#define SLOWNESS 1.44
-#define SLOWNESSERROR 0.4
-#define POWERRATIO 12.18
-#define POWERRATIOERROR 0.557
-#define ASSOCPHASE "P"
-#define ASSOCDISTANCE 0.442559
-#define ASSOCAZIMUTH 0.418479
-#define ASSOCRESIDUAL -0.025393
-#define ASSOCSIGMA 0.086333
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	// check id
@@ -209,34 +177,34 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 		// check phase
 		if (pickobject.associationinfo.phase.compare("") != true) {
 			std::string associatedphase = pickobject.associationinfo.phase;
-			std::string expectedassociatedphase = std::string(ASSOCPHASE);
+			std::string expectedassociatedphase = std::string(PHASE);
 			ASSERT_STREQ(associatedphase.c_str(), expectedassociatedphase.c_str())<< testinfo.c_str();
 		}
 		// check distance
 		if (std::isnan(pickobject.associationinfo.distance) != true) {
 			double associateddistance = pickobject.associationinfo.distance;
-			double expecteddistance = ASSOCDISTANCE;
+			double expecteddistance = DISTANCE;
 			ASSERT_EQ(associateddistance, expecteddistance)<< testinfo.c_str();
 		}
 
 		// check azimuth
 		if (std::isnan(pickobject.associationinfo.azimuth) != true) {
 			double associatedazimuth = pickobject.associationinfo.azimuth;
-			double expectedazimuth = ASSOCAZIMUTH;
+			double expectedazimuth = AZIMUTH;
 			ASSERT_EQ(associatedazimuth, expectedazimuth)<< testinfo.c_str();
 		}
 
 		// check residual
 		if (std::isnan(pickobject.associationinfo.residual) != true) {
 			double associatedresidual = pickobject.associationinfo.residual;
-			double expectedresidual = ASSOCRESIDUAL;
+			double expectedresidual = RESIDUAL;
 			ASSERT_EQ(associatedresidual, expectedresidual)<< testinfo.c_str();
 		}
 
 		// check sigma
 		if (std::isnan(pickobject.associationinfo.sigma) != true) {
 			double associatedsigma = pickobject.associationinfo.sigma;
-			double expectedsigma = ASSOCSIGMA;
+			double expectedsigma = SIGMA;
 			ASSERT_EQ(associatedsigma, expectedsigma)<< testinfo.c_str();
 		}
 	}
@@ -292,11 +260,11 @@ TEST(PickTest, WritesJSON) {
 	pickobject.beam.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
-	pickobject.associationinfo.phase = std::string(ASSOCPHASE);
-	pickobject.associationinfo.distance = ASSOCDISTANCE;
-	pickobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	pickobject.associationinfo.residual = ASSOCRESIDUAL;
-	pickobject.associationinfo.sigma = ASSOCSIGMA;
+	pickobject.associationinfo.phase = std::string(PHASE);
+	pickobject.associationinfo.distance = DISTANCE;
+	pickobject.associationinfo.azimuth = AZIMUTH;
+	pickobject.associationinfo.residual = RESIDUAL;
+	pickobject.associationinfo.sigma = SIGMA;
 
 	// build json string
 	rapidjson::Document pickdocument;
@@ -351,11 +319,11 @@ TEST(PickTest, WritesJSONNoFilter) {
 	pickobject.beam.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
-	pickobject.associationinfo.phase = std::string(ASSOCPHASE);
-	pickobject.associationinfo.distance = ASSOCDISTANCE;
-	pickobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	pickobject.associationinfo.residual = ASSOCRESIDUAL;
-	pickobject.associationinfo.sigma = ASSOCSIGMA;
+	pickobject.associationinfo.phase = std::string(PHASE);
+	pickobject.associationinfo.distance = DISTANCE;
+	pickobject.associationinfo.azimuth = AZIMUTH;
+	pickobject.associationinfo.residual = RESIDUAL;
+	pickobject.associationinfo.sigma = SIGMA;
 
 	// build json string
 	rapidjson::Document pickdocument;
@@ -408,9 +376,9 @@ TEST(PickTest, Constructor) {
 			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
 			HIGHPASS, LOWPASS, AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
 			BACKAZIMUTHERROR, SLOWNESS,
-			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR, std::string(ASSOCPHASE),
-			ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR, std::string(PHASE),
+			DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA);
 
 	// check data values
 	checkdata(pickobject, "Tested Constructor");
@@ -430,8 +398,8 @@ TEST(PickTest, Constructor) {
 			detectionformats::amplitude(AMPLITUDEVALUE, PERIOD, SNR),
 			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
 			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
-			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+			detectionformats::associated(std::string(PHASE), DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA));
 
 	// check data values
 	checkdata(pickobject_altc, "Tested alternate constructor");
@@ -448,9 +416,9 @@ TEST(PickTest, CopyConstructor) {
 			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
 			HIGHPASS, LOWPASS, AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
 			BACKAZIMUTHERROR, SLOWNESS,
-			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR, std::string(ASSOCPHASE),
-			ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR, std::string(PHASE),
+			DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA);
 
 	detectionformats::pick pickobject(frompickobject);
 
@@ -503,11 +471,11 @@ TEST(PickTest, Validate) {
 	pickobject.beam.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
-	pickobject.associationinfo.phase = std::string(ASSOCPHASE);
-	pickobject.associationinfo.distance = ASSOCDISTANCE;
-	pickobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	pickobject.associationinfo.residual = ASSOCRESIDUAL;
-	pickobject.associationinfo.sigma = ASSOCSIGMA;
+	pickobject.associationinfo.phase = std::string(PHASE);
+	pickobject.associationinfo.distance = DISTANCE;
+	pickobject.associationinfo.azimuth = AZIMUTH;
+	pickobject.associationinfo.residual = RESIDUAL;
+	pickobject.associationinfo.sigma = SIGMA;
 
 	// successful validation
 	bool result = pickobject.isvalid();

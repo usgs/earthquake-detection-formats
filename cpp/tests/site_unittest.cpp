@@ -1,14 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define SITESTRING "{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"}"
-#define STATION "BMN"
-#define CHANNEL "HHZ"
-#define NETWORK "LB"
-#define LOCATION "01"
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::site siteobject, std::string testinfo) {
 	// check station

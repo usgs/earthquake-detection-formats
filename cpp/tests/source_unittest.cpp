@@ -1,12 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define SOURCESTRING "{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
+#include "unittest_data.h" // NOLINT
 
 // tests to see if source can successfully
 // write json output
