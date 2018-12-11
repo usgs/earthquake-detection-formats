@@ -16,18 +16,28 @@ applications and organizations.
 
 ```json
     {
-       "Phase"                : String,
-       "PhaseProbability"     : Number,
-       "Distance"             : Number,
-       "DistanceProbability"  : Number,
-       "Azimuth"              : Number,
-       "AzimuthProbability"   : Number,
-       "Magnitude"            : Number,
-       "MagnitudeType"        : String,
-       "MagnitudeProbability" : Number,
-       "Depth"                : Number,
-       "DepthProbability"     : Number,
-       "ClassifyingAlgorithm" : String
+        "Phase"                : String,
+        "PhaseProbability"     : Number,
+        "Distance"             : Number,
+        "DistanceProbability"  : Number,
+        "Azimuth"              : Number,
+        "AzimuthProbability"   : Number,
+        "Magnitude"            : Number,
+        "MagnitudeType"        : String,
+        "MagnitudeProbability" : Number,
+        "Depth"                : Number,
+        "DepthProbability"     : Number,
+        "EventType" :
+        {
+            "Type"      : String,
+            "Certainty" : String
+        },
+        "EventTypeProbability" : Number,
+        "Source" :
+        {
+            "AgencyID" : String,
+            "Author"   : String
+        }
     }
 ```
 
@@ -48,4 +58,6 @@ The following are values that **may or may not** be provided as part of classifi
 * MagnitudeProbability - A decimal number containing the probability of the magnitude estimation
 * Depth - A decimal number containing a depth estimation in kilometers
 * DepthProbability - A decimal number containing the probability of the depth estimation
-* ClassifyingAlgorithm - A string containing the name of the classification algorithm
+* EventType - An object containing the event type, see [EventType](EventType.md).
+* EventTypeProbability - A decimal number containing the probability of the event type estimation
+* Source - An object containing the source of the classification, see [Source](Source.md).

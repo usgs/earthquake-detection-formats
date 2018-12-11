@@ -38,7 +38,7 @@ applications.
       {
           "Type"      : String,
           "Certainty" : String
-      }
+      },
       "Bayes"           : Number,
       "MinimumDistance" : Number,
       "RMS"             : Number,
