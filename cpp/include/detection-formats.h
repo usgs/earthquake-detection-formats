@@ -19,6 +19,12 @@ namespace detectionformats {
      * \brief detectionformats function to validate a provided
      * json formatted string
      */
-    bool ValidateJSON(std::string jsonstring);
+    bool ValidateJSON(const std::string & jsonstring);
+
+     /**
+     * \brief detectionformats function to print out validation errors from a 
+     * provided json formatted string
+     */
+    std::string ValidateJSONErrors(const std::string & jsonstring);
 }  // namespace detectionformats
 #endif  // DETECTION_H
