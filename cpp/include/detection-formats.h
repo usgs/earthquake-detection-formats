@@ -11,6 +11,7 @@
 #include <base.h>
 #include <stationInfo.h>
 #include <stationInfoRequest.h>
+#include <classification.h>
 
 #include <string>
 

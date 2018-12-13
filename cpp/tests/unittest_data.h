@@ -102,3 +102,13 @@
 
 // stationinforequest
 #define REQUESTSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Type\":\"StationInfoRequest\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
+
+// classification
+#define CLASSIFICATIONSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Type\":\"StationInfoRequest\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
+#define PHASEPROBABILITY 0.22
+#define DISTANCEPROBABILITY 22.5
+#define AZIMUTHPROBABILITY 0.16
+#define MAGNITUDETYPE "Mb"
+#define MAGNITUDEPROBABILITY 0.55
+#define DEPTHPROBABILITY 11.2
+#define EVENTTYPEPROBABILITY 1.1
