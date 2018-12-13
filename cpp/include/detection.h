@@ -190,8 +190,8 @@ class detection : public detectionbase {
 	/**
 	 * \brief detection source
 	 *
-	 * A required detectionformats::site containing the site for this detection
-	 * message
+	 * A required detectionformats::source containing the source for this 
+	 * detection message
 	 */
 	detectionformats::source source;
 

@@ -27,7 +27,7 @@ class associated : public detectionbase {
 	 * \brief associated constructor
 	 *
 	 * The constructor for the associated class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	associated();
 
@@ -35,7 +35,7 @@ class associated : public detectionbase {
 	 * \brief associated advanced constructor
 	 *
 	 * The advanced constructor for the associated class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newphase - A std::string containing the phase name to use, empty
 	 * string to omit
