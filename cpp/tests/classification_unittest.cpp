@@ -102,8 +102,7 @@ void checkdata(detectionformats::classification classificationobject,
 
 // tests to see if classification can successfully
 // write json output
-TEST(ClassificationTest, WritesJSON)
-{
+TEST(ClassificationTest, WritesJSON) {
 	detectionformats::classification classificationobject;
 
 	// build classification object
@@ -129,6 +128,8 @@ TEST(ClassificationTest, WritesJSON)
 	std::string classificationjson = detectionformats::ToJSONString(
             classificationobject.tojson(classificationdocument,
             classificationdocument.GetAllocator()));
+
+    printf("%s\n", classificationjson.c_str());
 
     // read it back in
     rapidjson::Document classificationdocument2;

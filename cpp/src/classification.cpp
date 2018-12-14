@@ -220,7 +220,7 @@ classification::classification(const classification & newclassification) {
 	azimuth = newclassification.azimuth;
     azimuthprobability = newclassification.azimuthprobability;
 	magnitude = newclassification.magnitude;
-    magnitudetype = newclassification.magnitude;
+    magnitudetype = newclassification.magnitudetype;
     magnitudeprobability = newclassification.magnitudeprobability;
 	depth = newclassification.depth;
     depthprobability = newclassification.depthprobability;
