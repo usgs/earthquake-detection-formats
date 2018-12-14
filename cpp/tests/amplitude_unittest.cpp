@@ -6,7 +6,8 @@
 // test data
 #include "unittest_data.h" // NOLINT
 
-void checkdata(detectionformats::amplitude amplitudeobject, std::string testinfo)
+void checkdata(detectionformats::amplitude amplitudeobject,
+	std::string testinfo)
 {
 	// check period
 	double amplitudeperiod = amplitudeobject.period;
@@ -37,24 +38,27 @@ TEST(AmplitudeTest, WritesJSON)
 
 	// build json string
 	rapidjson::Document amplitudedocument;
-	std::string amplitudejson = detectionformats::ToJSONString(amplitudeobject.tojson(amplitudedocument, amplitudedocument.GetAllocator()));
-    
+	std::string amplitudejson = detectionformats::ToJSONString(
+		amplitudeobject.tojson(amplitudedocument,
+		amplitudedocument.GetAllocator()));
+
     // read it back in
     rapidjson::Document amplitudedocument2;
-    detectionformats::amplitude amplitudeobject2(detectionformats::FromJSONString(amplitudejson, amplitudedocument2));
-    
+    detectionformats::amplitude amplitudeobject2(
+		detectionformats::FromJSONString(amplitudejson, amplitudedocument2));
+
     // check data values
     checkdata(amplitudeobject2, "");
 }
 
 // tests to see if amplitude can successfully
 // read json output
-TEST(AmplitudeTest, ReadsJSON)
-{
-	
+TEST(AmplitudeTest, ReadsJSON) {
 	// build amplitude object
 	rapidjson::Document amplitudedocument;
-	detectionformats::amplitude amplitudeobject(detectionformats::FromJSONString(std::string(AMPLITUDESTRING), amplitudedocument));
+	detectionformats::amplitude amplitudeobject(
+			detectionformats::FromJSONString(std::string(AMPLITUDESTRING),
+			amplitudedocument));
 
 	// check data values
 	checkdata(amplitudeobject, "");
@@ -62,8 +66,7 @@ TEST(AmplitudeTest, ReadsJSON)
 
 // tests to see if amplitude can successfully
 // be constructed
-TEST(AmplitudeTest, Constructor)
-{
+TEST(AmplitudeTest, Constructor) {
 	// use constructor
 	detectionformats::amplitude amplitudeobject(AMPLITUDEVALUE, PERIOD, SNR);
 
@@ -71,11 +74,9 @@ TEST(AmplitudeTest, Constructor)
 	checkdata(amplitudeobject, "");
 }
 
-
 // tests to see if amplitude can successfully
 // validate
-TEST(AmplitudeTest, Validate)
-{
+TEST(AmplitudeTest, Validate) {
 	detectionformats::amplitude amplitudeobject;
 
 	// build amplitude object
@@ -90,4 +91,18 @@ TEST(AmplitudeTest, Validate)
 	ASSERT_EQ(result, true) << "Tested for successful validation.";
 
 	// Can't think of a way to make a bad amplitude object
+}
+
+// tests the isempty function
+TEST(AmplitudeTest, IsEmpty) {
+	detectionformats::amplitude amplitudeobject;
+
+	// check return
+	ASSERT_TRUE(amplitudeobject.isempty()) << "Tested for empty.";
+
+	// build amplitude object
+	amplitudeobject.ampvalue = AMPLITUDEVALUE;
+
+	// check return
+	ASSERT_FALSE(amplitudeobject.isempty()) << "Tested for not empty.";
 }

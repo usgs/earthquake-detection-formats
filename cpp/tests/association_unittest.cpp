@@ -36,7 +36,7 @@ void checkdata(detectionformats::association associationobject,
 
 // tests to see if association can successfully
 // write json output
-TEST(AssociatedTest, WritesJSON) {
+TEST(AssociationTest, WritesJSON) {
 	detectionformats::association associationobject;
 
 	// build association object
@@ -64,7 +64,7 @@ TEST(AssociatedTest, WritesJSON) {
 
 // tests to see if association can successfully
 // read json output
-TEST(AssociatedTest, ReadsJSON) {
+TEST(AssociationTest, ReadsJSON) {
 	// build association object
 	rapidjson::Document associationdocument;
 	detectionformats::association associationobject(
@@ -77,7 +77,7 @@ TEST(AssociatedTest, ReadsJSON) {
 
 // tests to see if association can successfully
 // be constructed
-TEST(AssociatedTest, Constructor) {
+TEST(AssociationTest, Constructor) {
 	// use constructor
 	detectionformats::association associationobject(std::string(PHASE), DISTANCE,
 		AZIMUTH, RESIDUAL, SIGMA);
@@ -88,7 +88,7 @@ TEST(AssociatedTest, Constructor) {
 
 // tests to see if association can successfully
 // validate
-TEST(AssociatedTest, Validate) {
+TEST(AssociationTest, Validate) {
 	detectionformats::association associationobject;
 
 	// build association object
@@ -118,4 +118,18 @@ TEST(AssociatedTest, Validate) {
 
 	// check return code
 	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
+}
+
+// tests the isempty function
+TEST(AssociationTest, IsEmpty) {
+	detectionformats::association associationobject;
+
+	// check return
+	ASSERT_TRUE(associationobject.isempty()) << "Tested for empty.";
+
+	// build association object
+	associationobject.phase = std::string(PHASE);
+
+	// check return
+	ASSERT_FALSE(associationobject.isempty()) << "Tested for not empty.";
 }

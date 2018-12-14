@@ -99,7 +99,7 @@ class correlation : public detectionbase {
 	 * \brief correlation advanced constructor
 	 *
 	 * The advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newstation - A std::string containing the station to use
@@ -167,7 +167,7 @@ class correlation : public detectionbase {
 	 * \brief correlation alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsite - A detectionformats::site containing the site to use
@@ -203,7 +203,7 @@ class correlation : public detectionbase {
 	 * \brief correlation alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsite - A detectionformats::site containing the site to use

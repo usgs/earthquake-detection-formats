@@ -20,19 +20,9 @@ class detectionbase {
 	 * \brief detectionbase constructor
 	 *
 	 * The constructor for the detectionbase class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	detectionbase();
-
-	/**
-	 * \brief detectionbase constructor
-	 *
-	 * The constructor for the detectionbase class.
-	 * Initilizes members to provided values.
-	 *
-	 * \param newtype - A std::string containing the type to use
-	 */
-	explicit detectionbase(std::string newtype);
 
 	/**
 	 * \brief site destructor

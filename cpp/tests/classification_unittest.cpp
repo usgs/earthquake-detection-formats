@@ -129,8 +129,6 @@ TEST(ClassificationTest, WritesJSON) {
             classificationobject.tojson(classificationdocument,
             classificationdocument.GetAllocator()));
 
-    printf("%s\n", classificationjson.c_str());
-
     // read it back in
     rapidjson::Document classificationdocument2;
     detectionformats::classification classificationobject2(
@@ -223,4 +221,18 @@ TEST(ClassificationTest, Validate) {
 
 	// check return code
 	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
+}
+
+// tests the isempty function
+TEST(ClassificationTest, IsEmpty) {
+	detectionformats::classification classificationobject;
+
+	// check return
+	ASSERT_TRUE(classificationobject.isempty()) << "Tested for empty.";
+
+	// build filter object
+	classificationobject.phase = std::string(PHASE);
+
+	// check return
+	ASSERT_FALSE(classificationobject.isempty()) << "Tested for not empty.";
 }

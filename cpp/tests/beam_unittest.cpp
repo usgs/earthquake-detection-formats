@@ -141,3 +141,17 @@ TEST(BeamTest, Validate) {
 	// check return code
 	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
 }
+
+// tests the isempty function
+TEST(BeamTest, IsEmpty) {
+	detectionformats::beam beamobject;
+
+	// check return
+	ASSERT_TRUE(beamobject.isempty()) << "Tested for empty.";
+
+	// build beam object
+	beamobject.backazimuth = BACKAZIMUTH;
+
+	// check return
+	ASSERT_FALSE(beamobject.isempty()) << "Tested for not empty.";
+}

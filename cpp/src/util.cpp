@@ -69,7 +69,7 @@ bool IsStringISO8601(const std::string &s) {
 	// 012345678901234567890123
 	// YYYY-MM-DDTHH:MM:SS.SSSZ
 
-	// length
+	// length checks
 	if (s.length() != 24) {
 		return (false);
 	}
@@ -159,9 +159,8 @@ bool IsStringISO8601(const std::string &s) {
 					std::string("Formatting error validating ISO8601 time."));
 			return (false);
 		}
-	} catch (const std::exception &) {
-		throw std::invalid_argument(
-				std::string("Formatting error validating ISO8601 time."));
+	} catch (const std::exception &e) {
+		printf("Formatting error validating ISO8601 time: %s\n", e.what());
 		return (false);
 	}
 
@@ -174,18 +173,8 @@ bool IsStringISO8601(const std::string &s) {
 char envTZ[MAXENV];
 double ConvertISO8601ToEpochTime(std::string TimeString) {
 	// make sure we got something
-	if (TimeString.length() == 0) {
-		return (-1.0);
-	}
-
-	// time string is too short
-	if (TimeString.length() < 24) {
-		return (-1.0);
-	}
-
-	// time string is too long
-	if (TimeString.length() > 24) {
-		return (-1.0);
+	if (IsStringISO8601(TimeString) == false) {
+		return(-1.0);
 	}
 
 	struct tm timeinfo;

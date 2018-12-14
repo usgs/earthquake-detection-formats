@@ -143,30 +143,33 @@ void checkdata(detectionformats::correlation correlationobject,
 	ASSERT_STREQ(correlationthresholdtype.c_str(),
 			expectedthresholdtype.c_str());
 
-	// check phase
-	std::string associationphase = correlationobject.associationinfo.phase;
-	std::string expectedassociationphase = std::string(PHASE);
-	ASSERT_STREQ(associationphase.c_str(), expectedassociationphase.c_str());
+	// associationinfo
+	if (correlationobject.associationinfo.isempty() == false) {
+		// check phase
+		std::string associationphase = correlationobject.associationinfo.phase;
+		std::string expectedassociationphase = std::string(PHASE);
+		ASSERT_STREQ(associationphase.c_str(), expectedassociationphase.c_str());
 
-	// check distance
-	double associationdistance = correlationobject.associationinfo.distance;
-	double expecteddistance = DISTANCE;
-	ASSERT_EQ(associationdistance, expecteddistance);
+		// check distance
+		double associationdistance = correlationobject.associationinfo.distance;
+		double expecteddistance = DISTANCE;
+		ASSERT_EQ(associationdistance, expecteddistance);
 
-	// check azimuth
-	double associationazimuth = correlationobject.associationinfo.azimuth;
-	double expectedazimuth = AZIMUTH;
-	ASSERT_EQ(associationazimuth, expectedazimuth);
+		// check azimuth
+		double associationazimuth = correlationobject.associationinfo.azimuth;
+		double expectedazimuth = AZIMUTH;
+		ASSERT_EQ(associationazimuth, expectedazimuth);
 
-	// check residual
-	double associationresidual = correlationobject.associationinfo.residual;
-	double expectedresidual = RESIDUAL;
-	ASSERT_EQ(associationresidual, expectedresidual);
+		// check residual
+		double associationresidual = correlationobject.associationinfo.residual;
+		double expectedresidual = RESIDUAL;
+		ASSERT_EQ(associationresidual, expectedresidual);
 
-	// check sigma
-	double associationsigma = correlationobject.associationinfo.sigma;
-	double expectedsigma = SIGMA;
-	ASSERT_EQ(associationsigma, expectedsigma);
+		// check sigma
+		double associationsigma = correlationobject.associationinfo.sigma;
+		double expectedsigma = SIGMA;
+		ASSERT_EQ(associationsigma, expectedsigma);
+	}
 }
 
 // tests to see if correlation can successfully
@@ -259,32 +262,69 @@ TEST(CorrelationTest, Constructor) {
 					std::string(TIME)), DEPTH, LATITUDEERROR,
 			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
 			std::string(CERTAINTY), MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
-			std::string(THRESHOLDTYPE), std::string(PHASE), DISTANCE,
-			AZIMUTH, RESIDUAL, SIGMA);
+			std::string(THRESHOLDTYPE));
 
 	// check data values
 	checkdata(correlationobject, "Tested Constructor");
 
-	detectionformats::correlation correlationobject_altc(std::string(ID),
+	// use constructor
+	detectionformats::correlation correlationobject_altc1(std::string(ID),
+			std::string(STATION), std::string(CHANNEL),
+			std::string(NETWORK), std::string(LOCATION), std::string(AGENCYID),
+			std::string(AUTHOR), std::string(PHASE),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			CORRELATION, LATITUDE, LONGITUDE,
+			detectionformats::ConvertISO8601ToEpochTime(
+					std::string(TIME)), DEPTH, LATITUDEERROR,
+			LONGITUDEERROR, TIMEERROR, DEPTHERROR, std::string(EVENTTYPE),
+			std::string(CERTAINTY), MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(THRESHOLDTYPE), std::string(PHASE), DISTANCE,
+			AZIMUTH, RESIDUAL, SIGMA);
+
+	// check data values
+	checkdata(correlationobject_altc1, "Tested Alternate Constructor 1");
+
+	detectionformats::correlation correlationobject_altc2(std::string(ID),
 			detectionformats::site(std::string(STATION),
 					std::string(CHANNEL), std::string(NETWORK),
 					std::string(LOCATION)),
 			detectionformats::source(std::string(AGENCYID),
 					std::string(AUTHOR)), std::string(PHASE),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
-			CORRELATION,
+					CORRELATION,
 			detectionformats::hypocenter(LATITUDE, LONGITUDE,
 					detectionformats::ConvertISO8601ToEpochTime(
-							std::string(TIME)), DEPTH, LATITUDEERROR,
+					std::string(TIME)), DEPTH, LATITUDEERROR,
 					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
-			detectionformats::eventtype(std::string(EVENTTYPE), std::string(CERTAINTY)),
+			detectionformats::eventtype(std::string(EVENTTYPE),
+					std::string(CERTAINTY)),
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
+			std::string(THRESHOLDTYPE));
+
+	// check data values
+	checkdata(correlationobject_altc2, "Tested Alternate Constructor 2");
+
+	detectionformats::correlation correlationobject_altc3(std::string(ID),
+			detectionformats::site(std::string(STATION),
+					std::string(CHANNEL), std::string(NETWORK),
+					std::string(LOCATION)),
+			detectionformats::source(std::string(AGENCYID),
+					std::string(AUTHOR)), std::string(PHASE),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+					CORRELATION,
+			detectionformats::hypocenter(LATITUDE, LONGITUDE,
+					detectionformats::ConvertISO8601ToEpochTime(
+					std::string(TIME)), DEPTH, LATITUDEERROR,
+					LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+			detectionformats::eventtype(std::string(EVENTTYPE),
+					std::string(CERTAINTY)),
 			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 			std::string(THRESHOLDTYPE),
 			detectionformats::association(std::string(PHASE), DISTANCE,
 			AZIMUTH, RESIDUAL, SIGMA));
 
 	// check data values
-	checkdata(correlationobject_altc, "Tested Alternate Constructor");
+	checkdata(correlationobject_altc3, "Tested Alternate Constructor 3");
 }
 
 // tests to see if correlation can successfully

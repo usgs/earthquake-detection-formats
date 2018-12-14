@@ -7,10 +7,6 @@ detectionbase::detectionbase() {
 	type = "";
 }
 
-detectionbase::detectionbase(std::string newtype) {
-	type = newtype;
-}
-
 detectionbase::~detectionbase() {
 }
 

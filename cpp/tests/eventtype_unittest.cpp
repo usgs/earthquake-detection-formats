@@ -103,3 +103,17 @@ TEST(EventTypeTest, Validate) {
 	// check return code
 	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
 }
+
+// tests the isempty function
+TEST(EventTypeTest, IsEmpty) {
+	detectionformats::eventtype eventtypeobject;
+
+	// check return
+	ASSERT_TRUE(eventtypeobject.isempty()) << "Tested for empty.";
+
+	// build event type object
+	eventtypeobject.type = std::string(EVENTTYPE);
+
+	// check return
+	ASSERT_FALSE(eventtypeobject.isempty()) << "Tested for not empty.";
+}

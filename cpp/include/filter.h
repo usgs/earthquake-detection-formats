@@ -35,12 +35,19 @@ class filter : public detectionbase {
 	 * \brief filter advanced constructor
 	 *
 	 * The advanced constructor for the filter class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
-	 * \param newhighpass - A double containing the high pass to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlowpass - A double containing the low pass to use, std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newtype - A std::string containing the filter type, empty string
+	 * to omit, if not defined, type is assumed to be bandpass
+	 * \param newhighpass - A double containing the high pass to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newlowpass - A double containing the low pass to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newunits - A std::string containing the filter units, empty string
+	 * to omit, if not defined, units is assumed to be hertz
 	 */
-	filter(double newhighpass, double newlowpass);
+	filter(std::string newtype, double newhighpass, double newlowpass,
+		std::string newunits);
 
 	/**
 	 * \brief filter advanced constructor
@@ -71,7 +78,8 @@ class filter : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \param jsondocument - a reference to the json document to fill in with the class contents.
+	 * \param jsondocument - a reference to the json document to fill in with 
+	 * the class contents.
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
@@ -108,6 +116,14 @@ class filter : public detectionbase {
 	 * An optional double containing the filter lowpass
 	 */
 	double lowpass;
+
+	/**
+	 * \brief filter units
+	 *
+	 * An optional std::string containing the filter units, if not specified, it
+	 * is assumed to be "Hertz"
+	 */
+	std::string units;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_FILTER_H
