@@ -12,7 +12,8 @@
 #include <amplitude.h>
 #include <filter.h>
 #include <beam.h>
-#include <associated.h>
+#include <association.h>
+#include <classification.h>
 
 #include <string>
 #include <vector>
@@ -23,7 +24,7 @@ namespace detectionformats {
  * \brief detectionformats pick conversion class
  *
  * The detectionformats pick class is a conversion class used to create, parse,
- * and validate the unassociated pick data format pick.  The pick format uses
+ * and validate the unassociation pick data format pick.  The pick format uses
  * the JSON standard (www.json.org)
  *
  * pick is intended for use in seismic data messaging between seismic
@@ -83,15 +84,15 @@ class pick : public detectionbase {
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newpowerratioerror - A double containing the powerratio error to
 	 * use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedphase - A std:string containing the associated
+	 * \param newassociationphase - A std:string containing the association
 	 * phase to use, empty string to omit
-	 * \param newassociateddistance - A double containing the associated
+	 * \param newassociationdistance - A double containing the association
 	 * distance to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedazimuth - A double containing the associated
+	 * \param newassociationazimuth - A double containing the association
 	 * azimuth to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedresidual - A double containing the associated
+	 * \param newassociationresidual - A double containing the association
 	 * residual to use, -10000 to omit
-	 * \param newassociatedsigma - A double containing the associated sigma
+	 * \param newassociationsigma - A double containing the association sigma
 	 * to use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	pick(std::string newid, std::string newstation, std::string newchannel,
@@ -102,9 +103,9 @@ class pick : public detectionbase {
 			double newamplitude, double newperiod, double newsnr,
 			double newbackazimuth, double newbackazimutherror,
 			double newslowness, double newslownesserror, double newpowerratio,
-			double newpowerratioerror, std::string newassociatedphase,
-			double newassociateddistance, double newassociatedazimuth,
-			double newassociatedresidual, double newassociatedsigma);
+			double newpowerratioerror, std::string newassociationphase,
+			double newassociationdistance, double newassociationazimuth,
+			double newassociationresidual, double newassociationsigma);
 
 	/**
 	 * \brief pick advanced constructor
@@ -216,8 +217,8 @@ class pick : public detectionbase {
 	 * \param newamplitude - A detectionformats::amplitude containing the the
 	 * amplitude to use
 	 * \param newbeam - A detectionformats::beam containing the beam to use
-	 * \param newassociated - A detectionformats::associated containing the
-	 * associated to use
+	 * \param newassociation - A detectionformats::association containing the
+	 * association to use
 	 */
 	pick(std::string newid, detectionformats::site newsite, double newtime,
 			detectionformats::source newsource, std::string newphase,
@@ -226,7 +227,7 @@ class pick : public detectionbase {
 			std::vector<detectionformats::filter> newfilterdata,
 			detectionformats::amplitude newamplitude,
 			detectionformats::beam newbeam,
-			detectionformats::associated newassociated);
+			detectionformats::association newassociation);
 
 	/**
 	 * \brief pick advanced constructor
@@ -360,12 +361,20 @@ class pick : public detectionbase {
 	detectionformats::beam beam;
 
 	/**
-	 * \brief pick associated
+	 * \brief pick association info
 	 *
-	 * Optional detectionformats::associated containing the associated
+	 * Optional detectionformats::association containing the association
 	 * information for this pick message
 	 */
-	detectionformats::associated associationinfo;
+	detectionformats::association associationinfo;
+
+	/**
+	 * \brief pick classificationinfo
+	 *
+	 * Optional detectionformats::classification containing the classification
+	 * information for this pick message
+	 */
+	detectionformats::classification classificationinfo;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_PICK_H

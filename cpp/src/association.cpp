@@ -1,4 +1,4 @@
-#include <associated.h>
+#include <association.h>
 
 #include <string>
 #include <limits>
@@ -12,7 +12,7 @@
 #define SIGMA_KEY "Sigma"
 
 namespace detectionformats {
-associated::associated() {
+association::association() {
 	phase = "";
 	distance = std::numeric_limits<double>::quiet_NaN();
 	azimuth = std::numeric_limits<double>::quiet_NaN();
@@ -20,7 +20,7 @@ associated::associated() {
 	sigma = std::numeric_limits<double>::quiet_NaN();
 }
 
-associated::associated(std::string newphase, double newdistance,
+association::association(std::string newphase, double newdistance,
 						double newazimuth, double newresidual,
 						double newsigma) {
 	phase = newphase;
@@ -30,7 +30,7 @@ associated::associated(std::string newphase, double newdistance,
 	sigma = newsigma;
 }
 
-associated::associated(rapidjson::Value &json) {
+association::association(rapidjson::Value &json) {
 	// optional values
 	// phase
 	if ((json.HasMember(PHASE_KEY) == true)
@@ -73,18 +73,18 @@ associated::associated(rapidjson::Value &json) {
 		sigma = std::numeric_limits<double>::quiet_NaN();
 }
 
-associated::associated(const associated & newassociated) {
-	phase = newassociated.phase;
-	distance = newassociated.distance;
-	azimuth = newassociated.azimuth;
-	residual = newassociated.residual;
-	sigma = newassociated.sigma;
+association::association(const association & newassociation) {
+	phase = newassociation.phase;
+	distance = newassociation.distance;
+	azimuth = newassociation.azimuth;
+	residual = newassociation.residual;
+	sigma = newassociation.sigma;
 }
 
-associated::~associated() {
+association::~association() {
 }
 
-rapidjson::Value & associated::tojson(
+rapidjson::Value & association::tojson(
 		rapidjson::Value &json,
 		rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) {
 	json.SetObject();
@@ -116,20 +116,20 @@ rapidjson::Value & associated::tojson(
 	return (json);
 }
 
-std::vector<std::string> associated::geterrors() {
+std::vector<std::string> association::geterrors() {
 	std::vector<std::string> errorlist;
 
 	// optional keys
 	// phase
 	if ((phase != "") && (detectionformats::IsStringAlpha(phase) == false)) {
-		errorlist.push_back("Phase did not validate in associated object.");
+		errorlist.push_back("Phase did not validate in association object.");
 	}
 
 	// return the list of errors
 	return (errorlist);
 }
 
-bool associated::isempty() {
+bool association::isempty() {
 	if (phase != "")
 		return (false);
 	if (std::isnan(distance) != true)

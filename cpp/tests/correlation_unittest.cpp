@@ -144,29 +144,29 @@ void checkdata(detectionformats::correlation correlationobject,
 			expectedthresholdtype.c_str());
 
 	// check phase
-	std::string associatedphase = correlationobject.associationinfo.phase;
-	std::string expectedassociatedphase = std::string(PHASE);
-	ASSERT_STREQ(associatedphase.c_str(), expectedassociatedphase.c_str());
+	std::string associationphase = correlationobject.associationinfo.phase;
+	std::string expectedassociationphase = std::string(PHASE);
+	ASSERT_STREQ(associationphase.c_str(), expectedassociationphase.c_str());
 
 	// check distance
-	double associateddistance = correlationobject.associationinfo.distance;
+	double associationdistance = correlationobject.associationinfo.distance;
 	double expecteddistance = DISTANCE;
-	ASSERT_EQ(associateddistance, expecteddistance);
+	ASSERT_EQ(associationdistance, expecteddistance);
 
 	// check azimuth
-	double associatedazimuth = correlationobject.associationinfo.azimuth;
+	double associationazimuth = correlationobject.associationinfo.azimuth;
 	double expectedazimuth = AZIMUTH;
-	ASSERT_EQ(associatedazimuth, expectedazimuth);
+	ASSERT_EQ(associationazimuth, expectedazimuth);
 
 	// check residual
-	double associatedresidual = correlationobject.associationinfo.residual;
+	double associationresidual = correlationobject.associationinfo.residual;
 	double expectedresidual = RESIDUAL;
-	ASSERT_EQ(associatedresidual, expectedresidual);
+	ASSERT_EQ(associationresidual, expectedresidual);
 
 	// check sigma
-	double associatedsigma = correlationobject.associationinfo.sigma;
+	double associationsigma = correlationobject.associationinfo.sigma;
 	double expectedsigma = SIGMA;
-	ASSERT_EQ(associatedsigma, expectedsigma);
+	ASSERT_EQ(associationsigma, expectedsigma);
 }
 
 // tests to see if correlation can successfully
@@ -235,7 +235,7 @@ TEST(CorrelationTest, WritesJSON) {
 // tests to see if correlation can successfully
 // read json output
 TEST(CorrelationTest, ReadsJSON) {
-	// build associated object
+	// build association object
 	rapidjson::Document correlationdocument;
 	detectionformats::correlation correlationobject(
 			detectionformats::FromJSONString(std::string(CORRELATIONSTRING),
@@ -280,7 +280,7 @@ TEST(CorrelationTest, Constructor) {
 			detectionformats::eventtype(std::string(EVENTTYPE), std::string(CERTAINTY)),
 			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
 			std::string(THRESHOLDTYPE),
-			detectionformats::associated(std::string(PHASE), DISTANCE,
+			detectionformats::association(std::string(PHASE), DISTANCE,
 			AZIMUTH, RESIDUAL, SIGMA));
 
 	// check data values

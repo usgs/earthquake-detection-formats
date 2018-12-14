@@ -176,36 +176,36 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 
 		// check phase
 		if (pickobject.associationinfo.phase.compare("") != true) {
-			std::string associatedphase = pickobject.associationinfo.phase;
-			std::string expectedassociatedphase = std::string(PHASE);
-			ASSERT_STREQ(associatedphase.c_str(), expectedassociatedphase.c_str())<< testinfo.c_str();
+			std::string associationphase = pickobject.associationinfo.phase;
+			std::string expectedassociationphase = std::string(PHASE);
+			ASSERT_STREQ(associationphase.c_str(), expectedassociationphase.c_str())<< testinfo.c_str();
 		}
 		// check distance
 		if (std::isnan(pickobject.associationinfo.distance) != true) {
-			double associateddistance = pickobject.associationinfo.distance;
+			double associationdistance = pickobject.associationinfo.distance;
 			double expecteddistance = DISTANCE;
-			ASSERT_EQ(associateddistance, expecteddistance)<< testinfo.c_str();
+			ASSERT_EQ(associationdistance, expecteddistance)<< testinfo.c_str();
 		}
 
 		// check azimuth
 		if (std::isnan(pickobject.associationinfo.azimuth) != true) {
-			double associatedazimuth = pickobject.associationinfo.azimuth;
+			double associationazimuth = pickobject.associationinfo.azimuth;
 			double expectedazimuth = AZIMUTH;
-			ASSERT_EQ(associatedazimuth, expectedazimuth)<< testinfo.c_str();
+			ASSERT_EQ(associationazimuth, expectedazimuth)<< testinfo.c_str();
 		}
 
 		// check residual
 		if (std::isnan(pickobject.associationinfo.residual) != true) {
-			double associatedresidual = pickobject.associationinfo.residual;
+			double associationresidual = pickobject.associationinfo.residual;
 			double expectedresidual = RESIDUAL;
-			ASSERT_EQ(associatedresidual, expectedresidual)<< testinfo.c_str();
+			ASSERT_EQ(associationresidual, expectedresidual)<< testinfo.c_str();
 		}
 
 		// check sigma
 		if (std::isnan(pickobject.associationinfo.sigma) != true) {
-			double associatedsigma = pickobject.associationinfo.sigma;
+			double associationsigma = pickobject.associationinfo.sigma;
 			double expectedsigma = SIGMA;
-			ASSERT_EQ(associatedsigma, expectedsigma)<< testinfo.c_str();
+			ASSERT_EQ(associationsigma, expectedsigma)<< testinfo.c_str();
 		}
 	}
 }
@@ -398,7 +398,7 @@ TEST(PickTest, Constructor) {
 			detectionformats::amplitude(AMPLITUDEVALUE, PERIOD, SNR),
 			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
 			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
-			detectionformats::associated(std::string(PHASE), DISTANCE,
+			detectionformats::association(std::string(PHASE), DISTANCE,
 			AZIMUTH, RESIDUAL, SIGMA));
 
 	// check data values

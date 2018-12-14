@@ -15,26 +15,26 @@
 
 namespace detectionformats {
 /**
- * \brief detectionformats associated conversion class
+ * \brief detectionformats association conversion class
  *
- * The detectionformats associated class is a conversion class used to create,
- * parse, and validate associated data as part of detectionformats data.
+ * The detectionformats association class is a conversion class used to create,
+ * parse, and validate association data as part of detectionformats data.
  *
  */
-class associated : public detectionbase {
+class association : public detectionbase {
  public:
 	/**
-	 * \brief associated constructor
+	 * \brief association constructor
 	 *
-	 * The constructor for the associated class.
+	 * The constructor for the association class.
 	 * Initializes members to null values.
 	 */
-	associated();
+	association();
 
 	/**
-	 * \brief associated advanced constructor
+	 * \brief association advanced constructor
 	 *
-	 * The advanced constructor for the associated class.
+	 * The advanced constructor for the association class.
 	 * Initializes members to provided values.
 	 *
 	 * \param newphase - A std::string containing the phase name to use, empty
@@ -48,33 +48,33 @@ class associated : public detectionbase {
 	 * \param newsigma - A double containing the sigma to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 */
-	associated(std::string newphase, double newdistance, double newazimuth,
+	association(std::string newphase, double newdistance, double newazimuth,
 				double newresidual, double newsigma);
 
 	/**
-	 * \brief associated advanced constructor
+	 * \brief association advanced constructor
 	 *
-	 * The advanced constructor for the associated class.
+	 * The advanced constructor for the association class.
 	 * Converts the provided object from a json::Object, populating members
 	 * \param jsondocument - A json document.
 	 */
-	explicit associated(rapidjson::Value &json); // NOLINT
+	explicit association(rapidjson::Value &json); // NOLINT
 
 	/**
-	 * \brief associated copy constructor
+	 * \brief association copy constructor
 	 *
-	 * The copy constructor for the associated class.
-	 * Copies the provided object from a associated, populating members
-	 * \param newassociated - A associated.
+	 * The copy constructor for the association class.
+	 * Copies the provided object from a association, populating members
+	 * \param newassociation - A association.
 	 */
-	associated(const associated & newassociated);
+	association(const association & newassociation);
 
 	/**
-	 * \brief associated destructor
+	 * \brief association destructor
 	 *
-	 * The destructor for the associated class.
+	 * The destructor for the association class.
 	 */
-	~associated();
+	~association();
 
 	/**
 	 * \brief Convert to json object function
@@ -106,37 +106,37 @@ class associated : public detectionbase {
 	bool isempty();
 
 	/**
-	 * \brief associated phase name
+	 * \brief association phase name
 	 *
-	 * An optional std::string containing associated phase name.
+	 * An optional std::string containing association phase name.
 	 */
 	std::string phase;
 
 	/**
-	 * \brief associated distance
+	 * \brief association distance
 	 *
-	 * An optional double containing the associated distance
+	 * An optional double containing the association distance
 	 */
 	double distance;
 
 	/**
-	 * \brief associated azimuth
+	 * \brief association azimuth
 	 *
-	 * An optional double containing the associated azimuth
+	 * An optional double containing the association azimuth
 	 */
 	double azimuth;
 
 	/**
-	 * \brief associated residual
+	 * \brief association residual
 	 *
-	 * An optional double containing the associated residual
+	 * An optional double containing the association residual
 	 */
 	double residual;
 
 	/**
-	 * \brief associated sigma
+	 * \brief association sigma
 	 *
-	 * An optional double containing the associated sigma
+	 * An optional double containing the association sigma
 	 */
 	double sigma;
 };

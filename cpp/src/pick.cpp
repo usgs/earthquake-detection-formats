@@ -32,7 +32,7 @@ pick::pick() {
 	filterdata.clear();
 	amplitude = detectionformats::amplitude();
 	beam = detectionformats::beam();
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
 }
 
 pick::pick(std::string newid, std::string newstation, std::string newchannel,
@@ -43,9 +43,9 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 			double newamplitude, double newperiod, double newsnr,
 			double newbackazimuth, double newbackazimutherror,
 			double newslowness, double newslownesserror, double newpowerratio,
-			double newpowerratioerror, std::string newassociatedphase,
-			double newassociateddistance, double newassociatedazimuth,
-			double newassociatedresidual, double newassociatedsigma) {
+			double newpowerratioerror, std::string newassociationphase,
+			double newassociationdistance, double newassociationazimuth,
+			double newassociationresidual, double newassociationsigma) {
 	type = PICK_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
@@ -66,11 +66,11 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 									newslowness, newslownesserror,
 									newpowerratio, newpowerratioerror);
 
-	associationinfo = detectionformats::associated(newassociatedphase,
-													newassociateddistance,
-													newassociatedazimuth,
-													newassociatedresidual,
-													newassociatedsigma);
+	associationinfo = detectionformats::association(newassociationphase,
+													newassociationdistance,
+													newassociationazimuth,
+													newassociationresidual,
+													newassociationsigma);
 }
 
 pick::pick(std::string newid, std::string newstation, std::string newchannel,
@@ -102,7 +102,7 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 									newslowness, newslownesserror,
 									newpowerratio, newpowerratioerror);
 
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
 }
 
 pick::pick(std::string newid, detectionformats::site newsite, double newtime,
@@ -131,7 +131,7 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 
 	pick::beam = newbeam;
 
-	pick::associationinfo = detectionformats::associated();
+	pick::associationinfo = detectionformats::association();
 }
 
 pick::pick(std::string newid, detectionformats::site newsite, double newtime,
@@ -141,7 +141,7 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 			std::vector<detectionformats::filter> newfilterdata,
 			detectionformats::amplitude newamplitude,
 			detectionformats::beam newbeam,
-			detectionformats::associated newassociated) {
+			detectionformats::association newassociation) {
 	type = PICK_TYPE;
 	id = newid;
 	site = newsite;
@@ -161,7 +161,7 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 
 	pick::beam = newbeam;
 
-	associationinfo = newassociated;
+	associationinfo = newassociation;
 }
 
 pick::pick(rapidjson::Value &json) {
@@ -283,13 +283,13 @@ pick::pick(rapidjson::Value &json) {
 		beam = detectionformats::beam();
 	}
 
-	// associated
+	// association
 	if ((json.HasMember(ASSOCIATIONINFO_KEY) == true)
 			&& (json[ASSOCIATIONINFO_KEY].IsObject() == true)) {
-		rapidjson::Value & associatedvalue = json[ASSOCIATIONINFO_KEY];
-		associationinfo = detectionformats::associated(associatedvalue);
+		rapidjson::Value & associationvalue = json[ASSOCIATIONINFO_KEY];
+		associationinfo = detectionformats::association(associationvalue);
 	} else {
-		associationinfo = detectionformats::associated();
+		associationinfo = detectionformats::association();
 	}
 }
 
@@ -417,11 +417,11 @@ rapidjson::Value & pick::tojson(
 		json.AddMember(BEAM_KEY, beamvalue, allocator);
 	}
 
-	// associated
+	// association
 	if (associationinfo.isempty() == false) {
-		rapidjson::Value associatedvalue(rapidjson::kObjectType);
-		associationinfo.tojson(associatedvalue, allocator);
-		json.AddMember(ASSOCIATIONINFO_KEY, associatedvalue, allocator);
+		rapidjson::Value associationvalue(rapidjson::kObjectType);
+		associationinfo.tojson(associationvalue, allocator);
+		json.AddMember(ASSOCIATIONINFO_KEY, associationvalue, allocator);
 	}
 
 	return (json);
@@ -599,7 +599,7 @@ std::vector<std::string> pick::geterrors() {
 		}
 	}
 
-	// associated
+	// association
 	if (associationinfo.isempty() == false) {
 		if (associationinfo.isvalid() != true) {
 			std::vector<std::string> assocErrors = associationinfo.geterrors();
@@ -611,7 +611,7 @@ std::vector<std::string> pick::geterrors() {
 				errorString += " " + assocErrors[i];
 			}
 
-			// bad associated
+			// bad association
 			errorlist.push_back(errorString);
 		}
 	}

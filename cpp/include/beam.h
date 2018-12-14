@@ -33,7 +33,7 @@ class beam : public detectionbase {
 	 * \brief beam constructor
 	 *
 	 * The constructor for the beam class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	beam();
 

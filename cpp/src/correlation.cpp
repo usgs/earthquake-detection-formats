@@ -36,7 +36,7 @@ correlation::correlation() {
 	zscore = std::numeric_limits<double>::quiet_NaN();
 	detectionthreshold = std::numeric_limits<double>::quiet_NaN();
 	thresholdtype = "";
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
 }
 
 correlation::correlation(std::string newid, std::string newstation,
@@ -73,7 +73,7 @@ correlation::correlation(std::string newid, std::string newstation,
 	zscore = newzscore;
 	detectionthreshold = newdetectionthreshold;
 	thresholdtype = newthresholdtype;
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
 }
 
 correlation::correlation(std::string newid, std::string newstation,
@@ -91,11 +91,11 @@ correlation::correlation(std::string newid, std::string newstation,
 							double newsnr, double newzscore,
 							double newdetectionthreshold,
 							std::string newthresholdtype,
-							std::string newassociatedphase,
-							double newassociateddistance,
-							double newassociatedazimuth,
-							double newassociatedresidual,
-							double newassociatedsigma) {
+							std::string newassociationphase,
+							double newassociationdistance,
+							double newassociationazimuth,
+							double newassociationresidual,
+							double newassociationsigma) {
 	type = CORRELATION_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
@@ -115,11 +115,11 @@ correlation::correlation(std::string newid, std::string newstation,
 	zscore = newzscore;
 	detectionthreshold = newdetectionthreshold;
 	thresholdtype = newthresholdtype;
-	associationinfo = detectionformats::associated(newassociatedphase,
-													newassociateddistance,
-													newassociatedazimuth,
-													newassociatedresidual,
-													newassociatedsigma);
+	associationinfo = detectionformats::association(newassociationphase,
+													newassociationdistance,
+													newassociationazimuth,
+													newassociationresidual,
+													newassociationsigma);
 }
 
 correlation::correlation(std::string newid, detectionformats::site newsite,
@@ -145,7 +145,7 @@ correlation::correlation(std::string newid, detectionformats::site newsite,
 	zscore = newzscore;
 	detectionthreshold = newdetectionthreshold;
 	thresholdtype = newthresholdtype;
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
 }
 
 correlation::correlation(std::string newid, detectionformats::site newsite,
@@ -157,7 +157,7 @@ correlation::correlation(std::string newid, detectionformats::site newsite,
 							double newmagnitude, double newsnr, double newzscore,
 							double newdetectionthreshold,
 							std::string newthresholdtype,
-							detectionformats::associated newassociated) {
+							detectionformats::association newassociation) {
 	type = CORRELATION_TYPE;
 	id = newid;
 	site = newsite;
@@ -172,7 +172,7 @@ correlation::correlation(std::string newid, detectionformats::site newsite,
 	zscore = newzscore;
 	detectionthreshold = newdetectionthreshold;
 	thresholdtype = newthresholdtype;
-	associationinfo = newassociated;
+	associationinfo = newassociation;
 }
 
 correlation::correlation(rapidjson::Value &json) {
@@ -301,13 +301,13 @@ correlation::correlation(rapidjson::Value &json) {
 		thresholdtype = "";
 	}
 
-	// associated
+	// association
 	if ((json.HasMember(ASSOCIATIONINFO_KEY) == true)
 			&& (json[ASSOCIATIONINFO_KEY].IsObject() == true)) {
-		rapidjson::Value & associatedvalue = json[ASSOCIATIONINFO_KEY];
-		associationinfo = detectionformats::associated(associatedvalue);
+		rapidjson::Value & associationvalue = json[ASSOCIATIONINFO_KEY];
+		associationinfo = detectionformats::association(associationvalue);
 	} else {
-		associationinfo = detectionformats::associated();
+		associationinfo = detectionformats::association();
 	}
 }
 
@@ -418,11 +418,11 @@ rapidjson::Value & correlation::tojson(
 		json.AddMember(THRESHOLDTYPE_KEY, thresholdtypevalue, allocator);
 	}
 
-	// associated
+	// association
 	if (associationinfo.isempty() == false) {
-		rapidjson::Value associatedvalue(rapidjson::kObjectType);
-		associationinfo.tojson(associatedvalue, allocator);
-		json.AddMember(ASSOCIATIONINFO_KEY, associatedvalue, allocator);
+		rapidjson::Value associationvalue(rapidjson::kObjectType);
+		associationinfo.tojson(associationvalue, allocator);
+		json.AddMember(ASSOCIATIONINFO_KEY, associationvalue, allocator);
 	}
 
 	return (json);
@@ -532,7 +532,7 @@ std::vector<std::string> correlation::geterrors() {
 		}
 	}
 
-	// associated
+	// association
 	if (associationinfo.isempty() == false) {
 		if (associationinfo.isvalid() != true) {
 			// site not found

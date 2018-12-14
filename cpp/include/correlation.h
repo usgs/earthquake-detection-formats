@@ -10,7 +10,7 @@
 #include <hypocenter.h>
 #include <site.h>
 #include <source.h>
-#include <associated.h>
+#include <association.h>
 #include <eventtype.h>
 
 #include <string>
@@ -36,7 +36,7 @@ class correlation : public detectionbase {
 	 * \brief correlation constructor
 	 *
 	 * The constructor for the correlation class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	correlation();
 
@@ -44,7 +44,7 @@ class correlation : public detectionbase {
 	 * \brief correlation advanced constructor
 	 *
 	 * The advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newstation - A std::string containing the station to use
@@ -137,15 +137,15 @@ class correlation : public detectionbase {
 	 * 		threshold to use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newthresholdtype - A std::string containing the threshold type to
 	 * 		use, empty string to omit
-	 * \param newassociatedphase - A std:string containing the associated phase
+	 * \param newassociationphase - A std:string containing the association phase
 	 * 		to use, empty string to omit
-	 * \param newassociateddistance - A double containing the associated
+	 * \param newassociationdistance - A double containing the association
 	 * 		distance to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedazimuth - A double containing the associated azimuth
+	 * \param newassociationazimuth - A double containing the association azimuth
 	 * 		to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedresidual - A double containing the associated
+	 * \param newassociationresidual - A double containing the association
 	 * 		residual to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedsigma - A double containing the associated sigma to
+	 * \param newassociationsigma - A double containing the association sigma to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	correlation(std::string newid, std::string newstation,
@@ -159,9 +159,9 @@ class correlation : public detectionbase {
 				std::string neweventtypecertainty, double newmagnitude,
 				double newsnr, double newzscore,
 				double newdetectionthreshold, std::string newthresholdtype,
-				std::string newassociatedphase, double newassociateddistance,
-				double newassociatedazimuth, double newassociatedresidual,
-				double newassociatedsigma);
+				std::string newassociationphase, double newassociationdistance,
+				double newassociationazimuth, double newassociationresidual,
+				double newassociationsigma);
 
 	/**
 	 * \brief correlation alternate advanced constructor
@@ -226,8 +226,8 @@ class correlation : public detectionbase {
 	 * 		threshold to use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newthresholdtype - A std::string containing the threshold type to
 	 * 		use, empty string to omit
-	 * \param newassociated - A detectionformats::associated containing the
-	 * 		associated to use
+	 * \param newassociation - A detectionformats::association containing the
+	 * 		association to use
 	 */
 	correlation(std::string newid, detectionformats::site newsite,
 				detectionformats::source newsource, std::string newphase,
@@ -236,7 +236,7 @@ class correlation : public detectionbase {
 				detectionformats::eventtype neweventtype, double newmagnitude,
 				double newsnr, double newzscore, double newdetectionthreshold,
 				std::string newthresholdtype,
-				detectionformats::associated newassociated);
+				detectionformats::association newassociation);
 
 	/**
 	 * \brief correlation advanced constructor
@@ -382,12 +382,12 @@ class correlation : public detectionbase {
 	std::string thresholdtype;
 
 	/**
-	 * \brief correlation associated
+	 * \brief correlation association
 	 *
-	 * Optional detectionformats::associated containing the associated
+	 * Optional detectionformats::association containing the association
 	 * information for this correlation message
 	 */
-	detectionformats::associated associationinfo;
+	detectionformats::association associationinfo;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_CORRELATION_H
