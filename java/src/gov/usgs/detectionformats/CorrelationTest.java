@@ -135,7 +135,7 @@ public class CorrelationTest {
 				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
 						LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 				EVENTTYPE, MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
-				THRESHOLDTYPE, new Associated(ASSOCPHASE, ASSOCDISTANCE,
+				THRESHOLDTYPE, new Association(ASSOCPHASE, ASSOCDISTANCE,
 						ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
 
 		// check data values
@@ -275,23 +275,23 @@ public class CorrelationTest {
 
 		if ((correlationObject.getAssociationInfo() != null)
 				&& (!correlationObject.getAssociationInfo().isEmpty())) {
-			// check correlationObject.Associated.Phase
+			// check correlationObject.Association.Phase
 			assertEquals(TestName + " Phase Equals", ASSOCPHASE,
 					correlationObject.getAssociationInfo().getPhase());
 
-			// check correlationObject.Associated.Distance
+			// check correlationObject.Association.Distance
 			assertEquals(TestName + " Distance Equals", ASSOCDISTANCE,
 					correlationObject.getAssociationInfo().getDistance(), 0);
 
-			// check correlationObject.Associated.Azimuth
+			// check correlationObject.Association.Azimuth
 			assertEquals(TestName + " Azimuth Equals", ASSOCAZIMUTH,
 					correlationObject.getAssociationInfo().getAzimuth(), 0);
 
-			// check correlationObject.Associated.Residual
+			// check correlationObject.Association.Residual
 			assertEquals(TestName + " Residual Equals", ASSOCRESIDUAL,
 					correlationObject.getAssociationInfo().getResidual(), 0);
 
-			// check correlationObject.Associated.Sigma
+			// check correlationObject.Association.Sigma
 			assertEquals(TestName + " Sigma Equals", ASSOCSIGMA,
 					correlationObject.getAssociationInfo().getSigma(), 0);
 		}

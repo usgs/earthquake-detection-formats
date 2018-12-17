@@ -89,6 +89,7 @@ std::vector<std::string> amplitude::geterrors() {
 		}
 	}
 
+	// SNR
 	if (std::isnan(snr) != true) {
 		// Limit SNR to between 0 and 10 digits after the decimal point
 		if ((snr < 0) || (snr > 9999999999.999)) {

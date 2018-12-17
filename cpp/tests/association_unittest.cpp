@@ -138,6 +138,8 @@ TEST(AssociationTest, Validate) {
 	// build bad site object
 	detectionformats::association badassociationobject;
 	badassociationobject.phase = "22";
+	badassociationobject.distance = -99.0;
+	badassociationobject.azimuth = -99.0;
 
 	result = false;
 	try {

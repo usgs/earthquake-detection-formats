@@ -10,7 +10,7 @@ import org.json.simple.*;
  *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
-public class Associated implements DetectionInt {
+public class Association implements DetectionInt {
 
 	/**
 	 * JSON Keys
@@ -47,11 +47,10 @@ public class Associated implements DetectionInt {
 	private final Double sigma;
 
 	/**
-	 * The constructor for the Associated class. Initializes members to null
+	 * The constructor for the Association class. Initializes members to null
 	 * values.
 	 */
-	public Associated() {
-
+	public Association() {
 		phase = null;
 		distance = null;
 		azimuth = null;
@@ -60,7 +59,7 @@ public class Associated implements DetectionInt {
 	}
 
 	/**
-	 * The advanced constructor for the Associated class. Initializes members to
+	 * The advanced constructor for the Association class. Initializes members to
 	 * provided values.
 	 *
 	 * @param newPhase
@@ -74,9 +73,8 @@ public class Associated implements DetectionInt {
 	 * @param newSigma
 	 *            - A double containing the sigma to use (null omit)
 	 */
-	public Associated(String newPhase, Double newDistance, Double newAzimuth,
+	public Association(String newPhase, Double newDistance, Double newAzimuth,
 			Double newResidual, Double newSigma) {
-
 		phase = newPhase;
 		distance = newDistance;
 		azimuth = newAzimuth;
@@ -90,8 +88,7 @@ public class Associated implements DetectionInt {
 	 * @param newJSONObject
 	 *            - A JSONObject.
 	 */
-	public Associated(JSONObject newJSONObject) {
-
+	public Association(JSONObject newJSONObject) {
 		// optional values
 		// phase
 		if (newJSONObject.containsKey(PHASE_KEY)) {
@@ -137,7 +134,6 @@ public class Associated implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonPhase = getPhase();
@@ -196,7 +192,6 @@ public class Associated implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonPhase = getPhase();
 		Double jsonDistance = getDistance();
 		Double jsonAzimuth = getAzimuth();
@@ -209,10 +204,10 @@ public class Associated implements DetectionInt {
 			// check phase string
 			if (jsonPhase.isEmpty()) {
 				// phase empty
-				errorList.add("Empty Phase in Associated Class.");
+				errorList.add("Empty Phase in Association Class.");
 			} else if (!Utility.isStringAlpha(jsonPhase)) {
 				// invalid phase
-				errorList.add("Phase did not validate in Associated class.");
+				errorList.add("Phase did not validate in Association class.");
 			}
 		}
 
@@ -221,7 +216,7 @@ public class Associated implements DetectionInt {
 			// check distance
 			if (jsonDistance < 0) {
 				// distance negative (invalid)
-				errorList.add("Invalid Distance in Associated Class.");
+				errorList.add("Invalid Distance in Association Class.");
 			}
 		}
 
@@ -230,7 +225,7 @@ public class Associated implements DetectionInt {
 			// check azimuth
 			if (jsonAzimuth < 0) {
 				// azimuth negative (invalid)
-				errorList.add("Invalid Azimuth in Associated Class.");
+				errorList.add("Invalid Azimuth in Association Class.");
 			}
 		}
 

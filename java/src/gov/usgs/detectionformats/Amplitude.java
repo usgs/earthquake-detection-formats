@@ -151,9 +151,29 @@ public class Amplitude implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-		// since all keys are optional and they're numbers...
+		Double jsonPeriod = getPeriod();
+		Double jsonSNR = getSNR();
+
+		ArrayList<String> errorList = new ArrayList<String>();
+
+		// optional data
+		// period
+		if (jsonPeriod != null) {
+			if (jsonPeriod < 0) {
+				errorList.add("Invalid Period in Amplitude class.");
+			}
+		}
+
+		// SNR
+		if (jsonSNR != null) {
+			if ((jsonSNR < 0) || (jsonSNR > 9999999999.999)) {
+				errorList.add("SNR in Amplitude Class is not in the valid " +
+					"range of 0 to 9999999999.999");
+			}
+		}		
+
 		// success
-		return (null);
+		return (errorList);
 	}
 
 	/**

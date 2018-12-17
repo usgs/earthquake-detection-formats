@@ -106,7 +106,7 @@ public class Correlation implements DetectionInt {
 	/**
 	 * Optional associated information.
 	 */
-	private final Associated associationInfo;
+	private final Association associationInfo;
 
 	/**
 	 * The constructor for the Correlation class. Initializes members to null
@@ -206,7 +206,7 @@ public class Correlation implements DetectionInt {
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
 				newEventtype, newMagnitude, newSNR, newZScore,
-				newDetectionThreshold, newThresholdType, new Associated());
+				newDetectionThreshold, newThresholdType, new Association());
 	}
 
 	/**
@@ -264,19 +264,19 @@ public class Correlation implements DetectionInt {
 	 *            omit
 	 * @param newThresholdType
 	 *            - A String containing the threshold type to use, null to omit
-	 * @param newAssociatedPhase
+	 * @param newAssociationPhase
 	 *            - A std:string containing the associated phase to use, null to
 	 *            omit
-	 * @param newAssociatedDistance
+	 * @param newAssociationDistance
 	 *            - A Double containing the associated distance to use, null to
 	 *            omit
-	 * @param newAssociatedAzimuth
+	 * @param newAssociationAzimuth
 	 *            - A Double containing the associated azimuth to use, null to
 	 *            omit
-	 * @param newAssociatedResidual
+	 * @param newAssociationResidual
 	 *            - A Double containing the associated residual to use, null to
 	 *            omit
-	 * @param newAssociatedSigma
+	 * @param newAssociationSigma
 	 *            - A Double containing the associated sigma to use, null to
 	 *            omit
 	 */
@@ -288,9 +288,9 @@ public class Correlation implements DetectionInt {
 			Double newLongitudeError, Double newTimeError, Double newDepthError,
 			String newEventtype, Double newMagnitude, Double newSNR,
 			Double newZScore, Double newDetectionThreshold,
-			String newThresholdType, String newAssociatedPhase,
-			Double newAssociatedDistance, Double newAssociatedAzimuth,
-			Double newAssociatedResidual, Double newAssociatedSigma) {
+			String newThresholdType, String newAssociationPhase,
+			Double newAssociationDistance, Double newAssociationAzimuth,
+			Double newAssociationResidual, Double newAssociationSigma) {
 
 		this(newID,
 				new Site(newStation, newChannel, newNetwork,
@@ -302,9 +302,9 @@ public class Correlation implements DetectionInt {
 						newDepthError),
 				newEventtype, newMagnitude, newSNR, newZScore,
 				newDetectionThreshold, newThresholdType,
-				new Associated(newAssociatedPhase, newAssociatedDistance,
-						newAssociatedAzimuth, newAssociatedResidual,
-						newAssociatedSigma));
+				new Association(newAssociationPhase, newAssociationDistance,
+						newAssociationAzimuth, newAssociationResidual,
+						newAssociationSigma));
 	}
 
 	/**
@@ -349,7 +349,7 @@ public class Correlation implements DetectionInt {
 
 		this(newID, newSite, newSource, newPhase, newTime, newCorrelation,
 				newHypocenter, newEventtype, newMagnitude, newSNR, newZScore,
-				newDetectionThreshold, newThresholdType, new Associated());
+				newDetectionThreshold, newThresholdType, new Association());
 	}
 
 	/**
@@ -385,14 +385,14 @@ public class Correlation implements DetectionInt {
 	 *            omit
 	 * @param newThresholdType
 	 *            - A String containing the threshold type to use, null to omit
-	 * @param newAssociated
-	 *            - A Associated containing the associated to use null to omit
+	 * @param newAssociation
+	 *            - A Association containing the associated to use null to omit
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
 			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
 			Double newSNR, Double newZScore, Double newDetectionThreshold,
-			String newThresholdType, Associated newAssociated) {
+			String newThresholdType, Association newAssociation) {
 
 		type = "Correlation";
 		id = newID;
@@ -408,7 +408,7 @@ public class Correlation implements DetectionInt {
 		zScore = newZScore;
 		detectionThreshold = newDetectionThreshold;
 		thresholdType = newThresholdType;
-		associationInfo = newAssociated;
+		associationInfo = newAssociation;
 	}
 
 	/**
@@ -523,7 +523,7 @@ public class Correlation implements DetectionInt {
 
 		// associated
 		if (newJSONObject.containsKey(ASSOCIATIONINFO_KEY)) {
-			associationInfo = new Associated(
+			associationInfo = new Association(
 					(JSONObject) newJSONObject.get(ASSOCIATIONINFO_KEY));
 		} else {
 			associationInfo = null;
@@ -555,7 +555,7 @@ public class Correlation implements DetectionInt {
 		Double jsonZScore = getZScore();
 		Double jsonDetectionThreshold = getDetectionThreshold();
 		String jsonThresholdType = getThresholdType();
-		Associated jsonAssociationInfo = getAssociationInfo();
+		Association jsonAssociationInfo = getAssociationInfo();
 
 		// Required values
 		// Type
@@ -668,7 +668,7 @@ public class Correlation implements DetectionInt {
 		String jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		String jsonThresholdType = getThresholdType();
-		Associated jsonAssociationInfo = getAssociationInfo();
+		Association jsonAssociationInfo = getAssociationInfo();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
@@ -898,7 +898,7 @@ public class Correlation implements DetectionInt {
 	/**
 	 * @return the associationInfo
 	 */
-	public Associated getAssociationInfo() {
+	public Association getAssociationInfo() {
 		return associationInfo;
 	}
 }

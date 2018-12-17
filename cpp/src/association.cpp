@@ -126,6 +126,20 @@ std::vector<std::string> association::geterrors() {
 		errorlist.push_back("Phase did not validate in association object.");
 	}
 
+	// distance
+	if (std::isnan(distance) != true) {
+		if (distance < 0) {
+			errorlist.push_back("Invalid Distance in Association Class.");
+		}
+	}
+
+	// azimuth
+	if (std::isnan(azimuth) != true) {
+		if (azimuth < 0) {
+			errorlist.push_back("Invalid Azimuth in Association Class.");
+		}
+	}
+
 	// return the list of errors
 	return (errorlist);
 }

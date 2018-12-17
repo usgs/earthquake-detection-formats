@@ -94,7 +94,7 @@ public class Pick implements DetectionInt {
 	/**
 	 * Optional associated information.
 	 */
-	private final Associated associationInfo;
+	private final Association associationInfo;
 
 	/**
 	 * The constructor for the Pick class. Initializes members to null values.
@@ -145,10 +145,14 @@ public class Pick implements DetectionInt {
 	 *            - A String containing the onset to use, null to omit
 	 * @param newPicker
 	 *            - A String containing the picker to use, null to omit
+	 * @param newType
+	 *            - A String containing the filter type to use (null omit)
 	 * @param newHighPass
-	 *            - A Double containing the high pass to use, null to omit
+	 *            - A Double containing the highPass to use (null omit)
 	 * @param newLowPass
-	 *            - A Double containing the low pass to use, null to omit
+	 *            - A Double containing the lowPass to use (null omit)
+	 * @param newUnits
+	 *            - A String containing the filter units to use (null omit)
 	 * @param newAmplitude
 	 *            - A Double containing the amplitude to use, null to omit
 	 * @param newPeriod
@@ -169,45 +173,46 @@ public class Pick implements DetectionInt {
 	 * @param newPowerRatioError
 	 *            - A Double containing the power ratio error to use, null to
 	 *            omit
-	 * @param newAssociatedPhase
+	 * @param newAssociationPhase
 	 *            - A std:Stringcontaining the associated phase to use, null to
 	 *            omit
-	 * @param newAssociatedDistance
+	 * @param newAssociationDistance
 	 *            - A Double containing the associated distance to use, null to
 	 *            omit
-	 * @param newAssociatedAzimuth
+	 * @param newAssociationAzimuth
 	 *            - A Double containing the associated azimuth to use, null to
 	 *            omit
-	 * @param newAssociatedResidual
+	 * @param newAssociationResidual
 	 *            - A Double containing the associated residual to use, null to
 	 *            omit
-	 * @param newAssociatedSigma
+	 * @param newAssociationSigma
 	 *            - A Double containing the associated sigma to use, null to
 	 *            omit
 	 */
 	public Pick(String newID, String newStation, String newChannel,
 			String newNetwork, String newLocation, Date newTime,
 			String newAgencyID, String newAuthor, String newPhase,
-			String newPolarity, String newOnset, String newPicker,
-			Double newHighPass, Double newLowPass, Double newAmplitude,
-			Double newPeriod, Double newSNR, Double newBackAzimuth,
-			Double newBackAzimutherror, Double newSlowness,
-			Double newSlownessError, Double newPowerRatio,
-			Double newPowerRatioError, String newAssociatedPhase,
-			Double newAssociatedDistance, Double newAssociatedAzimuth,
-			Double newAssociatedResidual, Double newAssociatedSigma) {
+			String newPolarity, String newOnset, String newPicker, 
+			String newType, Double newHighPass, Double newLowPass, 
+			String newUnits, Double newAmplitude, Double newPeriod, 
+			Double newSNR, Double newBackAzimuth, Double newBackAzimutherror, 
+			Double newSlowness, Double newSlownessError, Double newPowerRatio,
+			Double newPowerRatioError, String newAssociationPhase,
+			Double newAssociationDistance, Double newAssociationAzimuth,
+			Double newAssociationResidual, Double newAssociationSigma) {
 
 		this(newID, new Site(newStation, newChannel, newNetwork, newLocation),
 				newTime, new Source(newAgencyID, newAuthor), newPhase,
 				newPolarity, newOnset, newPicker,
 				new ArrayList<Filter>(
-						Arrays.asList(new Filter(newHighPass, newLowPass))),
+						Arrays.asList(new Filter(newType, newHighPass, 
+							newLowPass, newUnits))),
 				new Amplitude(newAmplitude, newPeriod, newSNR),
 				new Beam(newBackAzimuth, newBackAzimutherror, newSlowness,
 						newSlownessError, newPowerRatio, newPowerRatioError),
-				new Associated(newAssociatedPhase, newAssociatedDistance,
-						newAssociatedAzimuth, newAssociatedResidual,
-						newAssociatedSigma));
+				new Association(newAssociationPhase, newAssociationDistance,
+						newAssociationAzimuth, newAssociationResidual,
+						newAssociationSigma));
 	}
 
 	/**
@@ -238,10 +243,14 @@ public class Pick implements DetectionInt {
 	 *            - A String containing the onset to use, null to omit
 	 * @param newPicker
 	 *            - A String containing the picker to use, null to omit
+	 * @param newType
+	 *            - A String containing the filter type to use (null omit)
 	 * @param newHighPass
-	 *            - A Double containing the high pass to use, null to omit
+	 *            - A Double containing the highPass to use (null omit)
 	 * @param newLowPass
-	 *            - A Double containing the low pass to use, null to omit
+	 *            - A Double containing the lowPass to use (null omit)
+	 * @param newUnits
+	 *            - A String containing the filter units to use (null omit)
 	 * @param newAmplitude
 	 *            - A Double containing the amplitude to use, null to omit
 	 * @param newPeriod
@@ -267,7 +276,8 @@ public class Pick implements DetectionInt {
 			String newNetwork, String newLocation, Date newTime,
 			String newAgencyID, String newAuthor, String newPhase,
 			String newPolarity, String newOnset, String newPicker,
-			Double newHighPass, Double newLowPass, Double newAmplitude,
+			String newType, Double newHighPass, Double newLowPass, 
+			String newUnits, Double newAmplitude,
 			Double newPeriod, Double newSNR, Double newBackAzimuth,
 			Double newBackAzimutherror, Double newSlowness,
 			Double newSlownessError, Double newPowerRatio,
@@ -277,7 +287,8 @@ public class Pick implements DetectionInt {
 				newTime, new Source(newAgencyID, newAuthor), newPhase,
 				newPolarity, newOnset, newPicker,
 				new ArrayList<Filter>(
-						Arrays.asList(new Filter(newHighPass, newLowPass))),
+						Arrays.asList(new Filter(newType, newHighPass, 
+							newLowPass, newUnits))),
 				new Amplitude(newAmplitude, newPeriod, newSNR),
 				new Beam(newBackAzimuth, newBackAzimutherror, newSlowness,
 						newSlownessError, newPowerRatio, newPowerRatioError));
@@ -320,7 +331,7 @@ public class Pick implements DetectionInt {
 
 		this(newID, newSite, newTime, newSource, newPhase, newPolarity,
 				newOnset, newPicker, newFilter, newAmplitude, newBeam,
-				new Associated());
+				new Association());
 	}
 
 	/**
@@ -351,13 +362,13 @@ public class Pick implements DetectionInt {
 	 *            omit
 	 * @param newBeam
 	 *            - A Double containing the amplitude to us, null to omit
-	 * @param newAssociated
-	 *            - A Associated containing the associated to use, null to omit
+	 * @param newAssociation
+	 *            - A Association containing the associated to use, null to omit
 	 */
 	public Pick(String newID, Site newSite, Date newTime, Source newSource,
 			String newPhase, String newPolarity, String newOnset,
 			String newPicker, ArrayList<Filter> newFilter,
-			Amplitude newAmplitude, Beam newBeam, Associated newAssociated) {
+			Amplitude newAmplitude, Beam newBeam, Association newAssociation) {
 
 		type = "Pick";
 		id = newID;
@@ -371,7 +382,7 @@ public class Pick implements DetectionInt {
 		filterList = newFilter;
 		amplitude = newAmplitude;
 		beam = newBeam;
-		associationInfo = newAssociated;
+		associationInfo = newAssociation;
 	}
 
 	/**
@@ -490,7 +501,7 @@ public class Pick implements DetectionInt {
 		
 		// associated
 		if (newJSONObject.containsKey(ASSOCIATIONINFO_KEY)) {
-			associationInfo = new Associated(
+			associationInfo = new Association(
 					(JSONObject) newJSONObject.get(ASSOCIATIONINFO_KEY));
 		} else {
 			associationInfo = null;
@@ -521,7 +532,7 @@ public class Pick implements DetectionInt {
 		ArrayList<Filter> jsonFilterList = getFilterList();
 		Amplitude jsonAmplitude = getAmplitude();
 		Beam jsonBeam = getBeam();
-		Associated jsonAssociationInfo = getAssociationInfo();
+		Association jsonAssociationInfo = getAssociationInfo();
 
 		// Required values
 		// Type
@@ -632,7 +643,7 @@ public class Pick implements DetectionInt {
 		ArrayList<Filter> jsonFilterList = getFilterList();
 		Amplitude jsonAmplitude = getAmplitude();
 		Beam jsonBeam = getBeam();
-		Associated jsonAssociationInfo = getAssociationInfo();
+		Association jsonAssociationInfo = getAssociationInfo();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
@@ -881,7 +892,7 @@ public class Pick implements DetectionInt {
 	/**
 	 * @return the associationInfo
 	 */
-	public Associated getAssociationInfo() {
+	public Association getAssociationInfo() {
 		return associationInfo;
 	}
 }
