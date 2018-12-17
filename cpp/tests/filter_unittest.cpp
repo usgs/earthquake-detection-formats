@@ -7,25 +7,33 @@
 #include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::filter filterobject, std::string testinfo) {
-	// check TYPE
-	std::string filtertype = filterobject.type;
-	std::string expectedtype = std::string(FILTERTYPE);
-	ASSERT_STREQ(filtertype.c_str(), expectedtype.c_str());
+	// check type
+	if (filterobject.type.empty() != true) {
+		std::string filtertype = filterobject.type;
+		std::string expectedtype = std::string(FILTERTYPE);
+		ASSERT_STREQ(filtertype.c_str(), expectedtype.c_str());
+	}
 
 	// check lowpass
-	double filterlowpass = filterobject.lowpass;
-	double expectedlowpass = LOWPASS;
-	ASSERT_EQ(filterlowpass, expectedlowpass);
+	if (std::isnan(filterobject.lowpass) != true) {
+		double filterlowpass = filterobject.lowpass;
+		double expectedlowpass = LOWPASS;
+		ASSERT_EQ(filterlowpass, expectedlowpass);
+	}
 
 	// check highpass
-	double filterhighpass = filterobject.highpass;
-	double expectedhighpass = HIGHPASS;
-	ASSERT_EQ(filterhighpass, expectedhighpass);
+	if (std::isnan(filterobject.highpass) != true) {
+		double filterhighpass = filterobject.highpass;
+		double expectedhighpass = HIGHPASS;
+		ASSERT_EQ(filterhighpass, expectedhighpass);
+	}
 
 	// check units
-	std::string filterunits = filterobject.units;
-	std::string expectedunits = std::string(FILTERUNITS);
-	ASSERT_STREQ(filterunits.c_str(), expectedunits.c_str());
+	if (filterobject.units.empty() != true) {
+		std::string filterunits = filterobject.units;
+		std::string expectedunits = std::string(FILTERUNITS);
+		ASSERT_STREQ(filterunits.c_str(), expectedunits.c_str());
+	}
 }
 
 // tests to see if filter can successfully
@@ -74,6 +82,27 @@ TEST(FilterTest, Constructor) {
 
 	// check data values
 	checkdata(filterobject, "");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::filter filterobject2(emptyvalue);
+
+    // check data values
+	checkdata(filterobject2, "");
+}
+
+// tests to see if filter can successfully
+// be copied
+TEST(FilterTest, CopyConstructor) {
+	// use constructor
+	detectionformats::filter filterobject(FILTERTYPE, HIGHPASS, LOWPASS,
+		FILTERUNITS);
+
+	// copy constructor
+    detectionformats::filter filterobject2(filterobject);
+
+    // check data values
+	checkdata(filterobject2, "");
 }
 
 // tests to see if filter can successfully

@@ -7,8 +7,7 @@
 #include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::amplitude amplitudeobject,
-	std::string testinfo)
-{
+	std::string testinfo) {
 	// check period
 	if (std::isnan(amplitudeobject.period) != true) {
 		double amplitudeperiod = amplitudeobject.period;
@@ -33,8 +32,7 @@ void checkdata(detectionformats::amplitude amplitudeobject,
 
 // tests to see if amplitude can successfully
 // write json output
-TEST(AmplitudeTest, WritesJSON)
-{
+TEST(AmplitudeTest, WritesJSON) {
 	detectionformats::amplitude amplitudeobject;
 
 	// build amplitude object
