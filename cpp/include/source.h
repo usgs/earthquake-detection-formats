@@ -27,7 +27,7 @@ class source : public detectionbase {
 	 * \brief source constructor
 	 *
 	 * The constructor for the source class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	source();
 
@@ -35,7 +35,7 @@ class source : public detectionbase {
 	 * \brief source advanced constructor
 	 *
 	 * The advanced constructor for the source class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newagencyid - A std::string containing the agencyid to use
 	 * \param newauthor - A std::string containing the author to use
@@ -46,8 +46,8 @@ class source : public detectionbase {
 	 * \brief source advanced constructor
 	 *
 	 * The advanced constructor for the source class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit source(rapidjson::Value &json); // NOLINT
 
@@ -71,8 +71,10 @@ class source : public detectionbase {
 	 * \brief Convert to json value function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \param jsondocument - a reference to the json document to fill in with
-	 * 	the class contents.
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
@@ -97,7 +99,7 @@ class source : public detectionbase {
 	bool isempty();
 
 	/**
-	 * \brief source agency identifyer
+	 * \brief source agency identifier
 	 *
 	 * A required std::string containing an agency identifier for this source.
 	 */

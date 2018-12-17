@@ -383,7 +383,7 @@ std::vector<std::string> detection::geterrors() {
 	}
 
 	// id
-	if (id == "") {
+	if (id.empty() == true) {
 		// empty id
 		errorlist.push_back("Empty ID in detection class.");
 	}
@@ -420,7 +420,7 @@ std::vector<std::string> detection::geterrors() {
 
 	// optional keys
 	// detectiontype
-	if (detectiontype != "") {
+	if (detectiontype.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::detectiontypeindex::newdetection;

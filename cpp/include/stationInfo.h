@@ -54,6 +54,7 @@ class stationInfo : public detectionbase {
 	 * \param newquality - A double containing the quality to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newenable - A bool containing the enable flag to use
+	 * \param newuse - A bool containing the use flag to use
 	 * \param newuseforteleseismic - A bool containing the use for teleseismic
 	 * to use
 	 * \param newagencyid - A std::string containing the agencyid to use, empty
@@ -64,8 +65,9 @@ class stationInfo : public detectionbase {
 	stationInfo(std::string newstation, std::string newchannel,
 				std::string newnetwork, std::string newlocation,
 				double newlatitude, double newlongitude, double newelevation,
-				double newquality, bool newenable, bool newuseforteleseismic,
-				std::string newagencyid, std::string newauthor);
+				double newquality, bool newenable, bool newuse,
+				bool newuseforteleseismic, std::string newagencyid,
+				std::string newauthor);
 
 	/**
 	 * \brief stationInfo alternate advanced constructor
@@ -80,6 +82,7 @@ class stationInfo : public detectionbase {
 	 * \param newquality - A double containing the quality to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newenable - A bool containing the enable flag to use
+	 * \param newuse - A bool containing the use flag to use
 	 * \param newuseforteleseismic - A bool containing the use for teleseismic
 	 * to use
 	 * \param newinformationrequestor - A detectionformats::source containing
@@ -87,15 +90,15 @@ class stationInfo : public detectionbase {
 	 */
 	stationInfo(detectionformats::site newsite, double newlatitude,
 				double newlongitude, double newelevation, double newquality,
-				bool newenable, bool newuseforteleseismic,
+				bool newenable, bool newuse, bool newuseforteleseismic,
 				detectionformats::source newinformationrequestor);
 
 	/**
 	 * \brief stationInfo advanced constructor
 	 *
 	 * The advanced constructor for the stationInfo class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit stationInfo(rapidjson::Value &json); // NOLINT
 
@@ -120,7 +123,11 @@ class stationInfo : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
 			rapidjson::Value &json, // NOLINT
@@ -172,11 +179,18 @@ class stationInfo : public detectionbase {
 	double quality;
 
 	/**
-	 * \brief quality value
+	 * \brief enable value
 	 *
 	 * An optional bool containing the enable flag for this stationInfo
 	 */
 	bool enable;
+
+	/**
+	 * \brief use value
+	 *
+	 * An optional bool containing the use flag for this stationInfo
+	 */
+	bool use;
 
 	/**
 	 * \brief use for teleseismic value

@@ -6,6 +6,22 @@
 // test data
 #include "unittest_data.h" // NOLINT
 
+void checkdata(detectionformats::source sourceobject, std::string testinfo) {
+    // check agencyid
+	if (sourceobject.agencyid.empty() != true) {
+		std::string sourceagencyid = sourceobject.agencyid;
+		std::string expectedagencyid = std::string(AGENCYID);
+		ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+	}
+
+    // check author
+	if (sourceobject.author.empty() != true) {
+		std::string sourceauthor = sourceobject.author;
+		std::string expectedauthor = std::string(AUTHOR);
+		ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	}
+}
+
 // tests to see if source can successfully
 // write json output
 TEST(SourceTest, WritesJSON) {
@@ -25,15 +41,7 @@ TEST(SourceTest, WritesJSON) {
     detectionformats::source sourceobject2(
 		detectionformats::FromJSONString(sourcejson, sourcedocument2));
 
-    // check agencyid
-    std::string sourceagencyid = sourceobject2.agencyid;
-    std::string expectedagencyid = std::string(AGENCYID);
-    ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
-
-    // check author
-    std::string sourceauthor = sourceobject2.author;
-    std::string expectedauthor = std::string(AUTHOR);
-    ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	checkdata(sourceobject2, "");
 }
 
 // tests to see if source can successfully
@@ -45,15 +53,7 @@ TEST(SourceTest, ReadsJSON) {
 		detectionformats::FromJSONString(std::string(SOURCESTRING),
 		sourcedocument));
 
-	// check agencyid
-	std::string sourceagencyid = sourceobject.agencyid;
-	std::string expectedagencyid = std::string(AGENCYID);
-	ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
-
-	// check author
-	std::string sourceauthor = sourceobject.author;
-	std::string expectedauthor = std::string(AUTHOR);
-	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	checkdata(sourceobject, "");
 }
 
 // tests to see if source can successfully
@@ -62,15 +62,27 @@ TEST(SourceTest, Constructor) {
 	// use constructor
 	detectionformats::source sourceobject(AGENCYID, AUTHOR);
 
-	// check agencyid
-	std::string sourceagencyid = sourceobject.agencyid;
-	std::string expectedagencyid = std::string(AGENCYID);
-	ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+	checkdata(sourceobject, "");
 
-	// check author
-	std::string sourceauthor = sourceobject.author;
-	std::string expectedauthor = std::string(AUTHOR);
-	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::source sourceobject2(emptyvalue);
+
+    // check data values
+	checkdata(sourceobject2, "");
+}
+
+// tests to see if source can successfully
+// be copied
+TEST(SourceTest, CopyConstructor) {
+	// use constructor
+	detectionformats::source sourceobject(AGENCYID, AUTHOR);
+
+	// copy constructor
+    detectionformats::source sourceobject2(sourceobject);
+
+    // check data values
+	checkdata(sourceobject2, "");
 }
 
 // tests to see if source can successfully

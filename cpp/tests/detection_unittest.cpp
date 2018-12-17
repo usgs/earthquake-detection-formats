@@ -35,40 +35,54 @@ std::vector<detectionformats::correlation> buildcorrleationdata() {
 void checkdata(detectionformats::detection detectionobject,
 		std::string testinfo) {
 	// check id
-	std::string detectionid = detectionobject.id;
-	std::string expectedid = std::string(ID);
-	ASSERT_STREQ(detectionid.c_str(), expectedid.c_str());
+	if (detectionobject.id.empty() != true) {
+		std::string detectionid = detectionobject.id;
+		std::string expectedid = std::string(ID);
+		ASSERT_STREQ(detectionid.c_str(), expectedid.c_str());
+	}
 
 	// check agencyid
-	std::string sourceagencyid = detectionobject.source.agencyid;
-	std::string expectedagencyid = std::string(AGENCYID);
-	ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+	if (detectionobject.source.agencyid.empty() != true) {
+		std::string sourceagencyid = detectionobject.source.agencyid;
+		std::string expectedagencyid = std::string(AGENCYID);
+		ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+	}
 
 	// check author
-	std::string sourceauthor = detectionobject.source.author;
-	std::string expectedauthor = std::string(AUTHOR);
-	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	if (detectionobject.source.author.empty() != true) {
+		std::string sourceauthor = detectionobject.source.author;
+		std::string expectedauthor = std::string(AUTHOR);
+		ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	}
 
 	// check latitude
-	double latitude = detectionobject.hypocenter.latitude;
-	double expectedlatitude = LATITUDE;
-	ASSERT_EQ(latitude, expectedlatitude);
+	if (std::isnan(detectionobject.hypocenter.latitude) != true) {
+		double latitude = detectionobject.hypocenter.latitude;
+		double expectedlatitude = LATITUDE;
+		ASSERT_EQ(latitude, expectedlatitude);
+	}
 
 	// check longitude
-	double longitude = detectionobject.hypocenter.longitude;
-	double expectedlongitude = LONGITUDE;
-	ASSERT_EQ(longitude, expectedlongitude);
+	if (std::isnan(detectionobject.hypocenter.longitude) != true) {
+		double longitude = detectionobject.hypocenter.longitude;
+		double expectedlongitude = LONGITUDE;
+		ASSERT_EQ(longitude, expectedlongitude);
+	}
 
 	// check detectiontime
-	double time = detectionobject.hypocenter.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
-	ASSERT_NEAR(time, expectedtime, 0.0001);
+	if (std::isnan(detectionobject.hypocenter.time) != true) {
+		double time = detectionobject.hypocenter.time;
+		double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(TIME));
+		ASSERT_NEAR(time, expectedtime, 0.0001);
+	}
 
 	// check depth
-	double depth = detectionobject.hypocenter.depth;
-	double expecteddepth = DEPTH;
-	ASSERT_EQ(depth, expecteddepth);
+	if (std::isnan(detectionobject.hypocenter.depth) != true) {
+		double depth = detectionobject.hypocenter.depth;
+		double expecteddepth = DEPTH;
+		ASSERT_EQ(depth, expecteddepth);
+	}
 
 	// check latitude error
 	if (std::isnan(detectionobject.hypocenter.latitudeerror) != true) {
@@ -99,7 +113,7 @@ void checkdata(detectionformats::detection detectionobject,
 	}
 
 	// check detectiontype
-	if (detectionobject.detectiontype.compare("") != true) {
+	if (detectionobject.detectiontype.empty() != true) {
 		std::string detectiondetectiontype = detectionobject.detectiontype;
 		std::string expecteddetectiontype = std::string(DETECTIONTYPE);
 		ASSERT_STREQ(detectiondetectiontype.c_str(),
@@ -116,14 +130,14 @@ void checkdata(detectionformats::detection detectionobject,
 	}
 
 	// check eventtype
-	if (detectionobject.eventtype.type.compare("") != true) {
+	if (detectionobject.eventtype.type.empty() != true) {
 		std::string detectioneventtype = detectionobject.eventtype.type;
 		std::string expectedeventtype = std::string(EVENTTYPE);
 		ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
 	}
 
 	// check eventtype certainty
-	if (detectionobject.eventtype.certainty.compare("") != true) {
+	if (detectionobject.eventtype.certainty.empty() != true) {
 		std::string detectioneventtypecertainty =
 			detectionobject.eventtype.certainty;
 		std::string expectedeventtypecertainty = std::string(CERTAINTY);
@@ -139,21 +153,27 @@ void checkdata(detectionformats::detection detectionobject,
 	}
 
 	// check minimumdistance
-	double detectionminimumdistance = detectionobject.minimumdistance;
-	double expectedminimumdistancee = MINIMUMDISTANCE;
-	ASSERT_EQ(detectionminimumdistance, expectedminimumdistancee);
+	if (std::isnan(detectionobject.minimumdistance) != true) {
+		double detectionminimumdistance = detectionobject.minimumdistance;
+		double expectedminimumdistancee = MINIMUMDISTANCE;
+		ASSERT_EQ(detectionminimumdistance, expectedminimumdistancee);
+	}
 
 	// check rms
-	double detectionrms = detectionobject.rms;
-	double expectedrms = RMS;
-	ASSERT_EQ(detectionrms, expectedrms);
+	if (std::isnan(detectionobject.rms) != true) {
+		double detectionrms = detectionobject.rms;
+		double expectedrms = RMS;
+		ASSERT_EQ(detectionrms, expectedrms);
+	}
 
 	// check gap
-	double detectiongap = detectionobject.gap;
-	double expectedgap = GAP;
-	ASSERT_EQ(detectiongap, expectedgap);
+	if (std::isnan(detectionobject.gap) != true) {
+		double detectiongap = detectionobject.gap;
+		double expectedgap = GAP;
+		ASSERT_EQ(detectiongap, expectedgap);
+	}
 
-	// need to check data still!!!!!!
+	// should check data still!!!!!!
 	// somehow?
 }
 
@@ -258,6 +278,13 @@ TEST(DetectionTest, Constructor) {
 
 	// check data values
 	checkdata(detectionobject_altc, "Tested Alternate Constructor");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::detection detectionobject2(emptyvalue);
+
+    // check data values
+	checkdata(detectionobject2, "");
 }
 
 // tests to see if detection can successfully
@@ -308,7 +335,7 @@ TEST(DetectionTest, Validate) {
 	detectionobject.detectiontype = std::string(DETECTIONTYPE);
 	detectionobject.detectiontime = detectionformats::ConvertISO8601ToEpochTime(
 			std::string(DETECTIONTIME));
-		detectionobject.eventtype.type = std::string(EVENTTYPE);
+	detectionobject.eventtype.type = std::string(EVENTTYPE);
 	detectionobject.eventtype.certainty = std::string(CERTAINTY);
 	detectionobject.bayes = BAYES;
 	detectionobject.minimumdistance = MINIMUMDISTANCE;
@@ -327,12 +354,33 @@ TEST(DetectionTest, Validate) {
 
 	// build bad detection object
 	detectionformats::detection baddetectionobject;
-	baddetectionobject.id = "";
 
 	result = false;
 	try {
 		// call validation
 		result = baddetectionobject.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
+	// build bad detection object
+	detectionformats::detection baddetectionobject2;
+	baddetectionobject2.detectiontype = "not";
+	baddetectionobject2.detectiontime = -1000000000000;
+	baddetectionobject2.eventtype.type = "fjyord";
+	baddetectionobject2.eventtype.certainty = "nah";
+	baddetectionobject2.bayes = -99;
+	baddetectionobject2.minimumdistance = -99;
+	baddetectionobject2.rms = -99999;
+	baddetectionobject2.gap = -1;
+
+	result = false;
+	try {
+		// call validation
+		result = baddetectionobject2.isvalid();
 	} catch (const std::exception &) {
 		// don't care what the exception was
 	}

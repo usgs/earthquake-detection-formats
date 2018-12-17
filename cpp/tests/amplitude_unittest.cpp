@@ -10,19 +10,25 @@ void checkdata(detectionformats::amplitude amplitudeobject,
 	std::string testinfo)
 {
 	// check period
-	double amplitudeperiod = amplitudeobject.period;
-	double expectedperiod = PERIOD;
-	ASSERT_EQ(amplitudeperiod, expectedperiod);
+	if (std::isnan(amplitudeobject.period) != true) {
+		double amplitudeperiod = amplitudeobject.period;
+		double expectedperiod = PERIOD;
+		ASSERT_EQ(amplitudeperiod, expectedperiod);
+	}
 
 	// check amplitude
-	double amplitudeamplitude = amplitudeobject.ampvalue;
-	double expectedamplitude = AMPLITUDEVALUE;
-	ASSERT_EQ(amplitudeamplitude, expectedamplitude);
+	if (std::isnan(amplitudeobject.ampvalue) != true) {
+		double amplitudeamplitude = amplitudeobject.ampvalue;
+		double expectedamplitude = AMPLITUDEVALUE;
+		ASSERT_EQ(amplitudeamplitude, expectedamplitude);
+	}
 
 	// check snr
-	double amplitudesnr = amplitudeobject.snr;
-	double expectedsnr = SNR;
-	ASSERT_EQ(amplitudesnr, expectedsnr);
+	if (std::isnan(amplitudeobject.snr) != true) {
+		double amplitudesnr = amplitudeobject.snr;
+		double expectedsnr = SNR;
+		ASSERT_EQ(amplitudesnr, expectedsnr);
+	}
 }
 
 // tests to see if amplitude can successfully
@@ -72,6 +78,26 @@ TEST(AmplitudeTest, Constructor) {
 
 	// check data values
 	checkdata(amplitudeobject, "");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::amplitude amplitudeobject2(emptyvalue);
+
+    // check data values
+	checkdata(amplitudeobject2, "");
+}
+
+// tests to see if amplitude can successfully
+// be copied
+TEST(AmplitudeTest, CopyConstructor) {
+	// use constructor
+	detectionformats::amplitude amplitudeobject(AMPLITUDEVALUE, PERIOD, SNR);
+
+	// copy constructor
+    detectionformats::amplitude amplitudeobject2(amplitudeobject);
+
+    // check data values
+	checkdata(amplitudeobject2, "");
 }
 
 // tests to see if amplitude can successfully
@@ -90,7 +116,22 @@ TEST(AmplitudeTest, Validate) {
 	// check return code
 	ASSERT_EQ(result, true) << "Tested for successful validation.";
 
-	// Can't think of a way to make a bad amplitude object
+	// build bad amplitude object
+	detectionformats::amplitude badamplitudeobject;
+    badamplitudeobject.period = -9999;
+    badamplitudeobject.snr = -9999;
+
+	result = false;
+	try {
+		// call validation
+		result = badamplitudeobject.isvalid();
+	}
+	catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
 }
 
 // tests the isempty function

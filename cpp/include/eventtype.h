@@ -27,7 +27,7 @@ class eventtype : public detectionbase {
 	 * \brief eventtype constructor
 	 *
 	 * The constructor for the eventtype class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	eventtype();
 
@@ -46,8 +46,8 @@ class eventtype : public detectionbase {
 	 * \brief eventtype advanced constructor
 	 *
 	 * The advanced constructor for the eventtype class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit eventtype(rapidjson::Value &json); // NOLINT
 
@@ -71,8 +71,10 @@ class eventtype : public detectionbase {
 	 * \brief Convert to json value function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \param jsondocument - a reference to the json document to fill in with
-	 * 	the class contents.
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(

@@ -81,7 +81,7 @@ rapidjson::Value & filter::tojson(
 
 	// optional values
 	// type
-	if (type != "") {
+	if (type.empty() == false) {
 		rapidjson::Value typevalue;
 		typevalue.SetString(rapidjson::StringRef(type.c_str()), allocator);
 		json.AddMember(TYPE_KEY, typevalue, allocator);
@@ -98,7 +98,7 @@ rapidjson::Value & filter::tojson(
 	}
 
 	// units
-	if (units != "") {
+	if (units.empty() == false) {
 		rapidjson::Value unitsvalue;
 		unitsvalue.SetString(rapidjson::StringRef(units.c_str()), allocator);
 		json.AddMember(UNITS_KEY, unitsvalue, allocator);
@@ -113,7 +113,7 @@ std::vector<std::string> filter::geterrors() {
 }
 
 bool filter::isempty() {
-	if (type != "") {
+	if (type.empty() == false) {
 		return (false);
 	}
 	if (std::isnan(highpass) != true) {
@@ -122,7 +122,7 @@ bool filter::isempty() {
 	if (std::isnan(lowpass) != true) {
 		return (false);
 	}
-	if (units != "") {
+	if (units.empty() == false) {
 		return (false);
 	}
 	return (true);

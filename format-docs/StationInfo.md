@@ -28,6 +28,7 @@ Format is intended as a method of requesting a StationInfo message.
       "Elevation"     : Number,
       "Quality"       : Number,
       "Enable"        : Boolean,
+      "Use"           : Boolean,
       "UseForTeleseismic" : Boolean,
       "InformationRequestor" :
       {
@@ -55,6 +56,7 @@ The following are supplementary values that **may or may not** be provided as
 part of a StationInfo.
 
 * Quality - A decimal number that indicates the quality of the station in a range between 0.0 and 1.0, where 0.0 indicates that the station should not be used.
-* Enable - A boolean flag indicating whether use of the station is enabled or not, defaults to true.
+* Enable - A boolean flag indicating whether the station is enabled or not, defaults to true. This is intended to represent whether a station operator has disabled the station.
+* Use - A boolean flag indicating whether the station is was used by an algorithm or not, defaults to true. This is intended to represent whether an algorithm has chosen to not use a station for quality or other reasons
 * UseForTeleseismic - A boolean flag indicating whether to use the station for teleseismic algorithms, defaults to false.
 * InformationRequestor - An object containing the source who requested the information, see [Source](Source.md).

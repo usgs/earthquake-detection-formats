@@ -96,11 +96,12 @@
 #define AUTHOR "TestAuthor"
 
 // stationinfo
-#define STATIONSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\",\"Elevation\":1589.0,\"UseForTeleseismic\":true,\"Latitude\":40.3344,\"Longitude\":-121.44,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
+#define STATIONSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Enable\":true,\"Use\":true,\"Quality\":1.0,\"Type\":\"StationInfo\",\"Elevation\":1589.0,\"UseForTeleseismic\":false,\"Latitude\":40.3344,\"Longitude\":-121.44,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
 #define ELEVATION 1589.000000
 #define QUALITY 1.0
 #define ENABLE true
-#define USEFORTELESEISM true
+#define USE true
+#define USEFORTELESEISM false
 
 // stationinforequest
 #define REQUESTSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Type\":\"StationInfoRequest\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT

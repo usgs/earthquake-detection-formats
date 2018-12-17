@@ -41,7 +41,7 @@ class beam : public detectionbase {
 	 * \brief beam advanced constructor
 	 *
 	 * The advanced constructor for the beam class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newbackazimuth - A double containing the back azimuth to use
 	 * \param newbackazimutherror - A double containing the back azimuth error
@@ -62,8 +62,8 @@ class beam : public detectionbase {
 	 * \brief beam advanced constructor
 	 *
 	 * The advanced constructor for the beam class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit beam(rapidjson::Value &json); // NOLINT
 
@@ -88,6 +88,10 @@ class beam : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(

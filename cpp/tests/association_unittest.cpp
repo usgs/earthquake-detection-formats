@@ -9,29 +9,39 @@
 void checkdata(detectionformats::association associationobject,
 	std::string testinfo) {
 	// check phase
-	std::string associationphase = associationobject.phase;
-	std::string expectedphase = std::string(PHASE);
-	ASSERT_STREQ(associationphase.c_str(), expectedphase.c_str());
+	if (associationobject.phase.empty() != true) {
+		std::string associationphase = associationobject.phase;
+		std::string expectedphase = std::string(PHASE);
+		ASSERT_STREQ(associationphase.c_str(), expectedphase.c_str());
+	}
 
 	// check distance
-	double associationdistance = associationobject.distance;
-	double expecteddistance = DISTANCE;
-	ASSERT_EQ(associationdistance, expecteddistance);
+	if (std::isnan(associationobject.distance) != true) {
+		double associationdistance = associationobject.distance;
+		double expecteddistance = DISTANCE;
+		ASSERT_EQ(associationdistance, expecteddistance);
+	}
 
 	// check azimuth
-	double associationazimuth = associationobject.azimuth;
-	double expectedazimuth = AZIMUTH;
-	ASSERT_EQ(associationazimuth, expectedazimuth);
+	if (std::isnan(associationobject.azimuth) != true) {
+		double associationazimuth = associationobject.azimuth;
+		double expectedazimuth = AZIMUTH;
+		ASSERT_EQ(associationazimuth, expectedazimuth);
+	}
 
 	// check residual
-	double associationresidual = associationobject.residual;
-	double expectedresidual = RESIDUAL;
-	ASSERT_EQ(associationresidual, expectedresidual);
+	if (std::isnan(associationobject.residual) != true) {
+		double associationresidual = associationobject.residual;
+		double expectedresidual = RESIDUAL;
+		ASSERT_EQ(associationresidual, expectedresidual);
+	}
 
 	// check sigma
-	double associationsigma = associationobject.sigma;
-	double expectedsigma = SIGMA;
-	ASSERT_EQ(associationsigma, expectedsigma);
+	if (std::isnan(associationobject.sigma) != true) {
+		double associationsigma = associationobject.sigma;
+		double expectedsigma = SIGMA;
+		ASSERT_EQ(associationsigma, expectedsigma);
+	}
 }
 
 // tests to see if association can successfully
@@ -84,6 +94,27 @@ TEST(AssociationTest, Constructor) {
 
 	// check data values
 	checkdata(associationobject, "");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::association associationobject2(emptyvalue);
+
+    // check data values
+	checkdata(associationobject2, "");
+}
+
+// tests to see if association can successfully
+// be copied
+TEST(AssociationTest, CopyConstructor) {
+	// use constructor
+	detectionformats::association associationobject(std::string(PHASE), DISTANCE,
+		AZIMUTH, RESIDUAL, SIGMA);
+
+	// copy constructor
+    detectionformats::association associationobject2(associationobject);
+
+    // check data values
+	checkdata(associationobject2, "");
 }
 
 // tests to see if association can successfully

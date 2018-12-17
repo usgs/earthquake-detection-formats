@@ -62,7 +62,7 @@ class correlation : public detectionbase {
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlongtiudeerror - A double containing the longitude error to
+	 * \param newlongitudeerror - A double containing the longitude error to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newtimeerror - A double containing the time error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -117,7 +117,7 @@ class correlation : public detectionbase {
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlongtiudeerror - A double containing the longitude error to
+	 * \param newlongitudeerror - A double containing the longitude error to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newtimeerror - A double containing the time error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -242,8 +242,8 @@ class correlation : public detectionbase {
 	 * \brief correlation advanced constructor
 	 *
 	 * The advanced constructor for the correlation class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit correlation(rapidjson::Value &json); // NOLINT
 
@@ -268,7 +268,11 @@ class correlation : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
 			rapidjson::Value &json, // NOLINT

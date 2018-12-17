@@ -439,7 +439,7 @@ rapidjson::Value & pick::tojson(
 	json.AddMember(TYPE_KEY, typevalue, allocator);
 
 	// id
-	if (id != "") {
+	if (id.empty() == false) {
 		rapidjson::Value idvalue;
 		idvalue.SetString(rapidjson::StringRef(id.c_str()), allocator);
 		json.AddMember(ID_KEY, idvalue, allocator);
@@ -467,14 +467,14 @@ rapidjson::Value & pick::tojson(
 
 	// optional values
 	// phase
-	if (phase != "") {
+	if (phase.empty() == false) {
 		rapidjson::Value phasevalue;
 		phasevalue.SetString(rapidjson::StringRef(phase.c_str()), allocator);
 		json.AddMember(PHASE_KEY, phasevalue, allocator);
 	}
 
 	// polarity
-	if (polarity != "") {
+	if (polarity.empty() == false) {
 		rapidjson::Value polarityvalue;
 		polarityvalue.SetString(rapidjson::StringRef(polarity.c_str()),
 								allocator);
@@ -482,14 +482,14 @@ rapidjson::Value & pick::tojson(
 	}
 
 	// onset
-	if (onset != "") {
+	if (onset.empty() == false) {
 		rapidjson::Value onsetvalue;
 		onsetvalue.SetString(rapidjson::StringRef(onset.c_str()), allocator);
 		json.AddMember(ONSET_KEY, onsetvalue, allocator);
 	}
 
 	// picker
-	if (picker != "") {
+	if (picker.empty() == false) {
 		rapidjson::Value pickervalue;
 		pickervalue.SetString(rapidjson::StringRef(picker.c_str()), allocator);
 		json.AddMember(PICKER_KEY, pickervalue, allocator);
@@ -553,7 +553,7 @@ std::vector<std::string> pick::geterrors() {
 	}
 
 	// id
-	if (id == "") {
+	if (id.empty() == true) {
 		// empty id
 		errorlist.push_back("Empty ID in pick class.");
 	}
@@ -604,14 +604,14 @@ std::vector<std::string> pick::geterrors() {
 
 	// optional data
 	// phase
-	if (phase != "") {
+	if (phase.empty() == false) {
 		if (detectionformats::IsStringAlpha(phase) == false) {
 			errorlist.push_back("Phase did not validate in pick class.");
 		}
 	}
 
 	// polarity
-	if (polarity != "") {
+	if (polarity.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::polarityindex::up;
@@ -628,7 +628,7 @@ std::vector<std::string> pick::geterrors() {
 	}
 
 	// onset
-	if (onset != "") {
+	if (onset.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::onsetindex::impulsive;
@@ -645,7 +645,7 @@ std::vector<std::string> pick::geterrors() {
 	}
 
 	// picker
-	if (picker != "") {
+	if (picker.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::pickerindex::manual;

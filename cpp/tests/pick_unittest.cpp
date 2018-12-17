@@ -8,57 +8,77 @@
 
 void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	// check id
-	std::string pickid = pickobject.id;
-	std::string expectedid = std::string(ID);
-	ASSERT_STREQ(pickid.c_str(), expectedid.c_str())<< testinfo.c_str();
+	if (pickobject.id.empty() != true) {
+		std::string pickid = pickobject.id;
+		std::string expectedid = std::string(ID);
+		ASSERT_STREQ(pickid.c_str(), expectedid.c_str())<< testinfo.c_str();
+	}
 
 	// check station
-	std::string sitestation = pickobject.site.station;
-	std::string expectedstation = std::string(STATION);
-	ASSERT_STREQ(sitestation.c_str(), expectedstation.c_str())<< testinfo.c_str();
+	if (pickobject.site.station.empty() != true) {
+		std::string sitestation = pickobject.site.station;
+		std::string expectedstation = std::string(STATION);
+		ASSERT_STREQ(sitestation.c_str(),
+			expectedstation.c_str())<< testinfo.c_str();
+	}
 
 	// check channel
-	std::string sitechannel = pickobject.site.channel;
-	std::string expectedchannel = std::string(CHANNEL);
-	ASSERT_STREQ(sitechannel.c_str(), expectedchannel.c_str())<< testinfo.c_str();
+	if (pickobject.site.channel.empty() != true) {
+		std::string sitechannel = pickobject.site.channel;
+		std::string expectedchannel = std::string(CHANNEL);
+		ASSERT_STREQ(sitechannel.c_str(),
+			expectedchannel.c_str())<< testinfo.c_str();
+	}
 
 	// check network
-	std::string sitenetwork = pickobject.site.network;
-	std::string expectednetwork = std::string(NETWORK);
-	ASSERT_STREQ(sitenetwork.c_str(), expectednetwork.c_str())<< testinfo.c_str();
+	if (pickobject.site.network.empty() != true) {
+		std::string sitenetwork = pickobject.site.network;
+		std::string expectednetwork = std::string(NETWORK);
+		ASSERT_STREQ(sitenetwork.c_str(),
+			expectednetwork.c_str())<< testinfo.c_str();
+	}
 
 	// check location
-	std::string sitelocation = pickobject.site.location;
-	std::string expectedlocation = std::string(LOCATION);
-	ASSERT_STREQ(sitelocation.c_str(),
-		expectedlocation.c_str())<< testinfo.c_str();
+	if (pickobject.site.location.empty() != true) {
+		std::string sitelocation = pickobject.site.location;
+		std::string expectedlocation = std::string(LOCATION);
+		ASSERT_STREQ(sitelocation.c_str(),
+			expectedlocation.c_str())<< testinfo.c_str();
+	}
 
 	// check agencyid
-	std::string sourceagencyid = pickobject.source.agencyid;
-	std::string expectedagencyid = std::string(AGENCYID);
-	ASSERT_STREQ(sourceagencyid.c_str(),
-		expectedagencyid.c_str())<< testinfo.c_str();
+	if (pickobject.source.agencyid.empty() != true) {
+		std::string sourceagencyid = pickobject.source.agencyid;
+		std::string expectedagencyid = std::string(AGENCYID);
+		ASSERT_STREQ(sourceagencyid.c_str(),
+			expectedagencyid.c_str())<< testinfo.c_str();
+	}
 
 	// check author
-	std::string sourceauthor = pickobject.source.author;
-	std::string expectedauthor = std::string(AUTHOR);
-	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str())<< testinfo.c_str();
+	if (pickobject.source.author.empty() != true) {
+		std::string sourceauthor = pickobject.source.author;
+		std::string expectedauthor = std::string(AUTHOR);
+		ASSERT_STREQ(sourceauthor.c_str(),
+			expectedauthor.c_str())<< testinfo.c_str();
+	}
 
 	// check time
-	double picktime = pickobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
-	ASSERT_EQ(picktime, expectedtime)<< testinfo.c_str();
+	if (std::isnan(pickobject.time) != true) {
+		double picktime = pickobject.time;
+		double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(TIME));
+		ASSERT_EQ(picktime, expectedtime)<< testinfo.c_str();
+	}
 
 	// check phase
-	if (pickobject.phase.compare("") != true) {
+	if (pickobject.phase.empty() != true) {
 		std::string pickphase = pickobject.phase;
 		std::string expectedphase = std::string(PHASE);
 		ASSERT_STREQ(pickphase.c_str(), expectedphase.c_str())<< testinfo.c_str();
 	}
 
 	// check polarity
-	if (pickobject.polarity.compare("") != true) {
+	if (pickobject.polarity.empty() != true) {
 		std::string pickpolarity = pickobject.polarity;
 		std::string expectedpolarity = std::string(POLARITY);
 		ASSERT_STREQ(pickpolarity.c_str(),
@@ -66,7 +86,7 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	}
 
 	// check onset
-	if (pickobject.onset.compare("") != true) {
+	if (pickobject.onset.empty() != true) {
 		std::string pickonset = pickobject.onset;
 		std::string expectedonset = std::string(ONSET);
 		ASSERT_STREQ(pickonset.c_str(),
@@ -74,7 +94,7 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	}
 
 	// check picker
-	if (pickobject.picker.compare("") != true) {
+	if (pickobject.picker.empty() != true) {
 		std::string pickpicker = pickobject.picker;
 		std::string expectedpicker = std::string(PICKER);
 		ASSERT_STREQ(pickpicker.c_str(),
@@ -139,9 +159,11 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	// beam
 	if (pickobject.beam.isempty() == false) {
 		// check backazimuth
-		double beambackazimuth = pickobject.beam.backazimuth;
-		double expectedbackazimuth = BACKAZIMUTH;
-		ASSERT_EQ(beambackazimuth, expectedbackazimuth);
+		if (std::isnan(pickobject.beam.backazimuth) != true) {
+			double beambackazimuth = pickobject.beam.backazimuth;
+			double expectedbackazimuth = BACKAZIMUTH;
+			ASSERT_EQ(beambackazimuth, expectedbackazimuth);
+		}
 
 		// check backazimutherror
 		if (std::isnan(pickobject.beam.backazimutherror) != true) {
@@ -149,10 +171,13 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 			double expectedbackazimutherror = BACKAZIMUTHERROR;
 			ASSERT_EQ(beambackazimutherror, expectedbackazimutherror);
 		}
+
 		// check slowness
-		double beamslowness = pickobject.beam.slowness;
-		double expectedslowness = SLOWNESS;
-		ASSERT_EQ(beamslowness, expectedslowness);
+		if (std::isnan(pickobject.beam.slowness) != true) {
+			double beamslowness = pickobject.beam.slowness;
+			double expectedslowness = SLOWNESS;
+			ASSERT_EQ(beamslowness, expectedslowness);
+		}
 
 		// check slownesserror
 		if (std::isnan(pickobject.beam.slownesserror) != true) {
@@ -178,7 +203,7 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	// associationinfo
 	if (pickobject.associationinfo.isempty() == false) {
 		// check phase
-		if (pickobject.associationinfo.phase.compare("") != true) {
+		if (pickobject.associationinfo.phase.empty() != true) {
 			std::string associationphase = pickobject.associationinfo.phase;
 			std::string expectedassociationphase = std::string(PHASE);
 			ASSERT_STREQ(associationphase.c_str(),
@@ -216,68 +241,95 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	// classificationinfo
 	if (pickobject.classificationinfo.isempty() == false) {
 		// check phase
-		std::string classificationphase = pickobject.classificationinfo.phase;
-		std::string expectedphase = std::string(PHASE);
-		ASSERT_STREQ(classificationphase.c_str(), expectedphase.c_str());
+		if (pickobject.classificationinfo.phase.empty() != true) {
+			std::string classificationphase = pickobject.classificationinfo.phase;
+			std::string expectedphase = std::string(PHASE);
+			ASSERT_STREQ(classificationphase.c_str(), expectedphase.c_str());
+		}
 
 		// check phase probability
-		double classificationphaseprob =
-			pickobject.classificationinfo.phaseprobability;
-		double expectedphaseprob = PHASEPROBABILITY;
-		ASSERT_EQ(classificationphaseprob, expectedphaseprob);
+		if (std::isnan(pickobject.classificationinfo.phaseprobability) != true) {
+			double classificationphaseprob =
+				pickobject.classificationinfo.phaseprobability;
+			double expectedphaseprob = PHASEPROBABILITY;
+			ASSERT_EQ(classificationphaseprob, expectedphaseprob);
+		}
 
 		// check distance
-		double classificationdistance = pickobject.classificationinfo.distance;
-		double expecteddistance = DISTANCE;
-		ASSERT_EQ(classificationdistance, expecteddistance);
+		if (std::isnan(pickobject.classificationinfo.distance) != true) {
+			double classificationdistance =
+				pickobject.classificationinfo.distance;
+			double expecteddistance = DISTANCE;
+			ASSERT_EQ(classificationdistance, expecteddistance);
+		}
 
 		// check distance probability
-		double classificationdistanceprob =
-			pickobject.classificationinfo.distanceprobability;
-		double expecteddistanceprob = DISTANCEPROBABILITY;
-		ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
+		if (std::isnan(pickobject.classificationinfo.distanceprobability)
+			!= true) {
+			double classificationdistanceprob =
+				pickobject.classificationinfo.distanceprobability;
+			double expecteddistanceprob = DISTANCEPROBABILITY;
+			ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
+		}
 
 		// check azimuth
-		double classificationazimuth = pickobject.classificationinfo.azimuth;
-		double expectedazimuth = AZIMUTH;
-		ASSERT_EQ(classificationazimuth, expectedazimuth);
+		if (std::isnan(pickobject.classificationinfo.azimuth) != true) {
+			double classificationazimuth = pickobject.classificationinfo.azimuth;
+			double expectedazimuth = AZIMUTH;
+			ASSERT_EQ(classificationazimuth, expectedazimuth);
+		}
 
 		// check azimuth probability
-		double classificationazimuthprob =
-			pickobject.classificationinfo.azimuthprobability;
-		double expectedazimuthprob = AZIMUTHPROBABILITY;
-		ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+		if (std::isnan(pickobject.classificationinfo.azimuthprobability)
+			!= true) {
+			double classificationazimuthprob =
+				pickobject.classificationinfo.azimuthprobability;
+			double expectedazimuthprob = AZIMUTHPROBABILITY;
+			ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+		}
 
 		// check magnitude
-		double classificationmagnitude = pickobject.classificationinfo.magnitude;
-		double expectedmagnitude = MAGNITUDE;
-		ASSERT_EQ(classificationmagnitude, expectedmagnitude);
+		if (std::isnan(pickobject.classificationinfo.magnitude) != true) {
+			double classificationmagnitude =
+				pickobject.classificationinfo.magnitude;
+			double expectedmagnitude = MAGNITUDE;
+			ASSERT_EQ(classificationmagnitude, expectedmagnitude);
+		}
 
 		// check magnitude type
-		std::string classificationmagtype =
-			pickobject.classificationinfo.magnitudetype;
-		std::string expectedmagtype = std::string(MAGNITUDETYPE);
-		ASSERT_STREQ(classificationmagtype.c_str(), expectedmagtype.c_str());
+		if (pickobject.classificationinfo.magnitudetype.empty() != true) {
+			std::string classificationmagtype =
+				pickobject.classificationinfo.magnitudetype;
+			std::string expectedmagtype = std::string(MAGNITUDETYPE);
+			ASSERT_STREQ(classificationmagtype.c_str(), expectedmagtype.c_str());
+		}
 
 		// check magnitude probability
-		double classificationmagnitudeprob =
-			pickobject.classificationinfo.magnitudeprobability;
-		double expectedmagnitudeprob = MAGNITUDEPROBABILITY;
-		ASSERT_EQ(classificationmagnitudeprob, expectedmagnitudeprob);
+		if (std::isnan(pickobject.classificationinfo.magnitudeprobability)
+			!= true) {
+			double classificationmagnitudeprob =
+				pickobject.classificationinfo.magnitudeprobability;
+			double expectedmagnitudeprob = MAGNITUDEPROBABILITY;
+			ASSERT_EQ(classificationmagnitudeprob, expectedmagnitudeprob);
+		}
 
 		// check depth
-		double classificationdepth = pickobject.classificationinfo.depth;
-		double expecteddepth = DEPTH;
-		ASSERT_EQ(classificationdepth, expecteddepth);
+		if (std::isnan(pickobject.classificationinfo.depth) != true) {
+			double classificationdepth = pickobject.classificationinfo.depth;
+			double expecteddepth = DEPTH;
+			ASSERT_EQ(classificationdepth, expecteddepth);
+		}
 
 		// check depth probability
-		double classificationdepthprob =
-			pickobject.classificationinfo.depthprobability;
-		double expecteddepthprob = DEPTHPROBABILITY;
-		ASSERT_EQ(classificationdepthprob, expecteddepthprob);
+		if (std::isnan(pickobject.classificationinfo.depthprobability) != true) {
+			double classificationdepthprob =
+				pickobject.classificationinfo.depthprobability;
+			double expecteddepthprob = DEPTHPROBABILITY;
+			ASSERT_EQ(classificationdepthprob, expecteddepthprob);
+		}
 
 		// check eventtype
-		if (pickobject.classificationinfo.eventtype.type.compare("") != true) {
+		if (pickobject.classificationinfo.eventtype.type.empty() != true) {
 			std::string detectioneventtype =
 				pickobject.classificationinfo.eventtype.type;
 			std::string expectedeventtype = std::string(EVENTTYPE);
@@ -285,7 +337,7 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 		}
 
 		// check eventtype certainty
-		if (pickobject.classificationinfo.eventtype.certainty.compare("") != true) {
+		if (pickobject.classificationinfo.eventtype.certainty.empty() != true) {
 			std::string detectioneventtypecertainty =
 				pickobject.classificationinfo.eventtype.certainty;
 			std::string expectedeventtypecertainty = std::string(CERTAINTY);
@@ -294,20 +346,23 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 		}
 
 		// check event type probability
-		double classificationeventtypeprob =
-			pickobject.classificationinfo.eventtypeprobability;
-		double expectedeventtypeprob = EVENTTYPEPROBABILITY;
-		ASSERT_EQ(classificationeventtypeprob, expectedeventtypeprob);
+		if (std::isnan(pickobject.classificationinfo.eventtypeprobability)
+			!= true) {
+			double classificationeventtypeprob =
+				pickobject.classificationinfo.eventtypeprobability;
+			double expectedeventtypeprob = EVENTTYPEPROBABILITY;
+			ASSERT_EQ(classificationeventtypeprob, expectedeventtypeprob);
+		}
 
 		// check agencyid
-		if (pickobject.classificationinfo.source.agencyid.compare("") != true) {
+		if (pickobject.classificationinfo.source.agencyid.empty() != true) {
 			std::string sourceagencyid = pickobject.classificationinfo.source.agencyid;
 			std::string expectedagencyid = std::string(AGENCYID);
 			ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
 		}
 
 		// check author
-		if (pickobject.classificationinfo.source.author.compare("") != true) {
+		if (pickobject.classificationinfo.source.author.empty() != true) {
 			std::string sourceauthor = pickobject.classificationinfo.source.author;
 			std::string expectedauthor = std::string(AUTHOR);
 			ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
@@ -623,6 +678,13 @@ TEST(PickTest, Constructor) {
 
 	// check data values
 	checkdata(pickobject_altc5, "Tested alternate constructor 5");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::pick pickobject2(emptyvalue);
+
+    // check data values
+	checkdata(pickobject2, "");
 }
 
 // tests to see if pick can successfully
@@ -727,7 +789,6 @@ TEST(PickTest, Validate) {
 
 	// build bad pick object
 	detectionformats::pick badpickobject;
-	badpickobject.id = "";
 
 	result = false;
 	try {
@@ -739,4 +800,28 @@ TEST(PickTest, Validate) {
 
 	// check return code
 	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
+	// build bad pick object
+	detectionformats::pick badpickobject2;
+	badpickobject2.time = -1000000000000;
+	badpickobject2.phase = "22";
+	badpickobject2.polarity = "22";
+	badpickobject2.onset = "22";
+	badpickobject2.picker = "22";
+	badpickobject2.amplitude.period = -99;
+	badpickobject2.beam.backazimuth = -99;
+	badpickobject2.associationinfo.phase = "22";
+	badpickobject2.classificationinfo.phase = "22";
+
+	result = false;
+	try {
+		// call validation
+		result = badpickobject2.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
 }

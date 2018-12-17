@@ -76,7 +76,7 @@ std::vector<std::string> eventtype::geterrors() {
 	std::vector<std::string> errorlist;
 
     // type
-	if (type != "") {
+	if (type.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::eventtypeindex::earthquake;
@@ -93,7 +93,7 @@ std::vector<std::string> eventtype::geterrors() {
 	}
 
 	// certainty
-	if (certainty != "") {
+	if (certainty.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::eventtypecertaintyindex::suspected;
@@ -115,9 +115,9 @@ std::vector<std::string> eventtype::geterrors() {
 }
 
 bool eventtype::isempty() {
-	if (type != "")
+	if (type.empty() == false)
 		return (false);
-	if (certainty != "")
+	if (certainty.empty() == false)
 		return (false);
 
 	return (true);

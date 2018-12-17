@@ -6,6 +6,24 @@
 // test data
 #include "unittest_data.h" // NOLINT
 
+void checkdata(detectionformats::eventtype eventtypeobject,
+	std::string testinfo) {
+    // check type
+	if (eventtypeobject.type.empty() != true) {
+		std::string eventtypetype = eventtypeobject.type;
+		std::string expectedtype = std::string(EVENTTYPE);
+		ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
+	}
+
+    // check certainty
+	if (eventtypeobject.certainty.empty() != true) {
+		std::string eventtypecertainty = eventtypeobject.certainty;
+		std::string expectedcertainty = std::string(CERTAINTY);
+		ASSERT_STREQ(eventtypecertainty.c_str(), expectedcertainty.c_str());
+	}
+}
+
+
 // tests to see if eventtype can successfully
 // write json output
 TEST(EventTypeTest, WritesJSON) {
@@ -26,15 +44,7 @@ TEST(EventTypeTest, WritesJSON) {
     detectionformats::eventtype eventtypeobject2(detectionformats::FromJSONString(eventtypejson, // NOLINT
         eventtypedocument2));
 
-    // check type
-    std::string eventtypetype = eventtypeobject2.type;
-    std::string expectedtype = std::string(EVENTTYPE);
-    ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
-
-    // check certainty
-    std::string eventtypecertainty = eventtypeobject2.certainty;
-    std::string expectedcertainty = std::string(CERTAINTY);
-    ASSERT_STREQ(eventtypecertainty.c_str(), expectedcertainty.c_str());
+    checkdata(eventtypeobject2, "");
 }
 
 // tests to see if eventtype can successfully
@@ -44,15 +54,7 @@ TEST(EventTypeTest, ReadsJSON) {
 	rapidjson::Document eventtypedocument;
 	detectionformats::eventtype eventtypeobject(detectionformats::FromJSONString(std::string(EVENTTYPESTRING), eventtypedocument)); // NOLINT
 
-	// check type
-	std::string eventtypetype = eventtypeobject.type;
-	std::string expectedtype = std::string(EVENTTYPE);
-	ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
-
-	// check certainty
-	std::string eventtypecertainty = eventtypeobject.certainty;
-	std::string expectedcertainty = std::string(CERTAINTY);
-	ASSERT_STREQ(eventtypecertainty.c_str(), expectedcertainty.c_str());
+	checkdata(eventtypeobject, "");
 }
 
 // tests to see if eventtype can successfully
@@ -61,15 +63,26 @@ TEST(EventTypeTest, Constructor) {
 	// use constructor
 	detectionformats::eventtype eventtypeobject(EVENTTYPE, CERTAINTY);
 
-	// check type
-	std::string eventtypetype = eventtypeobject.type;
-	std::string expectedtype = std::string(EVENTTYPE);
-	ASSERT_STREQ(eventtypetype.c_str(), expectedtype.c_str());
+	checkdata(eventtypeobject, "");
 
-	// check certainty
-	std::string eventtypecertainty = eventtypeobject.certainty;
-	std::string expectedcertainty = std::string(CERTAINTY);
-	ASSERT_STREQ(eventtypecertainty.c_str(), expectedcertainty.c_str());
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::eventtype eventtypeobject2(emptyvalue);
+
+	checkdata(eventtypeobject2, "");
+}
+
+// tests to see if eventtype can successfully
+// be copied
+TEST(EventTypeTest, CopyConstructor) {
+	// use constructor
+	detectionformats::eventtype eventtypeobject(EVENTTYPE, CERTAINTY);
+
+	// copy constructor
+    detectionformats::eventtype eventtypeobject2(eventtypeobject);
+
+    // check data values
+	checkdata(eventtypeobject2, "");
 }
 
 // tests to see if eventtype can successfully

@@ -121,7 +121,8 @@ std::vector<std::string> association::geterrors() {
 
 	// optional keys
 	// phase
-	if ((phase != "") && (detectionformats::IsStringAlpha(phase) == false)) {
+	if ((phase.empty() == false) &&
+		(detectionformats::IsStringAlpha(phase) == false)) {
 		errorlist.push_back("Phase did not validate in association object.");
 	}
 
@@ -130,7 +131,7 @@ std::vector<std::string> association::geterrors() {
 }
 
 bool association::isempty() {
-	if (phase != "")
+	if (phase.empty() == false)
 		return (false);
 	if (std::isnan(distance) != true)
 		return (false);

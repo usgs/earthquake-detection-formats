@@ -10,69 +10,94 @@
 void checkdata(detectionformats::classification classificationobject,
 	std::string testinfo) {
 	// check phase
-	std::string classificationphase = classificationobject.phase;
-	std::string expectedphase = std::string(PHASE);
-	ASSERT_STREQ(classificationphase.c_str(), expectedphase.c_str());
+    if (classificationobject.phase.empty() != true) {
+        std::string classificationphase = classificationobject.phase;
+        std::string expectedphase = std::string(PHASE);
+        ASSERT_STREQ(classificationphase.c_str(), expectedphase.c_str());
+    }
 
 	// check phase probability
-	double classificationphaseprob = classificationobject.phaseprobability;
-	double expectedphaseprob = PHASEPROBABILITY;
-	ASSERT_EQ(classificationphaseprob, expectedphaseprob);
+    if (std::isnan(classificationobject.phaseprobability) != true) {
+        double classificationphaseprob = classificationobject.phaseprobability;
+        double expectedphaseprob = PHASEPROBABILITY;
+        ASSERT_EQ(classificationphaseprob, expectedphaseprob);
+    }
 
 	// check distance
-	double classificationdistance = classificationobject.distance;
-	double expecteddistance = DISTANCE;
-	ASSERT_EQ(classificationdistance, expecteddistance);
+    if (std::isnan(classificationobject.distance) != true) {
+        double classificationdistance = classificationobject.distance;
+        double expecteddistance = DISTANCE;
+        ASSERT_EQ(classificationdistance, expecteddistance);
+    }
 
     // check distance probability
-	double classificationdistanceprob = classificationobject.distanceprobability;
-	double expecteddistanceprob = DISTANCEPROBABILITY;
-	ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
+    if (std::isnan(classificationobject.distanceprobability) != true) {
+        double classificationdistanceprob =
+            classificationobject.distanceprobability;
+        double expecteddistanceprob = DISTANCEPROBABILITY;
+        ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
+    }
 
 	// check azimuth
-	double classificationazimuth = classificationobject.azimuth;
-	double expectedazimuth = AZIMUTH;
-	ASSERT_EQ(classificationazimuth, expectedazimuth);
+    if (std::isnan(classificationobject.azimuth) != true) {
+        double classificationazimuth = classificationobject.azimuth;
+        double expectedazimuth = AZIMUTH;
+        ASSERT_EQ(classificationazimuth, expectedazimuth);
+    }
 
     // check azimuth probability
-	double classificationazimuthprob = classificationobject.azimuthprobability;
-	double expectedazimuthprob = AZIMUTHPROBABILITY;
-	ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+    if (std::isnan(classificationobject.azimuthprobability) != true) {
+        double classificationazimuthprob =
+            classificationobject.azimuthprobability;
+        double expectedazimuthprob = AZIMUTHPROBABILITY;
+        ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+    }
 
     // check magnitude
-	double classificationmagnitude = classificationobject.magnitude;
-	double expectedmagnitude = MAGNITUDE;
-	ASSERT_EQ(classificationmagnitude, expectedmagnitude);
+    if (std::isnan(classificationobject.magnitude) != true) {
+        double classificationmagnitude = classificationobject.magnitude;
+        double expectedmagnitude = MAGNITUDE;
+        ASSERT_EQ(classificationmagnitude, expectedmagnitude);
+    }
 
     // check magnitude type
-	std::string classificationmagtype = classificationobject.magnitudetype;
-	std::string expectedmagtype = std::string(MAGNITUDETYPE);
-	ASSERT_STREQ(classificationmagtype.c_str(), expectedmagtype.c_str());
+    if (classificationobject.magnitudetype.empty() != true) {
+        std::string classificationmagtype = classificationobject.magnitudetype;
+        std::string expectedmagtype = std::string(MAGNITUDETYPE);
+        ASSERT_STREQ(classificationmagtype.c_str(), expectedmagtype.c_str());
+    }
 
     // check magnitude probability
-	double classificationmagnitudeprob = classificationobject.magnitudeprobability;
-	double expectedmagnitudeprob = MAGNITUDEPROBABILITY;
-	ASSERT_EQ(classificationmagnitudeprob, expectedmagnitudeprob);
+    if (std::isnan(classificationobject.magnitudeprobability) != true) {
+        double classificationmagnitudeprob =
+            classificationobject.magnitudeprobability;
+        double expectedmagnitudeprob = MAGNITUDEPROBABILITY;
+        ASSERT_EQ(classificationmagnitudeprob, expectedmagnitudeprob);
+    }
 
 	// check depth
-	double classificationdepth = classificationobject.depth;
-	double expecteddepth = DEPTH;
-	ASSERT_EQ(classificationdepth, expecteddepth);
+    if (std::isnan(classificationobject.depth) != true) {
+        double classificationdepth = classificationobject.depth;
+        double expecteddepth = DEPTH;
+        ASSERT_EQ(classificationdepth, expecteddepth);
+    }
 
     // check depth probability
-	double classificationdepthprob = classificationobject.depthprobability;
-	double expecteddepthprob = DEPTHPROBABILITY;
-	ASSERT_EQ(classificationdepthprob, expecteddepthprob);
+    if (std::isnan(classificationobject.depthprobability) != true) {
+        double classificationdepthprob = classificationobject.depthprobability;
+        double expecteddepthprob = DEPTHPROBABILITY;
+        ASSERT_EQ(classificationdepthprob, expecteddepthprob);
+    }
 
     // check eventtype
-	if (classificationobject.eventtype.type.compare("") != true) {
+	if (classificationobject.eventtype.type.empty() != true) {
 		std::string detectioneventtype = classificationobject.eventtype.type;
 		std::string expectedeventtype = std::string(EVENTTYPE);
 		ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
 	}
 
 	// check eventtype certainty
-	if (classificationobject.eventtype.certainty.compare("") != true) {
+	if (classificationobject.eventtype.certainty.empty() != true) {
 		std::string detectioneventtypecertainty =
 			classificationobject.eventtype.certainty;
 		std::string expectedeventtypecertainty = std::string(CERTAINTY);
@@ -81,19 +106,22 @@ void checkdata(detectionformats::classification classificationobject,
 	}
 
     // check event type probability
-	double classificationeventtypeprob = classificationobject.eventtypeprobability;
-	double expectedeventtypeprob = EVENTTYPEPROBABILITY;
-	ASSERT_EQ(classificationeventtypeprob, expectedeventtypeprob);
+    if (std::isnan(classificationobject.eventtypeprobability) != true) {
+        double classificationeventtypeprob =
+            classificationobject.eventtypeprobability;
+        double expectedeventtypeprob = EVENTTYPEPROBABILITY;
+        ASSERT_EQ(classificationeventtypeprob, expectedeventtypeprob);
+    }
 
 	// check agencyid
-    if (classificationobject.source.agencyid.compare("") != true) {
+    if (classificationobject.source.agencyid.empty() != true) {
         std::string sourceagencyid = classificationobject.source.agencyid;
         std::string expectedagencyid = std::string(AGENCYID);
         ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
     }
 
 	// check author
-    if (classificationobject.source.author.compare("") != true) {
+    if (classificationobject.source.author.empty() != true) {
         std::string sourceauthor = classificationobject.source.author;
         std::string expectedauthor = std::string(AUTHOR);
         ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
@@ -175,6 +203,30 @@ TEST(ClassificationTest, Constructor) {
 
 	// check data values
 	checkdata(classificationobject2, "");
+
+    // json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::classification classificationobject3(emptyvalue);
+
+    // check data values
+	checkdata(classificationobject3, "");
+}
+
+// tests to see if classification can successfully
+// be copied
+TEST(ClassificationTest, CopyConstructor) {
+	// use constructor
+	detectionformats::classification classificationobject(std::string(PHASE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
+            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
+            EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
+
+	// copy constructor
+    detectionformats::classification classificationobject2(classificationobject); // NOLINT
+
+    // check data values
+	checkdata(classificationobject2, "");
 }
 
 // tests to see if classification can successfully
@@ -206,9 +258,15 @@ TEST(ClassificationTest, Validate) {
 	// check return code
 	ASSERT_EQ(result, true) << "Tested for successful validation.";
 
-	// build bad site object
+	// build bad classification object
 	detectionformats::classification badclassificationobject;
 	badclassificationobject.phase = "22";
+    badclassificationobject.distance = 9999;
+    badclassificationobject.azimuth = 9999;
+    badclassificationobject.magnitude = 99;
+    badclassificationobject.depth = -9999;
+    badclassificationobject.eventtype.type = "chair";
+    badclassificationobject.eventtype.certainty = "never";
 
 	result = false;
 	try {

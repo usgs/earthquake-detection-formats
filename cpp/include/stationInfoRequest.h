@@ -72,8 +72,8 @@ class stationInfoRequest : public detectionbase {
 	 * \brief stationInfoRequest advanced constructor
 	 *
 	 * The advanced constructor for the stationInfoRequest class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit stationInfoRequest(rapidjson::Value &json); // NOLINT
 
@@ -98,7 +98,11 @@ class stationInfoRequest : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
 			rapidjson::Value &json, // NOLINT

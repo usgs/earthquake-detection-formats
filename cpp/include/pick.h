@@ -206,7 +206,7 @@ class pick : public detectionbase {
 	 * use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	pick(std::string newid, std::string newstation, std::string newchannel,
-			std::string newnetwork, std::string newlocation, double,
+			std::string newnetwork, std::string newlocation, double newtime,
 			std::string newagencyid, std::string newauthor,
 			std::string newphase, std::string newpolarity, std::string newonset,
 			std::string newpicker, std::string newfiltertype, double newhighpass,
@@ -364,8 +364,8 @@ class pick : public detectionbase {
 	 * \brief pick advanced constructor
 	 *
 	 * The advanced constructor for the pick class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
 	explicit pick(rapidjson::Value &json); // NOLINT
 
@@ -390,7 +390,11 @@ class pick : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
 			rapidjson::Value &json, // NOLINT

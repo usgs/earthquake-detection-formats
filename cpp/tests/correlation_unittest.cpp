@@ -9,107 +9,144 @@
 void checkdata(detectionformats::correlation correlationobject,
 		std::string testinfo) {
 	// check id
-	std::string correlationid = correlationobject.id;
-	std::string expectedid = std::string(ID);
-	ASSERT_STREQ(correlationid.c_str(), expectedid.c_str());
+	if (correlationobject.id.empty() != true) {
+		std::string correlationid = correlationobject.id;
+		std::string expectedid = std::string(ID);
+		ASSERT_STREQ(correlationid.c_str(), expectedid.c_str());
+	}
 
 	// check station
-	std::string sitestation = correlationobject.site.station;
-	std::string expectedstation = std::string(STATION);
-	ASSERT_STREQ(sitestation.c_str(), expectedstation.c_str());
+	if (correlationobject.site.station.empty() != true) {
+		std::string sitestation = correlationobject.site.station;
+		std::string expectedstation = std::string(STATION);
+		ASSERT_STREQ(sitestation.c_str(), expectedstation.c_str());
+	}
 
 	// check channel
-	std::string sitechannel = correlationobject.site.channel;
-	std::string expectedchannel = std::string(CHANNEL);
-	ASSERT_STREQ(sitechannel.c_str(), expectedchannel.c_str());
+	if (correlationobject.site.channel.empty() != true) {
+		std::string sitechannel = correlationobject.site.channel;
+		std::string expectedchannel = std::string(CHANNEL);
+		ASSERT_STREQ(sitechannel.c_str(), expectedchannel.c_str());
+	}
 
 	// check network
-	std::string sitenetwork = correlationobject.site.network;
-	std::string expectednetwork = std::string(NETWORK);
-	ASSERT_STREQ(sitenetwork.c_str(), expectednetwork.c_str());
+	if (correlationobject.site.network.empty() != true) {
+		std::string sitenetwork = correlationobject.site.network;
+		std::string expectednetwork = std::string(NETWORK);
+		ASSERT_STREQ(sitenetwork.c_str(), expectednetwork.c_str());
+	}
 
 	// check location
-	std::string sitelocation = correlationobject.site.location;
-	std::string expectedlocation = std::string(LOCATION);
-	ASSERT_STREQ(sitelocation.c_str(), expectedlocation.c_str());
+	if (correlationobject.site.location.empty() != true) {
+		std::string sitelocation = correlationobject.site.location;
+		std::string expectedlocation = std::string(LOCATION);
+		ASSERT_STREQ(sitelocation.c_str(), expectedlocation.c_str());
+	}
 
 	// check agencyid
-	std::string sourceagencyid = correlationobject.source.agencyid;
-	std::string expectedagencyid = std::string(AGENCYID);
-	ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+	if (correlationobject.source.agencyid.empty() != true) {
+		std::string sourceagencyid = correlationobject.source.agencyid;
+		std::string expectedagencyid = std::string(AGENCYID);
+		ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+	}
 
 	// check author
-	std::string sourceauthor = correlationobject.source.author;
-	std::string expectedauthor = std::string(AUTHOR);
-	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	if (correlationobject.source.author.empty() != true) {
+		std::string sourceauthor = correlationobject.source.author;
+		std::string expectedauthor = std::string(AUTHOR);
+		ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
+	}
 
 	// check phase
-	std::string correlationphase = correlationobject.phase;
-	std::string expectedphase = std::string(PHASE);
-	ASSERT_STREQ(correlationphase.c_str(), expectedphase.c_str());
+	if (correlationobject.phase.empty() != true) {
+		std::string correlationphase = correlationobject.phase;
+		std::string expectedphase = std::string(PHASE);
+		ASSERT_STREQ(correlationphase.c_str(), expectedphase.c_str());
+	}
 
 	// check time
-	double correlationtime = correlationobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
-	ASSERT_EQ(correlationtime, expectedtime);
+	if (std::isnan(correlationobject.time) != true) {
+		double correlationtime = correlationobject.time;
+		double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(TIME));
+		ASSERT_EQ(correlationtime, expectedtime);
+	}
 
 	// check correlation
-	double correlationcorrelation = correlationobject.correlationvalue;
-	double expectedcorrelation = CORRELATION;
-	ASSERT_EQ(correlationcorrelation, expectedcorrelation);
+	if (std::isnan(correlationobject.correlationvalue) != true) {
+		double correlationcorrelation = correlationobject.correlationvalue;
+		double expectedcorrelation = CORRELATION;
+		ASSERT_EQ(correlationcorrelation, expectedcorrelation);
+	}
 
 	// check latitude
-	double correlationlatitude = correlationobject.hypocenter.latitude;
-	double expectedlatitude = LATITUDE;
-	ASSERT_EQ(correlationlatitude, expectedlatitude);
+	if (std::isnan(correlationobject.hypocenter.latitude) != true) {
+		double correlationlatitude = correlationobject.hypocenter.latitude;
+		double expectedlatitude = LATITUDE;
+		ASSERT_EQ(correlationlatitude, expectedlatitude);
+	}
 
 	// check longitude
-	double correlationlongitude = correlationobject.hypocenter.longitude;
-	double expectedlongitude = LONGITUDE;
-	ASSERT_EQ(correlationlongitude, expectedlongitude);
+	if (std::isnan(correlationobject.hypocenter.longitude) != true) {
+		double correlationlongitude = correlationobject.hypocenter.longitude;
+		double expectedlongitude = LONGITUDE;
+		ASSERT_EQ(correlationlongitude, expectedlongitude);
+	}
 
 	// check origintime
-	double correlationorigintime = correlationobject.hypocenter.time;
-	double expectedorigintime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
-	ASSERT_EQ(correlationorigintime, expectedorigintime);
+	if (std::isnan(correlationobject.hypocenter.time) != true) {
+		double correlationorigintime = correlationobject.hypocenter.time;
+		double expectedorigintime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(TIME));
+		ASSERT_EQ(correlationorigintime, expectedorigintime);
+	}
 
 	// check depth
-	double correlationdepth = correlationobject.hypocenter.depth;
-	double expecteddepth = DEPTH;
-	ASSERT_EQ(correlationdepth, expecteddepth);
+	if (std::isnan(correlationobject.hypocenter.depth) != true) {
+		double correlationdepth = correlationobject.hypocenter.depth;
+		double expecteddepth = DEPTH;
+		ASSERT_EQ(correlationdepth, expecteddepth);
+	}
 
 	// check latitude error
-	double correlationlatitudeerror = correlationobject.hypocenter.latitudeerror;
-	double expectedlatitudeerror = LATITUDEERROR;
-	ASSERT_EQ(correlationlatitudeerror, expectedlatitudeerror);
+	if (std::isnan(correlationobject.hypocenter.latitudeerror) != true) {
+		double correlationlatitudeerror =
+			correlationobject.hypocenter.latitudeerror;
+		double expectedlatitudeerror = LATITUDEERROR;
+		ASSERT_EQ(correlationlatitudeerror, expectedlatitudeerror);
+	}
 
 	// check longitude error
-	double correlationlongitdeerror =
-			correlationobject.hypocenter.longitudeerror;
-	double expectedlongitudeerror = LONGITUDEERROR;
-	ASSERT_EQ(correlationlongitdeerror, expectedlongitudeerror);
+	if (std::isnan(correlationobject.hypocenter.longitudeerror) != true) {
+		double correlationlongitdeerror =
+				correlationobject.hypocenter.longitudeerror;
+		double expectedlongitudeerror = LONGITUDEERROR;
+		ASSERT_EQ(correlationlongitdeerror, expectedlongitudeerror);
+	}
 
 	// check time error
-	double correlationtimeerror = correlationobject.hypocenter.timeerror;
-	double expectedtimeerror = TIMEERROR;
-	ASSERT_EQ(correlationtimeerror, expectedtimeerror);
+	if (std::isnan(correlationobject.hypocenter.timeerror) != true) {
+		double correlationtimeerror = correlationobject.hypocenter.timeerror;
+		double expectedtimeerror = TIMEERROR;
+		ASSERT_EQ(correlationtimeerror, expectedtimeerror);
+	}
 
 	// check depth error
-	double correlationdeptherror = correlationobject.hypocenter.deptherror;
-	double expecteddeptherror = DEPTHERROR;
-	ASSERT_EQ(correlationdeptherror, expecteddeptherror);
+	if (std::isnan(correlationobject.hypocenter.deptherror) != true) {
+		double correlationdeptherror = correlationobject.hypocenter.deptherror;
+		double expecteddeptherror = DEPTHERROR;
+		ASSERT_EQ(correlationdeptherror, expecteddeptherror);
+	}
 
 	// check eventtype
-	if (correlationobject.eventtype.type.compare("") != true) {
+	if (correlationobject.eventtype.type.empty() != true) {
 		std::string detectioneventtype = correlationobject.eventtype.type;
 		std::string expectedeventtype = std::string(EVENTTYPE);
 		ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
 	}
 
 	// check eventtype certainty
-	if (correlationobject.eventtype.certainty.compare("") != true) {
+	if (correlationobject.eventtype.certainty.empty() != true) {
 		std::string detectioneventtypecertainty =
 			correlationobject.eventtype.certainty;
 		std::string expectedeventtypecertainty = std::string(CERTAINTY);
@@ -118,57 +155,83 @@ void checkdata(detectionformats::correlation correlationobject,
 	}
 
 	// check magnitude
-	double correlationmagnitude = correlationobject.magnitude;
-	double expectedmagnitude = MAGNITUDE;
-	ASSERT_EQ(correlationmagnitude, expectedmagnitude);
+	if (std::isnan(correlationobject.magnitude) != true) {
+		double correlationmagnitude = correlationobject.magnitude;
+		double expectedmagnitude = MAGNITUDE;
+		ASSERT_EQ(correlationmagnitude, expectedmagnitude);
+	}
 
 	// check snr
-	double correlationsnr = correlationobject.snr;
-	double expectedsnr = SNR;
-	ASSERT_EQ(correlationsnr, expectedsnr);
+	if (std::isnan(correlationobject.snr) != true) {
+		double correlationsnr = correlationobject.snr;
+		double expectedsnr = SNR;
+		ASSERT_EQ(correlationsnr, expectedsnr);
+	}
 
 	// check zscore
-	double correlationzscore = correlationobject.zscore;
-	double expectedzscore = ZSCORE;
-	ASSERT_EQ(correlationzscore, expectedzscore);
+	if (std::isnan(correlationobject.zscore) != true) {
+		double correlationzscore = correlationobject.zscore;
+		double expectedzscore = ZSCORE;
+		ASSERT_EQ(correlationzscore, expectedzscore);
+	}
 
 	// check detectionthreshold
-	double correlationdetectionthreshold = correlationobject.detectionthreshold;
-	double expecteddetectionthreshold = DETECTIONTHRESHOLD;
-	ASSERT_EQ(correlationdetectionthreshold, expecteddetectionthreshold);
+	if (std::isnan(correlationobject.detectionthreshold) != true) {
+		double correlationdetectionthreshold =
+			correlationobject.detectionthreshold;
+		double expecteddetectionthreshold = DETECTIONTHRESHOLD;
+		ASSERT_EQ(correlationdetectionthreshold, expecteddetectionthreshold);
+	}
 
 	// check thresholdtype
-	std::string correlationthresholdtype = correlationobject.thresholdtype;
-	std::string expectedthresholdtype = std::string(THRESHOLDTYPE);
-	ASSERT_STREQ(correlationthresholdtype.c_str(),
-			expectedthresholdtype.c_str());
+	if (correlationobject.thresholdtype.empty() != true) {
+		std::string correlationthresholdtype = correlationobject.thresholdtype;
+		std::string expectedthresholdtype = std::string(THRESHOLDTYPE);
+		ASSERT_STREQ(correlationthresholdtype.c_str(),
+				expectedthresholdtype.c_str());
+	}
 
 	// associationinfo
 	if (correlationobject.associationinfo.isempty() == false) {
 		// check phase
-		std::string associationphase = correlationobject.associationinfo.phase;
-		std::string expectedassociationphase = std::string(PHASE);
-		ASSERT_STREQ(associationphase.c_str(), expectedassociationphase.c_str());
+		if (correlationobject.associationinfo.phase.empty() != true) {
+			std::string associationphase =
+				correlationobject.associationinfo.phase;
+			std::string expectedassociationphase = std::string(PHASE);
+			ASSERT_STREQ(associationphase.c_str(),
+				expectedassociationphase.c_str());
+		}
 
 		// check distance
-		double associationdistance = correlationobject.associationinfo.distance;
-		double expecteddistance = DISTANCE;
-		ASSERT_EQ(associationdistance, expecteddistance);
+		if (std::isnan(correlationobject.associationinfo.distance) != true) {
+			double associationdistance =
+				correlationobject.associationinfo.distance;
+			double expecteddistance = DISTANCE;
+			ASSERT_EQ(associationdistance, expecteddistance);
+		}
 
 		// check azimuth
-		double associationazimuth = correlationobject.associationinfo.azimuth;
-		double expectedazimuth = AZIMUTH;
-		ASSERT_EQ(associationazimuth, expectedazimuth);
+		if (std::isnan(correlationobject.associationinfo.azimuth) != true) {
+			double associationazimuth =
+				correlationobject.associationinfo.azimuth;
+			double expectedazimuth = AZIMUTH;
+			ASSERT_EQ(associationazimuth, expectedazimuth);
+		}
 
 		// check residual
-		double associationresidual = correlationobject.associationinfo.residual;
-		double expectedresidual = RESIDUAL;
-		ASSERT_EQ(associationresidual, expectedresidual);
+		if (std::isnan(correlationobject.associationinfo.residual) != true) {
+			double associationresidual =
+				correlationobject.associationinfo.residual;
+			double expectedresidual = RESIDUAL;
+			ASSERT_EQ(associationresidual, expectedresidual);
+		}
 
 		// check sigma
-		double associationsigma = correlationobject.associationinfo.sigma;
-		double expectedsigma = SIGMA;
-		ASSERT_EQ(associationsigma, expectedsigma);
+		if (std::isnan(correlationobject.associationinfo.sigma) != true) {
+			double associationsigma = correlationobject.associationinfo.sigma;
+			double expectedsigma = SIGMA;
+			ASSERT_EQ(associationsigma, expectedsigma);
+		}
 	}
 }
 
@@ -325,6 +388,13 @@ TEST(CorrelationTest, Constructor) {
 
 	// check data values
 	checkdata(correlationobject_altc3, "Tested Alternate Constructor 3");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::correlation correlationobject2(emptyvalue);
+
+    // check data values
+	checkdata(correlationobject2, "");
 }
 
 // tests to see if correlation can successfully
@@ -405,12 +475,32 @@ TEST(CorrelationTest, Validate) {
 
 	// build bad correlation object
 	detectionformats::correlation badcorrelationobject;
-	badcorrelationobject.id = "";
 
 	result = false;
 	try {
 		// call validation
 		result = badcorrelationobject.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
+	// build bad correlation object
+	detectionformats::correlation badcorrelationobject2;
+	badcorrelationobject2.phase = "22";
+	badcorrelationobject2.time = -1000000000000;
+	badcorrelationobject2.correlationvalue = -9999;
+	badcorrelationobject2.eventtype.type = "fjyord";
+	badcorrelationobject2.eventtype.certainty = "nah";
+	badcorrelationobject2.magnitude = -9;
+	badcorrelationobject2.snr = -9;
+
+	result = false;
+	try {
+		// call validation
+		result = badcorrelationobject2.isvalid();
 	} catch (const std::exception &) {
 		// don't care what the exception was
 	}

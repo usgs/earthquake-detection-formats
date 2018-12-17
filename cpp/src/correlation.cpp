@@ -344,7 +344,7 @@ rapidjson::Value & correlation::tojson(
 	json.AddMember(TYPE_KEY, typevalue, allocator);
 
 	// id
-	if (id != "") {
+	if (id.empty() == false) {
 		rapidjson::Value idvalue;
 		idvalue.SetString(rapidjson::StringRef(id.c_str()), allocator);
 		json.AddMember(ID_KEY, idvalue, allocator);
@@ -361,7 +361,7 @@ rapidjson::Value & correlation::tojson(
 	json.AddMember(SOURCE_KEY, sourcevalue, allocator);
 
 	// phase
-	if (phase != "") {
+	if (phase.empty() == false) {
 		rapidjson::Value phasevalue;
 		phasevalue.SetString(rapidjson::StringRef(phase.c_str()), allocator);
 		json.AddMember(PHASE_KEY, phasevalue, allocator);
@@ -411,7 +411,7 @@ rapidjson::Value & correlation::tojson(
 		json.AddMember(DETECTIONTHRESHOLD_KEY, detectionthreshold, allocator);
 
 	// thresholdtype
-	if (thresholdtype != "") {
+	if (thresholdtype.empty() == false) {
 		rapidjson::Value thresholdtypevalue;
 		thresholdtypevalue.SetString(
 				rapidjson::StringRef(thresholdtype.c_str()), allocator);
@@ -439,7 +439,7 @@ std::vector<std::string> correlation::geterrors() {
 	}
 
 	// id
-	if (id == "") {
+	if (id.empty() == true) {
 		// empty id
 		errorlist.push_back("Empty ID in correlation class.");
 	}
@@ -459,7 +459,7 @@ std::vector<std::string> correlation::geterrors() {
 	}
 
 	// phase
-	if (phase == "") {
+	if (phase.empty() == true) {
 		errorlist.push_back("Empty Phase in correlation class.");
 	}
 	if (detectionformats::IsStringAlpha(phase) == false) {

@@ -8,41 +8,58 @@
 
 void checkdata(detectionformats::stationInfo stationobject,
 		std::string testinfo) {
-
 	// check station
-	std::string sitestation = stationobject.site.station;
-	std::string expectedstation = std::string(STATION);
-	ASSERT_STREQ(sitestation.c_str(), expectedstation.c_str())<< testinfo.c_str();
+	if (stationobject.site.station.empty() != true) {
+		std::string sitestation = stationobject.site.station;
+		std::string expectedstation = std::string(STATION);
+		ASSERT_STREQ(sitestation.c_str(),
+			expectedstation.c_str())<< testinfo.c_str();
+	}
 
 	// check channel
-	std::string sitechannel = stationobject.site.channel;
-	std::string expectedchannel = std::string(CHANNEL);
-	ASSERT_STREQ(sitechannel.c_str(), expectedchannel.c_str())<< testinfo.c_str();
+	if (stationobject.site.channel.empty() != true) {
+		std::string sitechannel = stationobject.site.channel;
+		std::string expectedchannel = std::string(CHANNEL);
+		ASSERT_STREQ(sitechannel.c_str(),
+			expectedchannel.c_str())<< testinfo.c_str();
+	}
 
 	// check network
-	std::string sitenetwork = stationobject.site.network;
-	std::string expectednetwork = std::string(NETWORK);
-	ASSERT_STREQ(sitenetwork.c_str(), expectednetwork.c_str())<< testinfo.c_str();
+	if (stationobject.site.network.empty() != true) {
+		std::string sitenetwork = stationobject.site.network;
+		std::string expectednetwork = std::string(NETWORK);
+		ASSERT_STREQ(sitenetwork.c_str(),
+			expectednetwork.c_str())<< testinfo.c_str();
+	}
 
 	// check location
-	std::string sitelocation = stationobject.site.location;
-	std::string expectedlocation = std::string(LOCATION);
-	ASSERT_STREQ(sitelocation.c_str(), expectedlocation.c_str())<< testinfo.c_str();
+	if (stationobject.site.location.empty() != true) {
+		std::string sitelocation = stationobject.site.location;
+		std::string expectedlocation = std::string(LOCATION);
+		ASSERT_STREQ(sitelocation.c_str(),
+			expectedlocation.c_str())<< testinfo.c_str();
+	}
 
 	// check latitude
-	double stationlatitude = stationobject.latitude;
-	double expectedlatitude = LATITUDE;
-	ASSERT_EQ(stationlatitude, expectedlatitude);
+	if (std::isnan(stationobject.latitude) != true) {
+		double stationlatitude = stationobject.latitude;
+		double expectedlatitude = LATITUDE;
+		ASSERT_EQ(stationlatitude, expectedlatitude);
+	}
 
 	// check longitude
-	double stationlongitude = stationobject.longitude;
-	double expectedlongitude = LONGITUDE;
-	ASSERT_EQ(stationlongitude, expectedlongitude);
+	if (std::isnan(stationobject.longitude) != true) {
+		double stationlongitude = stationobject.longitude;
+		double expectedlongitude = LONGITUDE;
+		ASSERT_EQ(stationlongitude, expectedlongitude);
+	}
 
 	// check elevation
-	double stationelevation = stationobject.elevation;
-	double expectedelevation = ELEVATION;
-	ASSERT_EQ(stationelevation, expectedelevation);
+	if (std::isnan(stationobject.elevation) != true) {
+		double stationelevation = stationobject.elevation;
+		double expectedelevation = ELEVATION;
+		ASSERT_EQ(stationelevation, expectedelevation);
+	}
 
 	// check quality
 	if (std::isnan(stationobject.quality) != true) {
@@ -56,6 +73,11 @@ void checkdata(detectionformats::stationInfo stationobject,
 	bool expectedenabled = ENABLE;
 	ASSERT_EQ(stationenabled, expectedenabled);
 
+	// check use
+	bool stationused = stationobject.use;
+	bool expectedused = USE;
+	ASSERT_EQ(stationused, expectedused);
+
 	// check useforteleseismic
 	bool stationuseforteleseismic = stationobject.useforteleseismic;
 	bool expecteduseforteleseismic = USEFORTELESEISM;
@@ -63,17 +85,22 @@ void checkdata(detectionformats::stationInfo stationobject,
 
 	// check informationRequestor
 	if (stationobject.informationRequestor.isempty() != true) {
-
 		// check agencyid
-		std::string sourceagencyid = stationobject.informationRequestor.agencyid;
-		std::string expectedagencyid = std::string(AGENCYID);
-		ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str())<< testinfo.c_str();
+		if (stationobject.informationRequestor.agencyid.empty() != true) {
+			std::string sourceagencyid =
+				stationobject.informationRequestor.agencyid;
+			std::string expectedagencyid = std::string(AGENCYID);
+			ASSERT_STREQ(sourceagencyid.c_str(),
+				expectedagencyid.c_str())<< testinfo.c_str();
+		}
 
 		// check author
+		if (stationobject.informationRequestor.author.empty() != true) {
 		std::string sourceauthor = stationobject.informationRequestor.author;
 		std::string expectedauthor = std::string(AUTHOR);
-		ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str())<< testinfo.c_str();
-
+		ASSERT_STREQ(sourceauthor.c_str(),
+			expectedauthor.c_str())<< testinfo.c_str();
+		}
 	}
 }
 
@@ -95,6 +122,7 @@ TEST(StationInfoTest, WritesJSON) {
 
 	stationobject.quality = QUALITY;
 	stationobject.enable = ENABLE;
+	stationobject.use = USE;
 	stationobject.useforteleseismic = USEFORTELESEISM;
 
 	// source informationRequestor
@@ -135,7 +163,7 @@ TEST(StationInfoTest, Constructor) {
 	// use constructor
 	detectionformats::stationInfo stationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, USEFORTELESEISM,
 			std::string(AGENCYID), std::string(AUTHOR));
 
 	// check data values
@@ -144,7 +172,7 @@ TEST(StationInfoTest, Constructor) {
 	// use constructor
 	detectionformats::stationInfo stationobject2(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, USEFORTELESEISM,
 			"", "");
 
 	// check data values
@@ -154,12 +182,19 @@ TEST(StationInfoTest, Constructor) {
 	detectionformats::stationInfo stationobject_altc(
 			detectionformats::site(std::string(STATION), std::string(CHANNEL),
 					std::string(NETWORK), std::string(LOCATION)),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, USEFORTELESEISM,
 			detectionformats::source(std::string(AGENCYID),
 					std::string(AUTHOR)));
 
 	// check data values
 	checkdata(stationobject_altc, "Tested alternate constructor");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::stationInfo stationobject3(emptyvalue);
+
+    // check data values
+	checkdata(stationobject3, "");
 }
 
 // tests to see if pick can successfully
@@ -168,7 +203,7 @@ TEST(StationInfoTest, CopyConstructor) {
 	// use constructor
 	detectionformats::stationInfo fromstationobject(std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, USEFORTELESEISM,
 			std::string(AGENCYID), std::string(AUTHOR));
 
 	detectionformats::stationInfo stationobject(fromstationobject);
@@ -195,13 +230,15 @@ TEST(StationInfoTest, Validate) {
 
 	stationobject.quality = QUALITY;
 	stationobject.enable = ENABLE;
+	stationobject.use = USE;
 	stationobject.useforteleseismic = USEFORTELESEISM;
 
 	// successful validation
 	bool result = stationobject.isvalid();
 
 	// check return code
-	ASSERT_EQ(result, true)<< "Tested for successful validation (Without informationRequestor).";
+	ASSERT_EQ(result, true)
+		<< "Tested for successful validation (Without informationRequestor).";
 
 	// source informationRequestor
 	stationobject.informationRequestor.agencyid = std::string(AGENCYID);
@@ -211,16 +248,32 @@ TEST(StationInfoTest, Validate) {
 	result = stationobject.isvalid();
 
 	// check return code
-	ASSERT_EQ(result, true)<< "Tested for successful validation (With informationRequestor).";
+	ASSERT_EQ(result, true)
+		<< "Tested for successful validation (With informationRequestor).";
 
-	// build bad pick object
+	// build bad stationinfo object
 	detectionformats::stationInfo badstationobject;
-	stationobject.site.station = "";
 
 	result = false;
 	try {
 		// call validation
 		result = badstationobject.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
+	// build bad stationinfo object
+	detectionformats::stationInfo badstationobject2;
+	stationobject.latitude = -9999;
+	stationobject.longitude = -9999;
+
+	result = false;
+	try {
+		// call validation
+		result = badstationobject2.isvalid();
 	} catch (const std::exception &) {
 		// don't care what the exception was
 	}

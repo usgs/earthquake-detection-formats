@@ -77,7 +77,7 @@ rapidjson::Value & retract::tojson(
 	json.AddMember(TYPE_KEY, typevalue, allocator);
 
 	// id
-	if (id != "") {
+	if (id.empty() == false) {
 		rapidjson::Value idvalue;
 		idvalue.SetString(rapidjson::StringRef(id.c_str()), allocator);
 		json.AddMember(ID_KEY, idvalue, allocator);
@@ -102,7 +102,7 @@ std::vector<std::string> retract::geterrors() {
 	}
 
 	// id
-	if (id == "") {
+	if (id.empty() == true) {
 		// empty id
 		errorlist.push_back("Empty ID in retract class.");
 	}

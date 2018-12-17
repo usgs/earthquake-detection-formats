@@ -11,6 +11,7 @@
 #define ELEVATION_KEY "Elevation"
 #define QUALITY_KEY "Quality"
 #define ENABLE_KEY "Enable"
+#define USE_KEY "Use"
 #define USEFORTELESEISMIC_KEY "UseForTeleseismic"
 #define INFORMATIONREQUESTOR_KEY "InformationRequestor"
 
@@ -23,6 +24,7 @@ stationInfo::stationInfo() {
 	elevation = std::numeric_limits<double>::quiet_NaN();
 	quality = std::numeric_limits<double>::quiet_NaN();
 	enable = true;
+	use = true;
 	useforteleseismic = false;
 	informationRequestor = detectionformats::source();
 }
@@ -31,8 +33,9 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 							std::string newnetwork, std::string newlocation,
 							double newlatitude, double newlongitude,
 							double newelevation, double newquality,
-							bool newenable, bool newuseforteleseismic,
-							std::string newagencyid, std::string newauthor) {
+							bool newenable, bool newuse,
+							bool newuseforteleseismic, std::string newagencyid,
+							std::string newauthor) {
 	type = STATIONINFO_TYPE;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
 									newlocation);
@@ -41,13 +44,14 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 	elevation = newelevation;
 	quality = newquality;
 	enable = newenable;
+	use = newuse;
 	useforteleseismic = newuseforteleseismic;
 	informationRequestor = detectionformats::source(newagencyid, newauthor);
 }
 
 stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
 							double newlongitude, double newelevation,
-							double newquality, bool newenable,
+							double newquality, bool newenable, bool newuse,
 							bool newuseforteleseismic,
 							detectionformats::source newinformationrequestor) {
 	type = STATIONINFO_TYPE;
@@ -57,6 +61,7 @@ stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
 	elevation = newelevation;
 	quality = newquality;
 	enable = newenable;
+	use = newuse;
 	useforteleseismic = newuseforteleseismic;
 	informationRequestor = newinformationrequestor;
 }
@@ -125,6 +130,14 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 		enable = true;
 	}
 
+	// use
+	if ((json.HasMember(USE_KEY) == true)
+			&& (json[USE_KEY].IsBool() == true)) {
+		use = json[USE_KEY].GetBool();
+	} else {
+		use = true;
+	}
+
 	// useforteleseismic
 	if ((json.HasMember(USEFORTELESEISMIC_KEY) == true)
 			&& (json[USEFORTELESEISMIC_KEY].IsBool() == true)) {
@@ -151,6 +164,7 @@ stationInfo::stationInfo(const stationInfo &newstation) {
 	elevation = newstation.elevation;
 	quality = newstation.quality;
 	enable = newstation.enable;
+	use = newstation.use;
 	useforteleseismic = newstation.useforteleseismic;
 	informationRequestor = newstation.informationRequestor;
 }
@@ -175,24 +189,31 @@ rapidjson::Value & stationInfo::tojson(
 	json.AddMember(SITE_KEY, sitevalue, allocator);
 
 	// latitude
-	if (std::isnan(latitude) != true)
+	if (std::isnan(latitude) != true) {
 		json.AddMember(LATITUDE_KEY, latitude, allocator);
+	}
 
 	// longitude
-	if (std::isnan(longitude) != true)
+	if (std::isnan(longitude) != true) {
 		json.AddMember(LONGITUDE_KEY, longitude, allocator);
+	}
 
 	// elevation
-	if (std::isnan(elevation) != true)
+	if (std::isnan(elevation) != true) {
 		json.AddMember(ELEVATION_KEY, elevation, allocator);
+	}
 
 	// optional values
 	// quality
-	if (std::isnan(quality) != true)
+	if (std::isnan(quality) != true) {
 		json.AddMember(QUALITY_KEY, quality, allocator);
+	}
 
 	// enable
 	json.AddMember(ENABLE_KEY, enable, allocator);
+
+	// use
+	json.AddMember(USE_KEY, use, allocator);
 
 	// useforteleseismic
 	json.AddMember(USEFORTELESEISMIC_KEY, useforteleseismic, allocator);
@@ -247,7 +268,7 @@ std::vector<std::string> stationInfo::geterrors() {
 
 	// optional data
 	// Currently no validation criteria for optional values Quality,
-	// Enable, and UseForTeleseismic.
+	// Enable, Use, and UseForTeleseismic.
 
 	// informationRequestor
 	if (informationRequestor.isempty() != true) {

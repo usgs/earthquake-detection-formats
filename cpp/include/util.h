@@ -199,6 +199,7 @@ std::string ConvertEpochTimeToISO8601(double epochtime);
  * \brief Convert to json string function
  *
  * Converts the contents of the class to a serialized json string
+ * \param json - a reference to the rapidjson::Value document to convert
  * \return Returns a std::string containing the serialized json string
  */
 std::string ToJSONString(rapidjson::Value &json); // NOLINT
@@ -209,6 +210,7 @@ std::string ToJSONString(rapidjson::Value &json); // NOLINT
  * Converts the provided string from a serialized json string, populating
  * members
  * \param jsonstring - A std::string containing the serialized json
+ * \param jsondocument - A rapidjson::Document used when parsing the serialized json
  * \return Returns 1 if successful, 0 otherwise
  */
 rapidjson::Document & FromJSONString(std::string jsonstring,

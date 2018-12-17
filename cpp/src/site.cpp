@@ -83,14 +83,14 @@ rapidjson::Value & site::tojson(
 
 	// required values
 	// station
-	if (station != "") {
+	if (station.empty() == false) {
 		rapidjson::Value stationvalue;
 		stationvalue.SetString(rapidjson::StringRef(station.c_str()),
 								allocator);
 		json.AddMember(STATION_KEY, stationvalue, allocator);
 	}
 	// network
-	if (network != "") {
+	if (network.empty() == false) {
 		rapidjson::Value networkvalue;
 		networkvalue.SetString(rapidjson::StringRef(network.c_str()),
 								allocator);
@@ -99,7 +99,7 @@ rapidjson::Value & site::tojson(
 
 	// optional values
 	// channel
-	if (channel != "") {
+	if (channel.empty() == false) {
 		rapidjson::Value channelvalue;
 		channelvalue.SetString(rapidjson::StringRef(channel.c_str()),
 								allocator);
@@ -107,7 +107,7 @@ rapidjson::Value & site::tojson(
 	}
 
 	// location
-	if (location != "") {
+	if (location.empty() == false) {
 		rapidjson::Value locationvalue;
 		locationvalue.SetString(rapidjson::StringRef(location.c_str()),
 								allocator);
@@ -122,13 +122,13 @@ std::vector<std::string> site::geterrors() {
 
 	// check for required keys
 	// Station
-	if (station == "") {
+	if (station.empty() == true) {
 		// empty Station
 		errorlist.push_back("Empty Station in site class.");
 	}
 
 	// Network
-	if (network == "") {
+	if (network.empty() == true) {
 		// empty network
 		errorlist.push_back("Empty Network in site class.");
 	}

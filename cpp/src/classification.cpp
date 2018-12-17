@@ -325,7 +325,8 @@ std::vector<std::string> classification::geterrors() {
 
 	// optional keys
 	// phase
-	if ((phase != "") && (detectionformats::IsStringAlpha(phase) == false)) {
+	if ((phase.empty() == false) &&
+		(detectionformats::IsStringAlpha(phase) == false)) {
 		errorlist.push_back("Invalid phase in classification object.");
 	}
 
@@ -395,7 +396,7 @@ std::vector<std::string> classification::geterrors() {
 }
 
 bool classification::isempty() {
-	if (phase != "") {
+	if (phase.empty() == false) {
 		return (false);
 	}
 	if (std::isnan(phaseprobability) != true) {
@@ -416,7 +417,7 @@ bool classification::isempty() {
 	if (std::isnan(magnitude) != true) {
 		return (false);
 	}
-	if (magnitudetype != "") {
+	if (magnitudetype.empty() == false) {
 		return (false);
 	}
 	if (std::isnan(magnitudeprobability) != true) {
