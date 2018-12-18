@@ -93,12 +93,12 @@ public class Source implements DetectionInt {
 		// required values
 		// agencyID
 		if ((jsonAgencyID != null) && (!jsonAgencyID.isEmpty())) {
-			newJSONObject.put("AgencyID", jsonAgencyID);
+			newJSONObject.put(AGENCYID_KEY, jsonAgencyID);
 		}
 
 		// author
 		if ((jsonAuthor != null) && (!jsonAuthor.isEmpty())) {
-			newJSONObject.put("Author", jsonAuthor);
+			newJSONObject.put(AUTHOR_KEY, jsonAuthor);
 		}
 
 		return (newJSONObject);
@@ -110,9 +110,7 @@ public class Source implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -152,6 +150,21 @@ public class Source implements DetectionInt {
 
 		// success
 		return (errorList);
+	}
+
+	/**
+	 * Checks to see if this object is empty
+	 *
+	 * @return Returns true if empty, false otherwise.
+	 */
+	public boolean isEmpty() {
+		if (getAgencyID() != null) {
+			return (false);
+        }
+        if (getAuthor() != null) {
+			return (false);
+		}          
+		return (true);
 	}
 
 	/**

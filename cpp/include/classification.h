@@ -279,7 +279,7 @@ class classification : public detectionbase {
     /**
 	 * \brief classification algorithm source
 	 *
-	 * An optional detectionformats::site containing the source of this 
+	 * An optional detectionformats::source containing the source of this 
      * classification information
 	 */
 	detectionformats::source source;

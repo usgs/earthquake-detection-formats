@@ -157,13 +157,8 @@ public class Filter implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
-			return (true);
-		} else {
-			return (false);
-		}
+		// no validation errors possible
+		return (true);
 	}
 
 	/**

@@ -399,7 +399,5 @@ public class PickTest {
 					pickObject.getAssociationInfo().getSigma(), 0);
 			}
 		}
-
 	}
-
 }

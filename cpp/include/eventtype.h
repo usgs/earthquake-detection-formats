@@ -101,7 +101,7 @@ class eventtype : public detectionbase {
 	/**
 	 * \brief site autnor
 	 *
-	 * A required std::string containing the certainty for this eventtype.
+	 * An optional std::string containing the certainty for this eventtype.
 	 */
 	std::string certainty;
 };
