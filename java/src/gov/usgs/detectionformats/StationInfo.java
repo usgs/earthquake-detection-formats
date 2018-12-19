@@ -22,6 +22,7 @@ public class StationInfo implements DetectionInt {
 	public static final String ELEVATION_KEY = "Elevation";
 	public static final String QUALITY_KEY = "Quality";
 	public static final String ENABLE_KEY = "Enable";
+	public static final String USE_KEY = "Use";
 	public static final String USEFORTELESEISMIC_KEY = "UseForTeleseismic";
 	public static final String INFORMATIONREQUESTOR_KEY = "InformationRequestor";
 
@@ -61,6 +62,11 @@ public class StationInfo implements DetectionInt {
 	private final Boolean enable;
 
 	/**
+	 * Optional Boolean containing use flag
+	 */
+	private final Boolean use;
+
+	/**
 	 * Optional Boolean containing the use for teleseismic flag
 	 */
 	private final Boolean useForTeleseismic;
@@ -75,7 +81,6 @@ public class StationInfo implements DetectionInt {
 	 * values.
 	 */
 	public StationInfo() {
-
 		type = "StationInfo";
 		site = null;
 		latitude = null;
@@ -83,6 +88,7 @@ public class StationInfo implements DetectionInt {
 		elevation = null;
 		quality = null;
 		enable = null;
+		use = null;
 		useForTeleseismic = null;
 		informationRequestor = null;
 	}
@@ -109,6 +115,8 @@ public class StationInfo implements DetectionInt {
 	 *            - A Double containing the quality to use, null to omit
 	 * @param newEnable
 	 *            - A Boolean containing the enable flag to use, null to omit
+	 * @param newUse
+	 *            - A Boolean containing the use flag to use, null to omit
 	 * @param newUseForTeleseismic
 	 *            - A Boolean containing the use for teleseismic flag to use,
 	 *            null to omit
@@ -119,13 +127,12 @@ public class StationInfo implements DetectionInt {
 	 */
 	public StationInfo(String newStation, String newChannel, String newNetwork,
 			String newLocation, Double newLatitude, Double newLongitude,
-			Double newElevation, Double newQuality, Boolean newEnable,
-			Boolean newUseForTeleseismic, String newAgencyID,
+			Double newElevation, Double newQuality, Boolean newEnable, 
+			Boolean newUse, Boolean newUseForTeleseismic, String newAgencyID,
 			String newAuthor) {
-
 		this(new Site(newStation, newChannel, newNetwork, newLocation),
 				newLatitude, newLongitude, newElevation, newQuality, newEnable,
-				newUseForTeleseismic, new Source(newAgencyID, newAuthor));
+				newUse, newUseForTeleseismic, new Source(newAgencyID, newAuthor));
 	}
 
 	/**
@@ -144,6 +151,8 @@ public class StationInfo implements DetectionInt {
 	 *            - A Double containing the quality to use, null to omit
 	 * @param newEnable
 	 *            - A Boolean containing the enable flag to use, null to omit
+	 * @param newUse
+	 *            - A Boolean containing the use flag to use, null to omit
 	 * @param newUseForTeleseismic
 	 *            - A Boolean containing the use for teleseismic flag to use,
 	 *            null to omit
@@ -152,9 +161,9 @@ public class StationInfo implements DetectionInt {
 	 *            to omit
 	 */
 	public StationInfo(Site newSite, Double newLatitude, Double newLongitude,
-			Double newElevation, Double newQuality, Boolean newEnable,
-			Boolean newUseForTeleseismic, Source newInformationRequestor) {
-
+			Double newElevation, Double newQuality, Boolean newEnable, 
+			Boolean newUse, Boolean newUseForTeleseismic, 
+			Source newInformationRequestor) {
 		type = "StationInfo";
 		site = newSite;
 		latitude = newLatitude;
@@ -162,6 +171,7 @@ public class StationInfo implements DetectionInt {
 		elevation = newElevation;
 		quality = newQuality;
 		enable = newEnable;
+		use = newUse;
 		useForTeleseismic = newUseForTeleseismic;
 		informationRequestor = newInformationRequestor;
 	}
@@ -173,7 +183,6 @@ public class StationInfo implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public StationInfo(JSONObject newJSONObject) {
-
 		// Required values
 		// type
 		if (newJSONObject.containsKey(TYPE_KEY)) {
@@ -225,6 +234,13 @@ public class StationInfo implements DetectionInt {
 			enable = null;
 		}
 
+		// use
+		if (newJSONObject.containsKey(USE_KEY)) {
+			use = (boolean) newJSONObject.get(USE_KEY);
+		} else {
+			use = null;
+		}
+
 		// useforteleseimic
 		if (newJSONObject.containsKey(USEFORTELESEISMIC_KEY)) {
 			useForTeleseismic = (boolean) newJSONObject
@@ -250,7 +266,6 @@ public class StationInfo implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonType = getType();
@@ -260,6 +275,7 @@ public class StationInfo implements DetectionInt {
 		Double jsonElevation = getElevation();
 		Double jsonQuality = getQuality();
 		Boolean jsonEnable = getEnable();
+		Boolean jsonUse = getUse();
 		Boolean jsonUseForTeleseismic = getUseForTeleseismic();
 		Source jsonInformationRequestor = getInformationRequestor();
 
@@ -298,6 +314,11 @@ public class StationInfo implements DetectionInt {
 			newJSONObject.put(ENABLE_KEY, jsonEnable);
 		}
 
+		// use
+		if (jsonUse != null) {
+			newJSONObject.put(USE_KEY, jsonUse);
+		}		
+
 		// useForTeleseismic
 		if (jsonUseForTeleseismic != null) {
 			newJSONObject.put(USEFORTELESEISMIC_KEY, jsonUseForTeleseismic);
@@ -318,9 +339,7 @@ public class StationInfo implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -339,9 +358,6 @@ public class StationInfo implements DetectionInt {
 		Double jsonLatitude = getLatitude();
 		Double jsonLongitude = getLongitude();
 		Double jsonElevation = getElevation();
-		// Double jsonQuality = getQuality();
-		// Boolean jsonEnable = getEnable();
-		// Boolean jsonUseForTeleseismic = getUseForTeleseismic();
 		Source jsonInformationRequestor = getInformationRequestor();
 
 		ArrayList<String> errorList = new ArrayList<String>();
@@ -457,6 +473,13 @@ public class StationInfo implements DetectionInt {
 	 */
 	public Boolean getEnable() {
 		return enable;
+	}
+
+	/**
+	 * @return the use flag
+	 */
+	public Boolean getUse() {
+		return use;
 	}
 
 	/**

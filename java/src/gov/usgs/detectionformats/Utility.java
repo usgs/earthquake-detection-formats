@@ -108,39 +108,6 @@ public class Utility {
 	}
 
 	/**
-	 * Convenience method to parse an XML Date Time into a Date. Only useful
-	 * when the XML Date Time is within the Date object time range.
-	 *
-	 * @param toParse
-	 *            the xml date time string to parse.
-	 * @return the parsed Date object.
-	 */
-	public static Date getDate(final String toParse) {
-		XMLGregorianCalendar calendar = getXMLGregorianCalendar(toParse);
-		if (calendar != null) {
-			return new Date(calendar.toGregorianCalendar().getTimeInMillis());
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Convenience method to parse an XML Date Time into a GregorianCalender.
-	 *
-	 * @param toParse
-	 *            the xml date time string to parse.
-	 * @return the parsed Date object.
-	 */
-	public static GregorianCalendar getGregorianCalendar(final String toParse) {
-		XMLGregorianCalendar calendar = getXMLGregorianCalendar(toParse);
-		if (calendar != null) {
-			return calendar.toGregorianCalendar();
-		} else {
-			return null;
-		}
-	}
-
-	/**
 	 * Parse an XML Date Time into an XMLGregorianCalendar.
 	 *
 	 * @param toParse
@@ -158,41 +125,19 @@ public class Utility {
 	}
 
 	/**
-	 * Converts an XMLGregorianCalendar to a Date.
+	 * Convenience method to parse an XML Date Time into a Date. Only useful
+	 * when the XML Date Time is within the Date object time range.
 	 *
-	 * @param xmlDate
-	 *            XMLGregorianCalendar to convert.
-	 * @return corresponding date object.
+	 * @param toParse
+	 *            the xml date time string to parse.
+	 * @return the parsed Date object.
 	 */
-	public static Date getDate(final XMLGregorianCalendar xmlDate) {
-		// TODO: is this equivalent to getDate(String) processing above??
-
-		// start with UTC, i.e. no daylight savings time.
-		TimeZone timezone = TimeZone.getTimeZone("GMT");
-
-		// adjust timezone to match xmldate
-		int offsetMinutes = xmlDate.getTimezone();
-		if (offsetMinutes != DatatypeConstants.FIELD_UNDEFINED) {
-			timezone.setRawOffset(
-			// convert minutes to milliseconds
-			offsetMinutes * 60 // seconds per minute
-			* 1000 // milliseconds per second
-			);
+	public static Date getDate(final String toParse) {
+		XMLGregorianCalendar calendar = getXMLGregorianCalendar(toParse);
+		if (calendar != null) {
+			return new Date(calendar.toGregorianCalendar().getTimeInMillis());
+		} else {
+			return null;
 		}
-
-		// use calendar so parsed date will be UTC
-		Calendar calendar = Calendar.getInstance(timezone);
-		calendar.clear();
-		calendar.set(xmlDate.getYear(),
-				// xmlcalendar is 1 based, calender is 0 based
-				xmlDate.getMonth() - 1, xmlDate.getDay(), xmlDate.getHour(),
-				xmlDate.getMinute(), xmlDate.getSecond());
-		Date date = calendar.getTime();
-		int millis = xmlDate.getMillisecond();
-		if (millis != DatatypeConstants.FIELD_UNDEFINED) {
-			calendar.setTimeInMillis(calendar.getTimeInMillis() + millis);
-		}
-
-		return date;
 	}
 }

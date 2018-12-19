@@ -35,6 +35,7 @@ public class AssociationTest {
 				"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -50,6 +51,7 @@ public class AssociationTest {
 				"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 

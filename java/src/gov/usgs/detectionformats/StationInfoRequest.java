@@ -64,7 +64,6 @@ public class StationInfoRequest {
 	public StationInfoRequest(String newStation, String newChannel,
 			String newNetwork, String newLocation, String newAgencyID,
 			String newAuthor) {
-
 		this(new Site(newStation, newChannel, newNetwork, newLocation),
 				new Source(newAgencyID, newAuthor));
 	}
@@ -79,7 +78,6 @@ public class StationInfoRequest {
 	 *            - A Source containing the source to use
 	 */
 	public StationInfoRequest(Site newSite, Source newSource) {
-
 		type = "StationInfoRequest";
 		site = newSite;
 		source = newSource;
@@ -92,7 +90,6 @@ public class StationInfoRequest {
 	 *            - A JSONObject.
 	 */
 	public StationInfoRequest(JSONObject newJSONObject) {
-
 		// Required values
 		// type
 		if (newJSONObject.containsKey(TYPE_KEY)) {
@@ -124,7 +121,6 @@ public class StationInfoRequest {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonType = getType();
@@ -154,9 +150,7 @@ public class StationInfoRequest {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -169,7 +163,6 @@ public class StationInfoRequest {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonType = getType();
 		Site jsonSite = getSite();
 		Source jsonSource = getSource();

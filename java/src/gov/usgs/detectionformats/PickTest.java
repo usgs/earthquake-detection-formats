@@ -22,7 +22,15 @@ public class PickTest {
 			+ "\"ID\":\"12GFH48776857\",\"Polarity\":\"up\",\"Phase\":\"P\","
 			+ "\"Picker\":\"manual\",\"AssociationInfo\":{\"Distance\":0.442559,"
 			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":"
-			+ "-0.025393}}";
+			+ "-0.025393},\"ClassificationInfo\":{\"Phase\":\"P\","
+            + "\"PhaseProbability\":0.22,\"Distance\":0.442559," 
+            + "\"DistanceProbability\":22.5,\"Azimuth\":0.418479," 
+            + "\"AzimuthProbability\":0.16,\"Magnitude\":2.14,"
+            + "\"MagnitudeType\":\"Mb\",\"MagnitudeProbability\":0.55,"
+            + "\"Depth\":32.44,\"DepthProbability\":11.2,"
+            + "\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},"
+            + "\"EventTypeProbability\":1.1,\"Source\":{\"AgencyID\":\"US\","
+            + "\"Author\":\"TestAuthor\"}}}";
 	public static String ID = "12GFH48776857";
 	public static String STATION = "BMN";
 	public static String CHANNEL = "HHZ";
@@ -53,6 +61,22 @@ public class PickTest {
 	public static double ASSOCAZIMUTH = 0.418479;
 	public static double ASSOCRESIDUAL = -0.025393;
 	public static double ASSOCSIGMA = 0.086333;
+	public static String CLASSPHASE = "P";
+    public static double CLASSPHASEPROBABILITY = 0.22;
+    public static double CLASSDISTANCE = 0.442559;
+    public static double CLASSDISTANCEPROBABILITY = 22.5;
+    public static double CLASSAZIMUTH = 0.418479;
+    public static double CLASSAZIMUTHPROBABILITY = 0.16;
+    public static double CLASSMAGNITUDE = 2.14;
+    public static String CLASSMAGNITUDETYPE = "Mb";
+    public static double CLASSMAGNITUDEPROBABILITY = 0.55;
+    public static double CLASSDEPTH = 32.44;
+    public static double CLASSDEPTHPROBABILITY = 11.2;
+    public static String CLASSEVENTTYPE = "Earthquake";
+    public static String CLASSCERTAINTY = "Suspected";
+    public static double CLASSEVENTTYPEPROBABILITY = 1.1;
+    public static String CLASSAGENCYID = "US";
+    public static String CLASSAUTHOR = "TestAuthor";
 
 	/**
 	 * Able to write a JSON string
@@ -64,7 +88,12 @@ public class PickTest {
 			TYPE, HIGHPASS, LOWPASS, UNITS, AMPLITUDE, PERIOD, SNR, 
 			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, 
 			POWERRATIO, POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, 
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA, CLASSPHASE, 
+			CLASSPHASEPROBABILITY, CLASSDISTANCE, CLASSDISTANCEPROBABILITY, 
+			CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
+			CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, CLASSDEPTH, 
+			CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, CLASSCERTAINTY, 
+			CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, CLASSAUTHOR);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(pickObject.toJSON());
@@ -75,6 +104,7 @@ public class PickTest {
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -83,12 +113,13 @@ public class PickTest {
 	 */
 	@Test
 	public void ReadsJSON() {
-		// build Correlation object
+		// build Pick object
 		try {
 			CheckData(new Pick(Utility.fromJSONString(PICK_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 
@@ -102,7 +133,12 @@ public class PickTest {
 			TYPE, HIGHPASS, LOWPASS, UNITS, AMPLITUDE, PERIOD, SNR, 
 			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, 
 			POWERRATIO, POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, 
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA, CLASSPHASE, 
+			CLASSPHASEPROBABILITY, CLASSDISTANCE, CLASSDISTANCEPROBABILITY, 
+			CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
+			CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, CLASSDEPTH, 
+			CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, CLASSCERTAINTY, 
+			CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, CLASSAUTHOR);
 
 		// check data values
 		CheckData(pickObject, "Constructor");
@@ -140,7 +176,13 @@ public class PickTest {
 			new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR,
 				POWERRATIO, POWERRATIOERROR),
 			new Association(ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
-				ASSOCRESIDUAL, ASSOCSIGMA));
+				ASSOCRESIDUAL, ASSOCSIGMA),
+			new Classification(CLASSPHASE, CLASSPHASEPROBABILITY, CLASSDISTANCE, 
+				CLASSDISTANCEPROBABILITY, CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, 
+				CLASSMAGNITUDE, CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, 
+				CLASSDEPTH, CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, 
+				CLASSCERTAINTY, CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, 
+				CLASSAUTHOR));
 
 		// check data values
 		CheckData(altAltAltPickObject, "Alternate Constructor 3");
@@ -159,11 +201,16 @@ public class PickTest {
 	@Test
 	public void Validate() {
 		Pick pickObject = new Pick(ID, STATION, CHANNEL, NETWORK, LOCATION,
-			TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET, PICKER, TYPE, 
-			HIGHPASS, LOWPASS, UNITS, AMPLITUDE, PERIOD, SNR, BACKAZIMUTH,
-			BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
-			POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
-			ASSOCRESIDUAL, ASSOCSIGMA);
+			TIME, AGENCYID, AUTHOR, PHASE, POLARITY, ONSET, PICKER,
+			TYPE, HIGHPASS, LOWPASS, UNITS, AMPLITUDE, PERIOD, SNR, 
+			BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, 
+			POWERRATIO, POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, 
+			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA, CLASSPHASE, 
+			CLASSPHASEPROBABILITY, CLASSDISTANCE, CLASSDISTANCEPROBABILITY, 
+			CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
+			CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, CLASSDEPTH, 
+			CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, CLASSCERTAINTY, 
+			CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, CLASSAUTHOR);
 
 		// Successful validation
 		boolean rc = pickObject.isValid();
@@ -182,9 +229,10 @@ public class PickTest {
 
 		// build bad Pick object
 		Pick badPickObject2 = new Pick(null, null, null, null, null, null, null, 
-			null, "22", "22", "22", "22", null, null, null, null, -99.0, 
-			null, null, -99.0, null, null, null, null, null, "22", null, 
-			null, null, null);
+			null, "22", "22", "22", "22", null, null, null, null, -99.0, null, 
+			null, -99.0, null, null, null, null, null, "22", null, null, null, 
+			null, "22", null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null);
 
 		// Unuccessful validation
 		rc = badPickObject2.isValid();
@@ -399,5 +447,133 @@ public class PickTest {
 					pickObject.getAssociationInfo().getSigma(), 0);
 			}
 		}
+
+		// check pickObject.ClassificationInfo
+		if ((pickObject.getClassificationInfo() != null) && 
+			!pickObject.getClassificationInfo().isEmpty()) {
+			// check pickObject.getClassificationInfo().phase
+			if (pickObject.getClassificationInfo().getPhase() != null) {
+				assertEquals(TestName + " Phase Equals", CLASSPHASE,
+					pickObject.getClassificationInfo().getPhase());
+			}
+
+			// check pickObject.getClassificationInfo().phaseProbability
+			if (pickObject.getClassificationInfo().getPhaseProbability() != 
+				null) {
+				assertEquals(TestName + " Phase Probability Equals", 
+				CLASSPHASEPROBABILITY, 
+					pickObject.getClassificationInfo().getPhaseProbability(), 
+					0);
+			}
+
+			// check pickObject.getClassificationInfo().distance
+			if (pickObject.getClassificationInfo().getDistance() != null) {
+				assertEquals(TestName + " Distance Equals", CLASSDISTANCE,
+					pickObject.getClassificationInfo().getDistance(), 0);
+			}
+
+			// check pickObject.getClassificationInfo().distanceProbability
+			if (pickObject.getClassificationInfo().getDistanceProbability() != 
+				null) {
+				assertEquals(TestName + " Distance Probability Equals", 
+				CLASSDISTANCEPROBABILITY, 
+					pickObject.getClassificationInfo().getDistanceProbability(), 
+					0);
+			}        
+
+			// check pickObject.getClassificationInfo().Azimuth
+			if (pickObject.getClassificationInfo().getAzimuth() != null) {
+				assertEquals(TestName + " Azimuth Equals", CLASSAZIMUTH,
+					pickObject.getClassificationInfo().getAzimuth(), 0);
+			}
+
+			// check pickObject.getClassificationInfo().azimuthProbability
+			if (pickObject.getClassificationInfo().getAzimuthProbability() != 
+				null) {
+				assertEquals(TestName + " Azimuth Probability Equals", 
+				CLASSAZIMUTHPROBABILITY, 
+					pickObject.getClassificationInfo().getAzimuthProbability(), 
+					0);
+			}             
+
+			// check pickObject.getClassificationInfo().magnitude
+			if (pickObject.getClassificationInfo().getMagnitude() != null) {
+				assertEquals(TestName + " Magnitude Equals", CLASSMAGNITUDE,
+					pickObject.getClassificationInfo().getMagnitude(), 0);
+			}
+
+			// check pickObject.getClassificationInfo().magnitudeType
+			if (pickObject.getClassificationInfo().getMagnitudeType() != null) {
+				assertEquals(TestName + " Magnitude Type Equals", 
+					CLASSMAGNITUDETYPE,
+					pickObject.getClassificationInfo().getMagnitudeType());
+			}
+
+			// check pickObject.getClassificationInfo().magnitudeProbability
+			if (pickObject.getClassificationInfo().getMagnitudeProbability() != 
+				null) {
+				assertEquals(TestName + " Magnitude Probability Equals", 
+				CLASSMAGNITUDEPROBABILITY, 
+					pickObject.getClassificationInfo().getMagnitudeProbability(), 
+					0);
+			}
+
+			// check pickObject.getClassificationInfo().depth
+			if (pickObject.getClassificationInfo().getDepth() != null) {
+				assertEquals(TestName + " Depth Equals", CLASSDEPTH,
+					pickObject.getClassificationInfo().getDepth(), 0);
+			}
+
+			// check pickObject.getClassificationInfo().depthProbability
+			if (pickObject.getClassificationInfo().getDepthProbability() != 
+				null) {
+				assertEquals(TestName + " Depth Probability Equals", 
+				CLASSDEPTHPROBABILITY,
+					pickObject.getClassificationInfo().getDepthProbability(), 
+					0);
+			}
+
+			// check pickObject.getClassificationInfo().eventType
+			if (pickObject.getClassificationInfo().getEventType() != null) {
+				// check pickObject.getClassificationInfo().EventType.type
+				if (pickObject.getClassificationInfo().getEventType().getType() 
+					!= null) {
+					assertEquals(TestName + " Type Equals", CLASSEVENTTYPE,
+						pickObject.getClassificationInfo().getEventType().getType());
+				}
+
+				// check pickObject.getClassificationInfo().EventType.certainty
+				if (pickObject.getClassificationInfo().getEventType().getCertainty() 
+					!= null) {
+					assertEquals(TestName + " Certantity Equals", CLASSCERTAINTY,
+					pickObject.getClassificationInfo().getEventType().getCertainty());
+				}
+			}
+
+			// check pickObject.getClassificationInfo().eventTypeProbability
+			if (pickObject.getClassificationInfo().getEventTypeProbability() != 
+				null) {
+				assertEquals(TestName + " Event Type Probability Equals", 
+				CLASSEVENTTYPEPROBABILITY,
+					pickObject.getClassificationInfo().getEventTypeProbability(), 0);
+			}
+
+			// check pickObject.getClassificationInfo().source
+			if (pickObject.getClassificationInfo().getSource() != null) {
+				// check pickObject.getClassificationInfo().Source.AgencyID
+				if (pickObject.getClassificationInfo().getSource().getAgencyID() 
+					!= null) {
+					assertEquals(TestName + " AgencyID Equals", CLASSAGENCYID,
+						pickObject.getClassificationInfo().getSource().getAgencyID());
+				}
+
+				// check pickObject.getClassificationInfo().Source.Author
+				if (pickObject.getClassificationInfo().getSource().getAuthor() 
+					!= null) {
+					assertEquals(TestName + " Author Equals", CLASSAUTHOR,
+						pickObject.getClassificationInfo().getSource().getAuthor());
+				}
+			} 
+			}
 	}
 }

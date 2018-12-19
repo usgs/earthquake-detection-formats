@@ -8,7 +8,6 @@ import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
 public class FilterTest {
-
 	public static final String FILTER_STRING = "{\"Type\":\"BandPass\","
 			+ "\"HighPass\":1.05,"
 			+ "\"LowPass\":2.65,"
@@ -34,6 +33,7 @@ public class FilterTest {
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -48,6 +48,7 @@ public class FilterTest {
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 

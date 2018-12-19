@@ -11,7 +11,6 @@ import org.json.simple.JSONArray;
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Detection implements DetectionInt {
-
 	/**
 	 * JSON Keys
 	 */
@@ -61,10 +60,9 @@ public class Detection implements DetectionInt {
 	private final Date detectionTime;
 
 	/**
-	 * Optional String containing the event type of this Detection valid values
-	 * are "earthquake" or "blast"
+	 * Optional EventType containing the event type of this Detection
 	 */
-	private final String eventType;
+	private final EventType eventType;
 
 	/**
 	 * Required Double containing the Detection bayesian statistic
@@ -152,6 +150,9 @@ public class Detection implements DetectionInt {
 	 *            quickly after origin time, null to omit
 	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
+	 * @param newEventTypeCertainty 
+	 * 			  - A String containing the event type certainty to use, null to 
+	 * omit
 	 * @param newBayes
 	 *            - A Double containing the bayes to use, null to omit
 	 * @param newMinimumDistance
@@ -172,16 +173,19 @@ public class Detection implements DetectionInt {
 			Double newLatitude, Double newLongitude, Date newOrigintime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
 			Double newTimeError, Double newDepthError, String newDetectionType,
-			Date newDetectionTime, String newEventType, Double newBayes,
-			Double newMinimumDistance, Double newRMS, Double newGap,
-			ArrayList<Pick> newPickData, ArrayList<Correlation> newCorrelationData) {
-
+			Date newDetectionTime, String newEventType, 
+			String newEventTypeCertainty, Double newBayes, 
+			Double newMinimumDistance, Double newRMS, Double newGap, 
+			ArrayList<Pick> newPickData, 
+			ArrayList<Correlation> newCorrelationData) {
 		this(newID, new Source(newAgencyID, newAuthor),
 				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
 						newLatitudeError, newLongitudeError, newTimeError,
 						newDepthError),
-				newDetectionType, newDetectionTime, newEventType, newBayes,
-				newMinimumDistance, newRMS, newGap, newPickData, newCorrelationData);
+				newDetectionType, newDetectionTime, 
+				new EventType(newEventType, newEventTypeCertainty),
+				newBayes, newMinimumDistance, newRMS, newGap, newPickData, 
+				newCorrelationData);
 	}
 
 	/**
@@ -202,7 +206,7 @@ public class Detection implements DetectionInt {
 	 *            - A Date containing the time the detection was made, i.e. how
 	 *            quickly after origin time, null to omit
 	 * @param newEventType
-	 *            - A String containing the event type to use, null to omit
+	 *            - An EventType containing the event type to use, null to omit
 	 * @param newBayes
 	 *            - A Double containing the bayes to use, null to omit
 	 * @param newMinimumDistance
@@ -220,10 +224,9 @@ public class Detection implements DetectionInt {
 	 *            data that went into this origin, null to omit
 	 */
 	public Detection(String newID, Source newSource, Hypocenter newHypocenter,
-			String newDetectionType, Date newDetectionTime, String newEventType,
+			String newDetectionType, Date newDetectionTime, EventType newEventType,
 			Double newBayes, Double newMinimumDistance, Double newRMS, Double newGap,
 			ArrayList<Pick> newPickData, ArrayList<Correlation> newCorrelationData) {
-
 		type = "Detection";
 		id = newID;
 		source = newSource;
@@ -247,7 +250,6 @@ public class Detection implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Detection(JSONObject newJSONObject) {
-
 		// Required values
 		// type
 		if (newJSONObject.containsKey(TYPE_KEY)) {
@@ -296,7 +298,8 @@ public class Detection implements DetectionInt {
 
 		// eventType
 		if (newJSONObject.containsKey(EVENTTYPE_KEY)) {
-			eventType = (String) newJSONObject.get(EVENTTYPE_KEY);
+			eventType = new EventType
+				((JSONObject) newJSONObject.get(EVENTTYPE_KEY));
 		} else {
 			eventType = null;
 		}
@@ -331,7 +334,6 @@ public class Detection implements DetectionInt {
 
 		// Data
 		if (newJSONObject.containsKey(DATA_KEY)) {
-
 			pickData = new ArrayList<Pick>();
 			correlationData = new ArrayList<Correlation>();
 
@@ -339,7 +341,6 @@ public class Detection implements DetectionInt {
 			JSONArray dataArray = (JSONArray) newJSONObject.get(DATA_KEY);
 
 			if ((dataArray != null) && (!dataArray.isEmpty())) {
-
 				// go through the whole array
 				for (int i = 0; i < dataArray.size(); i++) {
 
@@ -387,7 +388,7 @@ public class Detection implements DetectionInt {
 		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonDetectionType = getDetectionType();
 		Date jsonDetectionTime = getDetectionTime();
-		String jsonEventType = getEventType();
+		EventType jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
 		Double jsonRMS = getRMS();
@@ -428,7 +429,7 @@ public class Detection implements DetectionInt {
 
 		// eventType
 		if (jsonEventType != null) {
-			newJSONObject.put(EVENTTYPE_KEY, jsonEventType);
+			newJSONObject.put(EVENTTYPE_KEY, jsonEventType.toJSON());
 		}
 
 		// bayes
@@ -456,11 +457,9 @@ public class Detection implements DetectionInt {
 
 		// Picks
 		if ((jsonPickData != null) && (!jsonPickData.isEmpty())) {
-
 			// enumerate through the whole arraylist
 			for (Iterator<Pick> pickIterator = jsonPickData
 					.iterator(); pickIterator.hasNext();) {
-
 				// convert pick to JSON object
 				JSONObject pickObject = ((Pick) pickIterator.next()).toJSON();
 
@@ -470,11 +469,9 @@ public class Detection implements DetectionInt {
 
 		// Correlation
 		if ((jsonCorrelationData != null) && (!jsonCorrelationData.isEmpty())) {
-
 			// enumerate through the whole arraylist
 			for (Iterator<Correlation> correlationIterator = jsonCorrelationData
 					.iterator(); correlationIterator.hasNext();) {
-
 				// convert beam to JSON object
 				JSONObject correlationObject = ((Correlation) correlationIterator
 						.next()).toJSON();
@@ -512,14 +509,13 @@ public class Detection implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonType = getType();
 		String jsonID = getID();
 		Source jsonSource = getSource();
 		Hypocenter jsonHypocenter = getHypocenter();
 		String jsonDetectionType = getDetectionType();
 		Date jsonDetectionTime = getDetectionTime();
-		String jsonEventType = getEventType();
+		EventType jsonEventType = getEventType();
 		Double jsonBayes = getBayes();
 		Double jsonMinimumDistance = getMinimumDistance();
 		Double jsonGap = getGap();
@@ -571,7 +567,6 @@ public class Detection implements DetectionInt {
 		// Optional Keys
 		// detectionType
 		if (jsonDetectionType != null) {
-
 			boolean match = false;
 			if (jsonDetectionType.equals("New")) {
 				match = true;
@@ -595,22 +590,12 @@ public class Detection implements DetectionInt {
 		// no time validation
 
 		// eventType
-		if (jsonEventType != null) {
-
-			boolean match = false;
-			if (jsonEventType.equals("earthquake")) {
-				match = true;
-			} else if (jsonEventType.equals("blast")) {
-				match = true;
-			} else {
-				match = false;
-			}
-
-			if (!match) {
-				// invalid eventType
-				errorList.add("Invalid EventType in Detection Class.");
-			}
-		}
+		if ((jsonEventType != null) && (!jsonEventType.isEmpty())) {
+            if (!jsonEventType.isValid()) {
+                // event type invalid
+                errorList.add("Invalid EventType in Correlation Class.");
+            }
+        }
 
 		// bayes
 		if (jsonBayes != null) {
@@ -642,7 +627,6 @@ public class Detection implements DetectionInt {
 		// Data
 		// Picks
 		if ((jsonPickData != null) && (!jsonPickData.isEmpty())) {
-
 			// enumerate through the whole arraylist
 			for (Iterator<Pick> pickIterator = jsonPickData
 					.iterator(); pickIterator.hasNext();) {
@@ -658,9 +642,8 @@ public class Detection implements DetectionInt {
 			}
 		}
 
-		// Correlation
+		// Correlations
 		if ((jsonCorrelationData != null) && (!jsonCorrelationData.isEmpty())) {
-
 			// enumerate through the whole arraylist
 			for (Iterator<Correlation> correlationIterator = jsonCorrelationData
 					.iterator(); correlationIterator.hasNext();) {
@@ -726,7 +709,7 @@ public class Detection implements DetectionInt {
 	/**
 	 * @return the eventType
 	 */
-	public String getEventType() {
+	public EventType getEventType() {
 		return eventType;
 	}
 

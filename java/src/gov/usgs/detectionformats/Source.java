@@ -32,7 +32,6 @@ public class Source implements DetectionInt {
 	 * The constructor for the Source class. Initializes members to null values.
 	 */
 	public Source() {
-
 		agencyID = null;
 		author = null;
 	}
@@ -47,7 +46,6 @@ public class Source implements DetectionInt {
 	 *            - A String containing the author to use
 	 */
 	public Source(String newAgencyID, String newAuthor) {
-
 		agencyID = newAgencyID;
 		author = newAuthor;
 	}
@@ -59,7 +57,6 @@ public class Source implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Source(JSONObject newJSONObject) {
-
 		// required values
 		// agencyID
 		if (newJSONObject.containsKey(AGENCYID_KEY)) {
@@ -74,7 +71,6 @@ public class Source implements DetectionInt {
 		} else {
 			author = null;
 		}
-
 	}
 
 	/**
@@ -84,7 +80,6 @@ public class Source implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonAgencyID = getAgencyID();
@@ -123,7 +118,6 @@ public class Source implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonAgencyID = getAgencyID();
 		String jsonAuthor = getAuthor();
 

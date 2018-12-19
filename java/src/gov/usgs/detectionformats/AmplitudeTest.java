@@ -32,6 +32,7 @@ public class AmplitudeTest {
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -48,6 +49,7 @@ public class AmplitudeTest {
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 

@@ -1,5 +1,7 @@
 package gov.usgs.detectionformats;
 
+import org.json.simple.JSONObject;
+
 import static org.junit.Assert.*;
 
 import org.json.simple.parser.ParseException;
@@ -16,8 +18,7 @@ public class RetractTest {
 	 * Able to write a JSON string
 	 */
 	@Test
-	public void writesJSON() {
-
+	public void WritesJSON() {
 		Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
 
 		// write out to a string
@@ -25,10 +26,11 @@ public class RetractTest {
 
 		// check the data
 		try {
-			checkData(new Retract(Utility.fromJSONString(jsonString)),
+			CheckData(new Retract(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -36,15 +38,14 @@ public class RetractTest {
 	 * Able to read a JSON string
 	 */
 	@Test
-	public void readsJSON() {
-
+	public void ReadsJSON() {
 		// build Correlation object
 		try {
-
-			checkData(new Retract(Utility.fromJSONString(RETRACT_STRING)),
+			CheckData(new Retract(Utility.fromJSONString(RETRACT_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 
@@ -52,21 +53,32 @@ public class RetractTest {
 	 * Constructor fills in members correctly
 	 */
 	@Test
-	public void altConstructors() {
-
+	public void Constructor() {
 		// use constructor
 		Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
 
 		// check data values
-		checkData(retractObject, "Alternate Constructor 1");
+		CheckData(retractObject, "Constructor");
+
+		// use constructor
+		Retract altRetractObject = new Retract(ID, new Source(AGENCYID, AUTHOR));
+
+		// check data values
+		CheckData(altRetractObject, "Alternate Constructor");	
+		
+		// empty constructor
+		JSONObject emptyJSONObject = new JSONObject();
+		Retract emptyObject = new Retract(emptyJSONObject);
+
+		// check the data
+		CheckData(emptyObject, "Empty Constructor");
 	}
 
 	/**
 	 * Able to run validation function
 	 */
 	@Test
-	public void validate() {
-
+	public void Validate() {
 		Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
 
 		// Successful validation
@@ -76,25 +88,41 @@ public class RetractTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad Retract object
-		Retract badRetractObject = new Retract("", AGENCYID, null);
+		Retract badRetractObject = new Retract();
 
 		rc = badRetractObject.isValid();
 
 		// check return code
 		assertEquals("Unsuccessful Validation", false, rc);
+
+		// build bad Retract object
+		Retract badRetractObject2= new Retract("", "", null);
+
+		rc = badRetractObject2.isValid();
+
+		// check return code
+		assertEquals("Unsuccessful Validation 2", false, rc);
 	}
 
-	public void checkData(Retract retractObject, String TestName) {
+	public void CheckData(Retract retractObject, String TestName) {
+		// check retractObject.ID
+		if (retractObject.getID() != null) {
+			assertEquals(TestName + " ID Equals", ID, retractObject.getID());
+		}
 
-		// check originObject.ID
-		assertEquals(TestName + " ID Equals", ID, retractObject.getID());
+		// check retractObject.Source
+		if (retractObject.getSource() != null) {
+			// check retractObject.Source.AgencyID
+			if (retractObject.getSource().getAgencyID() != null) {
+				assertEquals(TestName + " AgencyID Equals", AGENCYID,
+					retractObject.getSource().getAgencyID());
+			}
 
-		// check originObject.Source.AgencyID
-		assertEquals(TestName + " AgencyID Equals", AGENCYID, retractObject
-				.getSource().getAgencyID());
-
-		// check originObject.Source.Author
-		assertEquals(TestName + " Author Equals", AUTHOR, retractObject
-				.getSource().getAuthor());
+			// check retractObject.Source.Author
+			if (retractObject.getSource().getAuthor() != null) {
+				assertEquals(TestName + " Author Equals", AUTHOR,
+					retractObject.getSource().getAuthor());
+			}
+		}
 	}	
 }

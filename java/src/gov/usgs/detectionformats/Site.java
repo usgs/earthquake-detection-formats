@@ -11,7 +11,6 @@ import org.json.simple.*;
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Site implements DetectionInt {
-
 	/**
 	 * JSON Keys
 	 */
@@ -44,7 +43,6 @@ public class Site implements DetectionInt {
 	 * The constructor for the Site class. Initializes members to null values.
 	 */
 	public Site() {
-
 		station = null;
 		channel = null;
 		network = null;
@@ -66,7 +64,6 @@ public class Site implements DetectionInt {
 	 */
 	public Site(String newStation, String newChannel,
 			String newNetwork, String newLocation) {
-
 		station = newStation;
 		channel = newChannel;
 		network = newNetwork;
@@ -80,7 +77,6 @@ public class Site implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Site(JSONObject newJSONObject) {
-
 		// required values
 		// station
 		if (newJSONObject.containsKey(STATION_KEY)) {
@@ -119,7 +115,6 @@ public class Site implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject NewJSONObject = new JSONObject();
 
 		String jsonStation = getStation();
@@ -159,9 +154,7 @@ public class Site implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -174,7 +167,6 @@ public class Site implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonStation = getStation();
 		String jsonNetwork = getNetwork();
 

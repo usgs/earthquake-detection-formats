@@ -749,8 +749,8 @@ public class Correlation implements DetectionInt {
 		}
 
 		// Optional Keys
-		 // eventType
-		 if ((jsonEventType != null) && (!jsonEventType.isEmpty())) {
+		// eventType
+		if ((jsonEventType != null) && (!jsonEventType.isEmpty())) {
             if (!jsonEventType.isValid()) {
                 // event type invalid
                 errorList.add("Invalid EventType in Correlation Class.");

@@ -30,6 +30,7 @@ public class Pick implements DetectionInt {
 	public static final String AMPLITUDE_KEY = "Amplitude";
 	public static final String BEAM_KEY = "Beam";
 	public static final String ASSOCIATIONINFO_KEY = "AssociationInfo";
+	public static final String CLASSIFICATIONINFO_KEY = "ClassificationInfo";
 
 	/**
 	 * Required type identifier for this Pick
@@ -92,15 +93,19 @@ public class Pick implements DetectionInt {
 	private final Beam beam;
 
 	/**
-	 * Optional associated information.
+	 * Optional association information.
 	 */
 	private final Association associationInfo;
+
+	/**
+	 * Optional classification information.
+	 */
+	private final Classification classificationInfo;
 
 	/**
 	 * The constructor for the Pick class. Initializes members to null values.
 	 */
 	public Pick() {
-
 		type = "Pick";
 		id = null;
 		site = null;
@@ -114,6 +119,7 @@ public class Pick implements DetectionInt {
 		amplitude = null;
 		beam = null;
 		associationInfo = null;
+		classificationInfo = null;
 	}
 
 	/**
@@ -188,6 +194,47 @@ public class Pick implements DetectionInt {
 	 * @param newAssociationSigma
 	 *            - A Double containing the associated sigma to use, null to
 	 *            omit
+	 * @param newClassificationPhase
+	 *            - A String containing the phase name to use, null to omit
+     * @param newClassificationPhaseProb
+	 *            - A Double containing the probability of the phase estimate, 
+	 * 			  null to omit
+	 * @param newClassificationDistance
+	 *            - A Double containing the distance to use, null to omit
+     * @param newClassificationDistanceProb
+	 *            - A Double containing the probability of the distance estimate, 
+	 * 			  null to omit
+	 * @param newClassificationAzimuth
+	 *            - A Double containing the azimuth to use, null to omit
+     * @param newClassificationAzimuthProb
+	 *            - A Double containing the probability of the azimuth estimate, 
+	 * 			  null to omit
+	 * @param newClassificationMagnitude
+	 *            - A Double containing the magnitude to use, null to omit
+     * @param newClassificationMagType
+	 *            - A String containing the magnitude type to use, null to omit
+     * @param newClassificationMagProb
+	 *            - A Double containing the probability of the magnitude 
+	 * 			  estimate, null to omit
+	 * @param newClassificationDepth
+	 *            - A Double containing the depth to use, null to omit
+     * @param newClassificationDepthProb
+	 *            - A Double containing the probability of the depth estimate, 
+	 * 			  null to omit
+     * @param newClassificationEventType
+	 *            - A String containing the event type to use, null to omit
+	 * @param newClassificationEventTypeCertainty
+	 *            - A String containing the event type certainty to use, null to 
+	 * 			  omit
+     * @param newClassificationEventTypeProb
+	 *            - A Double containing the probability of the event type 
+	 * 			  estimate, null to omit
+	 * @param newClassificationAgencyID
+	 *            - A String containing the classifying algorithm agencyid to 
+	 * 			  use, null to omit
+     * @param newClassificationAuthor
+	 *            - A String containing the classifying algorithm author to use, 
+	 *  		  null to omit
 	 */
 	public Pick(String newID, String newStation, String newChannel,
 			String newNetwork, String newLocation, Date newTime,
@@ -199,20 +246,39 @@ public class Pick implements DetectionInt {
 			Double newSlowness, Double newSlownessError, Double newPowerRatio,
 			Double newPowerRatioError, String newAssociationPhase,
 			Double newAssociationDistance, Double newAssociationAzimuth,
-			Double newAssociationResidual, Double newAssociationSigma) {
+			Double newAssociationResidual, Double newAssociationSigma,
+			String newClassificationPhase, Double newClassificationPhaseProb,
+            Double newClassificationDistance, Double newClassificationDistanceProb,
+			Double newClassificationAzimuth, Double newClassificationAzimuthProb,
+			Double newClassificationMagnitude, String newClassificationMagType,
+            Double newClassificationMagProb, Double newClassificationDepth,
+			Double newClassificationDepthProb, String newClassificationEventType,
+			String newClassificationEventTypeCertainty,
+            Double newClassificationEventTypeProb, String newClassificationAgencyID,
+            String newClassificationAuthor) {
 
 		this(newID, new Site(newStation, newChannel, newNetwork, newLocation),
 				newTime, new Source(newAgencyID, newAuthor), newPhase,
 				newPolarity, newOnset, newPicker,
 				new ArrayList<Filter>(
-						Arrays.asList(new Filter(newType, newHighPass, 
-							newLowPass, newUnits))),
+					Arrays.asList(new Filter(newType, newHighPass, 
+						newLowPass, newUnits))),
 				new Amplitude(newAmplitude, newPeriod, newSNR),
 				new Beam(newBackAzimuth, newBackAzimutherror, newSlowness,
-						newSlownessError, newPowerRatio, newPowerRatioError),
+					newSlownessError, newPowerRatio, newPowerRatioError),
 				new Association(newAssociationPhase, newAssociationDistance,
-						newAssociationAzimuth, newAssociationResidual,
-						newAssociationSigma));
+					newAssociationAzimuth, newAssociationResidual,
+					newAssociationSigma),
+				new Classification(newClassificationPhase, 
+					newClassificationPhaseProb, newClassificationDistance, 
+					newClassificationDistanceProb, newClassificationAzimuth, 
+					newClassificationAzimuthProb, newClassificationMagnitude, 
+					newClassificationMagType, newClassificationMagProb, 
+					newClassificationDepth, newClassificationDepthProb, 
+					newClassificationEventType, 
+					newClassificationEventTypeCertainty,
+					newClassificationEventTypeProb, newClassificationAgencyID,
+					newClassificationAuthor));
 	}
 
 	/**
@@ -282,7 +348,6 @@ public class Pick implements DetectionInt {
 			Double newBackAzimutherror, Double newSlowness,
 			Double newSlownessError, Double newPowerRatio,
 			Double newPowerRatioError) {
-
 		this(newID, new Site(newStation, newChannel, newNetwork, newLocation),
 				newTime, new Source(newAgencyID, newAuthor), newPhase,
 				newPolarity, newOnset, newPicker,
@@ -328,10 +393,9 @@ public class Pick implements DetectionInt {
 			String newPhase, String newPolarity, String newOnset,
 			String newPicker, ArrayList<Filter> newFilter,
 			Amplitude newAmplitude, Beam newBeam) {
-
 		this(newID, newSite, newTime, newSource, newPhase, newPolarity,
 				newOnset, newPicker, newFilter, newAmplitude, newBeam,
-				new Association());
+				new Association(), new Classification());
 	}
 
 	/**
@@ -363,13 +427,17 @@ public class Pick implements DetectionInt {
 	 * @param newBeam
 	 *            - A Double containing the amplitude to us, null to omit
 	 * @param newAssociation
-	 *            - A Association containing the associated to use, null to omit
+	 *            - A Association containing the association info to use, null 
+	 * to omit
+	 * @param newClassification
+	 *            - A Classification containing the classification info to use, 
+	 * null to omit
 	 */
 	public Pick(String newID, Site newSite, Date newTime, Source newSource,
 			String newPhase, String newPolarity, String newOnset,
 			String newPicker, ArrayList<Filter> newFilter,
-			Amplitude newAmplitude, Beam newBeam, Association newAssociation) {
-
+			Amplitude newAmplitude, Beam newBeam, Association newAssociation,
+			Classification newClassification) {
 		type = "Pick";
 		id = newID;
 		site = newSite;
@@ -383,6 +451,7 @@ public class Pick implements DetectionInt {
 		amplitude = newAmplitude;
 		beam = newBeam;
 		associationInfo = newAssociation;
+		classificationInfo = newClassification;
 	}
 
 	/**
@@ -499,7 +568,7 @@ public class Pick implements DetectionInt {
 			beam = null;
 		}		
 		
-		// associated
+		// association
 		if (newJSONObject.containsKey(ASSOCIATIONINFO_KEY)) {
 			associationInfo = new Association(
 					(JSONObject) newJSONObject.get(ASSOCIATIONINFO_KEY));
@@ -507,6 +576,13 @@ public class Pick implements DetectionInt {
 			associationInfo = null;
 		}
 
+		// classification
+		if (newJSONObject.containsKey(CLASSIFICATIONINFO_KEY)) {
+			classificationInfo = new Classification(
+					(JSONObject) newJSONObject.get(CLASSIFICATIONINFO_KEY));
+		} else {
+			classificationInfo = null;
+		}
 	}
 
 	/**
@@ -517,7 +593,6 @@ public class Pick implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonType = getType();
@@ -533,6 +608,7 @@ public class Pick implements DetectionInt {
 		Amplitude jsonAmplitude = getAmplitude();
 		Beam jsonBeam = getBeam();
 		Association jsonAssociationInfo = getAssociationInfo();
+		Classification jsonClassificationInfo = getClassificationInfo();
 
 		// Required values
 		// Type
@@ -593,20 +669,29 @@ public class Pick implements DetectionInt {
 		}
 
 		// amplitude
-		if ((jsonAmplitude != null) && (!jsonAmplitude.isEmpty()))
+		if ((jsonAmplitude != null) && (!jsonAmplitude.isEmpty())) {
 			newJSONObject.put(AMPLITUDE_KEY, jsonAmplitude.toJSON());
+		}
 
 		// beam
-		if (jsonBeam != null) 
+		if (jsonBeam != null) {
 			newJSONObject.put(BEAM_KEY, jsonBeam.toJSON());		
-		
-		// associated
-		if ((jsonAssociationInfo != null) && (!jsonAssociationInfo.isEmpty()))
+		}
+
+		// association
+		if ((jsonAssociationInfo != null) && (!jsonAssociationInfo.isEmpty())) {
 			newJSONObject.put(ASSOCIATIONINFO_KEY,
-					jsonAssociationInfo.toJSON());
+				jsonAssociationInfo.toJSON());
+		}
+
+		// classification
+		if ((jsonClassificationInfo != null) && 
+			(!jsonClassificationInfo.isEmpty())) {
+			newJSONObject.put(CLASSIFICATIONINFO_KEY,
+				jsonClassificationInfo.toJSON());
+		}
 
 		return (newJSONObject);
-
 	}
 
 	/**
@@ -615,9 +700,7 @@ public class Pick implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -644,6 +727,7 @@ public class Pick implements DetectionInt {
 		Amplitude jsonAmplitude = getAmplitude();
 		Beam jsonBeam = getBeam();
 		Association jsonAssociationInfo = getAssociationInfo();
+		Classification jsonClassificationInfo = getClassificationInfo();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
@@ -793,11 +877,19 @@ public class Pick implements DetectionInt {
 			}
 		}		
 		
-		// associated
+		// association
 		if (jsonAssociationInfo != null) {
 			if (!jsonAssociationInfo.isValid()) {
 				// associationinfo invalid
 				errorList.add("Invalid AssociationInfo in Pick Class.");
+			}
+		}
+
+		// classification
+		if (jsonClassificationInfo != null) {
+			if (!jsonClassificationInfo.isValid()) {
+				// classificationInfo invalid
+				errorList.add("Invalid ClassificationInfo in Pick Class.");
 			}
 		}
 
@@ -895,4 +987,11 @@ public class Pick implements DetectionInt {
 	public Association getAssociationInfo() {
 		return associationInfo;
 	}
+
+	/**
+	 * @return the classificationInfo
+	 */
+	public Classification getClassificationInfo() {
+		return classificationInfo;
+	}	
 }

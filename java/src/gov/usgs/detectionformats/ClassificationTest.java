@@ -56,6 +56,7 @@ public class ClassificationTest {
 				"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -71,6 +72,7 @@ public class ClassificationTest {
 				"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 

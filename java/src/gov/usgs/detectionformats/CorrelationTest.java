@@ -81,8 +81,8 @@ public class CorrelationTest {
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
-
 	}
 
 	/**
@@ -97,6 +97,7 @@ public class CorrelationTest {
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 

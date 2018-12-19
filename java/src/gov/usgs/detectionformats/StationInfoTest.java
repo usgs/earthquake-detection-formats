@@ -1,5 +1,7 @@
 package gov.usgs.detectionformats;
 
+import org.json.simple.JSONObject;
+
 import static org.junit.Assert.*;
 
 import org.json.simple.parser.ParseException;
@@ -9,7 +11,7 @@ public class StationInfoTest {
 	public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
 			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
 			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\","
-			+ "\"Elevation\":1589.0,\"UseForTeleseismic\":true,"
+			+ "\"Use\":true,\"Elevation\":1589.0,\"UseForTeleseismic\":true,"
 			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,"
 			+ "\"InformationRequestor\":{\"Author\":\"TestAuthor\","
 			+ "\"AgencyID\":\"US\"}}";
@@ -23,6 +25,7 @@ public class StationInfoTest {
 	public static double ELEVATION = 1589.000000;
 	public static double QUALITY = 1.0;
 	public static boolean ENABLE = true;
+	public static boolean USE = true;
 	public static boolean USEFORTELESEISM = true;
 	public static String AGENCYID = "US";
 	public static String AUTHOR = "TestAuthor";
@@ -31,21 +34,21 @@ public class StationInfoTest {
 	 * Able to write a JSON string
 	 */
 	@Test
-	public void writesJSON() {
-
+	public void WritesJSON() {
 		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK,
 				LOCATION, LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
-				USEFORTELESEISM, AGENCYID, AUTHOR);
+				USE, USEFORTELESEISM, AGENCYID, AUTHOR);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(stationObject.toJSON());
 
 		// check the data
 		try {
-			checkData(new StationInfo(Utility.fromJSONString(jsonString)),
+			CheckData(new StationInfo(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -53,15 +56,14 @@ public class StationInfoTest {
 	 * Able to read a JSON string
 	 */
 	@Test
-	public void readsJSON() {
-
+	public void ReadsJSON() {
 		// build StationInfo object
 		try {
-
-			checkData(new StationInfo(Utility.fromJSONString(STATION_STRING)),
+			CheckData(new StationInfo(Utility.fromJSONString(STATION_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 
@@ -69,26 +71,40 @@ public class StationInfoTest {
 	 * Constructor fills in members correctly
 	 */
 	@Test
-	public void altConstructors() {
-
+	public void Constructor() {
 		// use constructor
-		StationInfo stationObject = new StationInfo(
-				new Site(STATION, CHANNEL, NETWORK, LOCATION), LATITUDE,
-				LONGITUDE, ELEVATION, QUALITY, ENABLE, USEFORTELESEISM,
-				new Source(AGENCYID, AUTHOR));
+		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK,
+			LOCATION, LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
+			USE, USEFORTELESEISM, AGENCYID, AUTHOR);
 
 		// check data values
-		checkData(stationObject, "Alternate Constructor 1");
+		CheckData(stationObject, "Constructor");
+
+		// use constructor
+		StationInfo altStationObject = new StationInfo(
+			new Site(STATION, CHANNEL, NETWORK, LOCATION), 
+			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, 
+			USEFORTELESEISM,
+			new Source(AGENCYID, AUTHOR));
+
+		// check data values
+		CheckData(altStationObject, "Alternate Constructor");
+
+		// empty constructor
+		JSONObject emptyJSONObject = new JSONObject();
+		StationInfo emptyObject = new StationInfo(emptyJSONObject);
+
+		// check the data
+		CheckData(emptyObject, "Empty Constructor");	
 	}
 
 	/**
 	 * Able to run validation function
 	 */
 	@Test
-	public void validate() {
-
+	public void Validate() {
 		StationInfo stationObject = new StationInfo(STATION, CHANNEL, NETWORK,
-				LOCATION, LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE,
+				LOCATION, LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE,
 				USEFORTELESEISM, AGENCYID, AUTHOR);
 
 		// Successful validation
@@ -98,45 +114,70 @@ public class StationInfoTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad StationInfo object
-		StationInfo badStationObject = new StationInfo(null, CHANNEL, NETWORK,
-				LOCATION, null, LONGITUDE, ELEVATION, QUALITY, ENABLE,
-				USEFORTELESEISM, AGENCYID, AUTHOR);
+		StationInfo badStationInfoObject = new StationInfo();
 
-		rc = badStationObject.isValid();
+		// Unuccessful validation
+		rc = badStationInfoObject.isValid();
+
+		// check return code
+		assertEquals("Unsuccessful Validation 1", false, rc);
+
+		// build bad StationInfo object
+		StationInfo badStationInfoObject2 = new StationInfo("", null, "",
+				null, -9999.0, 9999.0, 1000000.0, null, null, null,
+				null, "", "");
+
+		rc = badStationInfoObject2.isValid();
 
 		// check return code
 		assertEquals("Unsuccessful Validation", false, rc);
 	}
 
-	public void checkData(StationInfo stationObject, String TestName) {
+	public void CheckData(StationInfo stationObject, String TestName) {
+		// check stationObject.Site
+		if (stationObject.getSite() != null) {
+			// check stationObject.site.Station
+			if (stationObject.getSite().getStation() != null) {
+				assertEquals(TestName + " Station Equals", STATION,
+					stationObject.getSite().getStation());
+			}
 
-		// check stationObject.site.Station
-		assertEquals(TestName + " Station Equals", STATION,
-				stationObject.getSite().getStation());
+			// check stationObject.site.Channel
+			if (stationObject.getSite().getChannel() != null) {
+				assertEquals(TestName + " Channel Equals", CHANNEL,
+					stationObject.getSite().getChannel());
+			}
 
-		// check stationObject.site.Channel
-		assertEquals(TestName + " Channel Equals", CHANNEL,
-				stationObject.getSite().getChannel());
+			// check stationObject.site.Network
+			if (stationObject.getSite().getNetwork() != null) {
+				assertEquals(TestName + " Network Equals", NETWORK,
+					stationObject.getSite().getNetwork());
+			}
 
-		// check stationObject.site.Network
-		assertEquals(TestName + " Network Equals", NETWORK,
-				stationObject.getSite().getNetwork());
-
-		// check stationObject.site.Location
-		assertEquals(TestName + " Location Equals", LOCATION,
-				stationObject.getSite().getLocation());
+			// check stationObject.site.Location
+			if (stationObject.getSite().getLocation() != null) {
+				assertEquals(TestName + " Location Equals", LOCATION,
+					stationObject.getSite().getLocation());
+			}
+		}
 
 		// check stationObject.Latitude
-		assertEquals(TestName + " Latitude Equals", LATITUDE,
+		if (stationObject.getLatitude() != null) {
+			assertEquals(TestName + " Latitude Equals", LATITUDE,
 				stationObject.getLatitude(), 0);
+		}
 
 		// check stationObject.Longitude
-		assertEquals(TestName + " Longitude Equals", LONGITUDE,
+		if (stationObject.getLongitude() != null) {
+			assertEquals(TestName + " Longitude Equals", LONGITUDE,
 				stationObject.getLongitude(), 0);
+		}
 
 		// check stationObject.Depth
-		assertEquals(TestName + " Elevation Equals", ELEVATION,
+		if (stationObject.getElevation() != null) {
+			assertEquals(TestName + " Elevation Equals", ELEVATION,
 				stationObject.getElevation(), 0);
+		}
 
 		// optional values
 		// check hypoObject.quality
@@ -151,23 +192,31 @@ public class StationInfoTest {
 					stationObject.getEnable());
 		}
 
+		// check stationObject.use
+		if (stationObject.getUse() != null) {
+			assertEquals(TestName + " Use Equals", USE,
+					stationObject.getUse());
+		}
+
 		// check stationObject.useforteleseismic
 		if (stationObject.getUseForTeleseismic() != null) {
 			assertEquals(TestName + " UseForTeleseism Equals", USEFORTELESEISM,
 					stationObject.getUseForTeleseismic());
 		}
 		// check stationObject.informationRequestor
+		// check stationObject.Source
 		if (stationObject.getInformationRequestor() != null) {
-
 			// check stationObject.InformationRequestor.AgencyID
-			assertEquals(TestName + " AgencyID Equals", AGENCYID,
+			if (stationObject.getInformationRequestor().getAgencyID() != null) {
+				assertEquals(TestName + " AgencyID Equals", AGENCYID,
 					stationObject.getInformationRequestor().getAgencyID());
+			}
 
-			// check pickObject.Source.Author
-			assertEquals(TestName + " Author Equals", AUTHOR,
+			// check stationObject.InformationRequestor.Author
+			if (stationObject.getInformationRequestor().getAuthor() != null) {
+				assertEquals(TestName + " Author Equals", AUTHOR,
 					stationObject.getInformationRequestor().getAuthor());
-		}
-
+			}
+		}		
 	}
-
 }

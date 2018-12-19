@@ -43,6 +43,7 @@ public class BeamTest {
 				"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -58,6 +59,7 @@ public class BeamTest {
 				"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 
 	}
