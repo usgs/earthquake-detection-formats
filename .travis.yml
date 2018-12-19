@@ -66,7 +66,7 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
   - cd build
-  - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
+  - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRAPIDJSON_PATH=../../lib/rapidjson .. && make
   # python tests
   - cd ${TRAVIS_BUILD_DIR}/python
   - python -m unittest discover test/
