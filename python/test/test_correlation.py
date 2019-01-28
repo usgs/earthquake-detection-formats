@@ -5,7 +5,7 @@ import detectionformats.correlation
 import detectionformats.site
 import detectionformats.source
 import detectionformats.hypocenter
-import detectionformats.associated
+import detectionformats.association
 
 #stdlib imports
 import unittest
@@ -27,7 +27,7 @@ class TestCorrelation(unittest.TestCase):
     ZSCORE = 5.6
     DETECTIONTHRESHOLD = 1.0
     THRESHOLDTYPE = 'test'
-    ASSOCIATIONINFO = detectionformats.associated.Associated('P',
+    ASSOCIATIONINFO = detectionformats.association.Association('P',
         12.5, 255.0, 3.2, 4.8)
 
     JSONSTRING = '{"Type": "Correlation", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": "earthquake", "Magnitude": 2.5, "SNR": 1.2, "ZScore": 5.6, "DetectionThreshold": 1.0, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}'

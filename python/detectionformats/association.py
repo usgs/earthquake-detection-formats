@@ -5,7 +5,7 @@ import json
 
 # a conversion class used to create, parse, and validate association data as
 # part of detection data.
-class Associated:
+class Association:
     PHASE_KEY = "Phase"
     DISTANCE_KEY = "Distance"
     AZIMUTH_KEY = "Azimuth"
@@ -60,12 +60,12 @@ class Associated:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
+    # populate class from a dictionary
     def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -98,14 +98,14 @@ class Associated:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
+    # convert class to a dictionary
     def toDict(self) :
-        """Converts the object to a dictonary
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
@@ -177,13 +177,13 @@ class Associated:
         # second optional keys
         try:
             if self.distance < 0:
-                errorList.append('Invalid Distance in Associated Class.')
+                errorList.append('Invalid Distance in Association Class.')
         except:
             pass
 
         try:
             if self.azimuth < 0:
-                errorList.append('Invalid Azimuth in Associated Class.')
+                errorList.append('Invalid Azimuth in Association Class.')
         except:
             pass
 

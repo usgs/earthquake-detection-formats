@@ -31,7 +31,7 @@ class TestDetection(unittest.TestCase):
     FILTERLIST = [ aFilter ]
     AMPLITUDE = detectionformats.amplitude.Amplitude(5.5, 1.5, 6.2)
     BEAM = detectionformats.beam.Beam(22.5, 1.2, 4.6, 1.2, 3.5, 2.1)
-    ASSOCIATIONINFO = detectionformats.associated.Associated('P', 12.5, 255.0,
+    ASSOCIATIONINFO = detectionformats.association.Association('P', 12.5, 255.0,
         3.2, 4.8)
     PICK = detectionformats.pick.Pick('123',
         SITE, SOURCE, TIME, 'P', 'up','impulsive', 'other', FILTERLIST,

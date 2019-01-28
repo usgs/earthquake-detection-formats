@@ -7,7 +7,7 @@ import detectionformats.source
 import detectionformats.filter
 import detectionformats.amplitude
 import detectionformats.beam
-import detectionformats.associated
+import detectionformats.association
 
 #stdlib imports
 import unittest
@@ -26,7 +26,7 @@ class TestPick(unittest.TestCase):
     FILTERLIST = [ aFilter ]
     AMPLITUDE = detectionformats.amplitude.Amplitude(5.5, 1.5, 6.2)
     BEAM = detectionformats.beam.Beam(22.5, 1.2, 4.6, 1.2, 3.5, 2.1)
-    ASSOCIATIONINFO = detectionformats.associated.Associated('P', 12.5, 255.0,
+    ASSOCIATIONINFO = detectionformats.association.Association('P', 12.5, 255.0,
         3.2, 4.8)
 
     JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}'
@@ -466,6 +466,7 @@ class TestPick(unittest.TestCase):
             self.SITE, self.SOURCE, self.TIME, self.PHASE, self.POLARITY,
             self.ONSET, self.PICKER, self.FILTERLIST, self.AMPLITUDE, self.BEAM,
             self.ASSOCIATIONINFO)
+        self.maxDiff = None
         self.assertEqual(pick.toJSONString(), self.JSONSTRING)
 
     def test_fromJSON(self):

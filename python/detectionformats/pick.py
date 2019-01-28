@@ -6,7 +6,7 @@ import detectionformats.site
 import detectionformats.beam
 import detectionformats.filter
 import detectionformats.amplitude
-import detectionformats.associated
+import detectionformats.association
 
 #stdlib imports
 import json
@@ -33,7 +33,7 @@ class Pick:
     def __init__(self, newID=None, newSite=None, newSource=None, newTime=None,
         newPhase=None, newPolarity=None, newOnset=None, newPicker=None,
         newFilterList=None, newAmplitude=None, newBeam=None,
-        newAssociatioInfo=None) :
+        newAssociationInfo=None) :
         """Initialize the pick object. Constructs an empty object
            if all arguments are None
 
@@ -56,7 +56,7 @@ class Pick:
                 containing the amplitude measurement
             newBeam: an optional detectionformats.beam.Beam containing the beam
                 measurement
-            newAssociatioInfo: an optional detectionformats.associated.Associated
+            newAssociationInfo: an optional detectionformats.association.Association
                 containing association information
         Returns:
             Nothing
@@ -111,10 +111,10 @@ class Pick:
         else:
             self.beam = detectionformats.beam.Beam()
 
-        if newAssociatioInfo is not None:
-            self.associationInfo = newAssociatioInfo
+        if newAssociationInfo is not None:
+            self.associationInfo = newAssociationInfo
         else:
-            self.associationInfo = detectionformats.associated.Associated()
+            self.associationInfo = detectionformats.association.Association()
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
@@ -130,12 +130,12 @@ class Pick:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
+    # populate class from a dictionary
     def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -183,7 +183,7 @@ class Pick:
             self.beam.fromDict(aDict[self.BEAM_KEY])
 
         if self.ASSOCIATIONINFO_KEY in aDict:
-            self.associationInfo = detectionformats.associated.Associated()
+            self.associationInfo = detectionformats.association.Association()
             self.associationInfo.fromDict(aDict[self.ASSOCIATIONINFO_KEY])
 
     # convert class to a json string
@@ -201,14 +201,14 @@ class Pick:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
+    # convert class to a dictionary
     def toDict(self) :
-        """Converts the object to a dictonary
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """

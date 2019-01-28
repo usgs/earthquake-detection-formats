@@ -4,7 +4,7 @@
 import detectionformats.source
 import detectionformats.site
 import detectionformats.hypocenter
-import detectionformats.associated
+import detectionformats.association
 
 #stdlib imports
 import json
@@ -59,7 +59,7 @@ class Correlation:
                 threshold used as a float
             newThresholdType: an optional String containing the type of detection
                 threshold used
-            newAssociatioInfo: an optional detectionformats.associated.Associated
+            newAssociatioInfo: an optional detectionformats.association.Association
                 containing association information
         Returns:
             Nothing
@@ -118,7 +118,7 @@ class Correlation:
         if newAssociatioInfo is not None:
             self.associationInfo = newAssociatioInfo
         else:
-            self.associationInfo = detectionformats.associated.Associated()
+            self.associationInfo = detectionformats.association.Association()
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
@@ -179,7 +179,7 @@ class Correlation:
             self.thresholdType = aDict[self.THRESHOLDTYPE_KEY]
 
         if self.ASSOCIATIONINFO_KEY in aDict:
-            self.associationInfo = detectionformats.associated.Associated()
+            self.associationInfo = detectionformats.association.Association()
             self.associationInfo.fromDict(aDict[self.ASSOCIATIONINFO_KEY])
 
     # convert class to a json string
