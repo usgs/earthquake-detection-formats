@@ -13,12 +13,27 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+enum FormatTypes {
+	Pick, Correlation, Detection, Retract, StationInfo, StationInfoRequest,
+		Unknown;
+}
+
 /**
  * a utility class containing functions used by detectionformats.
  *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Utility {
+	/**
+	 * JSON Keys
+	 */
+	public static final String TYPE_KEY = "Type";
+	public static final String DETECTION_TYPE = "Detection";
+	public static final String CORRELATION_TYPE = "Correlation";
+	public static final String PICK_TYPE = "Pick";
+	public static final String RETRACT_TYPE = "Retract";
+	public static final String STATIONINFO_TYPE = "StationInfo";
+	public static final String STATIONINFOREQUEST_TYPE = "StationInfoRequest";
 
 	/**
 	 * File Extensions for detectionformats messages
@@ -138,6 +153,67 @@ public class Utility {
 			return new Date(calendar.toGregorianCalendar().getTimeInMillis());
 		} else {
 			return null;
+		}
+	}
+
+	/**
+	 * Convenience method to check if the provided string is for one of the 
+	 * supported types
+	 *
+	 * @param jsonString
+	 *            the json formatted string to check.
+	 * @return a FormatTypes enum containing the type, or unknown if the type
+	 * is not recognized 
+	 */
+	public static FormatTypes getDetectionType(String jsonString) {
+		// use a parser to convert to a string
+		JSONParser parser = new JSONParser();
+
+		// parse it
+		JSONObject newJSONObject;
+		
+		try {
+			newJSONObject = (JSONObject) parser.parse(jsonString);
+		} catch (ParseException e) { 
+			return(FormatTypes.Unknown);
+		}
+
+		return(getDetectionType(newJSONObject));
+	}
+
+	/**
+	 * Convenience method to check if the provided string is for one of the 
+	 * supported types
+	 *
+	 * @param jsonObject
+	 *            the json object to check.
+	 * @return a FormatTypes enum containing the type, or unknown if the type
+	 * is not recognized 
+	 */
+	public static FormatTypes getDetectionType(JSONObject jsonObject) {
+		// type
+		String jsonType = new String();
+		if (jsonObject.containsKey(TYPE_KEY)) {
+			jsonType = jsonObject.get(TYPE_KEY).toString();
+		} else {
+			return(FormatTypes.Unknown);
+		}
+
+		// return appropriate type
+		if (jsonType.equals(PICK_TYPE)) {
+			return (FormatTypes.Pick);
+		} else if (jsonType.equals(CORRELATION_TYPE)) {
+			return (FormatTypes.Correlation);
+		} else if (jsonType.equals(DETECTION_TYPE)) {
+			return (FormatTypes.Detection);
+		} else if (jsonType.equals(RETRACT_TYPE)) {
+			return (FormatTypes.Retract);
+		} else if (jsonType.equals(STATIONINFO_TYPE)) {
+			return (FormatTypes.StationInfo);
+		} else if (jsonType.equals(STATIONINFOREQUEST_TYPE)) {
+			return (FormatTypes.StationInfoRequest);
+		}  else {
+			return(FormatTypes.Unknown);
 		}
 	}
 }

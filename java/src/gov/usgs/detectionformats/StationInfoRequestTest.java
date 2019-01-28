@@ -11,7 +11,7 @@ public class StationInfoRequestTest {
 	public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
 			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
 			+ "\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},"
-			+ "\"Type\":\"StationInfoRequest\",}";
+			+ "\"Type\":\"StationInfoRequest\"}";
 
 	public static final String STATION = "BOZ";
 	public static final String CHANNEL = "BHZ";
