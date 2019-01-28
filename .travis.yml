@@ -65,9 +65,9 @@ before_script:
     - g++-5 --version 2>&1 | grep g++-5
 
 script:
-  # Java build, tests, and coverage
+  # Java build, tests, javadocs, and coverage
   - cd ${TRAVIS_BUILD_DIR}/java
-  - ant coverage
+  - ant all
   # C++ build, tests, and coverage
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
