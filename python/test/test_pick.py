@@ -8,6 +8,8 @@ import detectionformats.filter
 import detectionformats.amplitude
 import detectionformats.beam
 import detectionformats.association
+import detectionformats.classification
+import detectionformats.eventtype
 
 #stdlib imports
 import unittest
@@ -28,9 +30,13 @@ class TestPick(unittest.TestCase):
     BEAM = detectionformats.beam.Beam(22.5, 1.2, 4.6, 1.2, 3.5, 2.1)
     ASSOCIATIONINFO = detectionformats.association.Association('P', 12.5, 255.0,
         3.2, 4.8)
+    EVENTTYPE = detectionformats.eventtype.EventType('Earthquake', 'Suspected')
+    CLASSIFICATIONINFO = detectionformats.classification.Classification('P', 
+        12.5, 22.0, 88.2, 45.0, 67.0, 1.2, 'Mb', 33.33, 12.5, 50.2, EVENTTYPE, 
+        22.0, SOURCE)
 
-    JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}'
-    DICT = {"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}
+    JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}'
+    DICT = {"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}
 
     def test_init(self):
         # Empty init
@@ -220,10 +226,129 @@ class TestPick(unittest.TestCase):
             self.assertTrue(True)
             pass
 
+        try:
+            pick.classificationInfo.phase
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+        
+        try:
+            pick.classificationInfo.phaseProbability
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass    
+
+        try:
+            pick.classificationInfo.distance
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.distanceProbability
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.azimuth
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.azimuthProbability
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.magnitude
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.magnitudeType
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+        
+        try:
+            pick.classificationInfo.magnitudeProbability
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.residual
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.depth
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass  
+
+        try:
+            pick.classificationInfo.depthProbability
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass  
+
+        try:
+            pick.classificationInfo.eventType.type
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.eventType.certainty
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.eventTypeProbability
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.source.agencyID
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            pick.classificationInfo.source.author
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
         pick = detectionformats.pick.Pick(self.ID,
             self.SITE, self.SOURCE, self.TIME, self.PHASE, self.POLARITY,
             self.ONSET, self.PICKER, self.FILTERLIST, self.AMPLITUDE, self.BEAM,
-            self.ASSOCIATIONINFO)
+            self.ASSOCIATIONINFO, self.CLASSIFICATIONINFO)
 
         try:
             pick.id
@@ -461,11 +586,155 @@ class TestPick(unittest.TestCase):
 
         self.assertEqual(pick.associationInfo.sigma, self.ASSOCIATIONINFO.sigma)
 
+        try:
+            pick.classificationInfo.phase
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.phase, self.CLASSIFICATIONINFO.phase)
+
+        try:
+            pick.classificationInfo.phaseProbability
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
+
+        try:
+            pick.classificationInfo.distance
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
+
+        try:
+            pick.classificationInfo.distanceProbability
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
+
+        try:
+            pick.classificationInfo.azimuth
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
+
+        try:
+            pick.classificationInfo.azimuthProbability
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability)        
+
+        try:
+            pick.classificationInfo.magnitude
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
+
+        try:
+            pick.classificationInfo.magnitudeType
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
+
+        try:
+            pick.classificationInfo.magnitudeProbability
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)
+
+        try:
+            pick.classificationInfo.depth
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.depth, self.CLASSIFICATIONINFO.depth)
+
+        try:
+            pick.classificationInfo.depthProbability
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.depthProbability, self.CLASSIFICATIONINFO.depthProbability)  
+
+        try:
+            pick.classificationInfo.eventType.type
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.eventType.type, self.CLASSIFICATIONINFO.eventType.type)  
+
+        try:
+            pick.classificationInfo.eventType.certainty
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.eventType.certainty, self.CLASSIFICATIONINFO.eventType.certainty)  
+
+        try:
+            pick.classificationInfo.eventTypeProbability
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.eventTypeProbability, self.CLASSIFICATIONINFO.eventTypeProbability)   
+
+        try:
+            pick.classificationInfo.source.agencyID
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.source.agencyID, self.SOURCE.agencyID)  
+
+        try:
+            pick.classificationInfo.source.author
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.classificationInfo.source.author, self.SOURCE.author) 
+
     def test_toJSON(self):
         pick = detectionformats.pick.Pick(self.ID,
             self.SITE, self.SOURCE, self.TIME, self.PHASE, self.POLARITY,
             self.ONSET, self.PICKER, self.FILTERLIST, self.AMPLITUDE, self.BEAM,
-            self.ASSOCIATIONINFO)
+            self.ASSOCIATIONINFO, self.CLASSIFICATIONINFO)
         self.maxDiff = None
         self.assertEqual(pick.toJSONString(), self.JSONSTRING)
 
@@ -500,12 +769,29 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.associationInfo.azimuth, self.ASSOCIATIONINFO.azimuth)
         self.assertEqual(pick.associationInfo.residual, self.ASSOCIATIONINFO.residual)
         self.assertEqual(pick.associationInfo.sigma, self.ASSOCIATIONINFO.sigma)
+        self.assertEqual(pick.classificationInfo.phase, self.PHASE)
+        self.assertEqual(pick.classificationInfo.phase, self.CLASSIFICATIONINFO.phase)
+        self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
+        self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
+        self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
+        self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
+        self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability) 
+        self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
+        self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
+        self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)
+        self.assertEqual(pick.classificationInfo.depth, self.CLASSIFICATIONINFO.depth)
+        self.assertEqual(pick.classificationInfo.depthProbability, self.CLASSIFICATIONINFO.depthProbability) 
+        self.assertEqual(pick.classificationInfo.eventType.type, self.CLASSIFICATIONINFO.eventType.type)
+        self.assertEqual(pick.classificationInfo.eventType.certainty, self.CLASSIFICATIONINFO.eventType.certainty)    
+        self.assertEqual(pick.classificationInfo.eventTypeProbability, self.CLASSIFICATIONINFO.eventTypeProbability)   
+        self.assertEqual(pick.classificationInfo.source.agencyID, self.CLASSIFICATIONINFO.source.agencyID)
+        self.assertEqual(pick.classificationInfo.source.author, self.CLASSIFICATIONINFO.source.author)   
 
     def test_toDict(self):
         pick = detectionformats.pick.Pick(self.ID,
             self.SITE, self.SOURCE, self.TIME, self.PHASE, self.POLARITY,
             self.ONSET, self.PICKER, self.FILTERLIST, self.AMPLITUDE, self.BEAM,
-            self.ASSOCIATIONINFO)
+            self.ASSOCIATIONINFO, self.CLASSIFICATIONINFO)
         self.maxDiff = None
         self.assertEqual(pick.toDict(), self.DICT)
 
@@ -540,12 +826,28 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.associationInfo.azimuth, self.ASSOCIATIONINFO.azimuth)
         self.assertEqual(pick.associationInfo.residual, self.ASSOCIATIONINFO.residual)
         self.assertEqual(pick.associationInfo.sigma, self.ASSOCIATIONINFO.sigma)
+        self.assertEqual(pick.classificationInfo.phase, self.CLASSIFICATIONINFO.phase)
+        self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
+        self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
+        self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
+        self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
+        self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability) 
+        self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
+        self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
+        self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)
+        self.assertEqual(pick.classificationInfo.depth, self.CLASSIFICATIONINFO.depth)
+        self.assertEqual(pick.classificationInfo.depthProbability, self.CLASSIFICATIONINFO.depthProbability) 
+        self.assertEqual(pick.classificationInfo.eventType.type, self.CLASSIFICATIONINFO.eventType.type)
+        self.assertEqual(pick.classificationInfo.eventType.certainty, self.CLASSIFICATIONINFO.eventType.certainty)    
+        self.assertEqual(pick.classificationInfo.eventTypeProbability, self.CLASSIFICATIONINFO.eventTypeProbability)   
+        self.assertEqual(pick.classificationInfo.source.agencyID, self.CLASSIFICATIONINFO.source.agencyID)
+        self.assertEqual(pick.classificationInfo.source.author, self.CLASSIFICATIONINFO.source.author)  
 
     def test_isValid(self):
         pick = detectionformats.pick.Pick(self.ID,
             self.SITE, self.SOURCE, self.TIME, self.PHASE, self.POLARITY,
             self.ONSET, self.PICKER, self.FILTERLIST, self.AMPLITUDE, self.BEAM,
-            self.ASSOCIATIONINFO)
+            self.ASSOCIATIONINFO, self.CLASSIFICATIONINFO)
         self.assertTrue(pick.isValid())
 
         badPick = detectionformats.pick.Pick()

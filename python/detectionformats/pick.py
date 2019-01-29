@@ -7,6 +7,7 @@ import detectionformats.beam
 import detectionformats.filter
 import detectionformats.amplitude
 import detectionformats.association
+import detectionformats.classification
 
 #stdlib imports
 import json
@@ -28,12 +29,13 @@ class Pick:
     AMPLITUDE_KEY = "Amplitude"
     BEAM_KEY = "Beam"
     ASSOCIATIONINFO_KEY = "AssociationInfo"
+    CLASSIFICATIONINFO_KEY = "ClassificationInfo"
 
     # init
     def __init__(self, newID=None, newSite=None, newSource=None, newTime=None,
         newPhase=None, newPolarity=None, newOnset=None, newPicker=None,
         newFilterList=None, newAmplitude=None, newBeam=None,
-        newAssociationInfo=None) :
+        newAssociationInfo=None, newClassificationInfo=None) :
         """Initialize the pick object. Constructs an empty object
            if all arguments are None
 
@@ -58,6 +60,8 @@ class Pick:
                 measurement
             newAssociationInfo: an optional detectionformats.association.Association
                 containing association information
+            newClassificationInfo: an optional detectionformats.classification.Classification
+                containing classification information
         Returns:
             Nothing
         Raises:
@@ -115,6 +119,11 @@ class Pick:
             self.associationInfo = newAssociationInfo
         else:
             self.associationInfo = detectionformats.association.Association()
+
+        if newClassificationInfo is not None:
+            self.classificationInfo = newClassificationInfo
+        else:
+            self.classificationInfo = detectionformats.classification.Classification()
 
     # populate class from a json string
     def fromJSONString(self, jsonString) :
@@ -185,6 +194,10 @@ class Pick:
         if self.ASSOCIATIONINFO_KEY in aDict:
             self.associationInfo = detectionformats.association.Association()
             self.associationInfo.fromDict(aDict[self.ASSOCIATIONINFO_KEY])
+
+        if self.CLASSIFICATIONINFO_KEY in aDict:
+            self.classificationInfo = detectionformats.classification.Classification()
+            self.classificationInfo.fromDict(aDict[self.CLASSIFICATIONINFO_KEY])    
 
     # convert class to a json string
     def toJSONString(self) :
@@ -271,6 +284,12 @@ class Pick:
         try:
             if self.associationInfo.isEmpty() == False:
                 aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
+        except:
+            pass
+
+        try:
+            if self.classificationInfo.isEmpty() == False:
+                aDict[self.CLASSIFICATIONINFO_KEY] = self.classificationInfo.toDict()
         except:
             pass
 
@@ -388,6 +407,13 @@ class Pick:
             if self.associationInfo.isEmpty() == False:
                 if self.associationInfo.isValid() == False:
                     errorList.append('Invalid AssociationInfo in Pick Class.')
+        except (NameError, AttributeError):
+            pass
+
+        try:
+            if self.classificationInfo.isEmpty() == False:
+                if self.classificationInfo.isValid() == False:
+                    errorList.append('Invalid ClassificationInfo in Pick Class.')
         except (NameError, AttributeError):
             pass
 

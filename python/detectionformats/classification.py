@@ -37,14 +37,32 @@ class Classification:
         Args:
             newPhase: an optional String containing the desired phase
                 identification
+            newPhaseProb: an optional Number representing the probability of 
+                the phase identification as a float
             newDistance: an optional Number containing the desired distance
-                measurement as a float
+                measurement as a float 
+            newDistanceProb: an optional Number representing the probability of 
+                the distance measurement as a float
             newAzimuth: an optional Number containing the desired azimuth
                 measurement as a float
-            newResidual: an optional Number containing the desired residual
-                measurement as a float
-            newSigma: an optional Number containing the desired sigma measurement
+            newAzimuthProb: an optional Number representing the probability of 
+                the azimuth measurement as a float
+            newMagnitude: an optional Number representing the desired magnitude
+                estimate as a float
+            newMagType: an optional String containing the desired magnitude type
+                identification
+            newMagProb: an optional Number representing the probability of 
+                the magnitude estimate as a float
+            newDepth: an optional Number containing the desired depth measurement
                 as a float
+            newDepthProb: an optional Number representing the probability of 
+                the depth measurement as a float
+            newEventType: an optional detectionformats.eventtype.EventType 
+                containing the desired event type
+            newEventTypeProb: an optional Number representing the probability of 
+                the event type as a float
+            newSource: an optional detectionformats.source.Source containing 
+                the source of the classification information
         Returns:
             Nothing
         Raises:
@@ -87,7 +105,7 @@ class Classification:
         if newEventType is not None:
             self.eventType = newEventType
         else:
-            self.source = detectionformats.eventtype.EventType()
+            self.eventType = detectionformats.eventtype.EventType()
 
         if newEventTypeProb is not None:
             self.eventTypeProbability = newEventTypeProb
@@ -181,7 +199,6 @@ class Classification:
         jsonObject = self.toDict()
 
         return json.dumps(jsonObject, ensure_ascii=False)
-
 
     # convert class to a dictionary
     def toDict(self) :
@@ -423,8 +440,8 @@ class Classification:
             pass
 
         try:
-            self.eventType
-            return False
+            if self.eventType.isEmpty() == False:
+                return False
         except:
             pass
 
@@ -435,8 +452,8 @@ class Classification:
             pass
 
         try:
-            self.source
-            return False
+            if self.source.isEmpty() == False:
+                return False
         except:
             pass
 

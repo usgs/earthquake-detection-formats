@@ -79,5 +79,12 @@ class TestSource(unittest.TestCase):
         badSource = detectionformats.source.Source()
         self.assertFalse(badSource.isValid())
 
+    def test_isEmpty(self):
+        source = detectionformats.source.Source()
+        self.assertTrue(source.isEmpty())
+
+        source = detectionformats.source.Source(self.AGENCYID, self.AUTHOR)
+        self.assertFalse(source.isEmpty())
+
 if __name__ == '__main__':
     unittest.main()

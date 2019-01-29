@@ -141,4 +141,7 @@ class TestEventType(unittest.TestCase):
         self.assertTrue(eventtype.isValid())
         
         eventtype = detectionformats.eventtype.EventType(self.EARTHQUAKE, self.CONFIRMED)
-        self.assertTrue(eventtype.isValid())  
+        self.assertTrue(eventtype.isValid()) 
+        
+if __name__ == '__main__':
+    unittest.main()

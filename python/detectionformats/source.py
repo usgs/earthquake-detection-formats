@@ -138,3 +138,28 @@ class Source:
             errorList.append('No Author in Source Class.')
 
         return errorList
+
+    # test to see if class is empty
+    def isEmpty(self) :
+        """Checks to see if the object is empty
+
+        Args:
+            None
+        Returns:
+            True if the object is empty, False otherwise
+        Raises:
+            Nothing
+        """
+        try:
+            self.agencyID
+            return False
+        except:
+            pass
+
+        try:
+            self.author
+            return False
+        except:
+            pass
+
+        return True
