@@ -7,6 +7,7 @@ import detectionformats.source
 import detectionformats.hypocenter
 import detectionformats.pick
 import detectionformats.correlation
+import detectionformats.eventtype
 
 #stdlib imports
 import unittest
@@ -19,7 +20,7 @@ class TestDetection(unittest.TestCase):
         -120.33, 55.2, datetime.datetime(2018, 2, 6, 12, 32, 50, 0), 2.5,
         1.2, 20.0, 6.5)
     DETECTIONTYPE = 'New'
-    EVENTTYPE = 'earthquake'
+    EVENTTYPE = detectionformats.eventtype.EventType('Earthquake', 'Suspected')
     DETECTIONTIME = datetime.datetime(2018, 2, 6, 12, 31, 59, 0)
     BAYES = 2.5
     MINIMUMDISTANCE = 1.2
@@ -37,14 +38,14 @@ class TestDetection(unittest.TestCase):
         SITE, SOURCE, TIME, 'P', 'up','impulsive', 'other', FILTERLIST,
         AMPLITUDE, BEAM, ASSOCIATIONINFO)
     CORRELATION = detectionformats.correlation.Correlation('1234',
-        SITE, SOURCE, 'P', TIME, 1.2, HYPOCENTER, 'earthquake', 5.6, 1.2,
+        SITE, SOURCE, 'P', TIME, 1.2, HYPOCENTER, EVENTTYPE, 5.6, 1.2,
         2.2, 1, 'test', ASSOCIATIONINFO)
     PICKDATA = [ PICK ]
     CORRELATIONDATA = [ CORRELATION ]
 
-    JSONSTRING = '{"Type": "Detection", "ID": "123456789", "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "DetectionType": "New", "EventType": "earthquake", "DetectionTime": "2018-02-06T12:31:59.000Z", "Bayes": 2.5, "MinimumDistance": 1.2, "RMS": 5.6, "Gap": 1.0, "Data": [{"Type": "Pick", "ID": "123", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}, {"Type": "Correlation", "ID": "1234", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": "earthquake", "Magnitude": 5.6, "SNR": 1.2, "ZScore": 2.2, "DetectionThreshold": 1, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}]}'
+    JSONSTRING = '{"Type": "Detection", "ID": "123456789", "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "DetectionType": "New", "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "DetectionTime": "2018-02-06T12:31:59.000Z", "Bayes": 2.5, "MinimumDistance": 1.2, "RMS": 5.6, "Gap": 1.0, "Data": [{"Type": "Pick", "ID": "123", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}, {"Type": "Correlation", "ID": "1234", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "Magnitude": 5.6, "SNR": 1.2, "ZScore": 2.2, "DetectionThreshold": 1, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}]}'
 
-    DICT = {"Type": "Detection", "ID": "123456789", "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "DetectionType": "New", "EventType": "earthquake", "DetectionTime": "2018-02-06T12:31:59.000Z", "Bayes": 2.5, "MinimumDistance": 1.2, "RMS": 5.6, "Gap": 1.0, "Data": [{"Type": "Pick", "ID": "123", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}, {"Type": "Correlation", "ID": "1234", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": "earthquake", "Magnitude": 5.6, "SNR": 1.2, "ZScore": 2.2, "DetectionThreshold": 1, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}]}
+    DICT = {"Type": "Detection", "ID": "123456789", "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "DetectionType": "New", "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "DetectionTime": "2018-02-06T12:31:59.000Z", "Bayes": 2.5, "MinimumDistance": 1.2, "RMS": 5.6, "Gap": 1.0, "Data": [{"Type": "Pick", "ID": "123", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}, {"Type": "Correlation", "ID": "1234", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "Magnitude": 5.6, "SNR": 1.2, "ZScore": 2.2, "DetectionThreshold": 1, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}]}
 
     def test_init(self):
         # Empty init
@@ -135,7 +136,14 @@ class TestDetection(unittest.TestCase):
             pass
 
         try:
-            detection.eventType
+            detection.eventType.type
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            detection.eventType.certainty
             self.assertTrue(False)
         except AttributeError:
             self.assertTrue(True)
@@ -304,13 +312,22 @@ class TestDetection(unittest.TestCase):
         self.assertEqual(detection.detectionType, self.DETECTIONTYPE)
 
         try:
-            detection.eventType
+            detection.eventType.type
             self.assertTrue(True)
         except AttributeError:
             self.assertTrue(False)
             pass
 
-        self.assertEqual(detection.eventType, self.EVENTTYPE)
+        self.assertEqual(detection.eventType.type, self.EVENTTYPE.type)
+
+        try:
+            detection.eventType.certainty
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(detection.eventType.certainty, self.EVENTTYPE.certainty)
 
         try:
             detection.detectionTime
@@ -399,7 +416,8 @@ class TestDetection(unittest.TestCase):
         self.assertEqual(detection.hypocenter.depthError, self.HYPOCENTER.depthError)
         self.assertEqual(detection.hypocenter.timeError, self.HYPOCENTER.timeError)
         self.assertEqual(detection.detectionType, self.DETECTIONTYPE)
-        self.assertEqual(detection.eventType, self.EVENTTYPE)
+        self.assertEqual(detection.eventType.type, self.EVENTTYPE.type)
+        self.assertEqual(detection.eventType.certainty, self.EVENTTYPE.certainty)
         self.assertEqual(detection.detectionTime, self.DETECTIONTIME)
         self.assertEqual(detection.bayes, self.BAYES)
         self.assertEqual(detection.minimumDistance, self.MINIMUMDISTANCE)
@@ -431,7 +449,8 @@ class TestDetection(unittest.TestCase):
         self.assertEqual(detection.hypocenter.depthError, self.HYPOCENTER.depthError)
         self.assertEqual(detection.hypocenter.timeError, self.HYPOCENTER.timeError)
         self.assertEqual(detection.detectionType, self.DETECTIONTYPE)
-        self.assertEqual(detection.eventType, self.EVENTTYPE)
+        self.assertEqual(detection.eventType.type, self.EVENTTYPE.type)
+        self.assertEqual(detection.eventType.certainty, self.EVENTTYPE.certainty)
         self.assertEqual(detection.detectionTime, self.DETECTIONTIME)
         self.assertEqual(detection.bayes, self.BAYES)
         self.assertEqual(detection.minimumDistance, self.MINIMUMDISTANCE)

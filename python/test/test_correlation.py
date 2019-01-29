@@ -6,6 +6,7 @@ import detectionformats.site
 import detectionformats.source
 import detectionformats.hypocenter
 import detectionformats.association
+import detectionformats.eventtype
 
 #stdlib imports
 import unittest
@@ -21,7 +22,9 @@ class TestCorrelation(unittest.TestCase):
     HYPOCENTER = detectionformats.hypocenter.Hypocenter(45.123,
         -120.33, 55.2, datetime.datetime(2018, 2, 6, 12, 32, 50, 0), 2.5,
         1.2, 20.0, 6.5)
-    EVENTTYPE = 'earthquake'
+    EVENTTYPE = detectionformats.eventtype.EventType('Earthquake', 'Suspected')
+    EVENTTYPETYPE = 'Earthquake'
+    CERTAINTY = 'Suspected'
     MAGNITUDE = 2.5
     SNR = 1.2
     ZSCORE = 5.6
@@ -30,8 +33,8 @@ class TestCorrelation(unittest.TestCase):
     ASSOCIATIONINFO = detectionformats.association.Association('P',
         12.5, 255.0, 3.2, 4.8)
 
-    JSONSTRING = '{"Type": "Correlation", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": "earthquake", "Magnitude": 2.5, "SNR": 1.2, "ZScore": 5.6, "DetectionThreshold": 1.0, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}'
-    DICT = {"Type": "Correlation", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": "earthquake", "Magnitude": 2.5, "SNR": 1.2, "ZScore": 5.6, "DetectionThreshold": 1.0, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}
+    JSONSTRING = '{"Type": "Correlation", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "Magnitude": 2.5, "SNR": 1.2, "ZScore": 5.6, "DetectionThreshold": 1.0, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}'
+    DICT = {"Type": "Correlation", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Phase": "P", "Time": "2018-02-06T12:30:59.000Z", "Correlation": 1.2, "Hypocenter": {"Latitude": 45.123, "Longitude": -120.33, "Depth": 55.2, "Time": "2018-02-06T12:32:50.000Z", "LatitudeError": 2.5, "LongitudeError": 1.2, "DepthError": 20.0, "TimeError": 6.5}, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "Magnitude": 2.5, "SNR": 1.2, "ZScore": 5.6, "DetectionThreshold": 1.0, "ThresholdType": "test", "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}}
 
     def test_init(self):
         # Empty init
@@ -164,7 +167,14 @@ class TestCorrelation(unittest.TestCase):
             pass
 
         try:
-            correlation.eventType
+            correlation.eventType.type
+            self.assertTrue(False)
+        except AttributeError:
+            self.assertTrue(True)
+            pass
+
+        try:
+            correlation.eventType.certainty
             self.assertTrue(False)
         except AttributeError:
             self.assertTrue(True)
@@ -409,13 +419,22 @@ class TestCorrelation(unittest.TestCase):
         self.assertEqual(correlation.hypocenter.timeError, self.HYPOCENTER.timeError)
 
         try:
-            correlation.eventType
+            correlation.eventType.type
             self.assertTrue(True)
         except AttributeError:
             self.assertTrue(False)
             pass
 
-        self.assertEqual(correlation.eventType, self.EVENTTYPE)
+        self.assertEqual(correlation.eventType.type, self.EVENTTYPETYPE)
+
+        try:
+            correlation.eventType.certainty
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(correlation.eventType.certainty, self.CERTAINTY)
 
         try:
             correlation.magnitude
@@ -537,7 +556,8 @@ class TestCorrelation(unittest.TestCase):
         self.assertEqual(correlation.hypocenter.longitudeError, self.HYPOCENTER.longitudeError)
         self.assertEqual(correlation.hypocenter.depthError, self.HYPOCENTER.depthError)
         self.assertEqual(correlation.hypocenter.timeError, self.HYPOCENTER.timeError)
-        self.assertEqual(correlation.eventType, self.EVENTTYPE)
+        self.assertEqual(correlation.eventType.type, self.EVENTTYPETYPE)
+        self.assertEqual(correlation.eventType.certainty, self.CERTAINTY)
         self.assertEqual(correlation.magnitude, self.MAGNITUDE)
         self.assertEqual(correlation.snr, self.SNR)
         self.assertEqual(correlation.ZScore, self.ZSCORE)
@@ -579,7 +599,8 @@ class TestCorrelation(unittest.TestCase):
         self.assertEqual(correlation.hypocenter.longitudeError, self.HYPOCENTER.longitudeError)
         self.assertEqual(correlation.hypocenter.depthError, self.HYPOCENTER.depthError)
         self.assertEqual(correlation.hypocenter.timeError, self.HYPOCENTER.timeError)
-        self.assertEqual(correlation.eventType, self.EVENTTYPE)
+        self.assertEqual(correlation.eventType.type, self.EVENTTYPETYPE)
+        self.assertEqual(correlation.eventType.certainty, self.CERTAINTY)
         self.assertEqual(correlation.magnitude, self.MAGNITUDE)
         self.assertEqual(correlation.snr, self.SNR)
         self.assertEqual(correlation.ZScore, self.ZSCORE)

@@ -41,7 +41,8 @@ class Detection:
                 containing the desired hypocenter
             newDetectionType: an optional String containing the desired detection
                 type
-            newEventType: an optional String containing the desired event type
+            newEventType: an optional detectionformats.eventtype.EventType 
+                containing the desired event type
             newDetectionTime: an optional datetime containing the time this
                 detection was made
             newBayes: an optional Number containing the desired bayes estimate
@@ -82,6 +83,8 @@ class Detection:
 
         if newEventType is not None:
             self.eventType = newEventType
+        else:
+            self.eventType = detectionformats.eventtype.EventType()
 
         if newDetectionTime is not None:
             self.detectionTime = newDetectionTime
@@ -145,7 +148,8 @@ class Detection:
             self.detectionType = aDict[self.DETECTIONTYPE_KEY]
 
         if self.EVENTTYPE_KEY in aDict:
-            self.eventType = aDict[self.EVENTTYPE_KEY]
+            self.eventType = detectionformats.eventtype.EventType()
+            self.eventType.fromDict(aDict[self.EVENTTYPE_KEY])
 
         if self.DETECTIONTIME_KEY in aDict:
             timeString = aDict[self.DETECTIONTIME_KEY][:-1] + "000Z"
@@ -223,7 +227,8 @@ class Detection:
             pass
 
         try:
-            aDict[self.EVENTTYPE_KEY] = self.eventType
+            if self.eventType.isEmpty() == False:
+                aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
         except:
             pass
 
@@ -337,8 +342,9 @@ class Detection:
             pass
 
         try:
-            if self.eventType != 'earthquake' and self.eventType != 'blast' :
-                errorList.append('Invalid EventType in Correlation Class.')
+            if self.eventType.isEmpty() == False:
+                if self.eventType.isValid() == False:
+                    errorList.append('Invalid EventType in Detection Class.')
         except (NameError, AttributeError):
             pass
 

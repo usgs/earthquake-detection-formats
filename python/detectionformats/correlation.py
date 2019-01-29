@@ -4,6 +4,7 @@
 import detectionformats.source
 import detectionformats.site
 import detectionformats.hypocenter
+import detectionformats.eventtype
 import detectionformats.association
 
 #stdlib imports
@@ -34,7 +35,7 @@ class Correlation:
         newTime=None, newCorrelation=None, newHypocenter=None, newEventType=None,
         newMagnitude=None, newSNR=None, newZScore=None,
         newDetectionThreshold=None, newThresholdType=None,
-        newAssociatioInfo=None) :
+        newAssociationInfo=None) :
         """Initialize the correlation object. Constructs an empty object
            if all arguments are None
 
@@ -48,7 +49,8 @@ class Correlation:
             newTime: a required datetime containing the correlation time
             newHypocenter: a required detectionformats.hypocenter.Hypocenter
                 containing the desired hypocenter
-            newEventType: an optional String containing the desired event type
+            newEventType: an optional detectionformats.eventtype.EventType 
+                containing the desired event type
             newMagnitude: an optional Number containing the desired magnitude
                 estimate as a float
             newSNR: an optional Number containing the desired signal to noise
@@ -59,7 +61,7 @@ class Correlation:
                 threshold used as a float
             newThresholdType: an optional String containing the type of detection
                 threshold used
-            newAssociatioInfo: an optional detectionformats.association.Association
+            newAssociationInfo: an optional detectionformats.association.Association
                 containing association information
         Returns:
             Nothing
@@ -99,6 +101,8 @@ class Correlation:
         # second optional keys
         if newEventType is not None:
             self.eventType = newEventType
+        else:
+            self.eventType = detectionformats.eventtype.EventType()
 
         if newMagnitude is not None:
             self.magnitude = newMagnitude
@@ -115,8 +119,8 @@ class Correlation:
         if newThresholdType is not None:
             self.thresholdType = newThresholdType
 
-        if newAssociatioInfo is not None:
-            self.associationInfo = newAssociatioInfo
+        if newAssociationInfo is not None:
+            self.associationInfo = newAssociationInfo
         else:
             self.associationInfo = detectionformats.association.Association()
 
@@ -134,12 +138,12 @@ class Correlation:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
+    # populate class from a dictionary
     def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -161,7 +165,8 @@ class Correlation:
 
         # second optional keys
         if self.EVENTTYPE_KEY in aDict:
-            self.eventType = aDict[self.EVENTTYPE_KEY]
+            self.eventType = detectionformats.eventtype.EventType()
+            self.eventType.fromDict(aDict[self.EVENTTYPE_KEY])
 
         if self.MAGNITUDE_KEY in aDict:
             self.magnitude = aDict[self.MAGNITUDE_KEY]
@@ -197,14 +202,14 @@ class Correlation:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
+    # convert class to a dictionary
     def toDict(self) :
-        """Converts the object to a dictonary
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
@@ -226,7 +231,8 @@ class Correlation:
 
         # second optional keys
         try:
-            aDict[self.EVENTTYPE_KEY] = self.eventType
+            if self.eventType.isEmpty() == False:
+                aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
         except:
             pass
 
@@ -345,8 +351,9 @@ class Correlation:
 
         # optional values
         try:
-            if self.eventType != 'earthquake' and self.eventType != 'blast' :
-                errorList.append('Invalid EventType in Correlation Class.')
+            if self.eventType.isEmpty() == False:
+                if self.eventType.isValid() == False:
+                    errorList.append('Invalid EventType in Correlation Class.')
         except (NameError, AttributeError):
             pass
 
