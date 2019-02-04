@@ -3,14 +3,15 @@
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate filter data as part of
-# detection data.
 class Filter:
+    """ Filter - a conversion class used to create, parse, and validate filter 
+        data as part of detection data.
+    """
+    # json keys
     HIGHPASS_KEY = "HighPass"
     LOWPASS_KEY = "LowPass"
 
-    # init
-    def __init__(self, newHighPass=None, newLowPass=None) :
+    def __init__(self, newHighPass=None, newLowPass=None):
         """Initialize the filter object. Constructs an empty object
            if all arguments are None
 
@@ -30,8 +31,7 @@ class Filter:
         if newLowPass is not None:
             self.lowPass = newLowPass
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -44,12 +44,11 @@ class Filter:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
-    def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+    def fromDict(self, aDict):
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -61,8 +60,7 @@ class Filter:
         if self.LOWPASS_KEY in aDict:
             self.lowPass = aDict[self.LOWPASS_KEY]
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -76,34 +74,28 @@ class Filter:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
-    def toDict(self) :
-        """Converts the object to a dictonary
+    def toDict(self):
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
         aDict = {}
 
         # all members optional
-        try:
+        if hasattr(self, 'highPass'):
             aDict[self.HIGHPASS_KEY] = self.highPass
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'lowPass'):
             aDict[self.LOWPASS_KEY] = self.lowPass
-        except:
-            pass
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -120,8 +112,7 @@ class Filter:
         else:
             return False
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -137,8 +128,7 @@ class Filter:
 
         return errorList
 
-    # test to see if class is empty
-    def isEmpty(self) :
+    def isEmpty(self):
         """Checks to see if the object is empty
 
         Args:
@@ -148,16 +138,10 @@ class Filter:
         Raises:
             Nothing
         """
-        try:
-            self.highPass
+        if hasattr(self, 'highPass'):
             return False
-        except:
-            pass
 
-        try:
-            self.highPass
+        if hasattr(self, 'lowPass'):
             return False
-        except:
-            pass
 
         return True

@@ -7,9 +7,12 @@ import detectionformats.eventtype
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate classification data as
-# part of detection data.
 class Classification:
+    """ Classification - a conversion class used to create, parse, and validate 
+        value added classification data from advanced algorithms such as machine 
+        learning as part of detection data.
+    """
+    # json keys
     PHASE_KEY = "Phase"
     PHASEPROB_KEY = "PhaseProbability"
     DISTANCE_KEY = "Distance"
@@ -25,12 +28,11 @@ class Classification:
     EVENTTYPEPROB_KEY = "EventTypeProbability"
     SOURCE_KEY = "Source"
 
-    # init
     def __init__(self, newPhase=None, newPhaseProb=None, newDistance=None, 
         newDistanceProb=None, newAzimuth=None, newAzimuthProb=None,
         newMagnitude=None, newMagType=None, newMagProb=None, newDepth=None,
         newDepthProb=None, newEventType=None, newEventTypeProb=None, 
-        newSource=None) :
+        newSource=None):
         """Initialize the classification object. Constructs an empty object
            if all arguments are None
 
@@ -115,8 +117,7 @@ class Classification:
         else:
             self.source = detectionformats.source.Source()
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -129,8 +130,7 @@ class Classification:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictionary
-    def fromDict(self, aDict) :
+    def fromDict(self, aDict):
         """Populates the object from a dictionary
 
         Args:
@@ -185,8 +185,7 @@ class Classification:
             self.source = detectionformats.source.Source()
             self.source.fromDict(aDict[self.SOURCE_KEY])
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -200,8 +199,7 @@ class Classification:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictionary
-    def toDict(self) :
+    def toDict(self):
         """Converts the object to a dictionary
 
         Args:
@@ -214,82 +212,53 @@ class Classification:
         aDict = {}
 
         # all members optional
-        try:
+        if hasattr(self, 'phase'):
             aDict[self.PHASE_KEY] = self.phase
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'phaseProbability'):
             aDict[self.PHASEPROB_KEY] = self.phaseProbability
-        except:
-            pass    
 
-        try:
+        if hasattr(self, 'distance'):
             aDict[self.DISTANCE_KEY] = self.distance
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'distanceProbability'):
             aDict[self.DISTANCEPROB_KEY] = self.distanceProbability
-        except:
-            pass    
 
-        try:
+        if hasattr(self, 'azimuth'):
             aDict[self.AZIMUTH_KEY] = self.azimuth
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'azimuthProbability'):
             aDict[self.AZIMUTHPROB_KEY] = self.azimuthProbability
-        except:
-            pass   
 
-        try:
+        if hasattr(self, 'magnitude'):
             aDict[self.MAGNITUDE_KEY] = self.magnitude
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'magnitudeType'):
             aDict[self.MAGNITUDETYPE_KEY] = self.magnitudeType
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'magnitudeProbability'):
             aDict[self.MAGNITUDEPROB_KEY] = self.magnitudeProbability
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'depth'):
             aDict[self.DEPTH_KEY] = self.depth
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'depthProbability'):
             aDict[self.DEPTHPROB_KEY] = self.depthProbability
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'eventType'):
             if self.eventType.isEmpty() == False:
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'eventTypeProbability'):
             aDict[self.EVENTTYPEPROB_KEY] = self.eventTypeProbability
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'source'):
             if self.source.isEmpty() == False:
                 aDict[self.SOURCE_KEY] = self.source.toDict()
-        except:
-            pass
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -306,8 +275,7 @@ class Classification:
         else:
             return False
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -319,51 +287,35 @@ class Classification:
         """
         errorList = []
 
-        # optional
-        # need to lookup how to check if something is a string and
-        # if it's a letter
-
         # second optional keys
-        try:
+        if hasattr(self, 'distance'):
             if self.distance < 0:
                 errorList.append('Invalid Distance in Classification Class.')
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'azimuth'):
             if self.azimuth < 0:
                 errorList.append('Invalid Azimuth in Classification Class.')
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'magnitude'):
             if self.magnitude < -2 or self.magnitude > 10:
                 errorList.append('Magnitude in Classification Class not in the range of -2 to 10.')
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'depth'):
             if self.depth < -100 or self.depth > 1500:
                 errorList.append('Depth in Classification Class not in the range of -100 to 1500.')
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'eventType'):
             if self.eventType.isValid() == False:
                 errorList.append('Invalid EventType in Classification Class.')
-        except:
-            pass
 
-        try:
-            if self.source.isValid() == False:
-                errorList.append('Invalid Source in Classification Class.')
-        except:
-            pass
+        if hasattr(self, 'source'):
+            if self.source.isEmpty() == False:
+                if self.source.isValid() == False:
+                    errorList.append('Invalid Source in Classification Class.')
 
         return errorList
 
-    # test to see if class is empty
-    def isEmpty(self) :
+    def isEmpty(self):
         """Checks to see if the object is empty
 
         Args:
@@ -373,89 +325,49 @@ class Classification:
         Raises:
             Nothing
         """
-        try:
-            self.phase
+        if hasattr(self, 'phase'):
             return False
-        except:
-            pass
 
-        try:
-            self.phaseProbability
+        if hasattr(self, 'phaseProbability'):
             return False
-        except:
-            pass
 
-        try:
-            self.distance
+        if hasattr(self, 'distance'):
             return False
-        except:
-            pass
 
-        try:
-            self.distanceProbability
+        if hasattr(self, 'distanceProbability'):
             return False
-        except:
-            pass            
 
-        try:
-            self.azimuth
+        if hasattr(self, 'azimuth'):
             return False
-        except:
-            pass
 
-        try:
-            self.azimuthProbability
+        if hasattr(self, 'azimuthProbability'):
             return False
-        except:
-            pass            
-
-        try:
-            self.magnitude
+ 
+        if hasattr(self, 'magnitude'):
             return False
-        except:
-            pass
 
-        try:
-            self.magnitudeType
+        if hasattr(self, 'magnitudeType'):
             return False
-        except:
-            pass
 
-        try:
-            self.magnitudeProbability
+        if hasattr(self, 'magnitudeProbability'):
             return False
-        except:
-            pass
 
-        try:
-            self.depth
+        if hasattr(self, 'depth'):
             return False
-        except:
-            pass
 
-        try:
-            self.depthProbability
+        if hasattr(self, 'depthProbability'):
             return False
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'eventType'):
             if self.eventType.isEmpty() == False:
                 return False
-        except:
-            pass
 
-        try:
-            self.eventTypeProbability
+        if hasattr(self, 'eventTypeProbability'):
             return False
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'source'):
             if self.source.isEmpty() == False:
                 return False
-        except:
-            pass
 
         return True
 

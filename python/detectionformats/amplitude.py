@@ -3,16 +3,16 @@
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate amplitude data as part
-# of detection data.
 class Amplitude:
+    """ Amplitude - a conversion class used to create, parse, and validate  
+        amplitude data as part of detection data.
+    """
     # json keys
     AMPLITUDE_KEY = "Amplitude"
     PERIOD_KEY = "Period"
     SNR_KEY = "SNR"
 
-    # init
-    def __init__(self, newAmplitude=None, newPeriod=None, newSNR=None) :
+    def __init__(self, newAmplitude=None, newPeriod=None, newSNR=None):
         """Initialize the amplitude object. Constructs an empty object
            if all arguments are None
 
@@ -35,8 +35,7 @@ class Amplitude:
         if newSNR is not None:
             self.snr = newSNR
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -49,12 +48,11 @@ class Amplitude:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
-    def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+    def fromDict(self, aDict):
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -67,8 +65,7 @@ class Amplitude:
         if self.SNR_KEY in aDict:
             self.snr = aDict[self.SNR_KEY]
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -82,37 +79,29 @@ class Amplitude:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
-    def toDict(self) :
-        """Converts the object to a dictonary
+    def toDict(self):
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
         aDict = {}
-        try:
+        if hasattr(self, 'amplitude'):
             aDict[self.AMPLITUDE_KEY] = self.amplitude
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'period'):
             aDict[self.PERIOD_KEY] = self.period
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'snr'):
             aDict[self.SNR_KEY] = self.snr
-        except:
-            pass
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -129,8 +118,7 @@ class Amplitude:
         else:
             return False
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -146,8 +134,7 @@ class Amplitude:
 
         return errorList
 
-    # test to see if class is empty
-    def isEmpty(self) :
+    def isEmpty(self):
         """Checks to see if the object is empty
 
         Args:
@@ -157,22 +144,13 @@ class Amplitude:
         Raises:
             Nothing
         """
-        try:
-            self.amplitude
+        if hasattr(self, 'amplitude'):
             return False
-        except:
-            pass
 
-        try:
-            self.period
+        if hasattr(self, 'period'):
             return False
-        except:
-            pass
 
-        try:
-            self.snr
+        if hasattr(self, 'snr'):
             return False
-        except:
-            pass
 
         return True

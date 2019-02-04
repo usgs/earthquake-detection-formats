@@ -6,15 +6,16 @@ import detectionformats.source
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate a retraction
-# as part of detection data.
 class Retract:
+    """ Retract - a conversion class used to create, parse, and validate a 
+        retraction as part of detection data.
+    """
+    # json keys
     TYPE_KEY = "Type"
     ID_KEY = "ID"
     SOURCE_KEY = "Source"
 
-    # init
-    def __init__(self, newID=None, newSource=None) :
+    def __init__(self, newID=None, newSource=None):
         """Initialize the retract object. Constructs an empty object
            if all arguments are None
 
@@ -38,8 +39,7 @@ class Retract:
         else:
             self.source = detectionformats.source.Source()
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -52,12 +52,11 @@ class Retract:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
-    def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+    def fromDict(self, aDict):
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -71,8 +70,7 @@ class Retract:
         except (ValueError, KeyError, TypeError):
             print ("Dict format error")
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -86,14 +84,13 @@ class Retract:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
-    def toDict(self) :
-        """Converts the object to a dictonary
+    def toDict(self):
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
@@ -109,8 +106,7 @@ class Retract:
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -127,8 +123,7 @@ class Retract:
         else:
             return False
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:

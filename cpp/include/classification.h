@@ -20,7 +20,8 @@ namespace detectionformats {
  * \brief detectionformats classification conversion class
  *
  * The detectionformats classification class is a conversion class used to create,
- * parse, and validate classification data as part of detectionformats data.
+ * parse, and validate value added classification data from advanced algorithms 
+ * such as machine learning as part of detectionformats data.
  *
  */
 class classification : public detectionbase {

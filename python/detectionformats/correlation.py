@@ -11,9 +11,11 @@ import detectionformats.association
 import json
 import datetime
 
-# a conversion class used to create, parse, and validate a correlation
-# as part of detection data.
 class Correlation:
+    """Correlation - a conversion class used to create, parse, and validate a 
+        correlation as part of detection data.
+    """
+    # json keys
     TYPE_KEY = "Type"
     ID_KEY = "ID"
     SITE_KEY = "Site"
@@ -30,12 +32,11 @@ class Correlation:
     THRESHOLDTYPE_KEY = "ThresholdType"
     ASSOCIATIONINFO_KEY = "AssociationInfo"
 
-    # init
     def __init__(self, newID=None, newSite=None, newSource=None, newPhase=None,
         newTime=None, newCorrelation=None, newHypocenter=None, newEventType=None,
         newMagnitude=None, newSNR=None, newZScore=None,
         newDetectionThreshold=None, newThresholdType=None,
-        newAssociationInfo=None) :
+        newAssociationInfo=None):
         """Initialize the correlation object. Constructs an empty object
            if all arguments are None
 
@@ -124,8 +125,7 @@ class Correlation:
         else:
             self.associationInfo = detectionformats.association.Association()
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -138,8 +138,7 @@ class Correlation:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictionary
-    def fromDict(self, aDict) :
+    def fromDict(self, aDict):
         """Populates the object from a dictionary
 
         Args:
@@ -187,8 +186,7 @@ class Correlation:
             self.associationInfo = detectionformats.association.Association()
             self.associationInfo.fromDict(aDict[self.ASSOCIATIONINFO_KEY])
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -202,8 +200,7 @@ class Correlation:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictionary
-    def toDict(self) :
+    def toDict(self):
         """Converts the object to a dictionary
 
         Args:
@@ -230,47 +227,32 @@ class Correlation:
             print ("Missing data error")
 
         # second optional keys
-        try:
+        if hasattr(self, 'eventType'):
             if self.eventType.isEmpty() == False:
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'magnitude'):
             aDict[self.MAGNITUDE_KEY] = self.magnitude
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'snr'):
             aDict[self.SNR_KEY] = self.snr
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'ZScore'):
             aDict[self.ZSCORE_KEY] = self.ZScore
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'detectionThreshold'):
             aDict[self.DETECTIONTHRESHOLD_KEY] = self.detectionThreshold
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'thresholdType'):
             aDict[self.THRESHOLDTYPE_KEY] = self.thresholdType
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'associationInfo'):
             if self.associationInfo.isEmpty() == False:
                 aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
-        except:
-            pass
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -287,8 +269,7 @@ class Correlation:
         else:
             return False
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -350,30 +331,22 @@ class Correlation:
             errorList.append('No Hypocenter in Correlation Class.')
 
         # optional values
-        try:
+        if hasattr(self, 'eventType'):
             if self.eventType.isEmpty() == False:
                 if self.eventType.isValid() == False:
                     errorList.append('Invalid EventType in Correlation Class.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'magnitude'):
             if self.magnitude < -2 or self.magnitude > 10:
                 errorList.append('Magnitude in Correlation Class not in the range of -2 to 10.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'thresholdType'):
             if self.thresholdType == '':
                 errorList.append('Empty ThresholdType in Correlation Class.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'associationInfo'):
             if self.associationInfo.isEmpty() == False:
                 if self.associationInfo.isValid() == False:
                     errorList.append('Invalid AssociationInfo in Correlation Class.')
-        except (NameError, AttributeError):
-            pass
 
         return errorList

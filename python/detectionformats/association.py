@@ -3,18 +3,19 @@
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate association data as
-# part of detection data.
 class Association:
+    """ Association - a conversion class used to create, parse, and validate 
+        association data as part of detection data.
+    """
+    # json keys
     PHASE_KEY = "Phase"
     DISTANCE_KEY = "Distance"
     AZIMUTH_KEY = "Azimuth"
     RESIDUAL_KEY = "Residual"
     SIGMA_KEY = "Sigma"
 
-    # init
     def __init__(self, newPhase=None, newDistance=None, newAzimuth=None,
-        newResidual=None, newSigma=None) :
+        newResidual=None, newSigma=None):
         """Initialize the associated object. Constructs an empty object
            if all arguments are None
 
@@ -46,8 +47,7 @@ class Association:
         if newSigma is not None:
             self.sigma = newSigma
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -60,8 +60,7 @@ class Association:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictionary
-    def fromDict(self, aDict) :
+    def fromDict(self, aDict):
         """Populates the object from a dictionary
 
         Args:
@@ -83,8 +82,7 @@ class Association:
         if self.SIGMA_KEY in aDict:
             self.sigma = aDict[self.SIGMA_KEY]
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -98,8 +96,7 @@ class Association:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictionary
-    def toDict(self) :
+    def toDict(self):
         """Converts the object to a dictionary
 
         Args:
@@ -112,35 +109,25 @@ class Association:
         aDict = {}
 
         # all members optional
-        try:
+        if hasattr(self, 'phase'):
             aDict[self.PHASE_KEY] = self.phase
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'distance'):
             aDict[self.DISTANCE_KEY] = self.distance
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'azimuth'):
             aDict[self.AZIMUTH_KEY] = self.azimuth
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'residual'):
             aDict[self.RESIDUAL_KEY] = self.residual
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'sigma'):
             aDict[self.SIGMA_KEY] = self.sigma
-        except:
-            pass
 
         return aDict
 
     # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -157,8 +144,7 @@ class Association:
         else:
             return False
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -175,22 +161,17 @@ class Association:
         # if it's a letter
 
         # second optional keys
-        try:
+        if hasattr(self, 'distance'):
             if self.distance < 0:
                 errorList.append('Invalid Distance in Association Class.')
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'azimuth'):
             if self.azimuth < 0:
                 errorList.append('Invalid Azimuth in Association Class.')
-        except:
-            pass
 
         return errorList
 
-    # test to see if class is empty
-    def isEmpty(self) :
+    def isEmpty(self):
         """Checks to see if the object is empty
 
         Args:
@@ -200,34 +181,19 @@ class Association:
         Raises:
             Nothing
         """
-        try:
-            self.phase
+        if hasattr(self, 'phase'):
             return False
-        except:
-            pass
 
-        try:
-            self.distance
+        if hasattr(self, 'distance'):
             return False
-        except:
-            pass
 
-        try:
-            self.azimuth
+        if hasattr(self, 'azimuth'):
             return False
-        except:
-            pass
 
-        try:
-            self.residual
+        if hasattr(self, 'residual'):
             return False
-        except:
-            pass
 
-        try:
-            self.sigma
+        if hasattr(self, 'sigma'):
             return False
-        except:
-            pass
 
         return True

@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import org.json.simple.*;
 
 /**
- * a conversion class used to create, parse, and validate classification data as
- * part of detection data.
+ * a conversion class used to create, parse, and validate value added 
+ * classification data from advanced algorithms such as machine learning as part 
+ * of detectionformats data.
  *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */

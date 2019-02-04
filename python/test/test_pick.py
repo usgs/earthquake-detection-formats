@@ -26,6 +26,7 @@ class TestPick(unittest.TestCase):
     PICKER = 'other'
     aFilter = detectionformats.filter.Filter(1.2, 0.2)
     FILTERLIST = [ aFilter ]
+    FILTERLISTDICT = [ aFilter.toDict() ]
     AMPLITUDE = detectionformats.amplitude.Amplitude(5.5, 1.5, 6.2)
     BEAM = detectionformats.beam.Beam(22.5, 1.2, 4.6, 1.2, 3.5, 2.1)
     ASSOCIATIONINFO = detectionformats.association.Association('P', 12.5, 255.0,
@@ -35,8 +36,8 @@ class TestPick(unittest.TestCase):
         12.5, 22.0, 88.2, 45.0, 67.0, 1.2, 'Mb', 33.33, 12.5, 50.2, EVENTTYPE, 
         22.0, SOURCE)
 
-    JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}'
-    DICT = {"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}
+    JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Filter": [{"HighPass": 1.2, "LowPass": 0.2}], "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}'
+    DICT = {"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "Filter": [{"HighPass": 1.2, "LowPass": 0.2}], "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}
 
     def test_init(self):
         # Empty init
@@ -458,7 +459,14 @@ class TestPick(unittest.TestCase):
 
         self.assertEqual(pick.picker, self.PICKER)
 
-# not sure how to handle filterList
+        try:
+            pick.filterList
+            self.assertTrue(True)
+        except AttributeError:
+            self.assertTrue(False)
+            pass
+
+        self.assertEqual(pick.filterList, self.FILTERLIST)
 
         try:
             pick.amplitude.amplitude
@@ -754,7 +762,7 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.polarity, self.POLARITY)
         self.assertEqual(pick.onset, self.ONSET)
         self.assertEqual(pick.picker, self.PICKER)
-        # not sure how to handle filterlist
+        # self.assertEqual(pick.filterList, self.FILTERLIST)
         self.assertEqual(pick.amplitude.amplitude, self.AMPLITUDE.amplitude)
         self.assertEqual(pick.amplitude.period, self.AMPLITUDE.period)
         self.assertEqual(pick.amplitude.snr, self.AMPLITUDE.snr)
@@ -811,7 +819,7 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.polarity, self.POLARITY)
         self.assertEqual(pick.onset, self.ONSET)
         self.assertEqual(pick.picker, self.PICKER)
-        # not sure how to handle filterlist
+        # self.assertEqual(pick.filterList, self.FILTERLIST)
         self.assertEqual(pick.amplitude.amplitude, self.AMPLITUDE.amplitude)
         self.assertEqual(pick.amplitude.period, self.AMPLITUDE.period)
         self.assertEqual(pick.amplitude.snr, self.AMPLITUDE.snr)
