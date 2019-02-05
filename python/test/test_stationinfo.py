@@ -24,201 +24,47 @@ class TestStationInfo(unittest.TestCase):
         # Empty init
         stationinfo = detectionformats.stationinfo.StationInfo()
 
-        try:
-            stationinfo.site.station
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.site.channel
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.site.network
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.site.location
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.latitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.longitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.elevation
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.quality
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.enable
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.useForTeleseismic
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.informationRequestor.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinfo.informationRequestor.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(stationinfo.site, 'station'))
+        self.assertFalse(hasattr(stationinfo.site, 'channel'))
+        self.assertFalse(hasattr(stationinfo.site, 'network'))
+        self.assertFalse(hasattr(stationinfo.site, 'location'))
+        self.assertFalse(hasattr(stationinfo, 'latitude'))
+        self.assertFalse(hasattr(stationinfo, 'longitude'))
+        self.assertFalse(hasattr(stationinfo, 'elevation'))
+        self.assertFalse(hasattr(stationinfo, 'quality'))
+        self.assertFalse(hasattr(stationinfo, 'enable'))
+        self.assertFalse(hasattr(stationinfo, 'useForTeleseismic'))
+        self.assertFalse(hasattr(stationinfo.informationRequestor, 'agencyID'))
+        self.assertFalse(hasattr(stationinfo.informationRequestor, 'author'))
 
         stationinfo = detectionformats.stationinfo.StationInfo(self.SITE,
             self.LATITUDE, self.LONGITUDE, self.ELEVATION, self.QUALITY,
             self.ENABLE, self.USEFORTELESEISMIC, self.INFORMATIONREQUESTOR)
 
-        try:
-            stationinfo.site.station
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(stationinfo.site, 'station'))
+        self.assertTrue(hasattr(stationinfo.site, 'channel'))
+        self.assertTrue(hasattr(stationinfo.site, 'network'))
+        self.assertTrue(hasattr(stationinfo.site, 'location'))
+        self.assertTrue(hasattr(stationinfo, 'latitude'))
+        self.assertTrue(hasattr(stationinfo, 'longitude'))
+        self.assertTrue(hasattr(stationinfo, 'elevation'))
+        self.assertTrue(hasattr(stationinfo, 'quality'))
+        self.assertTrue(hasattr(stationinfo, 'enable'))
+        self.assertTrue(hasattr(stationinfo, 'useForTeleseismic'))
+        self.assertTrue(hasattr(stationinfo.informationRequestor, 'agencyID'))
+        self.assertTrue(hasattr(stationinfo.informationRequestor, 'author'))
 
         self.assertEqual(stationinfo.site.station, self.SITE.station)
-
-        try:
-            stationinfo.site.channel
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.site.channel, self.SITE.channel)
-
-        try:
-            stationinfo.site.network
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.site.network, self.SITE.network)
-
-        try:
-            stationinfo.site.location
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.site.location, self.SITE.location)
-
-        try:
-            stationinfo.latitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.latitude, self.LATITUDE)
-
-        try:
-            stationinfo.longitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.longitude, self.LONGITUDE)
-
-        try:
-            stationinfo.elevation
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.elevation, self.ELEVATION)
-
-
-        try:
-            stationinfo.quality
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.quality, self.QUALITY)
-
-        try:
-            stationinfo.enable
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.enable, self.ENABLE)
-
-        try:
-            stationinfo.useForTeleseismic
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.useForTeleseismic, self.USEFORTELESEISMIC)
-
-        try:
-            stationinfo.informationRequestor.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.informationRequestor.agencyID, self.INFORMATIONREQUESTOR.agencyID)
-
-        try:
-            stationinfo.informationRequestor.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinfo.informationRequestor.author, self.INFORMATIONREQUESTOR.author)
 
     def test_toJSON(self):

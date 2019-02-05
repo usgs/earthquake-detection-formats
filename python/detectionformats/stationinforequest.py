@@ -72,8 +72,8 @@ class StationInfoRequest:
             self.type = aDict[self.TYPE_KEY]
             self.site.fromDict(aDict[self.SITE_KEY])
             self.source.fromDict(aDict[self.SOURCE_KEY])
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
         """Converts the object to a json formatted string
@@ -106,8 +106,8 @@ class StationInfoRequest:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.SITE_KEY] = self.site.toDict()
             aDict[self.SOURCE_KEY] = self.source.toDict()
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         return aDict
 
@@ -123,10 +123,7 @@ class StationInfoRequest:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -145,19 +142,19 @@ class StationInfoRequest:
                 errorList.append('Empty Type in StationInfoRequest Class.')
             elif self.type != 'StationInfoRequest':
                 errorList.append('Non-StationInfoRequest Type in StationInfoRequest Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Type in StationInfoRequest Class.')
 
         try:
-            if self.site.isValid() == False:
+            if not self.site.isValid():
                 errorList.append('Invalid Site in StationInfoRequest Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Site in StationInfoRequest Class.')
 
         try:
-            if self.source.isValid() == False:
+            if not self.source.isValid():
                 errorList.append('Invalid Source in StationInfoRequest Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Source in StationInfoRequest Class.')
 
         return errorList

@@ -6,7 +6,8 @@ import org.json.simple.JSONObject;
 
 /**
  * a conversion class used to create, parse, and validate source data as part of
- * detection data.
+ * detection data. Detection formats supports a subset of the QuakeML 1.2 event 
+ * types that are automatically classifiable.
  *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */

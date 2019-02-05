@@ -27,39 +27,16 @@ class TestEventType(unittest.TestCase):
         # Empty init
         eventtype = detectionformats.eventtype.EventType()
 
-        try:
-            eventtype.type
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            eventtype.certainty
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(eventtype, 'type'))
+        self.assertFalse(hasattr(eventtype, 'certainty'))
 
         eventtype = detectionformats.eventtype.EventType(self.TYPE,
             self.CERTAINTY)
 
-        try:
-            eventtype.type
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(eventtype, 'type'))
+        self.assertTrue(hasattr(eventtype, 'certainty'))
 
         self.assertEqual(eventtype.type, self.TYPE)
-
-        try:
-            eventtype.certainty
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(eventtype.certainty, self.CERTAINTY)
 
     def test_toJSON(self):

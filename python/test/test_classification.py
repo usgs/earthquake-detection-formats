@@ -31,124 +31,22 @@ class TestClassification(unittest.TestCase):
         # Empty init
         classification = detectionformats.classification.Classification()
 
-        try:
-            classification.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-        
-        try:
-            classification.phaseProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass    
-
-        try:
-            classification.distance
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.distanceProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.azimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.azimuthProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.magnitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.magnitudeType
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-        
-        try:
-            classification.magnitudeProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.residual
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.depth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass  
-
-        try:
-            classification.depthProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass  
-
-        try:
-            classification.eventType.type
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.eventType.certainty
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.eventTypeProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            classification.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(classification, 'phase'))
+        self.assertFalse(hasattr(classification, 'phaseProbability'))
+        self.assertFalse(hasattr(classification, 'distance'))
+        self.assertFalse(hasattr(classification, 'distanceProbability'))
+        self.assertFalse(hasattr(classification, 'azimuth'))
+        self.assertFalse(hasattr(classification, 'azimuthProbability'))
+        self.assertFalse(hasattr(classification, 'magnitude'))
+        self.assertFalse(hasattr(classification, 'magnitudeType'))
+        self.assertFalse(hasattr(classification, 'magnitudeProbability'))
+        self.assertFalse(hasattr(classification, 'depth'))
+        self.assertFalse(hasattr(classification, 'depthProbability'))
+        self.assertFalse(hasattr(classification.eventType, 'type'))
+        self.assertFalse(hasattr(classification.eventType, 'certainty'))
+        self.assertFalse(hasattr(classification, 'eventTypeProbability'))
+        self.assertFalse(hasattr(classification.source, 'agencyID'))
+        self.assertFalse(hasattr(classification.source, 'author'))
 
         classification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, self.DISTANCE, self.DISTANCEPROBABILITY, 
@@ -156,148 +54,38 @@ class TestClassification(unittest.TestCase):
             self.MAGNITUDEPROBABILITY, self.DEPTH, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
 
-        try:
-            classification.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
-        self.assertEqual(classification.phase, self.PHASE)
-
-        try:
-            classification.phaseProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(classification, 'phase'))
+        self.assertTrue(hasattr(classification, 'phaseProbability'))
+        self.assertTrue(hasattr(classification, 'distance'))
+        self.assertTrue(hasattr(classification, 'distanceProbability'))
+        self.assertTrue(hasattr(classification, 'azimuth'))
+        self.assertTrue(hasattr(classification, 'azimuthProbability'))
+        self.assertTrue(hasattr(classification, 'magnitude'))
+        self.assertTrue(hasattr(classification, 'magnitudeType'))
+        self.assertTrue(hasattr(classification, 'magnitudeProbability'))
+        self.assertTrue(hasattr(classification, 'depth'))
+        self.assertTrue(hasattr(classification, 'depthProbability'))
+        self.assertTrue(hasattr(classification.eventType, 'type'))
+        self.assertTrue(hasattr(classification.eventType, 'certainty'))
+        self.assertTrue(hasattr(classification, 'eventTypeProbability'))
+        self.assertTrue(hasattr(classification.source, 'agencyID'))
+        self.assertTrue(hasattr(classification.source, 'author'))
 
         self.assertEqual(classification.phaseProbability, self.PHASEPROBABILITY)
-
-        try:
-            classification.distance
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
+        self.assertEqual(classification.phase, self.PHASE)
         self.assertEqual(classification.distance, self.DISTANCE)
-
-        try:
-            classification.distanceProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(classification.distanceProbability, self.DISTANCEPROBABILITY)
-
-        try:
-            classification.azimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(classification.azimuth, self.AZIMUTH)
-
-        try:
-            classification.azimuthProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
-        self.assertEqual(classification.azimuthProbability, self.AZIMUTHPROBABILITY)        
-
-        try:
-            classification.magnitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
+        self.assertEqual(classification.azimuthProbability, self.AZIMUTHPROBABILITY)      
         self.assertEqual(classification.magnitude, self.MAGNITUDE)
-
-        try:
-            classification.magnitudeType
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(classification.magnitudeType, self.MAGNITUDETYPE)
-
-        try:
-            classification.magnitudeProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(classification.magnitudeProbability, self.MAGNITUDEPROBABILITY)
-
-        try:
-            classification.depth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(classification.depth, self.DEPTH)
-
-        try:
-            classification.depthProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(classification.depthProbability, self.DEPTHPROBABILITY)  
-
-        try:
-            classification.eventType.type
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
-        self.assertEqual(classification.eventType.type, self.EVENTTYPE.type)  
-
-        try:
-            classification.eventType.certainty
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
+        self.assertEqual(classification.eventType.type, self.EVENTTYPE.type) 
         self.assertEqual(classification.eventType.certainty, self.EVENTTYPE.certainty)  
-
-        try:
-            classification.eventTypeProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
-        self.assertEqual(classification.eventTypeProbability, self.EVENTTYPEPROBABILITY)   
-
-        try:
-            classification.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
-        self.assertEqual(classification.source.agencyID, self.SOURCE.agencyID)  
-
-        try:
-            classification.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
+        self.assertEqual(classification.eventTypeProbability, self.EVENTTYPEPROBABILITY)  
+        self.assertEqual(classification.source.agencyID, self.SOURCE.agencyID) 
         self.assertEqual(classification.source.author, self.SOURCE.author)     
 
     def test_toJSON(self):

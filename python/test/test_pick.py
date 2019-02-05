@@ -43,699 +43,141 @@ class TestPick(unittest.TestCase):
         # Empty init
         pick = detectionformats.pick.Pick()
 
-        try:
-            pick.id
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.site.station
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.site.channel
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.site.network
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.site.location
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.pick
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.polarity
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.onset
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.picker
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
+        self.assertFalse(hasattr(pick, 'id'))
+        self.assertFalse(hasattr(pick.site, 'station'))
+        self.assertFalse(hasattr(pick.site, 'channel'))
+        self.assertFalse(hasattr(pick.site, 'network'))
+        self.assertFalse(hasattr(pick.site, 'location'))
+        self.assertFalse(hasattr(pick.source, 'agencyID'))
+        self.assertFalse(hasattr(pick.source, 'author'))
+        self.assertFalse(hasattr(pick, 'time'))
+        self.assertFalse(hasattr(pick, 'phase'))
+        self.assertFalse(hasattr(pick, 'polarity'))
+        self.assertFalse(hasattr(pick, 'onset'))
+        self.assertFalse(hasattr(pick, 'picker'))
         # not sure how to handle filterList
-
-        try:
-            pick.amplitude.amplitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.amplitude.period
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.amplitude.snr
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.beam.backAzimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.beam.slowness
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.beam.powerRatio
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.beam.backAzimuthError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.beam.slownessError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.beam.powerRatioError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.associationInfo.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.associationInfo.distance
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.associationInfo.azimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.associationInfo.residual
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.associationInfo.sigma
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(pick.amplitude, 'amplitude'))
+        self.assertFalse(hasattr(pick.amplitude, 'period'))
+        self.assertFalse(hasattr(pick.amplitude, 'snr'))
+        self.assertFalse(hasattr(pick.beam, 'backAzimuth'))
+        self.assertFalse(hasattr(pick.beam, 'slowness'))
+        self.assertFalse(hasattr(pick.beam, 'powerRatio'))
+        self.assertFalse(hasattr(pick.beam, 'backAzimuthError'))
+        self.assertFalse(hasattr(pick.beam, 'slownessError'))
+        self.assertFalse(hasattr(pick.beam, 'powerRatioError'))
+        self.assertFalse(hasattr(pick.associationInfo, 'phase'))
+        self.assertFalse(hasattr(pick.associationInfo, 'distance'))
+        self.assertFalse(hasattr(pick.associationInfo, 'azimuth'))
+        self.assertFalse(hasattr(pick.associationInfo, 'residual'))
+        self.assertFalse(hasattr(pick.associationInfo, 'sigma'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'phase'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'phaseProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'distance'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'distanceProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'azimuth'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'azimuthProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'magnitude'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'magnitudeType'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'magnitudeProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'depth'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'depthProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo.eventType, 'type'))
+        self.assertFalse(hasattr(pick.classificationInfo.eventType, 'certainty'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'eventTypeProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo.source, 'agencyID'))
+        self.assertFalse(hasattr(pick.classificationInfo.source, 'author'))
         
-        try:
-            pick.classificationInfo.phaseProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass    
-
-        try:
-            pick.classificationInfo.distance
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.distanceProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.azimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.azimuthProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.magnitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.magnitudeType
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-        
-        try:
-            pick.classificationInfo.magnitudeProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.residual
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.depth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass  
-
-        try:
-            pick.classificationInfo.depthProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass  
-
-        try:
-            pick.classificationInfo.eventType.type
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.eventType.certainty
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.eventTypeProbability
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            pick.classificationInfo.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
         pick = detectionformats.pick.Pick(self.ID,
             self.SITE, self.SOURCE, self.TIME, self.PHASE, self.POLARITY,
             self.ONSET, self.PICKER, self.FILTERLIST, self.AMPLITUDE, self.BEAM,
             self.ASSOCIATIONINFO, self.CLASSIFICATIONINFO)
 
-        try:
-            pick.id
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(pick, 'id'))
+        self.assertTrue(hasattr(pick.site, 'station'))
+        self.assertTrue(hasattr(pick.site, 'channel'))
+        self.assertTrue(hasattr(pick.site, 'network'))
+        self.assertTrue(hasattr(pick.site, 'location'))
+        self.assertTrue(hasattr(pick.source, 'agencyID'))
+        self.assertTrue(hasattr(pick.source, 'author'))
+        self.assertTrue(hasattr(pick, 'time'))
+        self.assertTrue(hasattr(pick, 'phase'))
+        self.assertTrue(hasattr(pick, 'polarity'))
+        self.assertTrue(hasattr(pick, 'onset'))
+        self.assertTrue(hasattr(pick, 'picker'))
+        # not sure how to handle filterList
+        self.assertTrue(hasattr(pick.amplitude, 'amplitude'))
+        self.assertTrue(hasattr(pick.amplitude, 'period'))
+        self.assertTrue(hasattr(pick.amplitude, 'snr'))
+        self.assertTrue(hasattr(pick.beam, 'backAzimuth'))
+        self.assertTrue(hasattr(pick.beam, 'slowness'))
+        self.assertTrue(hasattr(pick.beam, 'powerRatio'))
+        self.assertTrue(hasattr(pick.beam, 'backAzimuthError'))
+        self.assertTrue(hasattr(pick.beam, 'slownessError'))
+        self.assertTrue(hasattr(pick.beam, 'powerRatioError'))
+        self.assertTrue(hasattr(pick.associationInfo, 'phase'))
+        self.assertTrue(hasattr(pick.associationInfo, 'distance'))
+        self.assertTrue(hasattr(pick.associationInfo, 'azimuth'))
+        self.assertTrue(hasattr(pick.associationInfo, 'residual'))
+        self.assertTrue(hasattr(pick.associationInfo, 'sigma'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'phase'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'phaseProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'distance'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'distanceProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'azimuth'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'azimuthProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'magnitude'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'magnitudeType'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'magnitudeProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'depth'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'depthProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo.eventType, 'type'))
+        self.assertTrue(hasattr(pick.classificationInfo.eventType, 'certainty'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'eventTypeProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo.source, 'agencyID'))
+        self.assertTrue(hasattr(pick.classificationInfo.source, 'author'))
 
         self.assertEqual(pick.id, self.ID)
-
-        try:
-            pick.site.station
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.site.station, self.SITE.station)
-
-        try:
-            pick.site.channel
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.site.channel, self.SITE.channel)
-
-        try:
-            pick.site.network
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.site.network, self.SITE.network)
-
-        try:
-            pick.site.location
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.site.location, self.SITE.location)
-
-        try:
-            pick.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.source.agencyID, self.SOURCE.agencyID)
-
-        try:
-            pick.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.source.author, self.SOURCE.author)
-
-        try:
-            pick.time
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.time, self.TIME)
-
-        try:
-            pick.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.phase, self.PHASE)
-
-        try:
-            pick.polarity
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.polarity, self.POLARITY)
-
-        try:
-            pick.onset
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.onset, self.ONSET)
-
-        try:
-            pick.picker
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.picker, self.PICKER)
-
-        try:
-            pick.filterList
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.filterList, self.FILTERLIST)
-
-        try:
-            pick.amplitude.amplitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.amplitude.amplitude, self.AMPLITUDE.amplitude)
-
-        try:
-            pick.amplitude.period
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.amplitude.period, self.AMPLITUDE.period)
-
-        try:
-            pick.amplitude.snr
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.amplitude.snr, self.AMPLITUDE.snr)
-
-        try:
-            pick.beam.backAzimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.beam.backAzimuth, self.BEAM.backAzimuth)
-
-        try:
-            pick.beam.slowness
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.beam.slowness, self.BEAM.slowness)
-
-        try:
-            pick.beam.powerRatio
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.beam.powerRatio, self.BEAM.powerRatio)
-
-        try:
-            pick.beam.backAzimuthError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.beam.backAzimuthError, self.BEAM.backAzimuthError)
-
-        try:
-            pick.beam.slownessError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.beam.slownessError, self.BEAM.slownessError)
-
-        try:
-            pick.beam.powerRatioError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.beam.powerRatioError, self.BEAM.powerRatioError)
-
-        try:
-            pick.associationInfo.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.associationInfo.phase, self.ASSOCIATIONINFO.phase)
-
-        try:
-            pick.associationInfo.distance
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.associationInfo.distance, self.ASSOCIATIONINFO.distance)
-
-        try:
-            pick.associationInfo.azimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.associationInfo.azimuth, self.ASSOCIATIONINFO.azimuth)
-
-        try:
-            pick.associationInfo.residual
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.associationInfo.residual, self.ASSOCIATIONINFO.residual)
-
-        try:
-            pick.associationInfo.sigma
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.associationInfo.sigma, self.ASSOCIATIONINFO.sigma)
-
-        try:
-            pick.classificationInfo.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.phase, self.CLASSIFICATIONINFO.phase)
-
-        try:
-            pick.classificationInfo.phaseProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
-
-        try:
-            pick.classificationInfo.distance
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
-
-        try:
-            pick.classificationInfo.distanceProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
-
-        try:
-            pick.classificationInfo.azimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
-
-        try:
-            pick.classificationInfo.azimuthProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability)        
-
-        try:
-            pick.classificationInfo.magnitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
-
-        try:
-            pick.classificationInfo.magnitudeType
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
-
-        try:
-            pick.classificationInfo.magnitudeProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)
-
-        try:
-            pick.classificationInfo.depth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.depth, self.CLASSIFICATIONINFO.depth)
-
-        try:
-            pick.classificationInfo.depthProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.depthProbability, self.CLASSIFICATIONINFO.depthProbability)  
-
-        try:
-            pick.classificationInfo.eventType.type
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.eventType.type, self.CLASSIFICATIONINFO.eventType.type)  
-
-        try:
-            pick.classificationInfo.eventType.certainty
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.eventType.certainty, self.CLASSIFICATIONINFO.eventType.certainty)  
-
-        try:
-            pick.classificationInfo.eventTypeProbability
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.eventTypeProbability, self.CLASSIFICATIONINFO.eventTypeProbability)   
-
-        try:
-            pick.classificationInfo.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.source.agencyID, self.SOURCE.agencyID)  
-
-        try:
-            pick.classificationInfo.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(pick.classificationInfo.source.author, self.SOURCE.author) 
 
     def test_toJSON(self):

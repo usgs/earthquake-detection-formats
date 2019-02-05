@@ -18,7 +18,9 @@ namespace detectionformats {
  * \brief detectionformats eventtype conversion class
  *
  * The detectionformats eventtype class is a conversion class used to create,
- * parse, and validate eventtype data as part of detection  data.
+ * parse, and validate eventtype data as part of detection data. Detection 
+ * formats supports a subset of the QuakeML 1.2 event types that are 
+ * automatically classifiable.
  *
  */
 class eventtype : public detectionbase {

@@ -17,54 +17,18 @@ class TestRetract(unittest.TestCase):
         # Empty init
         retract = detectionformats.retract.Retract()
 
-        try:
-            retract.id
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            retract.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            retract.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(retract, 'id'))
+        self.assertFalse(hasattr(retract.source, 'agencyID'))
+        self.assertFalse(hasattr(retract.source, 'author'))
 
         retract = detectionformats.retract.Retract(self.ID, self.SOURCE)
 
-        try:
-            retract.id
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(retract, 'id'))
+        self.assertTrue(hasattr(retract.source, 'agencyID'))
+        self.assertTrue(hasattr(retract.source, 'author'))
 
         self.assertEqual(retract.id, self.ID)
-
-        try:
-            retract.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(retract.source.agencyID, self.SOURCE.agencyID)
-
-        try:
-            retract.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(retract.source.author, self.SOURCE.author)
 
     def test_toJSON(self):

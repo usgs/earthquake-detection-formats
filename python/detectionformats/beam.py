@@ -82,8 +82,8 @@ class Beam:
         try:
             self.backAzimuth = aDict[self.BACKAZIMUTH_KEY]
             self.slowness = aDict[self.SLOWNESS_KEY]
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print ("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.POWERRATIO_KEY in aDict:
@@ -125,8 +125,8 @@ class Beam:
         try:
             aDict[self.BACKAZIMUTH_KEY] = self.backAzimuth
             aDict[self.SLOWNESS_KEY] = self.slowness
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print ("Missing required data error: %s" % e)
 
         # second optional keys
         if hasattr(self, 'powerRatio'):
@@ -155,10 +155,7 @@ class Beam:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -176,13 +173,13 @@ class Beam:
         try:
             if self.backAzimuth < 0:
                 errorList.append('Invalid BackAzimuth in Beam Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No BackAzimuth in Beam Class.')
 
         try:
             if self.slowness < 0:
                 errorList.append('Invalid Slowness in Beam Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Slowness in Beam Class.')
 
         # second optional keys

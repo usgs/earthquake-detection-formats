@@ -54,9 +54,8 @@ class EventType:
         try:
             self.type = aDict[self.TYPE_KEY]
             self.certainty = aDict[self.CERTAINTY_KEY]
-
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
         """Converts the object to a json formatted string
@@ -86,8 +85,8 @@ class EventType:
         try:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.CERTAINTY_KEY] = self.certainty
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         return aDict
 
@@ -103,10 +102,7 @@ class EventType:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -122,11 +118,11 @@ class EventType:
 
         # optional values
         if hasattr(self, 'type'):
-            if self.type != 'Earthquake' and self.type != 'MineCollapse' and self.type != 'NuclearExplosion' and self.type != 'QuarryBlast' and self.type != 'InducedOrTriggered' and self.type != 'RockBurst' and self.type != 'FluidInjection' and self.type != 'IceQuake' and self.type != 'VolcanicEruption':
+            if self.type not in ['Earthquake', 'MineCollapse', 'NuclearExplosion', 'QuarryBlast', 'InducedOrTriggered', 'RockBurst', 'FluidInjection', 'IceQuake', 'VolcanicEruption']:
                 errorList.append('Invalid Type in EventType Class.')
 
         if hasattr(self, 'certainty'):
-            if self.certainty != 'Suspected' and self.certainty != 'Confirmed':
+            if self.certainty not in ['Suspected', 'Confirmed']:
                 errorList.append('Invalid Certainty in EventType Class.')
 
         return errorList

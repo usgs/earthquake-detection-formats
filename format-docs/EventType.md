@@ -28,5 +28,5 @@ applications and organizations.
 The following are values that **may or may not** be provided as part of
 event type.
 
-* Type - A string containing the type of detection that was found; allowed type strings are: "Earthquake", "MineCollapse", "NuclearExplosion", "QuarryBlast", "InducedOrTriggered", "RockBurst", "FluidInjection", "IceQuake",and "VolcanicEruption"
+* Type - A string containing the type of detection that was found; Detection formats supports a subset of the QuakeML 1.2 event types that are automatically classifiable. The allowed type strings are: "Earthquake", "MineCollapse", "NuclearExplosion", "QuarryBlast", "InducedOrTriggered", "RockBurst", "FluidInjection", "IceQuake",and "VolcanicEruption"
 * Certainty - A string containing the certainty of the event type; allowed strings are: "Suspected" and "Confirmed".

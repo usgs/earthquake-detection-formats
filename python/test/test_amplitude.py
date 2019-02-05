@@ -17,55 +17,19 @@ class TestAmplitude(unittest.TestCase):
         # Empty init
         amplitude = detectionformats.amplitude.Amplitude()
 
-        try:
-            amplitude.amplitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            amplitude.period
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            amplitude.snr
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(amplitude, 'amplitude'))
+        self.assertFalse(hasattr(amplitude, 'period'))
+        self.assertFalse(hasattr(amplitude, 'snr'))
 
         amplitude = detectionformats.amplitude.Amplitude(self.AMPLITUDE,
             self.PERIOD, self.SNR)
 
-        try:
-            amplitude.amplitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(amplitude, 'amplitude'))
+        self.assertTrue(hasattr(amplitude, 'period'))
+        self.assertTrue(hasattr(amplitude, 'snr'))
 
         self.assertEqual(amplitude.amplitude, self.AMPLITUDE)
-
-        try:
-            amplitude.period
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(amplitude.period, self.PERIOD)
-
-        try:
-            amplitude.snr
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(amplitude.snr, self.SNR)
 
     def test_toJSON(self):

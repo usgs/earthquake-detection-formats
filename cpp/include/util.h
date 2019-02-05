@@ -40,7 +40,9 @@
  */
 namespace detectionformats {
 /**
- * \brief detectionformats valid event type index enum
+ * \brief detectionformats valid event type index enum. Detection formats 
+ * supports a subset of the QuakeML 1.2 event types that are automatically 
+ * classifiable.
  */
 enum eventtypeindex {
 	earthquake = 0,
@@ -56,7 +58,9 @@ enum eventtypeindex {
 };
 
 /**
- * \brief detectionformats valid event type values
+ * \brief detectionformats valid event type values Detection formats 
+ * supports a subset of the QuakeML 1.2 event types that are automatically 
+ * classifiable.
  */
 static const char *eventtypevalues[] = { "Earthquake", "MineCollapse",
 		"NuclearExplosion", "QuarryBlast", "InducedOrTriggered",

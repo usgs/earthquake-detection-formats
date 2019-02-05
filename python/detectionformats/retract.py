@@ -67,8 +67,8 @@ class Retract:
             self.type = aDict[self.TYPE_KEY]
             self.id = aDict[self.ID_KEY]
             self.source.fromDict(aDict[self.SOURCE_KEY])
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
         """Converts the object to a json formatted string
@@ -101,8 +101,8 @@ class Retract:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.ID_KEY] = self.id
             aDict[self.SOURCE_KEY] = self.source.toDict()
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         return aDict
 
@@ -118,10 +118,7 @@ class Retract:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -140,19 +137,19 @@ class Retract:
                 errorList.append('Empty Type in Retract Class.')
             elif self.type != 'Retract':
                 errorList.append('Non-Retract Type in Retract Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Type in Retract Class.')
 
         try:
             if self.id == '':
                 errorList.append('Empty ID in Retract Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No ID in Retract Class.')
 
         try:
-            if self.source.isValid() == False:
+            if not self.source.isValid():
                 errorList.append('Invalid Source in Retract Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Source in Retract Class.')
 
         return errorList

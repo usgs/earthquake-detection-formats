@@ -139,8 +139,8 @@ class Detection:
             self.id = aDict[self.ID_KEY]
             self.source.fromDict(aDict[self.SOURCE_KEY])
             self.hypocenter.fromDict(aDict[self.HYPOCENTER_KEY])
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.DETECTIONTYPE_KEY in aDict:
@@ -214,15 +214,15 @@ class Detection:
             aDict[self.ID_KEY] = self.id
             aDict[self.SOURCE_KEY] = self.source.toDict()
             aDict[self.HYPOCENTER_KEY] = self.hypocenter.toDict()
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         # second optional keys
         if hasattr(self, 'detectionType'):
             aDict[self.DETECTIONTYPE_KEY] = self.detectionType
 
         if hasattr(self, 'eventType'):
-            if self.eventType.isEmpty() == False:
+            if not self.eventType.isEmpty():
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
 
         if hasattr(self, 'detectionTime'):
@@ -268,10 +268,7 @@ class Detection:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -291,35 +288,35 @@ class Detection:
                 errorList.append('Empty Type in Detection Class.')
             elif self.type != 'Detection':
                 errorList.append('Non-Detection Type in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Type in Detection Class.')
 
         try:
             if self.id == '':
                 errorList.append('Empty ID in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No ID in Detection Class.')
 
         try:
-            if self.source.isValid() == False:
+            if not self.source.isValid():
                 errorList.append('Invalid Source in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Source in Detection Class.')
 
         try:
-            if self.hypocenter.isValid() == False:
+            if not self.hypocenter.isValid():
                 errorList.append('Invalid Hypocenter in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Hypocenter in Detection Class.')
 
         # optional values
         if hasattr(self, 'detectionType'):
-            if self.detectionType != 'New' and self.detectionType != 'Update' and self.detectionType != 'Final' and self.detectionType != 'Retract':
+            if self.detectionType not in ['New', 'Update', 'Final', 'Retract']:
                 errorList.append('Invalid DetectionType in Detection Class.')
 
         if hasattr(self, 'eventType'):
-            if self.eventType.isEmpty() == False:
-                if self.eventType.isValid() == False:
+            if not self.eventType.isEmpty():
+                if not self.eventType.isValid():
                     errorList.append('Invalid EventType in Detection Class.')
 
         if hasattr(self, 'bayes'):
@@ -337,13 +334,13 @@ class Detection:
         if hasattr(self, 'pickData'):
             if self.pickData and len(self.pickData) > 0:
                 for aPick in self.pickData:
-                    if aPick.isValid() == False:
+                    if not aPick.isValid():
                         errorList.append('Invalid Pick in Detection Class.')
 
         if hasattr(self, 'correlationData'):
             if self.correlationData and len(self.correlationData) > 0:
                 for aCorrelation in self.correlationData:
-                    if aCorrelation.isValid() == False:
+                    if not aCorrelation.isValid():
                         errorList.append('Invalid Correlation in Detection Class.')
 
         return errorList

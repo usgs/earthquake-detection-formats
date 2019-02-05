@@ -19,87 +19,25 @@ class TestAssociation(unittest.TestCase):
         # Empty init
         association = detectionformats.association.Association()
 
-        try:
-            association.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            association.distance
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            association.azimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            association.residual
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            association.sigma
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
+        self.assertFalse(hasattr(association, 'phase'))
+        self.assertFalse(hasattr(association, 'distance'))
+        self.assertFalse(hasattr(association, 'azimuth'))
+        self.assertFalse(hasattr(association, 'residual'))
+        self.assertFalse(hasattr(association, 'sigma'))
+        
         association = detectionformats.association.Association(self.PHASE,
             self.DISTANCE, self.AZIMUTH, self.RESIDUAL, self.SIGMA)
 
-        try:
-            association.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(association, 'phase'))
+        self.assertTrue(hasattr(association, 'distance'))
+        self.assertTrue(hasattr(association, 'azimuth'))
+        self.assertTrue(hasattr(association, 'residual'))
+        self.assertTrue(hasattr(association, 'sigma'))
 
         self.assertEqual(association.phase, self.PHASE)
-
-        try:
-            association.distance
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(association.distance, self.DISTANCE)
-
-        try:
-            association.azimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(association.azimuth, self.AZIMUTH)
-
-        try:
-            association.residual
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(association.residual, self.RESIDUAL)
-
-        try:
-            association.sigma
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(association.sigma, self.SIGMA)
 
     def test_toJSON(self):

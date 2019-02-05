@@ -51,345 +51,75 @@ class TestDetection(unittest.TestCase):
         # Empty init
         detection = detectionformats.detection.Detection()
 
-        try:
-            detection.id
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.latitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.longitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.depth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.time
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.latitudeError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.longitudeError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.depthError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.hypocenter.timeError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.detectionType
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.eventType.type
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.eventType.certainty
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.detectionTime
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.bayes
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.minimumDistance
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.rms
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.newGap
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.pickData
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            detection.correlationData
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(detection, 'id'))
+        self.assertFalse(hasattr(detection.source, 'agencyID'))
+        self.assertFalse(hasattr(detection.source, 'author'))
+        self.assertFalse(hasattr(detection.hypocenter, 'latitude'))
+        self.assertFalse(hasattr(detection.hypocenter, 'longitude'))
+        self.assertFalse(hasattr(detection.hypocenter, 'depth'))
+        self.assertFalse(hasattr(detection.hypocenter, 'time'))
+        self.assertFalse(hasattr(detection.hypocenter, 'latitudeError'))
+        self.assertFalse(hasattr(detection.hypocenter, 'longitudeError'))
+        self.assertFalse(hasattr(detection.hypocenter, 'depthError'))
+        self.assertFalse(hasattr(detection.hypocenter, 'timeError'))
+        self.assertFalse(hasattr(detection, 'detectionType'))
+        self.assertFalse(hasattr(detection.eventType, 'type'))
+        self.assertFalse(hasattr(detection.eventType, 'certainty'))
+        self.assertFalse(hasattr(detection, 'detectionTime'))
+        self.assertFalse(hasattr(detection, 'bayes'))
+        self.assertFalse(hasattr(detection, 'minimumDistance'))
+        self.assertFalse(hasattr(detection, 'rms'))
+        self.assertFalse(hasattr(detection, 'gap'))
+        self.assertFalse(hasattr(detection, 'pickData'))
+        self.assertFalse(hasattr(detection, 'correlationData'))
 
         detection = detectionformats.detection.Detection(self.ID,
             self.SOURCE, self.HYPOCENTER, self.DETECTIONTYPE, self.EVENTTYPE,
             self.DETECTIONTIME, self.BAYES, self.MINIMUMDISTANCE, self.RMS,
             self.GAP, self.PICKDATA, self.CORRELATIONDATA)
 
-        try:
-            detection.id
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(detection, 'id'))
+        self.assertTrue(hasattr(detection.source, 'agencyID'))
+        self.assertTrue(hasattr(detection.source, 'author'))
+        self.assertTrue(hasattr(detection.hypocenter, 'latitude'))
+        self.assertTrue(hasattr(detection.hypocenter, 'longitude'))
+        self.assertTrue(hasattr(detection.hypocenter, 'depth'))
+        self.assertTrue(hasattr(detection.hypocenter, 'time'))
+        self.assertTrue(hasattr(detection.hypocenter, 'latitudeError'))
+        self.assertTrue(hasattr(detection.hypocenter, 'longitudeError'))
+        self.assertTrue(hasattr(detection.hypocenter, 'depthError'))
+        self.assertTrue(hasattr(detection.hypocenter, 'timeError'))
+        self.assertTrue(hasattr(detection, 'detectionType'))
+        self.assertTrue(hasattr(detection.eventType, 'type'))
+        self.assertTrue(hasattr(detection.eventType, 'certainty'))
+        self.assertTrue(hasattr(detection, 'detectionTime'))
+        self.assertTrue(hasattr(detection, 'bayes'))
+        self.assertTrue(hasattr(detection, 'minimumDistance'))
+        self.assertTrue(hasattr(detection, 'rms'))
+        self.assertTrue(hasattr(detection, 'gap'))
+        self.assertTrue(hasattr(detection, 'pickData'))
+        self.assertTrue(hasattr(detection, 'correlationData'))
 
         self.assertEqual(detection.id, self.ID)
-
-        try:
-            detection.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.source.agencyID, self.SOURCE.agencyID)
-
-        try:
-            detection.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.source.author, self.SOURCE.author)
-
-        try:
-            detection.hypocenter.latitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.latitude, self.HYPOCENTER.latitude)
-
-        try:
-            detection.hypocenter.longitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.longitude, self.HYPOCENTER.longitude)
-
-        try:
-            detection.hypocenter.depth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.depth, self.HYPOCENTER.depth)
-
-        try:
-            detection.hypocenter.time
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.time, self.HYPOCENTER.time)
-
-        try:
-            detection.hypocenter.latitudeError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.latitudeError, self.HYPOCENTER.latitudeError)
-
-        try:
-            detection.hypocenter.longitudeError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.longitudeError, self.HYPOCENTER.longitudeError)
-
-        try:
-            detection.hypocenter.depthError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.depthError, self.HYPOCENTER.depthError)
-
-        try:
-            detection.hypocenter.timeError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.hypocenter.timeError, self.HYPOCENTER.timeError)
-
-        try:
-            detection.detectionType
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.detectionType, self.DETECTIONTYPE)
-
-        try:
-            detection.eventType.type
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.eventType.type, self.EVENTTYPE.type)
-
-        try:
-            detection.eventType.certainty
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.eventType.certainty, self.EVENTTYPE.certainty)
-
-        try:
-            detection.detectionTime
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.detectionTime, self.DETECTIONTIME)
-
-        try:
-            detection.bayes
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.bayes, self.BAYES)
-
-        try:
-            detection.minimumDistance
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.minimumDistance, self.MINIMUMDISTANCE)
-
-        try:
-            detection.rms
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.rms, self.RMS)
-
-        try:
-            detection.gap
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(detection.gap, self.GAP)
-
-        try:
-            detection.pickData
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         # not sure how to handle pick list
-
-        try:
-            detection.pickData
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         # not sure how to handle correlation list
 
     def test_toJSON(self):

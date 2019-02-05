@@ -17,104 +17,29 @@ class TestStationInfoRequest(unittest.TestCase):
     def test_init(self):
         # Empty init
         stationinforequest = detectionformats.stationinforequest.StationInfoRequest()
-
-        try:
-            stationinforequest.site.station
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinforequest.site.channel
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinforequest.site.network
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinforequest.site.location
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinforequest.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            stationinforequest.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        
+        self.assertFalse(hasattr(stationinforequest.site, 'station'))
+        self.assertFalse(hasattr(stationinforequest.site, 'channel'))
+        self.assertFalse(hasattr(stationinforequest.site, 'network'))
+        self.assertFalse(hasattr(stationinforequest.site, 'location'))
+        self.assertFalse(hasattr(stationinforequest.source, 'agencyID'))
+        self.assertFalse(hasattr(stationinforequest.source, 'author'))
 
         stationinforequest = detectionformats.stationinforequest.StationInfoRequest(self.SITE,
             self.SOURCE)
 
-        try:
-            stationinforequest.site.station
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(stationinforequest.site, 'station'))
+        self.assertTrue(hasattr(stationinforequest.site, 'channel'))
+        self.assertTrue(hasattr(stationinforequest.site, 'network'))
+        self.assertTrue(hasattr(stationinforequest.site, 'location'))
+        self.assertTrue(hasattr(stationinforequest.source, 'agencyID'))
+        self.assertTrue(hasattr(stationinforequest.source, 'author'))
 
         self.assertEqual(stationinforequest.site.station, self.SITE.station)
-
-        try:
-            stationinforequest.site.channel
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinforequest.site.channel, self.SITE.channel)
-
-        try:
-            stationinforequest.site.network
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinforequest.site.network, self.SITE.network)
-
-        try:
-            stationinforequest.site.location
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinforequest.site.location, self.SITE.location)
-
-        try:
-            stationinforequest.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinforequest.source.agencyID, self.SOURCE.agencyID)
-
-        try:
-            stationinforequest.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(stationinforequest.source.author, self.SOURCE.author)
 
     def test_toJSON(self):

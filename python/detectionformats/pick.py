@@ -156,8 +156,8 @@ class Pick:
             self.source.fromDict(aDict[self.SOURCE_KEY])
             timeString = aDict[self.TIME_KEY][:-1] + "000Z"
             self.time = datetime.datetime.strptime(timeString, "%Y-%m-%dT%H:%M:%S.%fZ")
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.PHASE_KEY in aDict:
@@ -231,8 +231,8 @@ class Pick:
             aDict[self.SOURCE_KEY] = self.source.toDict()
             timeString = self.time.isoformat(timespec='milliseconds') + "Z"
             aDict[self.TIME_KEY] = timeString
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         # second optional keys
         if hasattr(self, 'phase'):
@@ -250,24 +250,25 @@ class Pick:
         if hasattr(self, 'filterList'):
             aFilterList = []
             for aFilter in self.filterList:
-                if aFilter.isEmpty() == False:
+                if not aFilter.isEmpty():
                     aFilterList.append(aFilter.toDict())
 
             aDict[self.FILTER_KEY] = aFilterList
 
         if hasattr(self, 'amplitude'):
-            if self.amplitude.isEmpty() == False:
+            if not self.amplitude.isEmpty():
                 aDict[self.AMPLITUDE_KEY] = self.amplitude.toDict()
 
         if hasattr(self, 'beam'):
-            aDict[self.BEAM_KEY] = self.beam.toDict()
+            if not self.beam.isEmpty():
+                aDict[self.BEAM_KEY] = self.beam.toDict()
 
         if hasattr(self, 'associationInfo'):
-            if self.associationInfo.isEmpty() == False:
+            if not self.associationInfo.isEmpty():
                 aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
 
         if hasattr(self, 'classificationInfo'):
-            if self.classificationInfo.isEmpty() == False:
+            if not self.classificationInfo.isEmpty():
                 aDict[self.CLASSIFICATIONINFO_KEY] = self.classificationInfo.toDict()
 
         return aDict
@@ -284,10 +285,7 @@ class Pick:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -307,69 +305,69 @@ class Pick:
                 errorList.append('Empty Type in Pick Class.')
             elif self.type != 'Pick':
                 errorList.append('Non-Pick Type in Pick Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Type in Pick Class.')
 
         try:
             if self.id == '':
                 errorList.append('Empty ID in Pick Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No ID in Pick Class.')
 
         try:
-            if self.site.isValid() == False:
+            if not self.site.isValid():
                 errorList.append('Invalid Site in Pick Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Site in Pick Class.')
 
         try:
-            if self.source.isValid() == False:
+            if not self.source.isValid():
                 errorList.append('Invalid Source in Pick Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Source in Pick Class.')
 
         try:
             self.time
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Time in Pick Class.')
 
         # optional values
         if hasattr(self, 'polarity'):
-            if self.polarity != 'up' and self.polarity != 'down' :
+            if self.polarity not in ['up', 'down']:
                 errorList.append('Invalid Polarity in Pick Class.')
 
         if hasattr(self, 'onset'):
-            if self.onset != 'impulsive' and self.onset != 'emergent' and self.onset != 'questionable':
+            if self.onset not in ['impulsive', 'emergent', 'questionable']:
                 errorList.append('Invalid Onset in Pick Class.')
 
         if hasattr(self, 'picker'):
-            if self.picker != 'manual' and self.picker != 'raypicker' and self.picker != 'filterpicker' and self.picker != 'earthworm' and self.picker != 'other':
+            if self.picker not in ['manual', 'raypicker', 'filterpicker', 'earthworm', 'other']:
                 errorList.append('Invalid Picker in Pick Class.')
 
         if hasattr(self, 'filterList'):
             for aFilter in self.filterList:
-                if aFilter.isEmpty() == False:
-                    if aFilter.isValid() == False:
+                if not aFilter.isEmpty():
+                    if not aFilter.isValid():
                         errorList.append('Invalid Filter in Pick Class.')
 
         if hasattr(self, 'amplitude'):
-            if self.amplitude.isEmpty() == False:
-                if self.amplitude.isValid() == False:
+            if not self.amplitude.isEmpty():
+                if not self.amplitude.isValid():
                     errorList.append('Invalid Amplitude in Pick Class.')
 
         if hasattr(self, 'beam'):
-            if self.beam.isEmpty() == False:
-                if self.beam.isValid() == False:
+            if not self.beam.isEmpty():
+                if not self.beam.isValid():
                     errorList.append('Invalid Beam in Pick Class.')
         
         if hasattr(self, 'associationInfo'):
-            if self.associationInfo.isEmpty() == False:
-                if self.associationInfo.isValid() == False:
+            if not self.associationInfo.isEmpty():
+                if not self.associationInfo.isValid():
                     errorList.append('Invalid AssociationInfo in Pick Class.')
 
         if hasattr(self, 'classificationInfo'):
-            if self.classificationInfo.isEmpty() == False:
-                if self.classificationInfo.isValid() == False:
+            if not self.classificationInfo.isEmpty():
+                if not self.classificationInfo.isValid():
                     errorList.append('Invalid ClassificationInfo in Pick Class.')
 
         return errorList

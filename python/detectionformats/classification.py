@@ -246,14 +246,14 @@ class Classification:
             aDict[self.DEPTHPROB_KEY] = self.depthProbability
 
         if hasattr(self, 'eventType'):
-            if self.eventType.isEmpty() == False:
+            if not self.eventType.isEmpty():
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
 
         if hasattr(self, 'eventTypeProbability'):
             aDict[self.EVENTTYPEPROB_KEY] = self.eventTypeProbability
 
         if hasattr(self, 'source'):
-            if self.source.isEmpty() == False:
+            if not self.source.isEmpty():
                 aDict[self.SOURCE_KEY] = self.source.toDict()
 
         return aDict
@@ -270,10 +270,7 @@ class Classification:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -305,12 +302,12 @@ class Classification:
                 errorList.append('Depth in Classification Class not in the range of -100 to 1500.')
 
         if hasattr(self, 'eventType'):
-            if self.eventType.isValid() == False:
+            if not self.eventType.isValid():
                 errorList.append('Invalid EventType in Classification Class.')
 
         if hasattr(self, 'source'):
-            if self.source.isEmpty() == False:
-                if self.source.isValid() == False:
+            if not self.source.isEmpty():
+                if not self.source.isValid():
                     errorList.append('Invalid Source in Classification Class.')
 
         return errorList
@@ -359,14 +356,14 @@ class Classification:
             return False
 
         if hasattr(self, 'eventType'):
-            if self.eventType.isEmpty() == False:
+            if not self.eventType.isEmpty():
                 return False
 
         if hasattr(self, 'eventTypeProbability'):
             return False
 
         if hasattr(self, 'source'):
-            if self.source.isEmpty() == False:
+            if not self.source.isEmpty():
                 return False
 
         return True

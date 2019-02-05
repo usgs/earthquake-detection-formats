@@ -40,215 +40,36 @@ class TestCorrelation(unittest.TestCase):
         # Empty init
         correlation = detectionformats.correlation.Correlation()
 
-        try:
-            correlation.id
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.site.station
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.site.channel
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.site.network
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.site.location
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.correlation
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.time
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.latitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.longitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.depth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.time
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.latitudeError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.longitudeError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.depthError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.hypocenter.timeError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.eventType.type
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.eventType.certainty
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.magnitude
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.snr
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.ZScore
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.detectionThreshold
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.thresholdType
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.associationInfo.phase
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.associationInfo.distance
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.associationInfo.azimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.associationInfo.residual
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            correlation.associationInfo.sigma
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(correlation, 'id'))
+        self.assertFalse(hasattr(correlation.site, 'station'))
+        self.assertFalse(hasattr(correlation.site, 'channel'))
+        self.assertFalse(hasattr(correlation.site, 'network'))
+        self.assertFalse(hasattr(correlation.site, 'location'))
+        self.assertFalse(hasattr(correlation.source, 'agencyID'))
+        self.assertFalse(hasattr(correlation.source, 'author'))
+        self.assertFalse(hasattr(correlation, 'phase'))
+        self.assertFalse(hasattr(correlation, 'correlation'))
+        self.assertFalse(hasattr(correlation, 'time'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'latitude'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'longitude'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'depth'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'time'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'latitudeError'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'longitudeError'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'depthError'))
+        self.assertFalse(hasattr(correlation.hypocenter, 'timeError'))
+        self.assertFalse(hasattr(correlation.eventType, 'type'))
+        self.assertFalse(hasattr(correlation.eventType, 'certainty'))
+        self.assertFalse(hasattr(correlation, 'magnitude'))
+        self.assertFalse(hasattr(correlation, 'snr'))
+        self.assertFalse(hasattr(correlation, 'ZScore'))
+        self.assertFalse(hasattr(correlation, 'detectionThreshold'))
+        self.assertFalse(hasattr(correlation, 'thresholdType'))
+        self.assertFalse(hasattr(correlation.associationInfo, 'phase'))
+        self.assertFalse(hasattr(correlation.associationInfo, 'distance'))
+        self.assertFalse(hasattr(correlation.associationInfo, 'azimuth'))        
+        self.assertFalse(hasattr(correlation.associationInfo, 'residual'))
+        self.assertFalse(hasattr(correlation.associationInfo, 'sigma'))
 
         correlation = detectionformats.correlation.Correlation(self.ID,
             self.SITE, self.SOURCE, self.PHASE, self.TIME, self.CORRELATION,
@@ -256,274 +77,66 @@ class TestCorrelation(unittest.TestCase):
             self.ZSCORE, self.DETECTIONTHRESHOLD, self.THRESHOLDTYPE,
             self.ASSOCIATIONINFO)
 
-        try:
-            correlation.id
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(correlation, 'id'))
+        self.assertTrue(hasattr(correlation.site, 'station'))
+        self.assertTrue(hasattr(correlation.site, 'channel'))
+        self.assertTrue(hasattr(correlation.site, 'network'))
+        self.assertTrue(hasattr(correlation.site, 'location'))
+        self.assertTrue(hasattr(correlation.source, 'agencyID'))
+        self.assertTrue(hasattr(correlation.source, 'author'))
+        self.assertTrue(hasattr(correlation, 'phase'))
+        self.assertTrue(hasattr(correlation, 'correlation'))
+        self.assertTrue(hasattr(correlation, 'time'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'latitude'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'longitude'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'depth'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'time'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'latitudeError'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'longitudeError'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'depthError'))
+        self.assertTrue(hasattr(correlation.hypocenter, 'timeError'))
+        self.assertTrue(hasattr(correlation.eventType, 'type'))
+        self.assertTrue(hasattr(correlation.eventType, 'certainty'))
+        self.assertTrue(hasattr(correlation, 'magnitude'))
+        self.assertTrue(hasattr(correlation, 'snr'))
+        self.assertTrue(hasattr(correlation, 'ZScore'))
+        self.assertTrue(hasattr(correlation, 'detectionThreshold'))
+        self.assertTrue(hasattr(correlation, 'thresholdType'))
+        self.assertTrue(hasattr(correlation.associationInfo, 'phase'))
+        self.assertTrue(hasattr(correlation.associationInfo, 'distance'))
+        self.assertTrue(hasattr(correlation.associationInfo, 'azimuth'))        
+        self.assertTrue(hasattr(correlation.associationInfo, 'residual'))
+        self.assertTrue(hasattr(correlation.associationInfo, 'sigma'))
 
         self.assertEqual(correlation.id, self.ID)
-
-        try:
-            correlation.site.station
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.site.station, self.SITE.station)
-
-        try:
-            correlation.site.channel
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.site.channel, self.SITE.channel)
-
-        try:
-            correlation.site.network
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.site.network, self.SITE.network)
-
-        try:
-            correlation.site.location
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.site.location, self.SITE.location)
-
-        try:
-            correlation.source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.source.agencyID, self.SOURCE.agencyID)
-
-        try:
-            correlation.source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.source.author, self.SOURCE.author)
-
-        try:
-            correlation.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.phase, self.PHASE)
-
-        try:
-            correlation.correlation
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.correlation, self.CORRELATION)
-
-        try:
-            correlation.time
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.time, self.TIME)
-
-        try:
-            correlation.hypocenter.latitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.latitude, self.HYPOCENTER.latitude)
-
-        try:
-            correlation.hypocenter.longitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.longitude, self.HYPOCENTER.longitude)
-
-        try:
-            correlation.hypocenter.depth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.depth, self.HYPOCENTER.depth)
-
-        try:
-            correlation.hypocenter.time
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.time, self.HYPOCENTER.time)
-
-        try:
-            correlation.hypocenter.latitudeError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.latitudeError, self.HYPOCENTER.latitudeError)
-
-        try:
-            correlation.hypocenter.longitudeError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.longitudeError, self.HYPOCENTER.longitudeError)
-
-        try:
-            correlation.hypocenter.depthError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.depthError, self.HYPOCENTER.depthError)
-
-        try:
-            correlation.hypocenter.timeError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.hypocenter.timeError, self.HYPOCENTER.timeError)
-
-        try:
-            correlation.eventType.type
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.eventType.type, self.EVENTTYPETYPE)
-
-        try:
-            correlation.eventType.certainty
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.eventType.certainty, self.CERTAINTY)
-
-        try:
-            correlation.magnitude
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.magnitude, self.MAGNITUDE)
-
-        try:
-            correlation.snr
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.snr, self.SNR)
-
-        try:
-            correlation.ZScore
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.ZScore, self.ZSCORE)
-
-        try:
-            correlation.detectionThreshold
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.detectionThreshold, self.DETECTIONTHRESHOLD)
-
-        try:
-            correlation.thresholdType
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.thresholdType, self.THRESHOLDTYPE)
-
-        try:
-            correlation.associationInfo.phase
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.associationInfo.phase, self.ASSOCIATIONINFO.phase)
-
-        try:
-            correlation.associationInfo.distance
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.associationInfo.distance, self.ASSOCIATIONINFO.distance)
-
-        try:
-            correlation.associationInfo.azimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.associationInfo.azimuth, self.ASSOCIATIONINFO.azimuth)
-
-        try:
-            correlation.associationInfo.residual
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.associationInfo.residual, self.ASSOCIATIONINFO.residual)
-
-        try:
-            correlation.associationInfo.sigma
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(correlation.associationInfo.sigma, self.ASSOCIATIONINFO.sigma)
 
     def test_toJSON(self):

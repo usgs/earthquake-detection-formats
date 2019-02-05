@@ -70,8 +70,8 @@ class Site:
         try:
             self.station = aDict[self.STATION_KEY]
             self.network = aDict[self.NETWORK_KEY]
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.CHANNEL_KEY in aDict:
@@ -109,8 +109,8 @@ class Site:
         try:
             aDict[self.STATION_KEY] = self.station
             aDict[self.NETWORK_KEY] = self.network
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         # second optional keys
         if hasattr(self, 'channel'):
@@ -135,10 +135,7 @@ class Site:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -155,13 +152,13 @@ class Site:
         try:
             if self.station == '':
                 errorList.append('Empty Station in Site Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Station in Site Class.')
 
         try:
             if self.network == '':
                 errorList.append('Empty Network in Site Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Network in Site Class.')
 
         return errorList

@@ -55,9 +55,8 @@ class Source:
         try:
             self.agencyID = aDict[self.AGENCYID_KEY]
             self.author = aDict[self.AUTHOR_KEY]
-
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
         """Converts the object to a json formatted string
@@ -87,8 +86,8 @@ class Source:
         try:
             aDict[self.AGENCYID_KEY] = self.agencyID
             aDict[self.AUTHOR_KEY] = self.author
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         return aDict
 
@@ -104,10 +103,7 @@ class Source:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
     def getErrors(self):
         """Gets a list of object validation errors
@@ -124,13 +120,13 @@ class Source:
         try:
             if self.agencyID == '':
                 errorList.append('Empty AgencyID in Source Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No AgencyID in Source Class.')
 
         try:
             if self.author == '':
                 errorList.append('Empty Author in Source Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Author in Source Class.')
 
         return errorList
