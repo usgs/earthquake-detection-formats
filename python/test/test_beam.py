@@ -20,104 +20,29 @@ class TestBeam(unittest.TestCase):
         # Empty init
         beam = detectionformats.beam.Beam()
 
-        try:
-            beam.backAzimuth
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            beam.slowness
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            beam.powerRatio
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            beam.backAzimuthError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            beam.slownessError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            beam.powerRatioError
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(beam, 'backAzimuth'))
+        self.assertFalse(hasattr(beam, 'slowness'))
+        self.assertFalse(hasattr(beam, 'powerRatio'))
+        self.assertFalse(hasattr(beam, 'backAzimuthError'))
+        self.assertFalse(hasattr(beam, 'slownessError'))
+        self.assertFalse(hasattr(beam, 'powerRatioError'))
 
         beam = detectionformats.beam.Beam(self.BACKAZIMUTH, self.SLOWNESS,
             self.POWERRATIO, self.BACKAZIMUTHERROR, self.SLOWNESSERROR,
             self.POWERRATIOERROR)
 
-        try:
-            beam.backAzimuth
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(beam, 'backAzimuth'))
+        self.assertTrue(hasattr(beam, 'slowness'))
+        self.assertTrue(hasattr(beam, 'powerRatio'))
+        self.assertTrue(hasattr(beam, 'backAzimuthError'))
+        self.assertTrue(hasattr(beam, 'slownessError'))
+        self.assertTrue(hasattr(beam, 'powerRatioError'))
 
         self.assertEqual(beam.backAzimuth, self.BACKAZIMUTH)
-
-        try:
-            beam.slowness
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(beam.slowness, self.SLOWNESS)
-
-        try:
-            beam.powerRatio
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(beam.powerRatio, self.POWERRATIO)
-
-        try:
-            beam.backAzimuthError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(beam.backAzimuthError, self.BACKAZIMUTHERROR)
-
-        try:
-            beam.slownessError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(beam.slownessError, self.SLOWNESSERROR)
-
-        try:
-            beam.powerRatioError
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(beam.powerRatioError, self.POWERRATIOERROR)
 
     def test_toJSON(self):

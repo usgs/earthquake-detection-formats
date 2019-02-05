@@ -7,13 +7,14 @@
 #ifndef DETECTION_ORIGIN_H
 #define DETECTION_ORIGIN_H
 
+#include <source.h>
+#include <hypocenter.h>
+#include <pick.h>
+#include <correlation.h>
+#include <eventtype.h>
+
 #include <string>
 #include <vector>
-
-#include "./source.h"
-#include "./hypocenter.h"
-#include "./pick.h"
-#include "./correlation.h"
 
 namespace detectionformats {
 /**
@@ -34,7 +35,7 @@ class detection : public detectionbase {
 	 * \brief detection constructor
 	 *
 	 * The constructor for the detection class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	detection();
 
@@ -42,7 +43,7 @@ class detection : public detectionbase {
 	 * \brief detection advanced constructor
 	 *
 	 * The advanced constructor for the detection class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newagencyid - A std::string containing the agencyid to use
@@ -53,7 +54,7 @@ class detection : public detectionbase {
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlongtiudeerror - A double containing the longitude error to
+	 * \param newlongitudeerror - A double containing the longitude error to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newtimeerror - A double containing the time error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -66,6 +67,8 @@ class detection : public detectionbase {
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
+	 * \param neweventtypecertainty - A std::string containing the event type 
+	 * 		certainty to use, empty string to omit
 	 * \param newbayes - A double containing the bayes to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newminimumdistance - A double containing the minimum distance to
@@ -87,7 +90,8 @@ class detection : public detectionbase {
 				double newlongitudeerror, double newtimeerror,
 				double newdeptherror, std::string newdetectiontype,
 				double newdetectiontime, std::string neweventtype,
-				double newbayes, double newminimumdistance, double newrms,
+				std::string neweventtypecertainty, double newbayes,
+				double newminimumdistance, double newrms,
 				double newgap, std::vector<detectionformats::pick> newpickdata,
 				std::vector<detectionformats::correlation> newcorrelationdata);
 
@@ -95,7 +99,7 @@ class detection : public detectionbase {
 	 * \brief detection alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the detection class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsource - A detectionformats::source containing the source to
@@ -105,10 +109,10 @@ class detection : public detectionbase {
 	 * \param newdetectiontype - A std::string containing the detection type to
 	 * 		use, empty string to omit
 	 * \param newdetectiontime - A double containing the new time the detection
-	 * was made, i.e. how quickly after origin time, use
-	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param neweventtype - A std::string containing the event type to use,
-	 * 		empty string to omit
+	 * 		was made, i.e. how quickly after origin time, use
+	 * 		std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param neweventtype - A detectionformats::eventtype containing the event
+	 * 		type to use
 	 * \param newbayes - A double containing the bayes to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newminimumdistance - A double containing the minimum distance to
@@ -127,7 +131,7 @@ class detection : public detectionbase {
 	detection(std::string newid, detectionformats::source newsource,
 				detectionformats::hypocenter newhypocenter,
 				std::string newdetectiontype, double newdetectiontime,
-				std::string neweventtype, double newbayes,
+				detectionformats::eventtype neweventtype, double newbayes,
 				double newminimumdistance, double newrms, double newgap,
 				std::vector<detectionformats::pick> newpickdata,
 				std::vector<detectionformats::correlation> newcorrelationdata);
@@ -136,10 +140,10 @@ class detection : public detectionbase {
 	 * \brief detection advanced constructor
 	 *
 	 * The advanced constructor for the detection class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
-	explicit detection(rapidjson::Value &json);
+	explicit detection(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief detection copy constructor
@@ -161,11 +165,15 @@ class detection : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
@@ -186,8 +194,8 @@ class detection : public detectionbase {
 	/**
 	 * \brief detection source
 	 *
-	 * A required detectionformats::site containing the site for this detection
-	 * message
+	 * A required detectionformats::source containing the source for this 
+	 * detection message
 	 */
 	detectionformats::source source;
 
@@ -203,17 +211,17 @@ class detection : public detectionbase {
 	 * \brief detection type
 	 *
 	 * An optional std::string containing the detection type of this detection
-	 * valid values are "New", "Update", "Final", or "Retract"
+	 * valid values are >New>, >Update>, >Final>, or >Retract>
 	 */
 	std::string detectiontype;
 
 	/**
 	 * \brief detection event type
 	 *
-	 * An optional std::string containing the event type of this detection
-	 * valid values are "earthquake" or "blast"
+	 * An optional detectionformats::eventtype containing the event type of this 
+	 * detection
 	 */
-	std::string eventtype;
+	detectionformats::eventtype eventtype;
 
 	/**
 	 * \brief bayes value

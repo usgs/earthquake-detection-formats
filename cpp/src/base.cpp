@@ -1,15 +1,10 @@
 #include <base.h>
-
 #include <string>
 #include <vector>
 
 namespace detectionformats {
 detectionbase::detectionbase() {
 	type = "";
-}
-
-detectionbase::detectionbase(std::string newtype) {
-	type = newtype;
 }
 
 detectionbase::~detectionbase() {

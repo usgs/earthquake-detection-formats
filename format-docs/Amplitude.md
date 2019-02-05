@@ -7,10 +7,12 @@ that may or may not be part of the [Pick](Pick.md) Format.  Amplitude uses the
 [JSON standard](http://www.json.org).
 
 ## Usage
+
 The Amplitude object is intended for use as part of the [Pick](Pick.md) Format
 in seismic data messaging between seismic applications and organizations.
 
 ## Output
+
 ```json
     {
        "Amplitude" : Number,
@@ -28,4 +30,4 @@ amplitude.
 
 * Amplitude - A decimal number containing the amplitude.
 * Period - A decimal number containing the amplitude period.
-* SNR - A decimal number containing the signal to noise ratio.
+* SNR - A decimal number containing the signal to noise ratio, capped at 1E9.

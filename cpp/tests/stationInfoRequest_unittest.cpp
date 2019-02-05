@@ -1,17 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define STATIONSTRING "{\"Site\":{\"Station\":\"BOZ\",\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},\"Type\":\"StationInfoRequest\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}"
-
-#define STATION "BOZ"
-#define CHANNEL "BHZ"
-#define NETWORK "US"
-#define LOCATION "00"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::stationInfoRequest stationrequestobject,
 		std::string testinfo) {
@@ -85,7 +78,7 @@ TEST(StationInfoRequestTest, ReadsJSON) {
 	// build pick object
 	rapidjson::Document stationdocument;
 	detectionformats::stationInfoRequest stationrequestobject(
-			detectionformats::FromJSONString(std::string(STATIONSTRING),
+			detectionformats::FromJSONString(std::string(REQUESTSTRING),
 					stationdocument));
 
 	// check data values

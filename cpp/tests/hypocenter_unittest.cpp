@@ -1,58 +1,68 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
-#define HYPOSTRING "{\"TimeError\":1.984,\"Time\":\"2015-12-28T21:32:24.017Z\",\"LongitudeError\":22.64,\"LatitudeError\":12.5,\"DepthError\":2.44,\"Latitude\":40.3344,\"Longitude\":-121.44,\"Depth\":32.44}"
-#define LATITUDE 40.3344
-#define LONGITUDE -121.44
-#define TIME "2015-12-28T21:32:24.017Z"
-#define DEPTH 32.44
-#define LATITUDEERROR 12.5
-#define LONGITUDEERROR 22.64
-#define DEPTHERROR 2.44
-#define TIMEERROR 1.984
+
+// test data
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::hypocenter hypoobject, std::string testinfo) {
 	// check latitude
-	double hypolatitude = hypoobject.latitude;
-	double expectedlatitude = LATITUDE;
-	ASSERT_EQ(hypolatitude, expectedlatitude);
+	if (std::isnan(hypoobject.latitude) != true) {
+		double hypolatitude = hypoobject.latitude;
+		double expectedlatitude = LATITUDE;
+		ASSERT_EQ(hypolatitude, expectedlatitude);
+	}
 
 	// check longitude
-	double hypolongitude = hypoobject.longitude;
-	double expectedlongitude = LONGITUDE;
-	ASSERT_EQ(hypolongitude, expectedlongitude);
+	if (std::isnan(hypoobject.longitude) != true) {
+		double hypolongitude = hypoobject.longitude;
+		double expectedlongitude = LONGITUDE;
+		ASSERT_EQ(hypolongitude, expectedlongitude);
+	}
 
 	// check time
-	double hypotime = hypoobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
-	ASSERT_EQ(hypotime, expectedtime);
+	if (std::isnan(hypoobject.time) != true) {
+		double hypotime = hypoobject.time;
+		double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(TIME));
+		ASSERT_EQ(hypotime, expectedtime);
+	}
 
 	// check depth
-	double hypodepth = hypoobject.depth;
-	double expecteddepth = DEPTH;
-	ASSERT_EQ(hypodepth, expecteddepth);
+	if (std::isnan(hypoobject.depth) != true) {
+		double hypodepth = hypoobject.depth;
+		double expecteddepth = DEPTH;
+		ASSERT_EQ(hypodepth, expecteddepth);
+	}
 
 	// check latitude error
-	double hypolatitudeerror = hypoobject.latitudeerror;
-	double expectedlatitudeerror = LATITUDEERROR;
-	ASSERT_EQ(hypolatitudeerror, expectedlatitudeerror);
+	if (std::isnan(hypoobject.latitudeerror) != true) {
+		double hypolatitudeerror = hypoobject.latitudeerror;
+		double expectedlatitudeerror = LATITUDEERROR;
+		ASSERT_EQ(hypolatitudeerror, expectedlatitudeerror);
+	}
 
 	// check longitude error
-	double hypolongitudeerror = hypoobject.longitudeerror;
-	double expectedlongitudeerror = LONGITUDEERROR;
-	ASSERT_EQ(hypolongitudeerror, expectedlongitudeerror);
+	if (std::isnan(hypoobject.longitudeerror) != true) {
+		double hypolongitudeerror = hypoobject.longitudeerror;
+		double expectedlongitudeerror = LONGITUDEERROR;
+		ASSERT_EQ(hypolongitudeerror, expectedlongitudeerror);
+	}
 
 	// check time error
-	double hypotimeerror = hypoobject.timeerror;
-	double expectedtimeerror = TIMEERROR;
-	ASSERT_EQ(hypotimeerror, expectedtimeerror);
+	if (std::isnan(hypoobject.timeerror) != true) {
+		double hypotimeerror = hypoobject.timeerror;
+		double expectedtimeerror = TIMEERROR;
+		ASSERT_EQ(hypotimeerror, expectedtimeerror);
+	}
 
 	// check depth error
-	double hypodeptherror = hypoobject.deptherror;
-	double expecteddeptherror = DEPTHERROR;
-	ASSERT_EQ(hypodeptherror, expecteddeptherror);
+	if (std::isnan(hypoobject.deptherror) != true) {
+		double hypodeptherror = hypoobject.deptherror;
+		double expecteddeptherror = DEPTHERROR;
+		ASSERT_EQ(hypodeptherror, expecteddeptherror);
+	}
 }
 
 // tests to see if hypocenter can successfully
@@ -109,6 +119,13 @@ TEST(HypoTest, Constructor) {
 
 	// check data values
 	checkdata(hypoobject, "Tested Constructor");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::hypocenter hypoobject2(emptyvalue);
+
+    // check data values
+	checkdata(hypoobject2, "");
 }
 
 // tests to see if hypocenter can successfully
@@ -150,7 +167,6 @@ TEST(HypoTest, Validate) {
 
 	// build bad hypocenter object
 	detectionformats::hypocenter badhypoobject;
-	badhypoobject.latitude = std::numeric_limits<double>::quiet_NaN();
 
 	result = false;
 	try {
@@ -162,4 +178,23 @@ TEST(HypoTest, Validate) {
 
 	// check return code
 	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
+	// build bad hypocenter object
+	detectionformats::hypocenter badhypoobject2;
+	badhypoobject2.latitude = 999;
+	badhypoobject2.longitude = -999;
+	badhypoobject2.time = -10000000000000000;
+	badhypoobject2.depth = -1000;
+
+	result = false;
+	try {
+		// call validation
+		result = badhypoobject2.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
 }

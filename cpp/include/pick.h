@@ -7,15 +7,16 @@
 #ifndef DETECTION_PICK_H
 #define DETECTION_PICK_H
 
+#include <site.h>
+#include <source.h>
+#include <amplitude.h>
+#include <filter.h>
+#include <beam.h>
+#include <association.h>
+#include <classification.h>
+
 #include <string>
 #include <vector>
-
-#include "./site.h"
-#include "./source.h"
-#include "./amplitude.h"
-#include "./filter.h"
-#include "./beam.h"
-#include "./associated.h"
 
 namespace detectionformats {
 
@@ -23,8 +24,8 @@ namespace detectionformats {
  * \brief detectionformats pick conversion class
  *
  * The detectionformats pick class is a conversion class used to create, parse,
- * and validate the unassociated pick data format pick.  The pick format uses
- * the JSON standard (www.json.org)
+ * and validate the pick data format.  The pick format uses the JSON standard 
+ * (www.json.org)
  *
  * pick is intended for use in seismic data messaging between seismic
  * applications and organizations.
@@ -45,7 +46,7 @@ class pick : public detectionbase {
 	 * \brief pick advanced constructor
 	 *
 	 * The advanced constructor for the pick class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newstation - A std::string containing the station to use
@@ -63,10 +64,14 @@ class pick : public detectionbase {
 	 * string to omit
 	 * \param newpicker - A std::string containing the picker to use, empty
 	 * string to omit
+	 * \param newfiltertype - A std::string containing the filter type, empty 
+	 * string to omit, if not defined, type is assumed to be bandpass
 	 * \param newhighpass - A double containing the high pass to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newlowpass - A double containing the low pass to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newfilterunits - A std::string containing the filter units, empty
+	 * string to omit, if not defined, units is assumed to be hertz
 	 * \param newamplitude - A double containing the amplitude to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newperiod - A double containing the period to use,
@@ -83,34 +88,81 @@ class pick : public detectionbase {
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newpowerratioerror - A double containing the powerratio error to
 	 * use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedphase - A std:string containing the associated
+	 * \param newassociationphase - A std:string containing the association
 	 * phase to use, empty string to omit
-	 * \param newassociateddistance - A double containing the associated
+	 * \param newassociationdistance - A double containing the association
 	 * distance to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedazimuth - A double containing the associated
+	 * \param newassociationazimuth - A double containing the association
 	 * azimuth to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedresidual - A double containing the associated
+	 * \param newassociationresidual - A double containing the association
 	 * residual to use, -10000 to omit
-	 * \param newassociatedsigma - A double containing the associated sigma
+	 * \param newassociationsigma - A double containing the association sigma
 	 * to use, std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newclassificationphase - A std::string containing the phase name 
+	 * to use, empty string to omit
+     * \param newclassificationphaseprob - A double containing the probability 
+     * of the phase estimate, std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newclassificationdistance - A double containing the distance to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+     * \param newclassificationdistanceprob - A double containing the 
+     * probability of the distance estimate, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newclassificationazimuth - A double containing the azimuth to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+     * \param newclassificationazimuthprob - A double containing the probability 
+	 * of the azimuth estimate, std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newclassificationmagnitude - A double containing the magnitude to 
+	 * use, std::numeric_limits<double>::quiet_NaN() to omit
+     * \param newclassificationmagtype - A std::string containing the magnitude 
+	 * type to use, empty string to omit
+     * \param newclassificationmagprob - A double containing the probability of 
+	 * the magnitude estimate, std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newclassificationdepth - A double containing the depth to use,
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+     * \param newclassificationdepthprob - A double containing the probability 
+	 * of the depth estimate, std::numeric_limits<double>::quiet_NaN() to omit
+     * \param newclassificationeventtype - A std::string containing the event 
+	 * type to use, empty string to omit
+	 * \param newclassificationeventtypecertainty - A std::string containing the 
+	 * event type certainty to use, empty string to omit
+     * \param newclassificationeventtypeprob - A double containing the 
+	 * probability of the event type estimate, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newclassificationagencyid - A std::string containing the 
+	 * classifying algorithm agencyid to use, empty string to omit
+     * \param newclassificationauthor - A std::string containing the classifying 
+	 * algorithm author to use, empty string to omit
 	 */
 	pick(std::string newid, std::string newstation, std::string newchannel,
 			std::string newnetwork, std::string newlocation, double newtime,
 			std::string newagencyid, std::string newauthor,
 			std::string newphase, std::string newpolarity, std::string newonset,
-			std::string newpicker, double newhighpass, double newlowpass,
+			std::string newpicker, std::string newfiltertype, double newhighpass,
+			double newlowpass, std::string newfilterunits,
 			double newamplitude, double newperiod, double newsnr,
 			double newbackazimuth, double newbackazimutherror,
 			double newslowness, double newslownesserror, double newpowerratio,
-			double newpowerratioerror, std::string newassociatedphase,
-			double newassociateddistance, double newassociatedazimuth,
-			double newassociatedresidual, double newassociatedsigma);
+			double newpowerratioerror, std::string newassociationphase,
+			double newassociationdistance, double newassociationazimuth,
+			double newassociationresidual, double newassociationsigma,
+			std::string newclassificationphase, double newclassificationphaseprob,
+            double newclassificationdistance,
+			double newclassificationdistanceprob,
+			double newclassificationazimuth, double newclassificationazimuthprob,
+			double newclassificationmagnitude, std::string newclassificationmagtype,
+            double newclassificationmagprob, double newclassificationdepth,
+			double newclassificationdepthprob,
+			std::string newclassificationeventtype,
+			std::string newclassificationeventtypecertainty,
+            double newclassificationeventtypeprob,
+			std::string newclassificationagencyid,
+            std::string newclassificationauthor);
 
 	/**
 	 * \brief pick advanced constructor
 	 *
 	 * The advanced constructor for the pick class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newstation - A std::string containing the station to use
@@ -128,10 +180,14 @@ class pick : public detectionbase {
 	 * to omit
 	 * \param newpicker - A std::string containing the picker to use, empty
 	 * string to omit
+	 * \param newfiltertype - A std::string containing the filter type, empty 
+	 * string to omit, if not defined, type is assumed to be bandpass
 	 * \param newhighpass - A double containing the high pass to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newlowpass - A double containing the low pass to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newfilterunits - A std::string containing the filter units, empty
+	 * string to omit, if not defined, units is assumed to be hertz
 	 * \param newamplitude - A double containing the amplitude to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newperiod - A double containing the period to use,
@@ -150,10 +206,11 @@ class pick : public detectionbase {
 	 * use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	pick(std::string newid, std::string newstation, std::string newchannel,
-			std::string newnetwork, std::string newlocation, double,
+			std::string newnetwork, std::string newlocation, double newtime,
 			std::string newagencyid, std::string newauthor,
 			std::string newphase, std::string newpolarity, std::string newonset,
-			std::string newpicker, double newhighpass, double newlowpass,
+			std::string newpicker, std::string newfiltertype, double newhighpass,
+			double newlowpass, std::string newfilterunits,
 			double newamplitude, double newperiod, double newsnr,
 			double newbackazimuth, double newbackazimutherror,
 			double newslowness, double newslownesserror, double newpowerratio,
@@ -163,7 +220,7 @@ class pick : public detectionbase {
 	 * \brief pick alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the pick class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsite - A detectionformats::site containing the site to use
@@ -196,6 +253,78 @@ class pick : public detectionbase {
 	 * \brief pick alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the pick class.
+	 * Initializes members to provided values.
+	 *
+	 * \param newid - A std::string containing the id to use
+	 * \param newsite - A detectionformats::site containing the site to use
+	 * \param newtime - A double containing the new time to use
+	 * \param newsource - A detectionformats::source containing the source to
+	 * use
+	 * \param newphase - A std::string containing the phase to use, empty string
+	 * to omit
+	 * \param newpolarity - A std::string containing the polarity to use, empty
+	 * string to omit
+	 * \param newonset - A std::string containing the onset to use, empty string
+	 * to omit
+	 * \param newpicker - A std::string containing the picker to use, empty
+	 * string to omit
+	 * \param newfilterdata -A std::vector<detectionformats::filter> containing
+	 * the filters that were used
+	 * \param newamplitude - A detectionformats::amplitude containing the the
+	 * amplitude to use
+	 * \param newbeam - A detectionformats::beam containing the beam to use
+	 * \param newclassification - A detectionformats::classification containing 
+	 * the classification info to use
+	 */
+	pick(std::string newid, detectionformats::site newsite, double newtime,
+			detectionformats::source newsource, std::string newphase,
+			std::string newpolarity, std::string newonset,
+			std::string newpicker,
+			std::vector<detectionformats::filter> newfilterdata,
+			detectionformats::amplitude newamplitude,
+			detectionformats::beam newbeam,
+			detectionformats::classification newclassification);
+
+	/**
+	 * \brief pick alternate advanced constructor
+	 *
+	 * The alternate advanced constructor for the pick class.
+	 * Initializes members to provided values.
+	 *
+	 * \param newid - A std::string containing the id to use
+	 * \param newsite - A detectionformats::site containing the site to use
+	 * \param newtime - A double containing the new time to use
+	 * \param newsource - A detectionformats::source containing the source to
+	 * use
+	 * \param newphase - A std::string containing the phase to use, empty string
+	 * to omit
+	 * \param newpolarity - A std::string containing the polarity to use, empty
+	 * string to omit
+	 * \param newonset - A std::string containing the onset to use, empty string
+	 * to omit
+	 * \param newpicker - A std::string containing the picker to use, empty
+	 * string to omit
+	 * \param newfilterdata -A std::vector<detectionformats::filter> containing
+	 * the filters that were used
+	 * \param newamplitude - A detectionformats::amplitude containing the the
+	 * amplitude to use
+	 * \param newbeam - A detectionformats::beam containing the beam to use
+	 * \param newassociation - A detectionformats::association containing the
+	 * association info to use
+	 */
+	pick(std::string newid, detectionformats::site newsite, double newtime,
+			detectionformats::source newsource, std::string newphase,
+			std::string newpolarity, std::string newonset,
+			std::string newpicker,
+			std::vector<detectionformats::filter> newfilterdata,
+			detectionformats::amplitude newamplitude,
+			detectionformats::beam newbeam,
+			detectionformats::association newassociation);
+
+	/**
+	 * \brief pick alternate advanced constructor
+	 *
+	 * The alternate advanced constructor for the pick class.
 	 * Initilizes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
@@ -216,8 +345,10 @@ class pick : public detectionbase {
 	 * \param newamplitude - A detectionformats::amplitude containing the the
 	 * amplitude to use
 	 * \param newbeam - A detectionformats::beam containing the beam to use
-	 * \param newassociated - A detectionformats::associated containing the
-	 * associated to use
+	 * \param newassociation - A detectionformats::association containing the
+	 * association info to use
+	 * \param newclassification - A detectionformats::classification containing 
+	 * the classification info to use
 	 */
 	pick(std::string newid, detectionformats::site newsite, double newtime,
 			detectionformats::source newsource, std::string newphase,
@@ -226,16 +357,17 @@ class pick : public detectionbase {
 			std::vector<detectionformats::filter> newfilterdata,
 			detectionformats::amplitude newamplitude,
 			detectionformats::beam newbeam,
-			detectionformats::associated newassociated);
+			detectionformats::association newassociation,
+			detectionformats::classification newclassification);
 
 	/**
 	 * \brief pick advanced constructor
 	 *
 	 * The advanced constructor for the pick class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
-	explicit pick(rapidjson::Value &json);
+	explicit pick(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief pick copy constructor
@@ -258,11 +390,15 @@ class pick : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
@@ -314,7 +450,7 @@ class pick : public detectionbase {
 	 * \brief pick polarity
 	 *
 	 * An optional std::string containing the polarity for this pick message
-	 * valid values are "up" or "down"
+	 * valid values are >up> or >down>
 	 */
 	std::string polarity;
 
@@ -322,7 +458,7 @@ class pick : public detectionbase {
 	 * \brief pick onset
 	 *
 	 * An optional std::string containing the onset for this pick message
-	 * valid values are "impulsive", "emergent", or "questionable"
+	 * valid values are >impulsive>, >emergent>, or >questionable>
 	 */
 	std::string onset;
 
@@ -330,8 +466,8 @@ class pick : public detectionbase {
 	 * \brief pick picker type
 	 *
 	 * An optional std::string defining the picker that made this pick message
-	 * valid values are "manual", "raypicker", "filterpicker", "earthworm", or
-	 * "other"
+	 * valid values are >manual>, >raypicker>, >filterpicker>, >earthworm>, or
+	 * >other>
 	 */
 	std::string picker;
 
@@ -360,12 +496,20 @@ class pick : public detectionbase {
 	detectionformats::beam beam;
 
 	/**
-	 * \brief pick associated
+	 * \brief pick association info
 	 *
-	 * Optional detectionformats::associated containing the associated
+	 * Optional detectionformats::association containing the association
 	 * information for this pick message
 	 */
-	detectionformats::associated associationinfo;
+	detectionformats::association associationinfo;
+
+	/**
+	 * \brief pick classification info
+	 *
+	 * Optional detectionformats::classification containing the classification
+	 * information for this pick message
+	 */
+	detectionformats::classification classificationinfo;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_PICK_H

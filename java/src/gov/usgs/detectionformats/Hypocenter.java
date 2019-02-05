@@ -69,7 +69,6 @@ public class Hypocenter implements DetectionInt {
 	 * The constructor for the Hypo class. Initializes members to null values.
 	 */
 	public Hypocenter() {
-
 		latitude = null;
 		longitude = null;
 		time = null;
@@ -106,7 +105,6 @@ public class Hypocenter implements DetectionInt {
 	public Hypocenter(Double newLatitude, Double newLongitude, Date newTime,
 			Double newDepth, Double newLatitudeError, Double newLongitudeError,
 			Double newTimeError, Double newDepthError) {
-
 		latitude = newLatitude;
 		longitude = newLongitude;
 		time = newTime;
@@ -124,7 +122,6 @@ public class Hypocenter implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Hypocenter(JSONObject newJSONObject) {
-
 		// Required values
 		// latitude
 		if (newJSONObject.containsKey(LATITUDE_KEY)) {
@@ -191,7 +188,6 @@ public class Hypocenter implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		Double jsonLatitude = getLatitude();
@@ -255,9 +251,7 @@ public class Hypocenter implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -270,7 +264,6 @@ public class Hypocenter implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		Double jsonLatitude = getLatitude();
 		Double jsonLongitude = getLongitude();
 		Date jsonTime = getTime();

@@ -7,11 +7,11 @@
 #ifndef DETECTION_SITE_H
 #define DETECTION_SITE_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -27,7 +27,7 @@ class site : public detectionbase {
 	 * \brief site constructor
 	 *
 	 * The constructor for the site class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	site();
 
@@ -35,7 +35,7 @@ class site : public detectionbase {
 	 * \brief site advanced constructor
 	 *
 	 * The advanced constructor for the source class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newstation - A std::string containing the station to use
 	 * \param newchannel - A std::string containing the channel to use
@@ -49,10 +49,10 @@ class site : public detectionbase {
 	 * \brief site advanced constructor
 	 *
 	 * The advanced constructor for the site class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
-	explicit site(rapidjson::Value &json);
+	explicit site(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief site copy constructor
@@ -74,13 +74,15 @@ class site : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \param jsondocument - a reference to the json document to fill in with
+	 * \param json - a reference to the rapidjson::Value document to fill in with
 	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

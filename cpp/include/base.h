@@ -7,11 +7,11 @@
 #ifndef DETECTION_BASE_H
 #define DETECTION_BASE_H
 
+#include <util.h>
+
 #include <string>
 #include <vector>
 #include <cmath>
-
-#include "./util.h"
 
 namespace detectionformats {
 class detectionbase {
@@ -20,19 +20,9 @@ class detectionbase {
 	 * \brief detectionbase constructor
 	 *
 	 * The constructor for the detectionbase class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	detectionbase();
-
-	/**
-	 * \brief detectionbase constructor
-	 *
-	 * The constructor for the detectionbase class.
-	 * Initilizes members to provided values.
-	 *
-	 * \param newtype - A std::string containing the type to use
-	 */
-	explicit detectionbase(std::string newtype);
 
 	/**
 	 * \brief site destructor
@@ -45,13 +35,15 @@ class detectionbase {
 	 * \brief Convert to json value function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \param jsondocument - a reference to the json document to fill in with
+	 * \param json - a reference to the rapidjson::Value document to fill in with
 	 * the class contents.
-	 * \return Returns 1 if successful, 0 otherwise
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	virtual rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) = 0;
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) = 0; // NOLINT
 
 	/**
 	 * \brief Validates the values in the class

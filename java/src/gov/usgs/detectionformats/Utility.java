@@ -13,12 +13,27 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+enum FormatTypes {
+	Pick, Correlation, Detection, Retract, StationInfo, StationInfoRequest,
+		Unknown;
+}
+
 /**
  * a utility class containing functions used by detectionformats.
  *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Utility {
+	/**
+	 * JSON Keys
+	 */
+	public static final String TYPE_KEY = "Type";
+	public static final String DETECTION_TYPE = "Detection";
+	public static final String CORRELATION_TYPE = "Correlation";
+	public static final String PICK_TYPE = "Pick";
+	public static final String RETRACT_TYPE = "Retract";
+	public static final String STATIONINFO_TYPE = "StationInfo";
+	public static final String STATIONINFOREQUEST_TYPE = "StationInfoRequest";
 
 	/**
 	 * File Extensions for detectionformats messages
@@ -108,39 +123,6 @@ public class Utility {
 	}
 
 	/**
-	 * Convenience method to parse an XML Date Time into a Date. Only useful
-	 * when the XML Date Time is within the Date object time range.
-	 *
-	 * @param toParse
-	 *            the xml date time string to parse.
-	 * @return the parsed Date object.
-	 */
-	public static Date getDate(final String toParse) {
-		XMLGregorianCalendar calendar = getXMLGregorianCalendar(toParse);
-		if (calendar != null) {
-			return new Date(calendar.toGregorianCalendar().getTimeInMillis());
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Convenience method to parse an XML Date Time into a GregorianCalender.
-	 *
-	 * @param toParse
-	 *            the xml date time string to parse.
-	 * @return the parsed Date object.
-	 */
-	public static GregorianCalendar getGregorianCalendar(final String toParse) {
-		XMLGregorianCalendar calendar = getXMLGregorianCalendar(toParse);
-		if (calendar != null) {
-			return calendar.toGregorianCalendar();
-		} else {
-			return null;
-		}
-	}
-
-	/**
 	 * Parse an XML Date Time into an XMLGregorianCalendar.
 	 *
 	 * @param toParse
@@ -158,41 +140,80 @@ public class Utility {
 	}
 
 	/**
-	 * Converts an XMLGregorianCalendar to a Date.
+	 * Convenience method to parse an XML Date Time into a Date. Only useful
+	 * when the XML Date Time is within the Date object time range.
 	 *
-	 * @param xmlDate
-	 *            XMLGregorianCalendar to convert.
-	 * @return corresponding date object.
+	 * @param toParse
+	 *            the xml date time string to parse.
+	 * @return the parsed Date object.
 	 */
-	public static Date getDate(final XMLGregorianCalendar xmlDate) {
-		// TODO: is this equivalent to getDate(String) processing above??
+	public static Date getDate(final String toParse) {
+		XMLGregorianCalendar calendar = getXMLGregorianCalendar(toParse);
+		if (calendar != null) {
+			return new Date(calendar.toGregorianCalendar().getTimeInMillis());
+		} else {
+			return null;
+		}
+	}
 
-		// start with UTC, i.e. no daylight savings time.
-		TimeZone timezone = TimeZone.getTimeZone("GMT");
+	/**
+	 * Convenience method to check if the provided string is for one of the 
+	 * supported types
+	 *
+	 * @param jsonString
+	 *            the json formatted string to check.
+	 * @return a FormatTypes enum containing the type, or unknown if the type
+	 * is not recognized 
+	 */
+	public static FormatTypes getDetectionType(String jsonString) {
+		// use a parser to convert to a string
+		JSONParser parser = new JSONParser();
 
-		// adjust timezone to match xmldate
-		int offsetMinutes = xmlDate.getTimezone();
-		if (offsetMinutes != DatatypeConstants.FIELD_UNDEFINED) {
-			timezone.setRawOffset(
-			// convert minutes to milliseconds
-			offsetMinutes * 60 // seconds per minute
-			* 1000 // milliseconds per second
-			);
+		// parse it
+		JSONObject newJSONObject;
+		
+		try {
+			newJSONObject = (JSONObject) parser.parse(jsonString);
+		} catch (ParseException e) { 
+			return(FormatTypes.Unknown);
 		}
 
-		// use calendar so parsed date will be UTC
-		Calendar calendar = Calendar.getInstance(timezone);
-		calendar.clear();
-		calendar.set(xmlDate.getYear(),
-				// xmlcalendar is 1 based, calender is 0 based
-				xmlDate.getMonth() - 1, xmlDate.getDay(), xmlDate.getHour(),
-				xmlDate.getMinute(), xmlDate.getSecond());
-		Date date = calendar.getTime();
-		int millis = xmlDate.getMillisecond();
-		if (millis != DatatypeConstants.FIELD_UNDEFINED) {
-			calendar.setTimeInMillis(calendar.getTimeInMillis() + millis);
+		return(getDetectionType(newJSONObject));
+	}
+
+	/**
+	 * Convenience method to check if the provided string is for one of the 
+	 * supported types
+	 *
+	 * @param jsonObject
+	 *            the json object to check.
+	 * @return a FormatTypes enum containing the type, or unknown if the type
+	 * is not recognized 
+	 */
+	public static FormatTypes getDetectionType(JSONObject jsonObject) {
+		// type
+		String jsonType = new String();
+		if (jsonObject.containsKey(TYPE_KEY)) {
+			jsonType = jsonObject.get(TYPE_KEY).toString();
+		} else {
+			return(FormatTypes.Unknown);
 		}
 
-		return date;
+		// return appropriate type
+		if (jsonType.equals(PICK_TYPE)) {
+			return (FormatTypes.Pick);
+		} else if (jsonType.equals(CORRELATION_TYPE)) {
+			return (FormatTypes.Correlation);
+		} else if (jsonType.equals(DETECTION_TYPE)) {
+			return (FormatTypes.Detection);
+		} else if (jsonType.equals(RETRACT_TYPE)) {
+			return (FormatTypes.Retract);
+		} else if (jsonType.equals(STATIONINFO_TYPE)) {
+			return (FormatTypes.StationInfo);
+		} else if (jsonType.equals(STATIONINFOREQUEST_TYPE)) {
+			return (FormatTypes.StationInfoRequest);
+		}  else {
+			return(FormatTypes.Unknown);
+		}
 	}
 }

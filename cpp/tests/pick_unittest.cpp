@@ -1,111 +1,104 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define PICKSTRING "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[{\"HighPass\":1.05,\"LowPass\":2.65},{\"HighPass\":2.10,\"LowPass\":3.58}],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-#define PICKSTRINGNOFILTER "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\",\"Site\":{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"},\"Time\":\"2015-12-28T21:32:24.017Z\",\"Phase\":\"P\",\"Polarity\":\"up\",\"Onset\":\"questionable\",\"Picker\":\"manual\",\"Filter\":[],\"Amplitude\":{\"Amplitude\":21.5,\"Period\":2.65,\"SNR\":3.8},\"Beam\":{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557},\"AssociationInfo\":{\"Phase\":\"P\",\"Distance\":0.442559,\"Azimuth\":0.418479,\"Residual\":-0.025393,\"Sigma\":0.086333}}"
-
-#define ID "12GFH48776857"
-#define STATION "BMN"
-#define CHANNEL "HHZ"
-#define NETWORK "LB"
-#define LOCATION "01"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
-#define TIME "2015-12-28T21:32:24.017Z"
-#define PHASE "P"
-#define POLARITY "up"
-#define ONSET "questionable"
-#define PICKER "manual"
-#define HIGHPASS 1.05
-#define LOWPASS 2.65
-#define HIGHPASS2 2.10
-#define LOWPASS2 3.58
-#define AMPLITUDEVALUE 21.5
-#define PERIOD 2.65
-#define SNR 3.8
-#define BACKAZIMUTH 2.65
-#define BACKAZIMUTHERROR 3.8
-#define SLOWNESS 1.44
-#define SLOWNESSERROR 0.4
-#define POWERRATIO 12.18
-#define POWERRATIOERROR 0.557
-#define ASSOCPHASE "P"
-#define ASSOCDISTANCE 0.442559
-#define ASSOCAZIMUTH 0.418479
-#define ASSOCRESIDUAL -0.025393
-#define ASSOCSIGMA 0.086333
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 	// check id
-	std::string pickid = pickobject.id;
-	std::string expectedid = std::string(ID);
-	ASSERT_STREQ(pickid.c_str(), expectedid.c_str())<< testinfo.c_str();
+	if (pickobject.id.empty() != true) {
+		std::string pickid = pickobject.id;
+		std::string expectedid = std::string(ID);
+		ASSERT_STREQ(pickid.c_str(), expectedid.c_str())<< testinfo.c_str();
+	}
 
 	// check station
-	std::string sitestation = pickobject.site.station;
-	std::string expectedstation = std::string(STATION);
-	ASSERT_STREQ(sitestation.c_str(), expectedstation.c_str())<< testinfo.c_str();
+	if (pickobject.site.station.empty() != true) {
+		std::string sitestation = pickobject.site.station;
+		std::string expectedstation = std::string(STATION);
+		ASSERT_STREQ(sitestation.c_str(),
+			expectedstation.c_str())<< testinfo.c_str();
+	}
 
 	// check channel
-	std::string sitechannel = pickobject.site.channel;
-	std::string expectedchannel = std::string(CHANNEL);
-	ASSERT_STREQ(sitechannel.c_str(), expectedchannel.c_str())<< testinfo.c_str();
+	if (pickobject.site.channel.empty() != true) {
+		std::string sitechannel = pickobject.site.channel;
+		std::string expectedchannel = std::string(CHANNEL);
+		ASSERT_STREQ(sitechannel.c_str(),
+			expectedchannel.c_str())<< testinfo.c_str();
+	}
 
 	// check network
-	std::string sitenetwork = pickobject.site.network;
-	std::string expectednetwork = std::string(NETWORK);
-	ASSERT_STREQ(sitenetwork.c_str(), expectednetwork.c_str())<< testinfo.c_str();
+	if (pickobject.site.network.empty() != true) {
+		std::string sitenetwork = pickobject.site.network;
+		std::string expectednetwork = std::string(NETWORK);
+		ASSERT_STREQ(sitenetwork.c_str(),
+			expectednetwork.c_str())<< testinfo.c_str();
+	}
 
 	// check location
-	std::string sitelocation = pickobject.site.location;
-	std::string expectedlocation = std::string(LOCATION);
-	ASSERT_STREQ(sitelocation.c_str(), expectedlocation.c_str())<< testinfo.c_str();
+	if (pickobject.site.location.empty() != true) {
+		std::string sitelocation = pickobject.site.location;
+		std::string expectedlocation = std::string(LOCATION);
+		ASSERT_STREQ(sitelocation.c_str(),
+			expectedlocation.c_str())<< testinfo.c_str();
+	}
 
 	// check agencyid
-	std::string sourceagencyid = pickobject.source.agencyid;
-	std::string expectedagencyid = std::string(AGENCYID);
-	ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str())<< testinfo.c_str();
+	if (pickobject.source.agencyid.empty() != true) {
+		std::string sourceagencyid = pickobject.source.agencyid;
+		std::string expectedagencyid = std::string(AGENCYID);
+		ASSERT_STREQ(sourceagencyid.c_str(),
+			expectedagencyid.c_str())<< testinfo.c_str();
+	}
 
 	// check author
-	std::string sourceauthor = pickobject.source.author;
-	std::string expectedauthor = std::string(AUTHOR);
-	ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str())<< testinfo.c_str();
+	if (pickobject.source.author.empty() != true) {
+		std::string sourceauthor = pickobject.source.author;
+		std::string expectedauthor = std::string(AUTHOR);
+		ASSERT_STREQ(sourceauthor.c_str(),
+			expectedauthor.c_str())<< testinfo.c_str();
+	}
 
 	// check time
-	double picktime = pickobject.time;
-	double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
-			std::string(TIME));
-	ASSERT_EQ(picktime, expectedtime)<< testinfo.c_str();
+	if (std::isnan(pickobject.time) != true) {
+		double picktime = pickobject.time;
+		double expectedtime = detectionformats::ConvertISO8601ToEpochTime(
+				std::string(TIME));
+		ASSERT_EQ(picktime, expectedtime)<< testinfo.c_str();
+	}
 
 	// check phase
-	if (pickobject.phase.compare("") != true) {
+	if (pickobject.phase.empty() != true) {
 		std::string pickphase = pickobject.phase;
 		std::string expectedphase = std::string(PHASE);
 		ASSERT_STREQ(pickphase.c_str(), expectedphase.c_str())<< testinfo.c_str();
 	}
 
 	// check polarity
-	if (pickobject.polarity.compare("") != true) {
+	if (pickobject.polarity.empty() != true) {
 		std::string pickpolarity = pickobject.polarity;
 		std::string expectedpolarity = std::string(POLARITY);
-		ASSERT_STREQ(pickpolarity.c_str(), expectedpolarity.c_str())<< testinfo.c_str();
+		ASSERT_STREQ(pickpolarity.c_str(),
+			expectedpolarity.c_str())<< testinfo.c_str();
 	}
 
 	// check onset
-	if (pickobject.onset.compare("") != true) {
+	if (pickobject.onset.empty() != true) {
 		std::string pickonset = pickobject.onset;
 		std::string expectedonset = std::string(ONSET);
-		ASSERT_STREQ(pickonset.c_str(), expectedonset.c_str())<< testinfo.c_str();
+		ASSERT_STREQ(pickonset.c_str(),
+			expectedonset.c_str())<< testinfo.c_str();
 	}
 
 	// check picker
-	if (pickobject.picker.compare("") != true) {
+	if (pickobject.picker.empty() != true) {
 		std::string pickpicker = pickobject.picker;
 		std::string expectedpicker = std::string(PICKER);
-		ASSERT_STREQ(pickpicker.c_str(), expectedpicker.c_str())<< testinfo.c_str();
+		ASSERT_STREQ(pickpicker.c_str(),
+			expectedpicker.c_str())<< testinfo.c_str();
 	}
 
 	// filter
@@ -165,11 +158,12 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 
 	// beam
 	if (pickobject.beam.isempty() == false) {
-
 		// check backazimuth
-		double beambackazimuth = pickobject.beam.backazimuth;
-		double expectedbackazimuth = BACKAZIMUTH;
-		ASSERT_EQ(beambackazimuth, expectedbackazimuth);
+		if (std::isnan(pickobject.beam.backazimuth) != true) {
+			double beambackazimuth = pickobject.beam.backazimuth;
+			double expectedbackazimuth = BACKAZIMUTH;
+			ASSERT_EQ(beambackazimuth, expectedbackazimuth);
+		}
 
 		// check backazimutherror
 		if (std::isnan(pickobject.beam.backazimutherror) != true) {
@@ -177,10 +171,13 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 			double expectedbackazimutherror = BACKAZIMUTHERROR;
 			ASSERT_EQ(beambackazimutherror, expectedbackazimutherror);
 		}
+
 		// check slowness
-		double beamslowness = pickobject.beam.slowness;
-		double expectedslowness = SLOWNESS;
-		ASSERT_EQ(beamslowness, expectedslowness);
+		if (std::isnan(pickobject.beam.slowness) != true) {
+			double beamslowness = pickobject.beam.slowness;
+			double expectedslowness = SLOWNESS;
+			ASSERT_EQ(beamslowness, expectedslowness);
+		}
 
 		// check slownesserror
 		if (std::isnan(pickobject.beam.slownesserror) != true) {
@@ -205,39 +202,170 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 
 	// associationinfo
 	if (pickobject.associationinfo.isempty() == false) {
-
 		// check phase
-		if (pickobject.associationinfo.phase.compare("") != true) {
-			std::string associatedphase = pickobject.associationinfo.phase;
-			std::string expectedassociatedphase = std::string(ASSOCPHASE);
-			ASSERT_STREQ(associatedphase.c_str(), expectedassociatedphase.c_str())<< testinfo.c_str();
+		if (pickobject.associationinfo.phase.empty() != true) {
+			std::string associationphase = pickobject.associationinfo.phase;
+			std::string expectedassociationphase = std::string(PHASE);
+			ASSERT_STREQ(associationphase.c_str(),
+				expectedassociationphase.c_str())<< testinfo.c_str();
 		}
 		// check distance
 		if (std::isnan(pickobject.associationinfo.distance) != true) {
-			double associateddistance = pickobject.associationinfo.distance;
-			double expecteddistance = ASSOCDISTANCE;
-			ASSERT_EQ(associateddistance, expecteddistance)<< testinfo.c_str();
+			double associationdistance = pickobject.associationinfo.distance;
+			double expecteddistance = DISTANCE;
+			ASSERT_EQ(associationdistance, expecteddistance)<< testinfo.c_str();
 		}
 
 		// check azimuth
 		if (std::isnan(pickobject.associationinfo.azimuth) != true) {
-			double associatedazimuth = pickobject.associationinfo.azimuth;
-			double expectedazimuth = ASSOCAZIMUTH;
-			ASSERT_EQ(associatedazimuth, expectedazimuth)<< testinfo.c_str();
+			double associationazimuth = pickobject.associationinfo.azimuth;
+			double expectedazimuth = AZIMUTH;
+			ASSERT_EQ(associationazimuth, expectedazimuth)<< testinfo.c_str();
 		}
 
 		// check residual
 		if (std::isnan(pickobject.associationinfo.residual) != true) {
-			double associatedresidual = pickobject.associationinfo.residual;
-			double expectedresidual = ASSOCRESIDUAL;
-			ASSERT_EQ(associatedresidual, expectedresidual)<< testinfo.c_str();
+			double associationresidual = pickobject.associationinfo.residual;
+			double expectedresidual = RESIDUAL;
+			ASSERT_EQ(associationresidual, expectedresidual)<< testinfo.c_str();
 		}
 
 		// check sigma
 		if (std::isnan(pickobject.associationinfo.sigma) != true) {
-			double associatedsigma = pickobject.associationinfo.sigma;
-			double expectedsigma = ASSOCSIGMA;
-			ASSERT_EQ(associatedsigma, expectedsigma)<< testinfo.c_str();
+			double associationsigma = pickobject.associationinfo.sigma;
+			double expectedsigma = SIGMA;
+			ASSERT_EQ(associationsigma, expectedsigma)<< testinfo.c_str();
+		}
+	}
+
+	// classificationinfo
+	if (pickobject.classificationinfo.isempty() == false) {
+		// check phase
+		if (pickobject.classificationinfo.phase.empty() != true) {
+			std::string classificationphase = pickobject.classificationinfo.phase;
+			std::string expectedphase = std::string(PHASE);
+			ASSERT_STREQ(classificationphase.c_str(), expectedphase.c_str());
+		}
+
+		// check phase probability
+		if (std::isnan(pickobject.classificationinfo.phaseprobability) != true) {
+			double classificationphaseprob =
+				pickobject.classificationinfo.phaseprobability;
+			double expectedphaseprob = PHASEPROBABILITY;
+			ASSERT_EQ(classificationphaseprob, expectedphaseprob);
+		}
+
+		// check distance
+		if (std::isnan(pickobject.classificationinfo.distance) != true) {
+			double classificationdistance =
+				pickobject.classificationinfo.distance;
+			double expecteddistance = DISTANCE;
+			ASSERT_EQ(classificationdistance, expecteddistance);
+		}
+
+		// check distance probability
+		if (std::isnan(pickobject.classificationinfo.distanceprobability)
+			!= true) {
+			double classificationdistanceprob =
+				pickobject.classificationinfo.distanceprobability;
+			double expecteddistanceprob = DISTANCEPROBABILITY;
+			ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
+		}
+
+		// check azimuth
+		if (std::isnan(pickobject.classificationinfo.azimuth) != true) {
+			double classificationazimuth = pickobject.classificationinfo.azimuth;
+			double expectedazimuth = AZIMUTH;
+			ASSERT_EQ(classificationazimuth, expectedazimuth);
+		}
+
+		// check azimuth probability
+		if (std::isnan(pickobject.classificationinfo.azimuthprobability)
+			!= true) {
+			double classificationazimuthprob =
+				pickobject.classificationinfo.azimuthprobability;
+			double expectedazimuthprob = AZIMUTHPROBABILITY;
+			ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+		}
+
+		// check magnitude
+		if (std::isnan(pickobject.classificationinfo.magnitude) != true) {
+			double classificationmagnitude =
+				pickobject.classificationinfo.magnitude;
+			double expectedmagnitude = MAGNITUDE;
+			ASSERT_EQ(classificationmagnitude, expectedmagnitude);
+		}
+
+		// check magnitude type
+		if (pickobject.classificationinfo.magnitudetype.empty() != true) {
+			std::string classificationmagtype =
+				pickobject.classificationinfo.magnitudetype;
+			std::string expectedmagtype = std::string(MAGNITUDETYPE);
+			ASSERT_STREQ(classificationmagtype.c_str(), expectedmagtype.c_str());
+		}
+
+		// check magnitude probability
+		if (std::isnan(pickobject.classificationinfo.magnitudeprobability)
+			!= true) {
+			double classificationmagnitudeprob =
+				pickobject.classificationinfo.magnitudeprobability;
+			double expectedmagnitudeprob = MAGNITUDEPROBABILITY;
+			ASSERT_EQ(classificationmagnitudeprob, expectedmagnitudeprob);
+		}
+
+		// check depth
+		if (std::isnan(pickobject.classificationinfo.depth) != true) {
+			double classificationdepth = pickobject.classificationinfo.depth;
+			double expecteddepth = DEPTH;
+			ASSERT_EQ(classificationdepth, expecteddepth);
+		}
+
+		// check depth probability
+		if (std::isnan(pickobject.classificationinfo.depthprobability) != true) {
+			double classificationdepthprob =
+				pickobject.classificationinfo.depthprobability;
+			double expecteddepthprob = DEPTHPROBABILITY;
+			ASSERT_EQ(classificationdepthprob, expecteddepthprob);
+		}
+
+		// check eventtype
+		if (pickobject.classificationinfo.eventtype.type.empty() != true) {
+			std::string detectioneventtype =
+				pickobject.classificationinfo.eventtype.type;
+			std::string expectedeventtype = std::string(EVENTTYPE);
+			ASSERT_STREQ(detectioneventtype.c_str(), expectedeventtype.c_str());
+		}
+
+		// check eventtype certainty
+		if (pickobject.classificationinfo.eventtype.certainty.empty() != true) {
+			std::string detectioneventtypecertainty =
+				pickobject.classificationinfo.eventtype.certainty;
+			std::string expectedeventtypecertainty = std::string(CERTAINTY);
+			ASSERT_STREQ(detectioneventtypecertainty.c_str(),
+				expectedeventtypecertainty.c_str());
+		}
+
+		// check event type probability
+		if (std::isnan(pickobject.classificationinfo.eventtypeprobability)
+			!= true) {
+			double classificationeventtypeprob =
+				pickobject.classificationinfo.eventtypeprobability;
+			double expectedeventtypeprob = EVENTTYPEPROBABILITY;
+			ASSERT_EQ(classificationeventtypeprob, expectedeventtypeprob);
+		}
+
+		// check agencyid
+		if (pickobject.classificationinfo.source.agencyid.empty() != true) {
+			std::string sourceagencyid = pickobject.classificationinfo.source.agencyid;
+			std::string expectedagencyid = std::string(AGENCYID);
+			ASSERT_STREQ(sourceagencyid.c_str(), expectedagencyid.c_str());
+		}
+
+		// check author
+		if (pickobject.classificationinfo.source.author.empty() != true) {
+			std::string sourceauthor = pickobject.classificationinfo.source.author;
+			std::string expectedauthor = std::string(AUTHOR);
+			ASSERT_STREQ(sourceauthor.c_str(), expectedauthor.c_str());
 		}
 	}
 }
@@ -292,11 +420,29 @@ TEST(PickTest, WritesJSON) {
 	pickobject.beam.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
-	pickobject.associationinfo.phase = std::string(ASSOCPHASE);
-	pickobject.associationinfo.distance = ASSOCDISTANCE;
-	pickobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	pickobject.associationinfo.residual = ASSOCRESIDUAL;
-	pickobject.associationinfo.sigma = ASSOCSIGMA;
+	pickobject.associationinfo.phase = std::string(PHASE);
+	pickobject.associationinfo.distance = DISTANCE;
+	pickobject.associationinfo.azimuth = AZIMUTH;
+	pickobject.associationinfo.residual = RESIDUAL;
+	pickobject.associationinfo.sigma = SIGMA;
+
+	// classification subobject
+	pickobject.classificationinfo.phase = std::string(PHASE);
+	pickobject.classificationinfo.phaseprobability = PHASEPROBABILITY;
+    pickobject.classificationinfo.distance = DISTANCE;
+	pickobject.classificationinfo.distanceprobability = DISTANCEPROBABILITY;
+    pickobject.classificationinfo.azimuth = AZIMUTH;
+    pickobject.classificationinfo.azimuthprobability = AZIMUTHPROBABILITY;
+    pickobject.classificationinfo.magnitude = MAGNITUDE;
+    pickobject.classificationinfo.magnitudetype = std::string(MAGNITUDETYPE);
+    pickobject.classificationinfo.magnitudeprobability = MAGNITUDEPROBABILITY;
+    pickobject.classificationinfo.depth = DEPTH;
+    pickobject.classificationinfo.depthprobability = DEPTHPROBABILITY;
+	pickobject.classificationinfo.eventtype.type = std::string(EVENTTYPE);
+    pickobject.classificationinfo.eventtype.certainty = std::string(CERTAINTY);
+    pickobject.classificationinfo.eventtypeprobability = EVENTTYPEPROBABILITY;
+    pickobject.classificationinfo.source.agencyid = AGENCYID;
+	pickobject.classificationinfo.source.author = AUTHOR;
 
 	// build json string
 	rapidjson::Document pickdocument;
@@ -351,11 +497,29 @@ TEST(PickTest, WritesJSONNoFilter) {
 	pickobject.beam.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
-	pickobject.associationinfo.phase = std::string(ASSOCPHASE);
-	pickobject.associationinfo.distance = ASSOCDISTANCE;
-	pickobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	pickobject.associationinfo.residual = ASSOCRESIDUAL;
-	pickobject.associationinfo.sigma = ASSOCSIGMA;
+	pickobject.associationinfo.phase = std::string(PHASE);
+	pickobject.associationinfo.distance = DISTANCE;
+	pickobject.associationinfo.azimuth = AZIMUTH;
+	pickobject.associationinfo.residual = RESIDUAL;
+	pickobject.associationinfo.sigma = SIGMA;
+
+	// classification subobject
+	pickobject.classificationinfo.phase = std::string(PHASE);
+	pickobject.classificationinfo.phaseprobability = PHASEPROBABILITY;
+    pickobject.classificationinfo.distance = DISTANCE;
+	pickobject.classificationinfo.distanceprobability = DISTANCEPROBABILITY;
+    pickobject.classificationinfo.azimuth = AZIMUTH;
+    pickobject.classificationinfo.azimuthprobability = AZIMUTHPROBABILITY;
+    pickobject.classificationinfo.magnitude = MAGNITUDE;
+    pickobject.classificationinfo.magnitudetype = std::string(MAGNITUDETYPE);
+    pickobject.classificationinfo.magnitudeprobability = MAGNITUDEPROBABILITY;
+    pickobject.classificationinfo.depth = DEPTH;
+    pickobject.classificationinfo.depthprobability = DEPTHPROBABILITY;
+	pickobject.classificationinfo.eventtype.type = std::string(EVENTTYPE);
+    pickobject.classificationinfo.eventtype.certainty = std::string(CERTAINTY);
+    pickobject.classificationinfo.eventtypeprobability = EVENTTYPEPROBABILITY;
+    pickobject.classificationinfo.source.agencyid = AGENCYID;
+	pickobject.classificationinfo.source.author = AUTHOR;
 
 	// build json string
 	rapidjson::Document pickdocument;
@@ -400,41 +564,127 @@ TEST(PickTest, ReadsJSONNoFilter) {
 // tests to see if pick can successfully
 // be constructed
 TEST(PickTest, Constructor) {
+	std::vector<detectionformats::filter> newfilterdata;
+	newfilterdata.push_back(detectionformats::filter(std::string(FILTERTYPE),
+		HIGHPASS, LOWPASS, std::string(FILTERUNITS)));
+
 	// use constructor
 	detectionformats::pick pickobject(std::string(ID), std::string(STATION),
 			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			std::string(AGENCYID), std::string(AUTHOR), std::string(PHASE),
 			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
-			HIGHPASS, LOWPASS, AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
-			BACKAZIMUTHERROR, SLOWNESS,
-			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR, std::string(ASSOCPHASE),
-			ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			std::string(FILTERTYPE), HIGHPASS, LOWPASS, std::string(FILTERUNITS),
+			AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
+			BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+			POWERRATIOERROR, std::string(PHASE), DISTANCE, AZIMUTH,
+			RESIDUAL, SIGMA, std::string(PHASE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
+            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
+            EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
 
 	// check data values
 	checkdata(pickobject, "Tested Constructor");
 
-	// use alternate constructor
-	std::vector<detectionformats::filter> newfilterdata;
-	newfilterdata.push_back(detectionformats::filter(HIGHPASS, LOWPASS));
+	// use alternate constructor 1
+	detectionformats::pick pickobject_altc1(std::string(ID), std::string(STATION),
+			std::string(CHANNEL), std::string(NETWORK), std::string(LOCATION),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			std::string(AGENCYID), std::string(AUTHOR), std::string(PHASE),
+			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
+			std::string(FILTERTYPE), HIGHPASS, LOWPASS, std::string(FILTERUNITS),
+			AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
+			BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+			POWERRATIOERROR);
 
-	detectionformats::pick pickobject_altc(std::string(ID),
+	// check data values
+	checkdata(pickobject_altc1, "Tested alternate constructor 1");
+
+	// use alternate constructor 2
+	detectionformats::pick pickobject_altc2(std::string(ID),
 			detectionformats::site(std::string(STATION), std::string(CHANNEL),
-					std::string(NETWORK), std::string(LOCATION)),
+				std::string(NETWORK), std::string(LOCATION)),
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			detectionformats::source(std::string(AGENCYID),
-					std::string(AUTHOR)), std::string(PHASE),
+				std::string(AUTHOR)), std::string(PHASE),
 			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
 			newfilterdata,
 			detectionformats::amplitude(AMPLITUDEVALUE, PERIOD, SNR),
 			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
-			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
-			detectionformats::associated(std::string(ASSOCPHASE), ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR));
 
 	// check data values
-	checkdata(pickobject_altc, "Tested alternate constructor");
+	checkdata(pickobject_altc2, "Tested alternate constructor 2");
+
+	// use alternate constructor 3
+	detectionformats::pick pickobject_altc3(std::string(ID),
+			detectionformats::site(std::string(STATION), std::string(CHANNEL),
+				std::string(NETWORK), std::string(LOCATION)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			detectionformats::source(std::string(AGENCYID),
+				std::string(AUTHOR)), std::string(PHASE),
+			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
+			newfilterdata,
+			detectionformats::amplitude(AMPLITUDEVALUE, PERIOD, SNR),
+			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
+				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
+			detectionformats::classification(std::string(PHASE),
+            	PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
+            	AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            	MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE,
+            	CERTAINTY, EVENTTYPEPROBABILITY, AGENCYID, AUTHOR));
+
+	// check data values
+	checkdata(pickobject_altc3, "Tested alternate constructor 3");
+
+	// use alternate constructor 4
+	detectionformats::pick pickobject_altc4(std::string(ID),
+			detectionformats::site(std::string(STATION), std::string(CHANNEL),
+				std::string(NETWORK), std::string(LOCATION)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			detectionformats::source(std::string(AGENCYID),
+				std::string(AUTHOR)), std::string(PHASE),
+			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
+			newfilterdata,
+			detectionformats::amplitude(AMPLITUDEVALUE, PERIOD, SNR),
+			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
+				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
+			detectionformats::association(std::string(PHASE), DISTANCE,
+				AZIMUTH, RESIDUAL, SIGMA));
+
+	// check data values
+	checkdata(pickobject_altc4, "Tested alternate constructor 4");
+
+	// use alternate constructor 5
+	detectionformats::pick pickobject_altc5(std::string(ID),
+			detectionformats::site(std::string(STATION), std::string(CHANNEL),
+				std::string(NETWORK), std::string(LOCATION)),
+			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
+			detectionformats::source(std::string(AGENCYID),
+				std::string(AUTHOR)), std::string(PHASE),
+			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
+			newfilterdata,
+			detectionformats::amplitude(AMPLITUDEVALUE, PERIOD, SNR),
+			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
+				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
+			detectionformats::association(std::string(PHASE), DISTANCE,
+				AZIMUTH, RESIDUAL, SIGMA),
+			detectionformats::classification(std::string(PHASE),
+            	PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
+            	AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            	MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE,
+            	CERTAINTY, EVENTTYPEPROBABILITY, AGENCYID, AUTHOR));
+
+	// check data values
+	checkdata(pickobject_altc5, "Tested alternate constructor 5");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::pick pickobject2(emptyvalue);
+
+    // check data values
+	checkdata(pickobject2, "");
 }
 
 // tests to see if pick can successfully
@@ -446,11 +696,15 @@ TEST(PickTest, CopyConstructor) {
 			detectionformats::ConvertISO8601ToEpochTime(std::string(TIME)),
 			std::string(AGENCYID), std::string(AUTHOR), std::string(PHASE),
 			std::string(POLARITY), std::string(ONSET), std::string(PICKER),
-			HIGHPASS, LOWPASS, AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
-			BACKAZIMUTHERROR, SLOWNESS,
-			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR, std::string(ASSOCPHASE),
-			ASSOCDISTANCE,
-			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			std::string(FILTERTYPE), HIGHPASS, LOWPASS, std::string(FILTERUNITS),
+			AMPLITUDEVALUE, PERIOD, SNR, BACKAZIMUTH,
+			BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
+			POWERRATIOERROR, std::string(PHASE), DISTANCE, AZIMUTH,
+			RESIDUAL, SIGMA, std::string(PHASE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
+            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
+            EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
 
 	detectionformats::pick pickobject(frompickobject);
 
@@ -503,11 +757,29 @@ TEST(PickTest, Validate) {
 	pickobject.beam.powerratioerror = POWERRATIOERROR;
 
 	// association subobject
-	pickobject.associationinfo.phase = std::string(ASSOCPHASE);
-	pickobject.associationinfo.distance = ASSOCDISTANCE;
-	pickobject.associationinfo.azimuth = ASSOCAZIMUTH;
-	pickobject.associationinfo.residual = ASSOCRESIDUAL;
-	pickobject.associationinfo.sigma = ASSOCSIGMA;
+	pickobject.associationinfo.phase = std::string(PHASE);
+	pickobject.associationinfo.distance = DISTANCE;
+	pickobject.associationinfo.azimuth = AZIMUTH;
+	pickobject.associationinfo.residual = RESIDUAL;
+	pickobject.associationinfo.sigma = SIGMA;
+
+	// classification subobject
+	pickobject.classificationinfo.phase = std::string(PHASE);
+	pickobject.classificationinfo.phaseprobability = PHASEPROBABILITY;
+    pickobject.classificationinfo.distance = DISTANCE;
+	pickobject.classificationinfo.distanceprobability = DISTANCEPROBABILITY;
+    pickobject.classificationinfo.azimuth = AZIMUTH;
+    pickobject.classificationinfo.azimuthprobability = AZIMUTHPROBABILITY;
+    pickobject.classificationinfo.magnitude = MAGNITUDE;
+    pickobject.classificationinfo.magnitudetype = std::string(MAGNITUDETYPE);
+    pickobject.classificationinfo.magnitudeprobability = MAGNITUDEPROBABILITY;
+    pickobject.classificationinfo.depth = DEPTH;
+    pickobject.classificationinfo.depthprobability = DEPTHPROBABILITY;
+	pickobject.classificationinfo.eventtype.type = std::string(EVENTTYPE);
+    pickobject.classificationinfo.eventtype.certainty = std::string(CERTAINTY);
+    pickobject.classificationinfo.eventtypeprobability = EVENTTYPEPROBABILITY;
+    pickobject.classificationinfo.source.agencyid = AGENCYID;
+	pickobject.classificationinfo.source.author = AUTHOR;
 
 	// successful validation
 	bool result = pickobject.isvalid();
@@ -517,7 +789,6 @@ TEST(PickTest, Validate) {
 
 	// build bad pick object
 	detectionformats::pick badpickobject;
-	badpickobject.id = "";
 
 	result = false;
 	try {
@@ -529,4 +800,28 @@ TEST(PickTest, Validate) {
 
 	// check return code
 	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
+	// build bad pick object
+	detectionformats::pick badpickobject2;
+	badpickobject2.time = -1000000000000;
+	badpickobject2.phase = "22";
+	badpickobject2.polarity = "22";
+	badpickobject2.onset = "22";
+	badpickobject2.picker = "22";
+	badpickobject2.amplitude.period = -99;
+	badpickobject2.beam.backazimuth = -99;
+	badpickobject2.associationinfo.phase = "22";
+	badpickobject2.classificationinfo.phase = "22";
+
+	result = false;
+	try {
+		// call validation
+		result = badpickobject2.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+
 }

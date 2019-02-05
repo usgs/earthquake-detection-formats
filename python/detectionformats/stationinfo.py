@@ -7,9 +7,12 @@ import detectionformats.source
 #stdlib imports
 import json
 
-# a conversion class used to create, parse, and validate station info data as
-# part of detection data.
+
 class StationInfo:
+    """ StationInfo - a conversion class used to create, parse, and validate 
+        station info data as part of detection data.
+    """
+    # json keys
     TYPE_KEY = "Type"
     SITE_KEY = "Site"
     LATITUDE_KEY = "Latitude"
@@ -20,10 +23,9 @@ class StationInfo:
     USEFORTELESEISMIC_KEY = "UseForTeleseismic"
     INFORMATIONREQUESTOR_KEY = "InformationRequestor"
 
-    # init
     def __init__(self, newSite=None, newLatitude=None, newLongitude=None,
         newElevation=None, newQuality=None, newEnable=None,
-        newUseForTeleseismic=None, newInformationRequestor=None) :
+        newUseForTeleseismic=None, newInformationRequestor=None):
         """Initialize the station info object. Constructs an empty object
            if all arguments are None
 
@@ -75,8 +77,7 @@ class StationInfo:
         else:
             self.informationRequestor = detectionformats.source.Source()
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -89,12 +90,11 @@ class StationInfo:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
-    def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+    def fromDict(self, aDict):
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -107,8 +107,8 @@ class StationInfo:
             self.latitude = aDict[self.LATITUDE_KEY]
             self.longitude = aDict[self.LONGITUDE_KEY]
             self.elevation = aDict[self.ELEVATION_KEY]
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.QUALITY_KEY in aDict:
@@ -123,8 +123,7 @@ class StationInfo:
         if self.INFORMATIONREQUESTOR_KEY in aDict:
             self.informationRequestor.fromDict(aDict[self.INFORMATIONREQUESTOR_KEY])
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -138,14 +137,13 @@ class StationInfo:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
-    def toDict(self) :
-        """Converts the object to a dictonary
+    def toDict(self):
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
@@ -158,34 +156,25 @@ class StationInfo:
             aDict[self.LATITUDE_KEY] = self.latitude
             aDict[self.LONGITUDE_KEY] = self.longitude
             aDict[self.ELEVATION_KEY] = self.elevation
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         # second optional keys
-        try:
+        if hasattr(self, 'quality'):
             aDict[self.QUALITY_KEY] = self.quality
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'enable'):
             aDict[self.ENABLE_KEY] = self.enable
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'useForTeleseismic'):
             aDict[self.USEFORTELESEISMIC_KEY] = self.useForTeleseismic
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'informationRequestor'):
             aDict[self.INFORMATIONREQUESTOR_KEY] = self.informationRequestor.toDict()
-        except:
-            pass
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -197,13 +186,9 @@ class StationInfo:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -221,36 +206,35 @@ class StationInfo:
                 errorList.append('Empty Type in StationInfo Class.')
             elif self.type != 'StationInfo':
                 errorList.append('Non-StationInfo Type in StationInfo Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Type in StationInfo Class.')
 
         try:
-            if self.site.isValid() == False:
+            if not self.site.isValid():
                 errorList.append('Invalid Site in StationInfo Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Site in StationInfo Class.')
 
         try:
             if self.latitude < -90 or self.latitude > 90:
                 errorList.append('Latitude in StationInfo Class not in the range of -90 to 90.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Latitude in StationInfo Class.')
 
         try:
             if self.longitude < -180 or self.longitude > 180:
                 errorList.append('Longitude in StationInfo Class not in the range of -180 to 180.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Longitude in StationInfo Class.')
 
         try:
             self.elevation
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Elevation in StationInfo Class.')
 
-        try:
-            if self.informationRequestor.isValid() == False:
+        # second optional keys
+        if hasattr(self, 'informationRequestor'):
+            if not self.informationRequestor.isValid():
                 errorList.append('Invalid InformationRequestor in StationInfo Class.')
-        except (NameError, AttributeError):
-            pass
 
         return errorList

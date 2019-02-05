@@ -86,7 +86,6 @@ public class Beam implements DetectionInt {
 	public Beam(Double newBackAzimuth, Double newBackAzimutherror,
 			Double newSlowness, Double newSlownessError, Double newPowerRatio,
 			Double newPowerRatioError) {
-
 		backAzimuth = newBackAzimuth;
 		backAzimuthError = newBackAzimutherror;
 		slowness = newSlowness;
@@ -102,7 +101,6 @@ public class Beam implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Beam(JSONObject newJSONObject) {
-
 		// Required values
 		// backAzimuth
 		if (newJSONObject.containsKey(BACKAZIMUTH_KEY)) {
@@ -156,7 +154,6 @@ public class Beam implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		Double jsonBackAzimuth = getBackAzimuth();
@@ -207,9 +204,7 @@ public class Beam implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -222,7 +217,6 @@ public class Beam implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		Double jsonBackAzimuth = getBackAzimuth();
 		Double jsonSlowness = getSlowness();
 		Double jsonPowerRatio = getPowerRatio();
@@ -292,6 +286,33 @@ public class Beam implements DetectionInt {
 
 		// success
 		return (errorList);
+	}
+
+	/**
+	 * Checks to see if this object is empty
+	 * 
+	 * @return Returns true if empty, false otherwise.
+	 */
+	public boolean isEmpty() {
+		if (getBackAzimuth() != null) {
+			return (false);
+		}
+		if (getBackAzimuthError() != null) {
+			return (false);
+		}
+		if (getSlowness() != null) {
+			return (false);
+		}
+		if (getSlownessError() != null) {
+			return (false);
+		}
+		if (getPowerRatio() != null) {
+			return (false);
+		}
+		if (getPowerRatioError() != null) {
+			return (false);
+		}
+		return (true);
 	}
 
 	/**

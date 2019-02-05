@@ -37,7 +37,6 @@ public class Retract implements DetectionInt{
 	 * The constructor for the Retract class. Initializes members to null values.
 	 */
 	public Retract() {
-
 		type = "Retract";
 		source = null;
 		id = null;
@@ -57,7 +56,6 @@ public class Retract implements DetectionInt{
 	 *            - A String containing the author to use
 	 */
 	public Retract(String newID, String newAgencyID, String newAuthor) {
-
 		this(newID, new Source(newAgencyID, newAuthor));
 	}	
 	
@@ -148,9 +146,7 @@ public class Retract implements DetectionInt{
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);

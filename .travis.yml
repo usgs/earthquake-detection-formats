@@ -14,6 +14,12 @@ addons:
       - libgtest-dev
       - lcov
       - cppcheck
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
+      - unzip
     sources:
       - ubuntu-toolchain-r-test
 
@@ -59,14 +65,15 @@ before_script:
     - g++-5 --version 2>&1 | grep g++-5
 
 script:
-  # Java build, tests, and coverage
+  # Java build, tests, javadocs, and coverage
   - cd ${TRAVIS_BUILD_DIR}/java
-  - ant coverage
+  - ant all
   # C++ build, tests, and coverage
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
+  - mkdir dist
   - cd build
-  - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRAPIDJSON_PATH=../lib/rapidjson .. && make
+  - cmake -DRUN_TESTS=1 -DSUPPORT_COVERAGE=1 -DRUN_COVERAGE=1 -DRUN_CPPCHECK=1 -DRUN_CPPLINT=1 -DGENERATE_DOCUMENTATION=1 -DCMAKE_INSTALL_PREFIX=../dist -DRAPIDJSON_PATH=../../lib/rapidjson -DCPPLINT_PATH=../../lib/cpplint/cpplint.py -DCPPCHECK_PATH=/usr/bin/cppcheck .. && make
   # python tests
   - cd ${TRAVIS_BUILD_DIR}/python
   - python -m unittest discover test/

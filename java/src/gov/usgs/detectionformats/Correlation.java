@@ -73,10 +73,9 @@ public class Correlation implements DetectionInt {
 	private final Hypocenter hypocenter;
 
 	/**
-	 * Optional String containing the event type of this Correlation valid
-	 * values are "earthquake" or "blast"
+	 * Optional EventType containing the event type of this Correlation
 	 */
-	private final String eventType;
+	private final EventType eventType;
 
 	/**
 	 * Optional Double containing the Correlation magnitude
@@ -106,14 +105,13 @@ public class Correlation implements DetectionInt {
 	/**
 	 * Optional associated information.
 	 */
-	private final Associated associationInfo;
+	private final Association associationInfo;
 
 	/**
 	 * The constructor for the Correlation class. Initializes members to null
 	 * values.
 	 */
 	public Correlation() {
-
 		type = "Correlation";
 		id = null;
 		site = null;
@@ -173,8 +171,11 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the new time error to use, null to omit
 	 * @param newDepthError
 	 *            - A Double containing the depth error to use, null to omit
-	 * @param newEventtype
+	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
+	 * @param newEventTypeCertainty 
+	 * 			  - A String containing the event type certainty to use, null to 
+	 * omit
 	 * @param newMagnitude
 	 *            - A Double containing the magnitude to use, null to omit
 	 * @param newSNR
@@ -193,20 +194,20 @@ public class Correlation implements DetectionInt {
 			Double newCorrelation, Double newLatitude, Double newLongitude,
 			Date newOrigintime, Double newDepth, Double newLatitudeError,
 			Double newLongitudeError, Double newTimeError, Double newDepthError,
-			String newEventtype, Double newMagnitude, Double newSNR,
-			Double newZScore, Double newDetectionThreshold,
-			String newThresholdType) {
-
+			String newEventType, String newEventTypeCertainty, 
+			Double newMagnitude, Double newSNR, Double newZScore, 
+			Double newDetectionThreshold, String newThresholdType) {
 		this(newID,
 				new Site(newStation, newChannel, newNetwork,
-						newLocation),
+					newLocation),
 				new Source(newAgencyID, newAuthor), newPhase, newTime,
 				newCorrelation,
 				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
-						newLatitudeError, newLongitudeError, newTimeError,
-						newDepthError),
-				newEventtype, newMagnitude, newSNR, newZScore,
-				newDetectionThreshold, newThresholdType, new Associated());
+					newLatitudeError, newLongitudeError, newTimeError,
+					newDepthError),
+				new EventType(newEventType, newEventTypeCertainty), 
+				newMagnitude, newSNR, newZScore, newDetectionThreshold, 
+				newThresholdType, new Association());
 	}
 
 	/**
@@ -251,8 +252,11 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the new time error to use, null to omit
 	 * @param newDepthError
 	 *            - A Double containing the depth error to use, null to omit
-	 * @param newEventtype
+	 * @param newEventType
 	 *            - A String containing the event type to use, null to omit
+	 * @param newEventTypeCertainty 
+	 * 			  - A String containing the event type certainty to use, null to 
+	 * omit
 	 * @param newMagnitude
 	 *            - A Double containing the magnitude to use, null to omit
 	 * @param newSNR
@@ -264,19 +268,19 @@ public class Correlation implements DetectionInt {
 	 *            omit
 	 * @param newThresholdType
 	 *            - A String containing the threshold type to use, null to omit
-	 * @param newAssociatedPhase
+	 * @param newAssociationPhase
 	 *            - A std:string containing the associated phase to use, null to
 	 *            omit
-	 * @param newAssociatedDistance
+	 * @param newAssociationDistance
 	 *            - A Double containing the associated distance to use, null to
 	 *            omit
-	 * @param newAssociatedAzimuth
+	 * @param newAssociationAzimuth
 	 *            - A Double containing the associated azimuth to use, null to
 	 *            omit
-	 * @param newAssociatedResidual
+	 * @param newAssociationResidual
 	 *            - A Double containing the associated residual to use, null to
 	 *            omit
-	 * @param newAssociatedSigma
+	 * @param newAssociationSigma
 	 *            - A Double containing the associated sigma to use, null to
 	 *            omit
 	 */
@@ -286,25 +290,26 @@ public class Correlation implements DetectionInt {
 			Double newCorrelation, Double newLatitude, Double newLongitude,
 			Date newOrigintime, Double newDepth, Double newLatitudeError,
 			Double newLongitudeError, Double newTimeError, Double newDepthError,
-			String newEventtype, Double newMagnitude, Double newSNR,
-			Double newZScore, Double newDetectionThreshold,
-			String newThresholdType, String newAssociatedPhase,
-			Double newAssociatedDistance, Double newAssociatedAzimuth,
-			Double newAssociatedResidual, Double newAssociatedSigma) {
-
+			String newEventType, String newEventTypeCertainty, 
+			Double newMagnitude, Double newSNR, Double newZScore, 
+			Double newDetectionThreshold, String newThresholdType, 
+			String newAssociationPhase, Double newAssociationDistance, 
+			Double newAssociationAzimuth, Double newAssociationResidual, 
+			Double newAssociationSigma) {
 		this(newID,
 				new Site(newStation, newChannel, newNetwork,
-						newLocation),
+					newLocation),
 				new Source(newAgencyID, newAuthor), newPhase, newTime,
 				newCorrelation,
 				new Hypocenter(newLatitude, newLongitude, newOrigintime, newDepth,
-						newLatitudeError, newLongitudeError, newTimeError,
-						newDepthError),
-				newEventtype, newMagnitude, newSNR, newZScore,
-				newDetectionThreshold, newThresholdType,
-				new Associated(newAssociatedPhase, newAssociatedDistance,
-						newAssociatedAzimuth, newAssociatedResidual,
-						newAssociatedSigma));
+					newLatitudeError, newLongitudeError, newTimeError,
+					newDepthError),
+				new EventType(newEventType, newEventTypeCertainty), 
+				newMagnitude, newSNR, newZScore, newDetectionThreshold, 
+				newThresholdType,
+				new Association(newAssociationPhase, newAssociationDistance,
+					newAssociationAzimuth, newAssociationResidual,
+					newAssociationSigma));
 	}
 
 	/**
@@ -327,8 +332,8 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the correlation value to use
 	 * @param newHypocenter
 	 *            - A Hypo containing the hypocenter to use
-	 * @param newEventtype
-	 *            - A String containing the event type to use, null to omit
+	 * @param newEventType
+	 *            - A EventType containing the event type to use, null to omit
 	 * @param newMagnitude
 	 *            - A Double containing the magnitude to use, null to omit
 	 * @param newSNR
@@ -343,13 +348,12 @@ public class Correlation implements DetectionInt {
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
-			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
-			Double newSNR, Double newZScore, Double newDetectionThreshold,
-			String newThresholdType) {
-
+			Hypocenter newHypocenter, EventType newEventType, 
+			Double newMagnitude, Double newSNR, Double newZScore, 
+			Double newDetectionThreshold, String newThresholdType) {
 		this(newID, newSite, newSource, newPhase, newTime, newCorrelation,
-				newHypocenter, newEventtype, newMagnitude, newSNR, newZScore,
-				newDetectionThreshold, newThresholdType, new Associated());
+				newHypocenter, newEventType, newMagnitude, newSNR, newZScore,
+				newDetectionThreshold, newThresholdType, new Association());
 	}
 
 	/**
@@ -372,8 +376,8 @@ public class Correlation implements DetectionInt {
 	 *            - A Double containing the correlation value to use
 	 * @param newHypocenter
 	 *            - A Hypo containing the hypocenter to use
-	 * @param newEventtype
-	 *            - A String containing the event type to use, null to omit
+	 * @param newEventType
+	 *            - A EventType containing the event type to use, null to omit
 	 * @param newMagnitude
 	 *            - A Double containing the magnitude to use, null to omit
 	 * @param newSNR
@@ -385,15 +389,14 @@ public class Correlation implements DetectionInt {
 	 *            omit
 	 * @param newThresholdType
 	 *            - A String containing the threshold type to use, null to omit
-	 * @param newAssociated
-	 *            - A Associated containing the associated to use null to omit
+	 * @param newAssociation
+	 *            - A Association containing the associated to use null to omit
 	 */
 	public Correlation(String newID, Site newSite, Source newSource,
 			String newPhase, Date newTime, Double newCorrelation,
-			Hypocenter newHypocenter, String newEventtype, Double newMagnitude,
+			Hypocenter newHypocenter, EventType newEventType, Double newMagnitude,
 			Double newSNR, Double newZScore, Double newDetectionThreshold,
-			String newThresholdType, Associated newAssociated) {
-
+			String newThresholdType, Association newAssociation) {
 		type = "Correlation";
 		id = newID;
 		site = newSite;
@@ -402,13 +405,13 @@ public class Correlation implements DetectionInt {
 		time = newTime;
 		correlation = newCorrelation;
 		hypocenter = newHypocenter;
-		eventType = newEventtype;
+		eventType = newEventType;
 		magnitude = newMagnitude;
 		snr = newSNR;
 		zScore = newZScore;
 		detectionThreshold = newDetectionThreshold;
 		thresholdType = newThresholdType;
-		associationInfo = newAssociated;
+		associationInfo = newAssociation;
 	}
 
 	/**
@@ -418,7 +421,6 @@ public class Correlation implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Correlation(JSONObject newJSONObject) {
-
 		// Required values
 		// type
 		if (newJSONObject.containsKey(TYPE_KEY)) {
@@ -472,7 +474,7 @@ public class Correlation implements DetectionInt {
 		// hypocenter
 		if (newJSONObject.containsKey(HYPOCENTER_KEY)) {
 			hypocenter = new Hypocenter(
-					(JSONObject) newJSONObject.get(HYPOCENTER_KEY));
+				(JSONObject) newJSONObject.get(HYPOCENTER_KEY));
 		} else {
 			hypocenter = null;
 		}
@@ -480,7 +482,8 @@ public class Correlation implements DetectionInt {
 		// Optional values
 		// eventType
 		if (newJSONObject.containsKey(EVENTTYPE_KEY)) {
-			eventType = (String) newJSONObject.get(EVENTTYPE_KEY);
+			eventType = new EventType(
+				(JSONObject) newJSONObject.get(EVENTTYPE_KEY));
 		} else {
 			eventType = null;
 		}
@@ -523,7 +526,7 @@ public class Correlation implements DetectionInt {
 
 		// associated
 		if (newJSONObject.containsKey(ASSOCIATIONINFO_KEY)) {
-			associationInfo = new Associated(
+			associationInfo = new Association(
 					(JSONObject) newJSONObject.get(ASSOCIATIONINFO_KEY));
 		} else {
 			associationInfo = null;
@@ -538,7 +541,6 @@ public class Correlation implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonType = getType();
@@ -549,13 +551,13 @@ public class Correlation implements DetectionInt {
 		Date jsonTime = getTime();
 		Double jsonCorrelation = getCorrelation();
 		Hypocenter jsonHypocenter = getHypocenter();
-		String jsonEventType = getEventType();
+		EventType jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		Double jsonSNR = getSNR();
 		Double jsonZScore = getZScore();
 		Double jsonDetectionThreshold = getDetectionThreshold();
 		String jsonThresholdType = getThresholdType();
-		Associated jsonAssociationInfo = getAssociationInfo();
+		Association jsonAssociationInfo = getAssociationInfo();
 
 		// Required values
 		// Type
@@ -599,7 +601,7 @@ public class Correlation implements DetectionInt {
 		// Optional values
 		// eventType
 		if (jsonEventType != null) {
-			newJSONObject.put(EVENTTYPE_KEY, jsonEventType);
+			newJSONObject.put(EVENTTYPE_KEY, jsonEventType.toJSON());
 		}
 
 		// magnitude
@@ -641,9 +643,7 @@ public class Correlation implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -656,7 +656,6 @@ public class Correlation implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonType = getType();
 		String jsonID = getID();
 		Site jsonSite = getSite();
@@ -665,10 +664,10 @@ public class Correlation implements DetectionInt {
 		Date jsonTime = getTime();
 		Double jsonCorrelation = getCorrelation();
 		Hypocenter jsonHypocenter = getHypocenter();
-		String jsonEventType = getEventType();
+		EventType jsonEventType = getEventType();
 		Double jsonMagnitude = getMagnitude();
 		String jsonThresholdType = getThresholdType();
-		Associated jsonAssociationInfo = getAssociationInfo();
+		Association jsonAssociationInfo = getAssociationInfo();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
@@ -751,22 +750,12 @@ public class Correlation implements DetectionInt {
 
 		// Optional Keys
 		// eventType
-		if (jsonEventType != null) {
-
-			boolean match = false;
-			if (jsonEventType.equals("earthquake")) {
-				match = true;
-			} else if (jsonEventType.equals("blast")) {
-				match = true;
-			} else {
-				match = false;
-			}
-
-			if (!match) {
-				// invalid eventType
-				errorList.add("Invalid EventType in Correlation Class.");
-			}
-		}
+		if ((jsonEventType != null) && (!jsonEventType.isEmpty())) {
+            if (!jsonEventType.isValid()) {
+                // event type invalid
+                errorList.add("Invalid EventType in Correlation Class.");
+            }
+        }
 
 		// magnitude
 		if (jsonMagnitude != null) {
@@ -856,7 +845,7 @@ public class Correlation implements DetectionInt {
 	/**
 	 * @return the eventType
 	 */
-	public String getEventType() {
+	public EventType getEventType() {
 		return eventType;
 	}
 
@@ -898,7 +887,7 @@ public class Correlation implements DetectionInt {
 	/**
 	 * @return the associationInfo
 	 */
-	public Associated getAssociationInfo() {
+	public Association getAssociationInfo() {
 		return associationInfo;
 	}
 }

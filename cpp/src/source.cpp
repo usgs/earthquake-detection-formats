@@ -55,7 +55,7 @@ rapidjson::Value & source::tojson(
 
 	// required values
 	// siteid
-	if (agencyid != "") {
+	if (agencyid.empty() == false) {
 		rapidjson::Value agencyidvalue;
 		agencyidvalue.SetString(rapidjson::StringRef(agencyid.c_str()),
 								allocator);
@@ -63,7 +63,7 @@ rapidjson::Value & source::tojson(
 	}
 
 	// author
-	if (author != "") {
+	if (author.empty() == false) {
 		rapidjson::Value authorvalue;
 		authorvalue.SetString(rapidjson::StringRef(author.c_str()), allocator);
 		json.AddMember(AUTHOR_KEY, authorvalue, allocator);
@@ -75,12 +75,12 @@ rapidjson::Value & source::tojson(
 std::vector<std::string> source::geterrors() {
 	std::vector<std::string> errorlist;
 
-	if (agencyid == "") {
+	if (agencyid.empty() == true) {
 		// empty agencyid
 		errorlist.push_back("Empty AgencyID in source class.");
 	}
 
-	if (author == "") {
+	if (author.empty() == true) {
 		// empty author
 		errorlist.push_back("Empty Author in source class.");
 	}
@@ -93,9 +93,9 @@ std::vector<std::string> source::geterrors() {
 }
 
 bool source::isempty() {
-	if (agencyid != "")
+	if (agencyid.empty() == false)
 		return (false);
-	if (author != "")
+	if (author.empty() == false)
 		return (false);
 
 	return (true);

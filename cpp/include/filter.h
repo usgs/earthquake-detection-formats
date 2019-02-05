@@ -7,11 +7,11 @@
 #ifndef DETECTION_FILTER_H
 #define DETECTION_FILTER_H
 
+#include <base.h>
+
 #include <string>
 #include <exception>
 #include <vector>
-
-#include "./base.h"
 
 namespace detectionformats {
 /**
@@ -35,21 +35,28 @@ class filter : public detectionbase {
 	 * \brief filter advanced constructor
 	 *
 	 * The advanced constructor for the filter class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
-	 * \param newhighpass - A double containing the high pass to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlowpass - A double containing the low pass to use, std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newtype - A std::string containing the filter type, empty string
+	 * to omit, if not defined, type is assumed to be bandpass
+	 * \param newhighpass - A double containing the high pass to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newlowpass - A double containing the low pass to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newunits - A std::string containing the filter units, empty string
+	 * to omit, if not defined, units is assumed to be hertz
 	 */
-	filter(double newhighpass, double newlowpass);
+	filter(std::string newtype, double newhighpass, double newlowpass,
+		std::string newunits);
 
 	/**
 	 * \brief filter advanced constructor
 	 *
 	 * The advanced constructor for the filter class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
-	explicit filter(rapidjson::Value &json);
+	explicit filter(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief filter copy constructor
@@ -71,12 +78,15 @@ class filter : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \param jsondocument - a reference to the json document to fill in with the class contents.
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
 	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
@@ -108,6 +118,14 @@ class filter : public detectionbase {
 	 * An optional double containing the filter lowpass
 	 */
 	double lowpass;
+
+	/**
+	 * \brief filter units
+	 *
+	 * An optional std::string containing the filter units, if not specified, it
+	 * is assumed to be "Hertz"
+	 */
+	std::string units;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_FILTER_H

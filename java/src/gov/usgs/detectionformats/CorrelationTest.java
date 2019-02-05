@@ -1,5 +1,7 @@
 package gov.usgs.detectionformats;
 
+import org.json.simple.JSONObject;
+
 import static org.junit.Assert.*;
 
 import java.util.Date;
@@ -13,7 +15,7 @@ public class CorrelationTest {
 			+ "\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\","
 			+ "\"Network\":\"LB\",\"Location\":\"01\"},\"Magnitude\":2.14,"
 			+ "\"Type\":\"Correlation\",\"Correlation\":2.65,"
-			+ "\"EventType\":\"earthquake\","
+			+ "\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},"
 			+ "\"AssociationInfo\":{\"Distance\":0.442559,\"Azimuth\":0.418479,"
 			+ "\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":-0.025393},"
 			+ "\"DetectionThreshold\":1.5,"
@@ -44,7 +46,8 @@ public class CorrelationTest {
 	public static double LONGITUDEERROR = 22.64;
 	public static double DEPTHERROR = 2.44;
 	public static double TIMEERROR = 1.984;
-	public static String EVENTTYPE = "earthquake";
+    public static String EVENTTYPE = "Earthquake";
+    public static String CERTAINTY = "Suspected";
 	public static double MAGNITUDE = 2.14;
 	public static double SNR = 3.8;
 	public static double ZSCORE = 33.67;
@@ -60,42 +63,41 @@ public class CorrelationTest {
 	 * Able to write a JSON string
 	 */
 	@Test
-	public void writesJSON() {
-
+	public void WritesJSON() {
 		Correlation correlationObject = new Correlation(ID, STATION, CHANNEL,
-				NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
-				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
-				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
-				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+			LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+			LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, CERTAINTY, 
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, 
+			ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, 
+			ASSOCSIGMA);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(correlationObject.toJSON());
 
 		// check the data
 		try {
-			checkData(new Correlation(Utility.fromJSONString(jsonString)),
+			CheckData(new Correlation(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
-
 	}
 
 	/**
 	 * Able to read a JSON string
 	 */
 	@Test
-	public void readsJSON() {
-
+	public void ReadsJSON() {
 		// build Correlation object
 		try {
-
-			checkData(
+			CheckData(
 					new Correlation(Utility.fromJSONString(CORRELATION_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 
@@ -103,57 +105,74 @@ public class CorrelationTest {
 	 * Constructor fills in members correctly
 	 */
 	@Test
-	public void altConstructors() {
-
+	public void Constructor() {
 		// use constructor
 		Correlation correlationObject = new Correlation(ID, STATION, CHANNEL,
-				NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
-				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
-				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
-				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+			NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+			LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+			LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, CERTAINTY, 
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, 
+			ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, 
+			ASSOCSIGMA);
 
 		// check data values
-		checkData(correlationObject, "Alternate Constructor 1");
+		CheckData(correlationObject, "Constructor");
 
 		// use constructor
-		Correlation altCorrelationObject = new Correlation(ID,
-				new Site(STATION, CHANNEL, NETWORK, LOCATION),
-				new Source(AGENCYID, AUTHOR), PHASE, TIME, CORRELATION,
-				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
-						LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
-				EVENTTYPE, MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
-				THRESHOLDTYPE);
+		Correlation altCorrelationObject = new Correlation(ID, STATION, CHANNEL,
+			NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
+			LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
+			LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, CERTAINTY, 
+			MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE);
 
 		// check data values
-		checkData(altCorrelationObject, "Alternate Constructor 2");
+		CheckData(altCorrelationObject, "Alternate Constructor 1");
 
 		// use constructor
 		Correlation altAltCorrelationObject = new Correlation(ID,
-				new Site(STATION, CHANNEL, NETWORK, LOCATION),
-				new Source(AGENCYID, AUTHOR), PHASE, TIME, CORRELATION,
-				new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
-						LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
-				EVENTTYPE, MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD,
-				THRESHOLDTYPE, new Associated(ASSOCPHASE, ASSOCDISTANCE,
-						ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+			new Site(STATION, CHANNEL, NETWORK, LOCATION),
+			new Source(AGENCYID, AUTHOR), PHASE, TIME, CORRELATION,
+			new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
+				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+			new EventType(EVENTTYPE, CERTAINTY), MAGNITUDE, SNR, ZSCORE, 
+			DETECTIONTHRESHOLD, THRESHOLDTYPE);
 
 		// check data values
-		checkData(altAltCorrelationObject, "Alternate Constructor 3");
+		CheckData(altAltCorrelationObject, "Alternate Constructor 2");
+
+		// use constructor
+		Correlation altAltAltCorrelationObject = new Correlation(ID,
+			new Site(STATION, CHANNEL, NETWORK, LOCATION),
+			new Source(AGENCYID, AUTHOR), PHASE, TIME, CORRELATION,
+			new Hypocenter(LATITUDE, LONGITUDE, ORIGINTIME, DEPTH,
+				LATITUDEERROR, LONGITUDEERROR, TIMEERROR, DEPTHERROR),
+			new EventType(EVENTTYPE, CERTAINTY), MAGNITUDE, SNR, ZSCORE, 
+			DETECTIONTHRESHOLD, THRESHOLDTYPE, new Association(ASSOCPHASE, 
+				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA));
+
+		// check data values
+		CheckData(altAltAltCorrelationObject, "Alternate Constructor 3");
+
+		// empty constructor
+		JSONObject emptyJSONObject = new JSONObject();
+		Correlation emptyObject = new Correlation(emptyJSONObject);
+
+		// check the data
+		CheckData(emptyObject, "Empty Constructor");	
 	}
 
 	/**
 	 * Able to run validation function
 	 */
 	@Test
-	public void validate() {
-
+	public void Validate() {
 		Correlation correlationObject = new Correlation(ID, STATION, CHANNEL,
 				NETWORK, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
 				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
-				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
-				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, CERTAINTY, 
+				MAGNITUDE, SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, 
+				ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, 
+				ASSOCSIGMA);
 
 		// Successful validation
 		boolean rc = correlationObject.isValid();
@@ -162,140 +181,224 @@ public class CorrelationTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad Correlation object
-		Correlation badCorrelationObject = new Correlation("", "", CHANNEL,
-				null, LOCATION, AGENCYID, AUTHOR, PHASE, TIME, CORRELATION,
-				LATITUDE, LONGITUDE, ORIGINTIME, DEPTH, LATITUDEERROR,
-				LONGITUDEERROR, TIMEERROR, DEPTHERROR, EVENTTYPE, MAGNITUDE,
-				SNR, ZSCORE, DETECTIONTHRESHOLD, THRESHOLDTYPE, ASSOCPHASE,
-				ASSOCDISTANCE, ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA);
+		Correlation badCorrelationObject = new Correlation();
 
+		// Unuccessful validation
 		rc = badCorrelationObject.isValid();
 
 		// check return code
-		assertEquals("Unsuccessful Validation", false, rc);
+		assertEquals("Unsuccessful Validation 1", false, rc);
+
+		// build bad Correlation object
+		Correlation badCorrelationObject2 = new Correlation("", "", null,
+				null, null, "", null, "22", null, -99.0,
+				-999.0, 999.0, null, -99999.0, null,
+				null, null, null, "chair", "bleh", -9.0,
+				null, null, null, "", "22",
+				null, null, null, null);
+
+		rc = badCorrelationObject2.isValid();
+
+		// check return code
+		assertEquals("Unsuccessful Validation 2", false, rc);
 	}
 
-	public void checkData(Correlation correlationObject, String TestName) {
-
+	public void CheckData(Correlation correlationObject, String TestName) {
 		// check correlationObject.ID
-		assertEquals(TestName + " ID Equals", ID, correlationObject.getID());
-
-		// check correlationObject.site.Station
-		assertEquals(TestName + " Station Equals", STATION,
-				correlationObject.getSite().getStation());
-
-		// check correlationObject.site.Channel
-		assertEquals(TestName + " Channel Equals", CHANNEL,
-				correlationObject.getSite().getChannel());
-
-		// check correlationObject.site.Network
-		assertEquals(TestName + " Network Equals", NETWORK,
-				correlationObject.getSite().getNetwork());
-
-		// check correlationObject.site.Location
-		assertEquals(TestName + " Location Equals", LOCATION,
-				correlationObject.getSite().getLocation());
-
-		// check correlationObject.Source.AgencyID
-		assertEquals(TestName + " AgencyID Equals", AGENCYID,
-				correlationObject.getSource().getAgencyID());
-
-		// check correlationObject.Source.Author
-		assertEquals(TestName + " Author Equals", AUTHOR,
-				correlationObject.getSource().getAuthor());
-
-		// check correlationObject.Time
-		assertEquals(TestName + " Time Equals", TIME,
-				correlationObject.getTime());
-
-		// check correlationObject.Phase
-		assertEquals(TestName + " Phase Equals", PHASE,
-				correlationObject.getPhase());
-
-		// check correlationObject.Correlation
-		assertEquals(TestName + " Correlation Equals", CORRELATION,
-				correlationObject.getCorrelation(), 0);
-
-		// check correlationObject.hypocenter.Latitude
-		assertEquals(TestName + " Latitude Equals", LATITUDE,
-				correlationObject.getHypocenter().getLatitude(), 0);
-
-		// check correlationObject.hypocenter.Longitude
-		assertEquals(TestName + " Longitude Equals", LONGITUDE,
-				correlationObject.getHypocenter().getLongitude(), 0);
-
-		// check correlationObject.hypocenter.Depth
-		assertEquals(TestName + " Depth Equals", DEPTH,
-				correlationObject.getHypocenter().getDepth(), 0);
-
-		// check correlationObject.hypocenter.Time
-		assertEquals(TestName + " OriginTime Equals", ORIGINTIME,
-				correlationObject.getHypocenter().getTime());
-
-		// check correlationObject.hypocenter.LatitudeError
-		assertEquals(TestName + " LatitudeError Equals", LATITUDEERROR,
-				correlationObject.getHypocenter().getLatitudeError(), 0);
-
-		// check correlationObject.hypocenter.LongitudeError
-		assertEquals(TestName + " LongitudError Equals", LONGITUDEERROR,
-				correlationObject.getHypocenter().getLongitudeError(), 0);
-
-		// check correlationObject.hypocenter.DepthError
-		assertEquals(TestName + " DepthError Equals", DEPTHERROR,
-				correlationObject.getHypocenter().getDepthError(), 0);
-
-		// check correlationObject.hypocenter.TimeError
-		assertEquals(TestName + " TimeError Equals", TIMEERROR,
-				correlationObject.getHypocenter().getTimeError(), 0);
-
-		// check correlationObject.EventType
-		assertEquals(TestName + " EventType Equals", EVENTTYPE,
-				correlationObject.getEventType());
-
-		// check correlationObject.Magnitude
-		assertEquals(TestName + " Magnitude Equals", MAGNITUDE,
-				correlationObject.getMagnitude(), 0);
-
-		// check correlationObject.SNR
-		assertEquals(TestName + " SNR Equals", SNR, correlationObject.getSNR(),
-				0);
-
-		// check correlationObject.ZScore
-		assertEquals(TestName + " ZScore Equals", ZSCORE,
-				correlationObject.getZScore(), 0);
-
-		// check correlationObject.DetectionThreshold
-		assertEquals(TestName + " DetectionThreshold Equals",
-				DETECTIONTHRESHOLD, correlationObject.getDetectionThreshold(),
-				0);
-
-		// check correlationObject.ThresholdType
-		assertEquals(TestName + " ThresholdType Equals", THRESHOLDTYPE,
-				correlationObject.getThresholdType());
-
-		if ((correlationObject.getAssociationInfo() != null)
-				&& (!correlationObject.getAssociationInfo().isEmpty())) {
-			// check correlationObject.Associated.Phase
-			assertEquals(TestName + " Phase Equals", ASSOCPHASE,
-					correlationObject.getAssociationInfo().getPhase());
-
-			// check correlationObject.Associated.Distance
-			assertEquals(TestName + " Distance Equals", ASSOCDISTANCE,
-					correlationObject.getAssociationInfo().getDistance(), 0);
-
-			// check correlationObject.Associated.Azimuth
-			assertEquals(TestName + " Azimuth Equals", ASSOCAZIMUTH,
-					correlationObject.getAssociationInfo().getAzimuth(), 0);
-
-			// check correlationObject.Associated.Residual
-			assertEquals(TestName + " Residual Equals", ASSOCRESIDUAL,
-					correlationObject.getAssociationInfo().getResidual(), 0);
-
-			// check correlationObject.Associated.Sigma
-			assertEquals(TestName + " Sigma Equals", ASSOCSIGMA,
-					correlationObject.getAssociationInfo().getSigma(), 0);
+		if (correlationObject.getID() != null) {
+			assertEquals(TestName + " ID Equals", ID, correlationObject.getID());
 		}
 
-	}
+		// check correlationObject.Site
+		if (correlationObject.getSite() != null) {
+			// check correlationObject.site.Station
+			if (correlationObject.getSite().getStation() != null) {
+				assertEquals(TestName + " Station Equals", STATION,
+					correlationObject.getSite().getStation());
+			}
 
+			// check correlationObject.site.Channel
+			if (correlationObject.getSite().getChannel() != null) {
+				assertEquals(TestName + " Channel Equals", CHANNEL,
+					correlationObject.getSite().getChannel());
+			}
+
+			// check correlationObject.site.Network
+			if (correlationObject.getSite().getNetwork() != null) {
+				assertEquals(TestName + " Network Equals", NETWORK,
+					correlationObject.getSite().getNetwork());
+			}
+
+			// check correlationObject.site.Location
+			if (correlationObject.getSite().getLocation() != null) {
+				assertEquals(TestName + " Location Equals", LOCATION,
+					correlationObject.getSite().getLocation());
+			}
+		}
+
+		// check correlationObject.Source
+		if (correlationObject.getSource() != null) {
+			// check correlationObject.Source.AgencyID
+			if (correlationObject.getSource().getAgencyID() != null) {
+				assertEquals(TestName + " AgencyID Equals", AGENCYID,
+					correlationObject.getSource().getAgencyID());
+			}
+
+			// check correlationObject.Source.Author
+			if (correlationObject.getSource().getAuthor() != null) {
+				assertEquals(TestName + " Author Equals", AUTHOR,
+					correlationObject.getSource().getAuthor());
+			}
+		}
+
+		// check correlationObject.Time
+		if (correlationObject.getTime() != null) {
+			assertEquals(TestName + " Time Equals", TIME, 
+				correlationObject.getTime());
+		}
+
+		// check correlationObject.Phase
+		if (correlationObject.getPhase() != null) {
+			assertEquals(TestName + " Phase Equals", PHASE, 
+				correlationObject.getPhase());
+		}
+
+		// check correlationObject.Correlation
+		if (correlationObject.getCorrelation() != null) {
+			assertEquals(TestName + " Correlation Equals", CORRELATION,
+				correlationObject.getCorrelation(), 0);
+		}
+
+		// check correlationObject.Hypocenter
+		if (correlationObject.getHypocenter() != null) {
+			// check correlationObject.hypocenter.Latitude
+			if (correlationObject.getHypocenter().getLatitude() != null) {
+				assertEquals(TestName + " Latitude Equals", LATITUDE,
+					correlationObject.getHypocenter().getLatitude(), 0);
+			}
+
+			// check correlationObject.hypocenter.Longitude
+			if (correlationObject.getHypocenter().getLongitude() != null) {
+				assertEquals(TestName + " Longitude Equals", LONGITUDE,
+					correlationObject.getHypocenter().getLongitude(), 0);
+			}
+
+			// check correlationObject.hypocenter.Depth
+			if (correlationObject.getHypocenter().getDepth() != null) {
+				assertEquals(TestName + " Depth Equals", DEPTH,
+					correlationObject.getHypocenter().getDepth(), 0);
+			}
+
+			// check correlationObject.hypocenter.Time
+			if (correlationObject.getHypocenter().getTime() != null) {
+				assertEquals(TestName + " OriginTime Equals", ORIGINTIME,
+					correlationObject.getHypocenter().getTime());
+			}
+
+			// check correlationObject.hypocenter.LatitudeError
+			if (correlationObject.getHypocenter().getLatitudeError() != null) {
+				assertEquals(TestName + " LatitudeError Equals", LATITUDEERROR,
+					correlationObject.getHypocenter().getLatitudeError(), 0);
+			}
+
+			// check correlationObject.hypocenter.LongitudeError
+			if (correlationObject.getHypocenter().getLongitudeError() != null) {
+				assertEquals(TestName + " LongitudError Equals", LONGITUDEERROR,
+					correlationObject.getHypocenter().getLongitudeError(), 0);
+			}
+
+			// check correlationObject.hypocenter.DepthError
+			if (correlationObject.getHypocenter().getDepthError() != null) {
+				assertEquals(TestName + " DepthError Equals", DEPTHERROR,
+					correlationObject.getHypocenter().getDepthError(), 0);
+			}
+
+			// check correlationObject.hypocenter.TimeError
+			if (correlationObject.getHypocenter().getTimeError() != null) {
+				assertEquals(TestName + " TimeError Equals", TIMEERROR,
+					correlationObject.getHypocenter().getTimeError(), 0);
+			}
+		}
+
+		// check correlationObject.eventType
+		if ((correlationObject.getEventType() != null) && 
+			(!correlationObject.getEventType().isEmpty())) {
+			// check correlationObject.EventType.type
+			if (correlationObject.getEventType().getType() != null) {
+				assertEquals(TestName + " Type Equals", EVENTTYPE,
+					correlationObject.getEventType().getType());
+			}
+
+			// check correlationObject.EventType.certainty
+			if (correlationObject.getEventType().getCertainty() != null) {
+				assertEquals(TestName + " Certantity Equals", CERTAINTY,
+				correlationObject.getEventType().getCertainty());
+			}
+		}
+
+		// check correlationObject.Magnitude
+		if (correlationObject.getMagnitude() != null) {
+			assertEquals(TestName + " Magnitude Equals", MAGNITUDE,
+				correlationObject.getMagnitude(), 0);
+		}
+
+		// check correlationObject.SNR
+		if (correlationObject.getSNR() != null) {
+			assertEquals(TestName + " SNR Equals", SNR, 
+				correlationObject.getSNR(), 0);
+		}
+
+		// check correlationObject.ZScore
+		if (correlationObject.getZScore() != null) {
+			assertEquals(TestName + " ZScore Equals", ZSCORE,
+				correlationObject.getZScore(), 0);
+		}
+
+		// check correlationObject.DetectionThreshold
+		if (correlationObject.getDetectionThreshold() != null) {
+			assertEquals(TestName + " DetectionThreshold Equals",
+				DETECTIONTHRESHOLD, correlationObject.getDetectionThreshold(),
+					0);
+		}
+
+		// check correlationObject.ThresholdType
+		if (correlationObject.getThresholdType() != null) {
+			assertEquals(TestName + " ThresholdType Equals", THRESHOLDTYPE,
+				correlationObject.getThresholdType());
+		}
+
+		// check correlationObject.AssociationInfo
+		if ((correlationObject.getAssociationInfo() != null) && 
+			!correlationObject.getAssociationInfo().isEmpty()) {
+			// check correlationObject.Association.Phase
+			if (correlationObject.getAssociationInfo().getPhase() != null) {
+				assertEquals(TestName + " Phase Equals", ASSOCPHASE,
+					correlationObject.getAssociationInfo().getPhase());
+			}
+
+			// check correlationObject.Association.Distance
+			if (correlationObject.getAssociationInfo().getPhase() != null) {
+				assertEquals(TestName + " Distance Equals", ASSOCDISTANCE,
+					correlationObject.getAssociationInfo().getDistance(), 0);
+			}
+
+			// check correlationObject.Association.Azimuth
+			if (correlationObject.getAssociationInfo().getPhase() != null) {
+				assertEquals(TestName + " Azimuth Equals", ASSOCAZIMUTH,
+					correlationObject.getAssociationInfo().getAzimuth(), 0);
+			}
+
+			// check correlationObject.Association.Residual
+			if (correlationObject.getAssociationInfo().getPhase() != null) {
+				assertEquals(TestName + " Residual Equals", ASSOCRESIDUAL,
+					correlationObject.getAssociationInfo().getResidual(), 0);
+			}
+
+			// check correlationObject.Association.Sigma
+			if (correlationObject.getAssociationInfo().getSigma() != null) {
+				assertEquals(TestName + " Sigma Equals", ASSOCSIGMA,
+					correlationObject.getAssociationInfo().getSigma(), 0);
+			}
+		}
+	}
 }

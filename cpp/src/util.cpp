@@ -7,8 +7,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#define TYPE_KEY "Type"
-
 namespace detectionformats {
 ////////////// functions //////////////
 
@@ -20,22 +18,26 @@ int GetDetectionType(std::string jsonstring) {
 		return (formattypes::unknown);
 	}
 
+	return(GetDetectionType(jsondocument));
+}
+
+int GetDetectionType(rapidjson::Value &json) { // NOLINT
 	// make sure we got valid json
-	if (jsondocument.IsObject() == false) {
+	if (json.IsObject() == false) {
 		return (formattypes::unknown);
 	}
 
 	// Type
-	if (jsondocument.HasMember(TYPE_KEY) == true) {
+	if (json.HasMember(TYPE_KEY) == true) {
 		// check type
-		if (jsondocument[TYPE_KEY].IsString() == false) {
+		if (json[TYPE_KEY].IsString() == false) {
 			return (formattypes::unknown);
 		}
 
 		// get type string
 		std::string typestring = std::string(
-				jsondocument[TYPE_KEY].GetString(),
-				jsondocument[TYPE_KEY].GetStringLength());
+				json[TYPE_KEY].GetString(),
+				json[TYPE_KEY].GetStringLength());
 
 		// return appropriate type
 		if (typestring == PICK_TYPE)
@@ -67,7 +69,7 @@ bool IsStringISO8601(const std::string &s) {
 	// 012345678901234567890123
 	// YYYY-MM-DDTHH:MM:SS.SSSZ
 
-	// length
+	// length checks
 	if (s.length() != 24) {
 		return (false);
 	}
@@ -157,9 +159,8 @@ bool IsStringISO8601(const std::string &s) {
 					std::string("Formatting error validating ISO8601 time."));
 			return (false);
 		}
-	} catch (const std::exception &) {
-		throw std::invalid_argument(
-				std::string("Formatting error validating ISO8601 time."));
+	} catch (const std::exception &e) {
+		printf("Formatting error validating ISO8601 time: %s\n", e.what());
 		return (false);
 	}
 
@@ -172,18 +173,8 @@ bool IsStringISO8601(const std::string &s) {
 char envTZ[MAXENV];
 double ConvertISO8601ToEpochTime(std::string TimeString) {
 	// make sure we got something
-	if (TimeString.length() == 0) {
-		return (-1.0);
-	}
-
-	// time string is too short
-	if (TimeString.length() < 24) {
-		return (-1.0);
-	}
-
-	// time string is too long
-	if (TimeString.length() > 24) {
-		return (-1.0);
+	if (IsStringISO8601(TimeString) == false) {
+		return(-1.0);
 	}
 
 	struct tm timeinfo;
@@ -313,7 +304,7 @@ std::string ConvertEpochTimeToISO8601(double epochtime) {
 	return (timestring + secondsstring + "Z");
 }
 
-std::string ToJSONString(rapidjson::Value &json) {
+std::string ToJSONString(rapidjson::Value &json) { // NOLINT
 	// make the buffer
 	rapidjson::StringBuffer jsonbuffer;
 
@@ -328,7 +319,7 @@ std::string ToJSONString(rapidjson::Value &json) {
 }
 
 rapidjson::Document & FromJSONString(std::string jsonstring,
-										rapidjson::Document & jsondocument) {
+										rapidjson::Document & jsondocument) { // NOLINT
 	// parse the json into a document
 	if (jsondocument.Parse(jsonstring.c_str()).HasParseError()) {
 		throw std::invalid_argument("Error parsing JSON string into document.");

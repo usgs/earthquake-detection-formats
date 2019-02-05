@@ -1,6 +1,8 @@
 package gov.usgs.detectionformats;
 
-import static org.junit.Assert.assertEquals;
+import org.json.simple.JSONObject;
+
+import static org.junit.Assert.*;
 
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
@@ -9,7 +11,7 @@ public class StationInfoRequestTest {
 	public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
 			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
 			+ "\"Source\":{\"Author\":\"TestAuthor\",\"AgencyID\":\"US\"},"
-			+ "\"Type\":\"StationInfoRequest\",}";
+			+ "\"Type\":\"StationInfoRequest\"}";
 
 	public static final String STATION = "BOZ";
 	public static final String CHANNEL = "BHZ";
@@ -22,8 +24,7 @@ public class StationInfoRequestTest {
 	 * Able to write a JSON string
 	 */
 	@Test
-	public void writesJSON() {
-
+	public void WritesJSON() {
 		StationInfoRequest stationRequestObject = new StationInfoRequest(
 				STATION, CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR);
 
@@ -32,11 +33,12 @@ public class StationInfoRequestTest {
 
 		// check the data
 		try {
-			checkData(
+			CheckData(
 					new StationInfoRequest(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -45,16 +47,15 @@ public class StationInfoRequestTest {
 	 */
 	@Test
 	public void readsJSON() {
-
 		// build StationInfoRequest object
 		try {
-
-			checkData(
+			CheckData(
 					new StationInfoRequest(
 							Utility.fromJSONString(STATION_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 	}
 
@@ -62,23 +63,34 @@ public class StationInfoRequestTest {
 	 * Constructor fills in members correctly
 	 */
 	@Test
-	public void altConstructors() {
+	public void Constructor() {
+		StationInfoRequest stationRequestObject = new StationInfoRequest(
+				STATION, CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR);
+
+		// check data values
+		CheckData(stationRequestObject, "Constructor");
 
 		// use constructor
-		StationInfoRequest stationRequestObject = new StationInfoRequest(
+		StationInfoRequest altStationRequestObject = new StationInfoRequest(
 				new Site(STATION, CHANNEL, NETWORK, LOCATION),
 				new Source(AGENCYID, AUTHOR));
 
 		// check data values
-		checkData(stationRequestObject, "Alternate Constructor 1");
+		CheckData(altStationRequestObject, "Alternate Constructor ");
+
+		// empty constructor
+		JSONObject emptyJSONObject = new JSONObject();
+		StationInfoRequest emptyObject = new StationInfoRequest(emptyJSONObject);
+
+		// check the data
+		CheckData(emptyObject, "Empty Constructor");	
 	}
 
 	/**
 	 * Able to run validation function
 	 */
 	@Test
-	public void validate() {
-
+	public void Validate() {
 		StationInfoRequest stationRequestObject = new StationInfoRequest(
 				STATION, CHANNEL, NETWORK, LOCATION, AGENCYID, AUTHOR);
 
@@ -89,41 +101,66 @@ public class StationInfoRequestTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad StationInfoRequest object
-		StationInfoRequest badStationRequestObject = new StationInfoRequest(
-				null, CHANNEL, NETWORK, LOCATION, AGENCYID, null);
+		StationInfoRequest badStationRequestObject = new StationInfoRequest();
 
+		// Unuccessful validation
 		rc = badStationRequestObject.isValid();
 
 		// check return code
-		assertEquals("Unsuccessful Validation", false, rc);
+		assertEquals("Unsuccessful Validation 1", false, rc);
+
+		// build bad StationInfoRequest object
+		StationInfoRequest badStationRequestObject2 = new StationInfoRequest(
+				"", null, "", null, "", null);
+
+		rc = badStationRequestObject2.isValid();
+
+		// check return code
+		assertEquals("Unsuccessful Validation 2", false, rc);
 	}
 
-	public void checkData(StationInfoRequest stationRequestObject,
+	public void CheckData(StationInfoRequest stationRequestObject,
 			String TestName) {
+		// check stationRequestObject.Site
+		if (stationRequestObject.getSite() != null) {
+			// check stationRequestObject.site.Station
+			if (stationRequestObject.getSite().getStation() != null) {
+				assertEquals(TestName + " Station Equals", STATION,
+					stationRequestObject.getSite().getStation());
+			}
 
-		// check stationObject.site.Station
-		assertEquals(TestName + " Station Equals", STATION,
-				stationRequestObject.getSite().getStation());
+			// check stationRequestObject.site.Channel
+			if (stationRequestObject.getSite().getChannel() != null) {
+				assertEquals(TestName + " Channel Equals", CHANNEL,
+					stationRequestObject.getSite().getChannel());
+			}
 
-		// check stationObject.site.Channel
-		assertEquals(TestName + " Channel Equals", CHANNEL,
-				stationRequestObject.getSite().getChannel());
+			// check stationRequestObject.site.Network
+			if (stationRequestObject.getSite().getNetwork() != null) {
+				assertEquals(TestName + " Network Equals", NETWORK,
+					stationRequestObject.getSite().getNetwork());
+			}
 
-		// check stationObject.site.Network
-		assertEquals(TestName + " Network Equals", NETWORK,
-				stationRequestObject.getSite().getNetwork());
+			// check stationRequestObject.site.Location
+			if (stationRequestObject.getSite().getLocation() != null) {
+				assertEquals(TestName + " Location Equals", LOCATION,
+					stationRequestObject.getSite().getLocation());
+			}
+		}
 
-		// check stationObject.site.Location
-		assertEquals(TestName + " Location Equals", LOCATION,
-				stationRequestObject.getSite().getLocation());
+		// check stationRequestObject.Source
+		if (stationRequestObject.getSource() != null) {
+			// check stationRequestObject.Source.AgencyID
+			if (stationRequestObject.getSource().getAgencyID() != null) {
+				assertEquals(TestName + " AgencyID Equals", AGENCYID,
+					stationRequestObject.getSource().getAgencyID());
+			}
 
-		// check stationObject.Source.AgencyID
-		assertEquals(TestName + " AgencyID Equals", AGENCYID,
-				stationRequestObject.getSource().getAgencyID());
-
-		// check stationObject.Source.Author
-		assertEquals(TestName + " Author Equals", AUTHOR,
-				stationRequestObject.getSource().getAuthor());
-
+			// check stationRequestObject.Source.Author
+			if (stationRequestObject.getSource().getAuthor() != null) {
+				assertEquals(TestName + " Author Equals", AUTHOR,
+					stationRequestObject.getSource().getAuthor());
+			}
+		}
 	}
 }

@@ -7,10 +7,10 @@
 #ifndef DETECTION_RETRACT_H
 #define DETECTION_RETRACT_H
 
+#include <source.h>
+
 #include <string>
 #include <vector>
-
-#include "./source.h"
 
 namespace detectionformats {
 /**
@@ -31,7 +31,7 @@ class retract : public detectionbase {
 	 * \brief retract constructor
 	 *
 	 * The constructor for the retract class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	retract();
 
@@ -39,7 +39,7 @@ class retract : public detectionbase {
 	 * \brief retract advanced constructor
 	 *
 	 * The advanced constructor for the retract class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newagencyid - A std::string containing the agencyid to use
@@ -51,7 +51,7 @@ class retract : public detectionbase {
 	 * \brief retract alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the retract class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsource - A detectionformats::source containing the source to use
@@ -62,10 +62,10 @@ class retract : public detectionbase {
 	 * \brief retract advanced constructor
 	 *
 	 * The advanced constructor for the retract class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
-	explicit retract(rapidjson::Value &json);
+	explicit retract(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief retract copy constructor
@@ -87,11 +87,15 @@ class retract : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**

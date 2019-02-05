@@ -18,71 +18,22 @@ class TestSite(unittest.TestCase):
         # Empty init
         site = detectionformats.site.Site()
 
-        try:
-            site.station
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            site.channel
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            site.network
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            site.location
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(site, 'station'))
+        self.assertFalse(hasattr(site, 'channel'))
+        self.assertFalse(hasattr(site, 'network'))
+        self.assertFalse(hasattr(site, 'location'))
 
         site = detectionformats.site.Site(self.STATION, self.NETWORK,
             self.CHANNEL, self.LOCATION)
 
-        try:
-            site.station
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(site, 'station'))
+        self.assertTrue(hasattr(site, 'channel'))
+        self.assertTrue(hasattr(site, 'network'))
+        self.assertTrue(hasattr(site, 'location'))
 
         self.assertEqual(site.station, self.STATION)
-
-        try:
-            site.channel
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(site.channel, self.CHANNEL)
-
-        try:
-            site.network
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(site.network, self.NETWORK)
-
-        try:
-            site.location
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(site.location, self.LOCATION)
 
     def test_toJSON(self):

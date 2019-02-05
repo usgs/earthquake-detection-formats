@@ -16,39 +16,16 @@ class TestFilter(unittest.TestCase):
         # Empty init
         filter = detectionformats.filter.Filter()
 
-        try:
-            filter.highPass
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            filter.lowPass
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(filter, 'highPass'))
+        self.assertFalse(hasattr(filter, 'lowPass'))
 
         filter = detectionformats.filter.Filter(self.HIGHPASS,
             self.LOWPASS)
 
-        try:
-            filter.highPass
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(filter, 'highPass'))
+        self.assertTrue(hasattr(filter, 'lowPass'))
 
         self.assertEqual(filter.highPass, self.HIGHPASS)
-
-        try:
-            filter.lowPass
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(filter.lowPass, self.LOWPASS)
 
     def test_toJSON(self):

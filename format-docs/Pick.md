@@ -11,6 +11,7 @@ Pick is intended for use in seismic data messaging between seismic
 applications and organizations.
 
 ## Output
+
 ```json
     {
       "Type"      : "Pick",
@@ -32,7 +33,12 @@ applications and organizations.
       "Polarity"  : ("up" | "down"),
       "Onset"     : ("impulsive" | "emergent" | "questionable"),
       "Picker"    : ("manual" | "raypicker" | "filterpicker" | "earthworm" | "other"),
-      "Filter"    : [Filter Objects ...]
+      "Filter"    : [ {
+        "Type"     : String,
+        "HighPass" : Number,
+        "LowPass"  : Number,
+        "Units"    : String
+        }, ...]
       "Amplitude" :
       {
          "Amplitude" : Number,
@@ -40,13 +46,13 @@ applications and organizations.
          "SNR"       : Number
       },
       "Beam" :
-      {    
+      {
         "BackAzimuth"      : Number,
         "BackAzimuthError" : Number,
         "Slowness"         : Number,
         "SlownessError"    : Number,
         "PowerRatio"       : Number,
-        "PowerRatioError"  : Number,      
+        "PowerRatioError"  : Number,
       },
       "AssociationInfo" :
       {
@@ -55,40 +61,48 @@ applications and organizations.
          "Azimuth"  : Number,
          "Residual" : Number,
          "Sigma"    : Number
+      },
+      "ClassificationInfo" :
+      {
+        "Phase"                : String,
+        "PhaseProbability"     : Number,
+        "Distance"             : Number,
+        "DistanceProbability"  : Number,
+        "Azimuth"              : Number,
+        "AzimuthProbability"   : Number,
+        "Magnitude"            : Number,
+        "MagnitudeType"        : String,
+        "MagnitudeProbability" : Number,
+        "Depth"                : Number,
+        "DepthProbability"     : Number,
+        "ClassifyingAlgorithm" : String
       }
     }
 ```
 
 ## Glossary
+
 **Required Values:**
 
 These are the values **required** to define a pick.
+
 * Type - A string that identifies this message as a pick.
 * ID - A string containing an unique identifier for this pick.
-* Site - An object containing the station the pick was made at, see
-[Site](Site.md).
-* Source - An object containing the source of the pick, see
-[Source](Source.md).
-* Time - A string containing the UTC arrival time of the phase that was picked,
-in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
+* Site - An object containing the station the pick was made at, see [Site](Site.md).
+* Source - An object containing the source of the pick, see [Source](Source.md).
+* Time - A string containing the UTC arrival time of the phase that was picked, in the ISO8601 format `YYYY-MM-DDTHH:MM:SS.SSSZ`.
 
 **Optional Values:**
 
 The following are supplementary values that **may or may not** be provided by
 various picking algorithms.
+
 * Phase - A string that identifies the seismic phase that was picked.
 * Polarity - A string containing the phase polarity; "up" or "down".
-* Onset - A string containing the phase onset; "impulsive", "emergent", or
-"questionable" .
-* Picker - A string describing the type of picker; "manual", "raypicker",
-"filterpicker", "earthworm", or "other".
-* Filter - An array of objects containing the filter frequencies when the pick
-was made, see
-[Filter](Filter.md).
-* Amplitude - An object containing the amplitude associated with the pick, see
-[Amplitude](Amplitude.md).
-* Beam - An object containing the waveform beam information associated with the
-pick, see [Beam](Beam.md).
-* AssociationInfo - An object containing the association information if this
-pick is used as data in a [Detection](Detection.md), see
-[Associated](Associated.md).
+* Onset - A string containing the phase onset; "impulsive", "emergent", or "questionable" .
+* Picker - A string describing the type of picker; "manual", "raypicker", "filterpicker", "earthworm", or "other".
+* Filter - An array of objects containing the filter frequencies when the pick was made, see [Filter](Filter.md).
+* Amplitude - An object containing the amplitude associated with the pick, see [Amplitude](Amplitude.md).
+* Beam - An object containing the waveform beam information associated with the pick, see [Beam](Beam.md).
+* AssociationInfo - An object containing the association information if this pick is used as data in a [Detection](Detection.md), see [Associated](Associated.md).
+* ClassificationInfo - An object containing the classification information of this pick, see [Classification](Classification.md).

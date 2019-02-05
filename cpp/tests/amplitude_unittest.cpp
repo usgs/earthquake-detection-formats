@@ -1,36 +1,38 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define AMPLITUDESTRING "{\"Amplitude\":1.05,\"Period\":2.65,\"SNR\":3.8}"
-#define AMPLITUDEVALUE 1.05
-#define PERIOD 2.65
-#define SNR 3.8
+#include "unittest_data.h" // NOLINT
 
-void checkdata(detectionformats::amplitude amplitudeobject, std::string testinfo)
-{
+void checkdata(detectionformats::amplitude amplitudeobject,
+	std::string testinfo) {
 	// check period
-	double amplitudeperiod = amplitudeobject.period;
-	double expectedperiod = PERIOD;
-	ASSERT_EQ(amplitudeperiod, expectedperiod);
+	if (std::isnan(amplitudeobject.period) != true) {
+		double amplitudeperiod = amplitudeobject.period;
+		double expectedperiod = PERIOD;
+		ASSERT_EQ(amplitudeperiod, expectedperiod);
+	}
 
 	// check amplitude
-	double amplitudeamplitude = amplitudeobject.ampvalue;
-	double expectedamplitude = AMPLITUDEVALUE;
-	ASSERT_EQ(amplitudeamplitude, expectedamplitude);
+	if (std::isnan(amplitudeobject.ampvalue) != true) {
+		double amplitudeamplitude = amplitudeobject.ampvalue;
+		double expectedamplitude = AMPLITUDEVALUE;
+		ASSERT_EQ(amplitudeamplitude, expectedamplitude);
+	}
 
 	// check snr
-	double amplitudesnr = amplitudeobject.snr;
-	double expectedsnr = SNR;
-	ASSERT_EQ(amplitudesnr, expectedsnr);
+	if (std::isnan(amplitudeobject.snr) != true) {
+		double amplitudesnr = amplitudeobject.snr;
+		double expectedsnr = SNR;
+		ASSERT_EQ(amplitudesnr, expectedsnr);
+	}
 }
 
 // tests to see if amplitude can successfully
 // write json output
-TEST(AmplitudeTest, WritesJSON)
-{
+TEST(AmplitudeTest, WritesJSON) {
 	detectionformats::amplitude amplitudeobject;
 
 	// build amplitude object
@@ -40,24 +42,27 @@ TEST(AmplitudeTest, WritesJSON)
 
 	// build json string
 	rapidjson::Document amplitudedocument;
-	std::string amplitudejson = detectionformats::ToJSONString(amplitudeobject.tojson(amplitudedocument, amplitudedocument.GetAllocator()));
-    
+	std::string amplitudejson = detectionformats::ToJSONString(
+		amplitudeobject.tojson(amplitudedocument,
+		amplitudedocument.GetAllocator()));
+
     // read it back in
     rapidjson::Document amplitudedocument2;
-    detectionformats::amplitude amplitudeobject2(detectionformats::FromJSONString(amplitudejson, amplitudedocument2));
-    
+    detectionformats::amplitude amplitudeobject2(
+		detectionformats::FromJSONString(amplitudejson, amplitudedocument2));
+
     // check data values
     checkdata(amplitudeobject2, "");
 }
 
 // tests to see if amplitude can successfully
 // read json output
-TEST(AmplitudeTest, ReadsJSON)
-{
-	
+TEST(AmplitudeTest, ReadsJSON) {
 	// build amplitude object
 	rapidjson::Document amplitudedocument;
-	detectionformats::amplitude amplitudeobject(detectionformats::FromJSONString(std::string(AMPLITUDESTRING), amplitudedocument));
+	detectionformats::amplitude amplitudeobject(
+			detectionformats::FromJSONString(std::string(AMPLITUDESTRING),
+			amplitudedocument));
 
 	// check data values
 	checkdata(amplitudeobject, "");
@@ -65,20 +70,37 @@ TEST(AmplitudeTest, ReadsJSON)
 
 // tests to see if amplitude can successfully
 // be constructed
-TEST(AmplitudeTest, Constructor)
-{
+TEST(AmplitudeTest, Constructor) {
 	// use constructor
 	detectionformats::amplitude amplitudeobject(AMPLITUDEVALUE, PERIOD, SNR);
 
 	// check data values
 	checkdata(amplitudeobject, "");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::amplitude amplitudeobject2(emptyvalue);
+
+    // check data values
+	checkdata(amplitudeobject2, "");
 }
 
+// tests to see if amplitude can successfully
+// be copied
+TEST(AmplitudeTest, CopyConstructor) {
+	// use constructor
+	detectionformats::amplitude amplitudeobject(AMPLITUDEVALUE, PERIOD, SNR);
+
+	// copy constructor
+    detectionformats::amplitude amplitudeobject2(amplitudeobject);
+
+    // check data values
+	checkdata(amplitudeobject2, "");
+}
 
 // tests to see if amplitude can successfully
 // validate
-TEST(AmplitudeTest, Validate)
-{
+TEST(AmplitudeTest, Validate) {
 	detectionformats::amplitude amplitudeobject;
 
 	// build amplitude object
@@ -92,5 +114,34 @@ TEST(AmplitudeTest, Validate)
 	// check return code
 	ASSERT_EQ(result, true) << "Tested for successful validation.";
 
-	// Can't think of a way to make a bad amplitude object
+	// build bad amplitude object
+	detectionformats::amplitude badamplitudeobject;
+    badamplitudeobject.period = -9999;
+    badamplitudeobject.snr = -9999;
+
+	result = false;
+	try {
+		// call validation
+		result = badamplitudeobject.isvalid();
+	}
+	catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false) << "Tested for unsuccessful validation.";
+}
+
+// tests the isempty function
+TEST(AmplitudeTest, IsEmpty) {
+	detectionformats::amplitude amplitudeobject;
+
+	// check return
+	ASSERT_TRUE(amplitudeobject.isempty()) << "Tested for empty.";
+
+	// build amplitude object
+	amplitudeobject.ampvalue = AMPLITUDEVALUE;
+
+	// check return
+	ASSERT_FALSE(amplitudeobject.isempty()) << "Tested for not empty.";
 }

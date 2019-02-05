@@ -1,5 +1,7 @@
 package gov.usgs.detectionformats;
 
+import org.json.simple.JSONObject;
+
 import static org.junit.Assert.*;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
@@ -29,7 +31,6 @@ public class BeamTest {
 	 */
 	@Test
 	public void writesJSON() {
-
 		Beam beamObject = new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
 				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR);
 
@@ -38,10 +39,11 @@ public class BeamTest {
 
 		// check the data
 		try {
-			checkData(new Beam(Utility.fromJSONString(jsonString)),
-					"WritesJSON");
+			CheckData(new Beam(Utility.fromJSONString(jsonString)),
+				"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 	}
 
@@ -50,26 +52,44 @@ public class BeamTest {
 	 */
 	@Test
 	public void readsJSON() {
-
 		// build Beam object
 		try {
 
-			checkData(new Beam(Utility.fromJSONString(BEAM_STRING)),
-					"ReadsJSON");
+			CheckData(new Beam(Utility.fromJSONString(BEAM_STRING)),
+				"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
 
+	}
+
+	/**
+	 * Constructor fills in members correctly
+	 */
+	@Test
+	public void Constructor() {
+		Beam beamObject = new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
+			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR);
+
+		// check data values
+		CheckData(beamObject, "Constructor");
+
+		// empty constructor
+		JSONObject emptyJSONObject = new JSONObject();
+		Beam emptyObject = new Beam(emptyJSONObject);
+
+		// check the data
+		CheckData(emptyObject, "Empty Constructor");	
 	}
 
 	/**
 	 * Able to run validation function
 	 */
 	@Test
-	public void validate() {
-
+	public void Validate() {
 		Beam beamObject = new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
-				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR);
+			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR);
 
 		// Successful validation
 		boolean rc = beamObject.isValid();
@@ -78,47 +98,83 @@ public class BeamTest {
 		assertEquals("Successful Validation", true, rc);
 
 		// build bad Beam object
-		Beam badBeamObject = new Beam(null, BACKAZIMUTHERROR, null,
-				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR);
+		Beam badBeamObject = new Beam();
 
 		rc = badBeamObject.isValid();
 
 		// check return code
 		assertEquals("Unsuccessful Validation", false, rc);
+
+		// build bad Beam object
+		Beam badBeamObject2 = new Beam(-99.0, -99.0, -99.0,
+				-99.0, -99.0, -99.0);
+
+		rc = badBeamObject2.isValid();
+
+		// check return code
+		assertEquals("Unsuccessful Validation", false, rc);
 	}
 
-	public void checkData(Beam beamObject, String TestName) {
+	/**
+	 * Empty check function
+	 */
+	@Test
+	public void IsEmpty() {
+		// empty object
+		Beam beamObject = new Beam();
 
+		// checked for empty
+		boolean rc = beamObject.isEmpty();
+
+		// check return code
+		assertEquals("Tested for empty.", true, rc);
+
+		// not empty object
+		Beam beamObject2 = new Beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
+			SLOWNESSERROR, POWERRATIO, POWERRATIOERROR);
+
+		// checked for empty
+		rc = beamObject2.isEmpty();
+
+		// check return code
+		assertEquals("Tested for not empty.", false, rc);		
+	}
+
+	public void CheckData(Beam beamObject, String TestName) {
 		// check beamObject.BackAzimuth
-		assertEquals(TestName + " BackAzimuth Equals", BACKAZIMUTH,
+		if (beamObject.getBackAzimuth() != null) {
+			assertEquals(TestName + " BackAzimuth Equals", BACKAZIMUTH,
 				beamObject.getBackAzimuth(), 0);
+		}
 
 		// check beamObject.BackAzimuthError
 		if (beamObject.getBackAzimuthError() != null) {
 			assertEquals(TestName + " BackAzimuthError Equals",
-					BACKAZIMUTHERROR, beamObject.getBackAzimuthError(), 0);
+				BACKAZIMUTHERROR, beamObject.getBackAzimuthError(), 0);
 		}
 
 		// check beamObject.Slowness
-		assertEquals(TestName + " Slowness Equals", SLOWNESS,
+		if (beamObject.getSlowness() != null) {
+			assertEquals(TestName + " Slowness Equals", SLOWNESS,
 				beamObject.getSlowness(), 0);
+		}
 
 		// check beamObject.SlownessError
 		if (beamObject.getSlownessError() != null) {
 			assertEquals(TestName + " SlownessError Equals", SLOWNESSERROR,
-					beamObject.getSlownessError(), 0);
+				beamObject.getSlownessError(), 0);
 		}
 
 		// check beamObject.PowerRatio
 		if (beamObject.getPowerRatio() != null) {
 			assertEquals(TestName + " PowerRatio Equals", POWERRATIO,
-					beamObject.getPowerRatio(), 0);
+				beamObject.getPowerRatio(), 0);
 		}
 
 		// check beamObject.PowerRatioError
 		if (beamObject.getPowerRatioError() != null) {
 			assertEquals(TestName + " PowerRatioError Equals", POWERRATIOERROR,
-					beamObject.getPowerRatioError(), 0);
+				beamObject.getPowerRatioError(), 0);
 		}
 	}
 }

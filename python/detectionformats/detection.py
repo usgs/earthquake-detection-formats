@@ -9,9 +9,11 @@ import detectionformats.correlation
 import json
 import datetime
 
-# a conversion class used to create, parse, and validate a Detection
-# as part of detection data.
 class Detection:
+    """ Detection - a conversion class used to create, parse, and validate a
+        Detection as part of detection data.
+    """
+    # json keys
     TYPE_KEY = "Type"
     ID_KEY = "ID"
     SOURCE_KEY = "Source"
@@ -25,11 +27,10 @@ class Detection:
     GAP_KEY = "Gap"
     DATA_KEY = "Data"
 
-    # init
     def __init__(self, newID=None, newSource=None, newHypocenter=None,
         newDetectionType=None, newEventType=None, newDetectionTime=None,
         newBayes=None, newMinimumDistance=None, newRMS=None, newGap=None,
-        newPickData=None, newCorrelationData=None) :
+        newPickData=None, newCorrelationData=None):
         """Initialize the detection object. Constructs an empty object
            if all arguments are None
 
@@ -41,7 +42,8 @@ class Detection:
                 containing the desired hypocenter
             newDetectionType: an optional String containing the desired detection
                 type
-            newEventType: an optional String containing the desired event type
+            newEventType: an optional detectionformats.eventtype.EventType 
+                containing the desired event type
             newDetectionTime: an optional datetime containing the time this
                 detection was made
             newBayes: an optional Number containing the desired bayes estimate
@@ -82,6 +84,8 @@ class Detection:
 
         if newEventType is not None:
             self.eventType = newEventType
+        else:
+            self.eventType = detectionformats.eventtype.EventType()
 
         if newDetectionTime is not None:
             self.detectionTime = newDetectionTime
@@ -106,8 +110,7 @@ class Detection:
             if newCorrelationData and len(newCorrelationData) > 0:
                 self.correlationData = newCorrelationData
 
-    # populate class from a json string
-    def fromJSONString(self, jsonString) :
+    def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
 
         Args:
@@ -120,12 +123,11 @@ class Detection:
         jsonObject = json.loads(jsonString)
         self.fromDict(jsonObject)
 
-    # populate class from a dictonary
-    def fromDict(self, aDict) :
-        """Populates the object from a dictonary
+    def fromDict(self, aDict):
+        """Populates the object from a dictionary
 
         Args:
-            aDict: a required Dictonary
+            aDict: a required dictionary
         Returns:
             Nothing
         Raises:
@@ -137,15 +139,16 @@ class Detection:
             self.id = aDict[self.ID_KEY]
             self.source.fromDict(aDict[self.SOURCE_KEY])
             self.hypocenter.fromDict(aDict[self.HYPOCENTER_KEY])
-        except (ValueError, KeyError, TypeError):
-            print ("Dict format error")
+        except(ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.DETECTIONTYPE_KEY in aDict:
             self.detectionType = aDict[self.DETECTIONTYPE_KEY]
 
         if self.EVENTTYPE_KEY in aDict:
-            self.eventType = aDict[self.EVENTTYPE_KEY]
+            self.eventType = detectionformats.eventtype.EventType()
+            self.eventType.fromDict(aDict[self.EVENTTYPE_KEY])
 
         if self.DETECTIONTIME_KEY in aDict:
             timeString = aDict[self.DETECTIONTIME_KEY][:-1] + "000Z"
@@ -179,8 +182,7 @@ class Detection:
                             newCorrelation.fromDict(aData)
                             self.correlationData.append(newCorrelation)
 
-    # convert class to a json string
-    def toJSONString(self) :
+    def toJSONString(self):
         """Converts the object to a json formatted string
 
         Args:
@@ -194,14 +196,13 @@ class Detection:
 
         return json.dumps(jsonObject, ensure_ascii=False)
 
-    # convert class to a dictonary
-    def toDict(self) :
-        """Converts the object to a dictonary
+    def toDict(self):
+        """Converts the object to a dictionary
 
         Args:
             None
         Returns:
-            The Dictonary
+            The dictionary
         Raises:
             Nothing
         """
@@ -213,65 +214,49 @@ class Detection:
             aDict[self.ID_KEY] = self.id
             aDict[self.SOURCE_KEY] = self.source.toDict()
             aDict[self.HYPOCENTER_KEY] = self.hypocenter.toDict()
-        except NameError:
-            print ("Missing data error")
+        except(NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         # second optional keys
-        try:
+        if hasattr(self, 'detectionType'):
             aDict[self.DETECTIONTYPE_KEY] = self.detectionType
-        except:
-            pass
 
-        try:
-            aDict[self.EVENTTYPE_KEY] = self.eventType
-        except:
-            pass
+        if hasattr(self, 'eventType'):
+            if not self.eventType.isEmpty():
+                aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
 
-        try:
+        if hasattr(self, 'detectionTime'):
             timeString = self.detectionTime.isoformat(timespec='milliseconds') + "Z"
             aDict[self.DETECTIONTIME_KEY] = timeString
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'bayes'):
             aDict[self.BAYES_KEY] = self.bayes
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'minimumDistance'):
             aDict[self.MINIMUMDISTANCE_KEY] = self.minimumDistance
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'rms'):
             aDict[self.RMS_KEY] = self.rms
-        except:
-            pass
 
-        try:
+        if hasattr(self, 'gap'):
             aDict[self.GAP_KEY] = self.gap
-        except:
-            pass
 
-        try:
-            aDataList = []
+        aDataList = []
+        if hasattr(self, 'pickData'):
             if self.pickData and len(self.pickData) > 0:
                 for aPick in self.pickData:
                     aDataList.append(aPick.toDict())
 
+        if hasattr(self, 'correlationData'):
             if self.correlationData and len(self.correlationData) > 0:
                 for aCorrelation in self.correlationData:
                     aDataList.append(aCorrelation.toDict())
 
-            aDict[self.DATA_KEY] = aDataList
-        except:
-            pass
-
+        aDict[self.DATA_KEY] = aDataList
 
         return aDict
 
-    # test to see if class is valid
-    def isValid(self) :
+    def isValid(self):
         """Checks to see if the object is valid
 
         Args:
@@ -283,13 +268,9 @@ class Detection:
         """
         errorList = self.getErrors()
 
-        if len(errorList) == 0:
-            return True
-        else:
-            return False
+        return not errorList
 
-    # get list of validation errors
-    def getErrors(self) :
+    def getErrors(self):
         """Gets a list of object validation errors
 
         Args:
@@ -307,78 +288,59 @@ class Detection:
                 errorList.append('Empty Type in Detection Class.')
             elif self.type != 'Detection':
                 errorList.append('Non-Detection Type in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Type in Detection Class.')
 
         try:
             if self.id == '':
                 errorList.append('Empty ID in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No ID in Detection Class.')
 
         try:
-            if self.source.isValid() == False:
+            if not self.source.isValid():
                 errorList.append('Invalid Source in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Source in Detection Class.')
 
         try:
-            if self.hypocenter.isValid() == False:
+            if not self.hypocenter.isValid():
                 errorList.append('Invalid Hypocenter in Detection Class.')
-        except (NameError, AttributeError):
+        except(NameError, AttributeError):
             errorList.append('No Hypocenter in Detection Class.')
 
         # optional values
-        try:
-            self.detectionType
-            if self.detectionType != 'New' and self.detectionType != 'Update' and self.detectionType != 'Final' and self.detectionType != 'Retract':
+        if hasattr(self, 'detectionType'):
+            if self.detectionType not in ['New', 'Update', 'Final', 'Retract']:
                 errorList.append('Invalid DetectionType in Detection Class.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
-            if self.eventType != 'earthquake' and self.eventType != 'blast' :
-                errorList.append('Invalid EventType in Correlation Class.')
-        except (NameError, AttributeError):
-            pass
+        if hasattr(self, 'eventType'):
+            if not self.eventType.isEmpty():
+                if not self.eventType.isValid():
+                    errorList.append('Invalid EventType in Detection Class.')
 
-        try:
-            self.detectionTime
-        except (NameError, AttributeError):
-            pass
-
-        try:
+        if hasattr(self, 'bayes'):
             if self.bayes < 0:
                 errorList.append('Bayes in Detection Class not in greater than 0.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'minimumDistance'):
             if self.minimumDistance < 0:
                 errorList.append('MinimumDistance in Detection Class not in greater than 0.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'gap'):
             if self.gap < 0 or self.gap > 360:
                 errorList.append('Gap in Detection Class not in the range of 0 to 360.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'pickData'):
             if self.pickData and len(self.pickData) > 0:
                 for aPick in self.pickData:
-                    if aPick.isValid() == False:
+                    if not aPick.isValid():
                         errorList.append('Invalid Pick in Detection Class.')
-        except (NameError, AttributeError):
-            pass
 
-        try:
+        if hasattr(self, 'correlationData'):
             if self.correlationData and len(self.correlationData) > 0:
                 for aCorrelation in self.correlationData:
-                    if aCorrelation.isValid() == False:
+                    if not aCorrelation.isValid():
                         errorList.append('Invalid Correlation in Detection Class.')
-        except (NameError, AttributeError):
-            pass
 
         return errorList

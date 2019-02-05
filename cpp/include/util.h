@@ -9,9 +9,14 @@
 
 #include <exception>
 #include <string>
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
+
+// needed to disable rapidjson warnings for clang
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wexpansion-to-defined"
+#include "document.h" // NOLINT
+#include "writer.h" // NOLINT
+#include "stringbuffer.h"  // NOLINT
+#pragma clang diagnostic pop
 
 #define DETECTIONEXTENSION "jsondetect"
 #define RETRACTEXTENSION "jsonrtct"
@@ -20,6 +25,7 @@
 #define STATIONINFOEXTENSION "jsonsta"
 #define STATIONINFOREQUESTEXTENSION "jsonstareq"
 
+#define TYPE_KEY "Type"
 #define DETECTION_TYPE "Detection"
 #define CORRELATION_TYPE "Correlation"
 #define PICK_TYPE "Pick"
@@ -34,18 +40,46 @@
  */
 namespace detectionformats {
 /**
- * \brief detectionformats valid event type index enum
+ * \brief detectionformats valid event type index enum. Detection formats 
+ * supports a subset of the QuakeML 1.2 event types that are automatically 
+ * classifiable.
  */
 enum eventtypeindex {
 	earthquake = 0,
-	blast = 1,
-	eventtypecount = 2
+	minecollapse = 1,
+	nuclearexplosion = 2,
+	quarryblast = 3,
+	inducedortriggered = 4,
+	rockburst = 5,
+	fluidinjection = 6,
+	icequake = 7,
+	volcaniceruption = 8,
+	eventtypecount = 9
+};
+
+/**
+ * \brief detectionformats valid event type values Detection formats 
+ * supports a subset of the QuakeML 1.2 event types that are automatically 
+ * classifiable.
+ */
+static const char *eventtypevalues[] = { "Earthquake", "MineCollapse",
+		"NuclearExplosion", "QuarryBlast", "InducedOrTriggered",
+		"RockBurst", "FluidInjection", "IceQuake", "VolcanicEruption", "" };
+
+/**
+ * \brief detectionformats valid event type certainty index enum
+ */
+enum eventtypecertaintyindex {
+	suspected = 0,
+	confirmed = 1,
+	eventtypecertaintycount = 2
 };
 
 /**
  * \brief detectionformats valid event type values
  */
-static const char *eventtypevalues[] = { "earthquake", "blast", "" };
+static const char *eventtypecertaintyvalues[] = { "Suspected", "Confirmed",
+		 "" };
 
 /**
  * \brief detectionformats valid pick polarity index enum
@@ -132,6 +166,12 @@ enum formattypes {
 int GetDetectionType(std::string jsonstring);
 
 /**
+ * \brief detectionformats function to get the detection type for a provided
+ * json value object
+ */
+int GetDetectionType(rapidjson::Value &json); // NOLINT
+
+/**
  * \brief detectionformats function to validate that a string contains just
  * characters
  */
@@ -163,9 +203,10 @@ std::string ConvertEpochTimeToISO8601(double epochtime);
  * \brief Convert to json string function
  *
  * Converts the contents of the class to a serialized json string
+ * \param json - a reference to the rapidjson::Value document to convert
  * \return Returns a std::string containing the serialized json string
  */
-std::string ToJSONString(rapidjson::Value &json);
+std::string ToJSONString(rapidjson::Value &json); // NOLINT
 
 /**
  * \brief Convert from json string function
@@ -173,9 +214,10 @@ std::string ToJSONString(rapidjson::Value &json);
  * Converts the provided string from a serialized json string, populating
  * members
  * \param jsonstring - A std::string containing the serialized json
+ * \param jsondocument - A rapidjson::Document used when parsing the serialized json
  * \return Returns 1 if successful, 0 otherwise
  */
 rapidjson::Document & FromJSONString(std::string jsonstring,
-										rapidjson::Document & jsondocument);
+										rapidjson::Document & jsondocument); // NOLINT
 }  // namespace detectionformats
 #endif  // DETECTION_UTIL_H

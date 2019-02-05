@@ -32,7 +32,6 @@ public class Source implements DetectionInt {
 	 * The constructor for the Source class. Initializes members to null values.
 	 */
 	public Source() {
-
 		agencyID = null;
 		author = null;
 	}
@@ -47,7 +46,6 @@ public class Source implements DetectionInt {
 	 *            - A String containing the author to use
 	 */
 	public Source(String newAgencyID, String newAuthor) {
-
 		agencyID = newAgencyID;
 		author = newAuthor;
 	}
@@ -59,7 +57,6 @@ public class Source implements DetectionInt {
 	 *            - A JSONObject.
 	 */
 	public Source(JSONObject newJSONObject) {
-
 		// required values
 		// agencyID
 		if (newJSONObject.containsKey(AGENCYID_KEY)) {
@@ -74,7 +71,6 @@ public class Source implements DetectionInt {
 		} else {
 			author = null;
 		}
-
 	}
 
 	/**
@@ -84,7 +80,6 @@ public class Source implements DetectionInt {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONObject toJSON() {
-
 		JSONObject newJSONObject = new JSONObject();
 
 		String jsonAgencyID = getAgencyID();
@@ -93,12 +88,12 @@ public class Source implements DetectionInt {
 		// required values
 		// agencyID
 		if ((jsonAgencyID != null) && (!jsonAgencyID.isEmpty())) {
-			newJSONObject.put("AgencyID", jsonAgencyID);
+			newJSONObject.put(AGENCYID_KEY, jsonAgencyID);
 		}
 
 		// author
 		if ((jsonAuthor != null) && (!jsonAuthor.isEmpty())) {
-			newJSONObject.put("Author", jsonAuthor);
+			newJSONObject.put(AUTHOR_KEY, jsonAuthor);
 		}
 
 		return (newJSONObject);
@@ -110,9 +105,7 @@ public class Source implements DetectionInt {
 	 * @return Returns true if successful
 	 */
 	public boolean isValid() {
-		if (getErrors() == null) {
-			return (true);
-		} else if (getErrors().size() == 0) {
+		if (getErrors().size() == 0) {
 			return (true);
 		} else {
 			return (false);
@@ -125,7 +118,6 @@ public class Source implements DetectionInt {
 	 * @return Returns a List&lt;String&gt; of any errors found
 	 */
 	public ArrayList<String> getErrors() {
-
 		String jsonAgencyID = getAgencyID();
 		String jsonAuthor = getAuthor();
 
@@ -152,6 +144,21 @@ public class Source implements DetectionInt {
 
 		// success
 		return (errorList);
+	}
+
+	/**
+	 * Checks to see if this object is empty
+	 *
+	 * @return Returns true if empty, false otherwise.
+	 */
+	public boolean isEmpty() {
+		if (getAgencyID() != null) {
+			return (false);
+        }
+        if (getAuthor() != null) {
+			return (false);
+		}          
+		return (true);
 	}
 
 	/**

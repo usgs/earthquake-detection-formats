@@ -5,7 +5,6 @@
 #include <vector>
 
 // JSON Keys
-#define TYPE_KEY "Type"
 #define ID_KEY "ID"
 #define SITE_KEY "Site"
 #define SOURCE_KEY "Source"
@@ -18,6 +17,7 @@
 #define AMPLITUDE_KEY "Amplitude"
 #define BEAM_KEY "Beam"
 #define ASSOCIATIONINFO_KEY "AssociationInfo"
+#define CLASSIFICATIONINFO_KEY "ClassificationInfo"
 
 namespace detectionformats {
 pick::pick() {
@@ -33,20 +33,34 @@ pick::pick() {
 	filterdata.clear();
 	amplitude = detectionformats::amplitude();
 	beam = detectionformats::beam();
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
+	classificationinfo = detectionformats::classification();
 }
 
 pick::pick(std::string newid, std::string newstation, std::string newchannel,
 			std::string newnetwork, std::string newlocation, double newtime,
 			std::string newagencyid, std::string newauthor,
 			std::string newphase, std::string newpolarity, std::string newonset,
-			std::string newpicker, double newhighpass, double newlowpass,
+			std::string newpicker, std::string newfiltertype, double newhighpass,
+			double newlowpass, std::string newfilterunits,
 			double newamplitude, double newperiod, double newsnr,
 			double newbackazimuth, double newbackazimutherror,
 			double newslowness, double newslownesserror, double newpowerratio,
-			double newpowerratioerror, std::string newassociatedphase,
-			double newassociateddistance, double newassociatedazimuth,
-			double newassociatedresidual, double newassociatedsigma) {
+			double newpowerratioerror, std::string newassociationphase,
+			double newassociationdistance, double newassociationazimuth,
+			double newassociationresidual, double newassociationsigma,
+			std::string newclassificationphase, double newclassificationphaseprob,
+            double newclassificationdistance,
+			double newclassificationdistanceprob,
+			double newclassificationazimuth, double newclassificationazimuthprob,
+			double newclassificationmagnitude, std::string newclassificationmagtype,
+            double newclassificationmagprob, double newclassificationdepth,
+			double newclassificationdepthprob,
+			std::string newclassificationeventtype,
+			std::string newclassificationeventtypecertainty,
+            double newclassificationeventtypeprob,
+			std::string newclassificationagencyid,
+            std::string newclassificationauthor) {
 	type = PICK_TYPE;
 	id = newid;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
@@ -59,7 +73,8 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 	picker = newpicker;
 
 	filterdata.clear();
-	filterdata.push_back(detectionformats::filter(newhighpass, newlowpass));
+	filterdata.push_back(detectionformats::filter(newfiltertype, newhighpass,
+		newlowpass, newfilterunits));
 
 	amplitude = detectionformats::amplitude(newamplitude, newperiod, newsnr);
 
@@ -67,18 +82,28 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 									newslowness, newslownesserror,
 									newpowerratio, newpowerratioerror);
 
-	associationinfo = detectionformats::associated(newassociatedphase,
-													newassociateddistance,
-													newassociatedazimuth,
-													newassociatedresidual,
-													newassociatedsigma);
+	associationinfo = detectionformats::association(newassociationphase,
+													newassociationdistance,
+													newassociationazimuth,
+													newassociationresidual,
+													newassociationsigma);
+	classificationinfo = detectionformats::classification(
+			newclassificationphase, newclassificationphaseprob,
+            newclassificationdistance, newclassificationdistanceprob,
+			newclassificationazimuth, newclassificationazimuthprob,
+			newclassificationmagnitude, newclassificationmagtype,
+            newclassificationmagprob, newclassificationdepth,
+			newclassificationdepthprob,	newclassificationeventtype,
+			newclassificationeventtypecertainty, newclassificationeventtypeprob,
+			newclassificationagencyid, newclassificationauthor);
 }
 
 pick::pick(std::string newid, std::string newstation, std::string newchannel,
 			std::string newnetwork, std::string newlocation, double newtime,
 			std::string newagencyid, std::string newauthor,
 			std::string newphase, std::string newpolarity, std::string newonset,
-			std::string newpicker, double newhighpass, double newlowpass,
+			std::string newpicker, std::string newfiltertype, double newhighpass,
+			double newlowpass, std::string newfilterunits,
 			double newamplitude, double newperiod, double newsnr,
 			double newbackazimuth, double newbackazimutherror,
 			double newslowness, double newslownesserror, double newpowerratio,
@@ -95,7 +120,8 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 	picker = newpicker;
 
 	filterdata.clear();
-	filterdata.push_back(detectionformats::filter(newhighpass, newlowpass));
+	filterdata.push_back(detectionformats::filter(newfiltertype, newhighpass,
+		newlowpass, newfilterunits));
 
 	amplitude = detectionformats::amplitude(newamplitude, newperiod, newsnr);
 
@@ -103,7 +129,8 @@ pick::pick(std::string newid, std::string newstation, std::string newchannel,
 									newslowness, newslownesserror,
 									newpowerratio, newpowerratioerror);
 
-	associationinfo = detectionformats::associated();
+	associationinfo = detectionformats::association();
+	classificationinfo = detectionformats::classification();
 }
 
 pick::pick(std::string newid, detectionformats::site newsite, double newtime,
@@ -132,7 +159,9 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 
 	pick::beam = newbeam;
 
-	pick::associationinfo = detectionformats::associated();
+	pick::associationinfo = detectionformats::association();
+
+	classificationinfo = detectionformats::classification();
 }
 
 pick::pick(std::string newid, detectionformats::site newsite, double newtime,
@@ -142,7 +171,39 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 			std::vector<detectionformats::filter> newfilterdata,
 			detectionformats::amplitude newamplitude,
 			detectionformats::beam newbeam,
-			detectionformats::associated newassociated) {
+			detectionformats::classification newclassification) {
+	type = PICK_TYPE;
+	id = newid;
+	pick::site = newsite;
+	time = newtime;
+	pick::source = newsource;
+	phase = newphase;
+	polarity = newpolarity;
+	onset = newonset;
+	picker = newpicker;
+
+	filterdata.clear();
+	for (int i = 0; i < static_cast<int>(newfilterdata.size()); i++) {
+		filterdata.push_back(newfilterdata[i]);
+	}
+
+	pick::amplitude = newamplitude;
+
+	pick::beam = newbeam;
+
+	pick::associationinfo = detectionformats::association();
+
+	classificationinfo = newclassification;
+}
+
+pick::pick(std::string newid, detectionformats::site newsite, double newtime,
+			detectionformats::source newsource, std::string newphase,
+			std::string newpolarity, std::string newonset,
+			std::string newpicker,
+			std::vector<detectionformats::filter> newfilterdata,
+			detectionformats::amplitude newamplitude,
+			detectionformats::beam newbeam,
+			detectionformats::association newassociation) {
 	type = PICK_TYPE;
 	id = newid;
 	site = newsite;
@@ -162,7 +223,42 @@ pick::pick(std::string newid, detectionformats::site newsite, double newtime,
 
 	pick::beam = newbeam;
 
-	associationinfo = newassociated;
+	associationinfo = newassociation;
+
+	classificationinfo = detectionformats::classification();
+}
+
+pick::pick(std::string newid, detectionformats::site newsite, double newtime,
+			detectionformats::source newsource, std::string newphase,
+			std::string newpolarity, std::string newonset,
+			std::string newpicker,
+			std::vector<detectionformats::filter> newfilterdata,
+			detectionformats::amplitude newamplitude,
+			detectionformats::beam newbeam,
+			detectionformats::association newassociation,
+			detectionformats::classification newclassification) {
+	type = PICK_TYPE;
+	id = newid;
+	site = newsite;
+	time = newtime;
+	source = newsource;
+	phase = newphase;
+	polarity = newpolarity;
+	onset = newonset;
+	picker = newpicker;
+
+	filterdata.clear();
+	for (int i = 0; i < static_cast<int>(newfilterdata.size()); i++) {
+		filterdata.push_back(newfilterdata[i]);
+	}
+
+	amplitude = newamplitude;
+
+	pick::beam = newbeam;
+
+	associationinfo = newassociation;
+
+	classificationinfo = newclassification;
 }
 
 pick::pick(rapidjson::Value &json) {
@@ -284,13 +380,22 @@ pick::pick(rapidjson::Value &json) {
 		beam = detectionformats::beam();
 	}
 
-	// associated
+	// association
 	if ((json.HasMember(ASSOCIATIONINFO_KEY) == true)
 			&& (json[ASSOCIATIONINFO_KEY].IsObject() == true)) {
-		rapidjson::Value & associatedvalue = json[ASSOCIATIONINFO_KEY];
-		associationinfo = detectionformats::associated(associatedvalue);
+		rapidjson::Value & associationvalue = json[ASSOCIATIONINFO_KEY];
+		associationinfo = detectionformats::association(associationvalue);
 	} else {
-		associationinfo = detectionformats::associated();
+		associationinfo = detectionformats::association();
+	}
+
+	// classification
+	if ((json.HasMember(CLASSIFICATIONINFO_KEY) == true)
+			&& (json[CLASSIFICATIONINFO_KEY].IsObject() == true)) {
+		rapidjson::Value & associationvalue = json[CLASSIFICATIONINFO_KEY];
+		classificationinfo = detectionformats::classification(associationvalue);
+	} else {
+		classificationinfo = detectionformats::classification();
 	}
 }
 
@@ -315,6 +420,8 @@ pick::pick(const pick &newpick) {
 	beam = newpick.beam;
 
 	associationinfo = newpick.associationinfo;
+
+	classificationinfo = newpick.classificationinfo;
 }
 
 pick::~pick() {
@@ -332,7 +439,7 @@ rapidjson::Value & pick::tojson(
 	json.AddMember(TYPE_KEY, typevalue, allocator);
 
 	// id
-	if (id != "") {
+	if (id.empty() == false) {
 		rapidjson::Value idvalue;
 		idvalue.SetString(rapidjson::StringRef(id.c_str()), allocator);
 		json.AddMember(ID_KEY, idvalue, allocator);
@@ -360,14 +467,14 @@ rapidjson::Value & pick::tojson(
 
 	// optional values
 	// phase
-	if (phase != "") {
+	if (phase.empty() == false) {
 		rapidjson::Value phasevalue;
 		phasevalue.SetString(rapidjson::StringRef(phase.c_str()), allocator);
 		json.AddMember(PHASE_KEY, phasevalue, allocator);
 	}
 
 	// polarity
-	if (polarity != "") {
+	if (polarity.empty() == false) {
 		rapidjson::Value polarityvalue;
 		polarityvalue.SetString(rapidjson::StringRef(polarity.c_str()),
 								allocator);
@@ -375,14 +482,14 @@ rapidjson::Value & pick::tojson(
 	}
 
 	// onset
-	if (onset != "") {
+	if (onset.empty() == false) {
 		rapidjson::Value onsetvalue;
 		onsetvalue.SetString(rapidjson::StringRef(onset.c_str()), allocator);
 		json.AddMember(ONSET_KEY, onsetvalue, allocator);
 	}
 
 	// picker
-	if (picker != "") {
+	if (picker.empty() == false) {
 		rapidjson::Value pickervalue;
 		pickervalue.SetString(rapidjson::StringRef(picker.c_str()), allocator);
 		json.AddMember(PICKER_KEY, pickervalue, allocator);
@@ -418,11 +525,18 @@ rapidjson::Value & pick::tojson(
 		json.AddMember(BEAM_KEY, beamvalue, allocator);
 	}
 
-	// associated
+	// association
 	if (associationinfo.isempty() == false) {
-		rapidjson::Value associatedvalue(rapidjson::kObjectType);
-		associationinfo.tojson(associatedvalue, allocator);
-		json.AddMember(ASSOCIATIONINFO_KEY, associatedvalue, allocator);
+		rapidjson::Value associationvalue(rapidjson::kObjectType);
+		associationinfo.tojson(associationvalue, allocator);
+		json.AddMember(ASSOCIATIONINFO_KEY, associationvalue, allocator);
+	}
+
+	// classification
+	if (classificationinfo.isempty() == false) {
+		rapidjson::Value classificationvalue(rapidjson::kObjectType);
+		classificationinfo.tojson(classificationvalue, allocator);
+		json.AddMember(CLASSIFICATIONINFO_KEY, classificationvalue, allocator);
 	}
 
 	return (json);
@@ -431,7 +545,7 @@ rapidjson::Value & pick::tojson(
 std::vector<std::string> pick::geterrors() {
 	std::vector<std::string> errorlist;
 
-	// check for requried data
+	// check for required data
 	// Type
 	if (type != PICK_TYPE) {
 		// wrong type
@@ -439,7 +553,7 @@ std::vector<std::string> pick::geterrors() {
 	}
 
 	// id
-	if (id == "") {
+	if (id.empty() == true) {
 		// empty id
 		errorlist.push_back("Empty ID in pick class.");
 	}
@@ -490,14 +604,14 @@ std::vector<std::string> pick::geterrors() {
 
 	// optional data
 	// phase
-	if (phase != "") {
+	if (phase.empty() == false) {
 		if (detectionformats::IsStringAlpha(phase) == false) {
 			errorlist.push_back("Phase did not validate in pick class.");
 		}
 	}
 
 	// polarity
-	if (polarity != "") {
+	if (polarity.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::polarityindex::up;
@@ -514,7 +628,7 @@ std::vector<std::string> pick::geterrors() {
 	}
 
 	// onset
-	if (onset != "") {
+	if (onset.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::onsetindex::impulsive;
@@ -531,7 +645,7 @@ std::vector<std::string> pick::geterrors() {
 	}
 
 	// picker
-	if (picker != "") {
+	if (picker.empty() == false) {
 		bool match = false;
 		// check all the valid types to see if this string matches
 		for (int i = detectionformats::pickerindex::manual;
@@ -600,7 +714,7 @@ std::vector<std::string> pick::geterrors() {
 		}
 	}
 
-	// associated
+	// association
 	if (associationinfo.isempty() == false) {
 		if (associationinfo.isvalid() != true) {
 			std::vector<std::string> assocErrors = associationinfo.geterrors();
@@ -612,7 +726,24 @@ std::vector<std::string> pick::geterrors() {
 				errorString += " " + assocErrors[i];
 			}
 
-			// bad associated
+			// bad association
+			errorlist.push_back(errorString);
+		}
+	}
+
+	// classification
+	if (classificationinfo.isempty() == false) {
+		if (classificationinfo.isvalid() != true) {
+			std::vector<std::string> classErrors = classificationinfo.geterrors();
+
+			std::string errorString =
+					"ClassificationInfo object did not validate in pick class:";
+
+			for (int i = 0; i < classErrors.size(); i++) {
+				errorString += " " + classErrors[i];
+			}
+
+			// bad association
 			errorlist.push_back(errorString);
 		}
 	}

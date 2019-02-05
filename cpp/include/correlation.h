@@ -7,13 +7,14 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
+#include <hypocenter.h>
+#include <site.h>
+#include <source.h>
+#include <association.h>
+#include <eventtype.h>
+
 #include <string>
 #include <vector>
-
-#include "./hypocenter.h"
-#include "./site.h"
-#include "./source.h"
-#include "./associated.h"
 
 namespace detectionformats {
 
@@ -35,7 +36,7 @@ class correlation : public detectionbase {
 	 * \brief correlation constructor
 	 *
 	 * The constructor for the correlation class.
-	 * Initilizes members to null values.
+	 * Initializes members to null values.
 	 */
 	correlation();
 
@@ -43,7 +44,7 @@ class correlation : public detectionbase {
 	 * \brief correlation advanced constructor
 	 *
 	 * The advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newstation - A std::string containing the station to use
@@ -61,7 +62,7 @@ class correlation : public detectionbase {
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlongtiudeerror - A double containing the longitude error to
+	 * \param newlongitudeerror - A double containing the longitude error to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newtimeerror - A double containing the time error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -69,6 +70,8 @@ class correlation : public detectionbase {
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
+	 * \param neweventtypecertainty - A std::string containing the event type 
+	 * 		certainty to use, empty string to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -88,14 +91,15 @@ class correlation : public detectionbase {
 				double neworigintime, double newdepth, double newlatitudeerror,
 				double newlongitudeerror, double newtimeerror,
 				double newdeptherror, std::string neweventtype,
-				double newmagnitude, double newsnr, double newzscore,
+				std::string neweventtypecertainty, double newmagnitude,
+				double newsnr, double newzscore,
 				double newdetectionthreshold, std::string newthresholdtype);
 
 	/**
 	 * \brief correlation advanced constructor
 	 *
 	 * The advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newstation - A std::string containing the station to use
@@ -113,7 +117,7 @@ class correlation : public detectionbase {
 	 * \param newdepth - A double containing the depth to use
 	 * \param newlatitudeerror - A double containing the latitude error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newlongtiudeerror - A double containing the longitude error to
+	 * \param newlongitudeerror - A double containing the longitude error to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newtimeerror - A double containing the time error to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
@@ -121,6 +125,8 @@ class correlation : public detectionbase {
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param neweventtype - A std::string containing the event type to use,
 	 * 		empty string to omit
+	 * \param neweventtypecertainty - A std::string containing the event type 
+	 * 		certainty to use, empty string to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -131,15 +137,15 @@ class correlation : public detectionbase {
 	 * 		threshold to use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newthresholdtype - A std::string containing the threshold type to
 	 * 		use, empty string to omit
-	 * \param newassociatedphase - A std:string containing the associated phase
+	 * \param newassociationphase - A std:string containing the association phase
 	 * 		to use, empty string to omit
-	 * \param newassociateddistance - A double containing the associated
+	 * \param newassociationdistance - A double containing the association
 	 * 		distance to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedazimuth - A double containing the associated azimuth
+	 * \param newassociationazimuth - A double containing the association azimuth
 	 * 		to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedresidual - A double containing the associated
+	 * \param newassociationresidual - A double containing the association
 	 * 		residual to use, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newassociatedsigma - A double containing the associated sigma to
+	 * \param newassociationsigma - A double containing the association sigma to
 	 * 		use, std::numeric_limits<double>::quiet_NaN() to omit
 	 */
 	correlation(std::string newid, std::string newstation,
@@ -150,17 +156,18 @@ class correlation : public detectionbase {
 				double neworigintime, double newdepth, double newlatitudeerror,
 				double newlongitudeerror, double newtimeerror,
 				double newdeptherror, std::string neweventtype,
-				double newmagnitude, double newsnr, double newzscore,
+				std::string neweventtypecertainty, double newmagnitude,
+				double newsnr, double newzscore,
 				double newdetectionthreshold, std::string newthresholdtype,
-				std::string newassociatedphase, double newassociateddistance,
-				double newassociatedazimuth, double newassociatedresidual,
-				double newassociatedsigma);
+				std::string newassociationphase, double newassociationdistance,
+				double newassociationazimuth, double newassociationresidual,
+				double newassociationsigma);
 
 	/**
 	 * \brief correlation alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsite - A detectionformats::site containing the site to use
@@ -171,8 +178,8 @@ class correlation : public detectionbase {
 	 * \param newcorrelation - A double containing the correlation value to use
 	 * \param newhypocenter - A detectionformats::hypocenter containing the
 	 * 		hypocenter to use
-	 * \param neweventtype - A std::string containing the event type to use,
-	 * 		empty string to omit
+	 * \param neweventtype - A detectionformats::eventtype containing the event
+	 * 		type to use
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -188,15 +195,15 @@ class correlation : public detectionbase {
 				detectionformats::source newsource, std::string newphase,
 				double newtime, double newcorrelation,
 				detectionformats::hypocenter newhypocenter,
-				std::string neweventtype, double newmagnitude, double newsnr,
-				double newzscore, double newdetectionthreshold,
+				detectionformats::eventtype neweventtype, double newmagnitude,
+				double newsnr, double newzscore, double newdetectionthreshold,
 				std::string newthresholdtype);
 
 	/**
 	 * \brief correlation alternate advanced constructor
 	 *
 	 * The alternate advanced constructor for the correlation class.
-	 * Initilizes members to provided values.
+	 * Initializes members to provided values.
 	 *
 	 * \param newid - A std::string containing the id to use
 	 * \param newsite - A detectionformats::site containing the site to use
@@ -207,8 +214,8 @@ class correlation : public detectionbase {
 	 * \param newcorrelation - A double containing the correlation value to use
 	 * \param newhypocenter - A etectionformats::hypocenter containing the
 	 * 		hypocenter to use
-	 * \param neweventtype - A std::string containing the event type to use,
-	 * 		empty string to omit
+	 * \param neweventtype - A detectionformats::eventtype containing the event
+	 * 		type to use
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newsnr - A double containing the snr to use,
@@ -219,26 +226,26 @@ class correlation : public detectionbase {
 	 * 		threshold to use, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newthresholdtype - A std::string containing the threshold type to
 	 * 		use, empty string to omit
-	 * \param newassociated - A detectionformats::associated containing the
-	 * 		associated to use
+	 * \param newassociation - A detectionformats::association containing the
+	 * 		association to use
 	 */
 	correlation(std::string newid, detectionformats::site newsite,
 				detectionformats::source newsource, std::string newphase,
 				double newtime, double newcorrelation,
 				detectionformats::hypocenter newhypocenter,
-				std::string neweventtype, double newmagnitude, double newsnr,
-				double newzscore, double newdetectionthreshold,
+				detectionformats::eventtype neweventtype, double newmagnitude,
+				double newsnr, double newzscore, double newdetectionthreshold,
 				std::string newthresholdtype,
-				detectionformats::associated newassociated);
+				detectionformats::association newassociation);
 
 	/**
 	 * \brief correlation advanced constructor
 	 *
 	 * The advanced constructor for the correlation class.
-	 * Converts the provided object from a json::Object, populating members
-	 * \param jsondocument - A json document.
+	 * Converts the provided object from a rapidjson::Value, populating members
+	 * \param json - A rapidjson::Value containing the parsed json.
 	 */
-	explicit correlation(rapidjson::Value &json);
+	explicit correlation(rapidjson::Value &json); // NOLINT
 
 	/**
 	 * \brief correlation copy constructor
@@ -261,11 +268,15 @@ class correlation : public detectionbase {
 	 * \brief Convert to json object function
 	 *
 	 * Converts the contents of the class to a json object
-	 * \return Returns a json::Object containing the class contents
+	 * \param json - a reference to the rapidjson::Value document to fill in with
+	 * the class contents.
+	 * \param allocator - a rapidjson::MemoryPoolAllocator to use during the 
+	 * conversion
+	 * \return Returns rapidjson::Value & if successful
 	 */
 	rapidjson::Value & tojson(
-			rapidjson::Value &json,
-			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator)
+			rapidjson::Value &json, // NOLINT
+			rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &allocator) // NOLINT
 					override;
 
 	/**
@@ -330,12 +341,12 @@ class correlation : public detectionbase {
 	detectionformats::hypocenter hypocenter;
 
 	/**
-	 * \brief correlation event type
+	 * \brief detection event type
 	 *
-	 * An optional std::string containing the event type of this correlation
-	 * message valid values are "earthquake" or "blast"
+	 * An optional detectionformats::eventtype containing the event type of this 
+	 * detection
 	 */
-	std::string eventtype;
+	detectionformats::eventtype eventtype;
 
 	/**
 	 * \brief magnitude value
@@ -375,12 +386,12 @@ class correlation : public detectionbase {
 	std::string thresholdtype;
 
 	/**
-	 * \brief correlation associated
+	 * \brief correlation association
 	 *
-	 * Optional detectionformats::associated containing the associated
+	 * Optional detectionformats::association containing the association
 	 * information for this correlation message
 	 */
-	detectionformats::associated associationinfo;
+	detectionformats::association associationinfo;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_CORRELATION_H

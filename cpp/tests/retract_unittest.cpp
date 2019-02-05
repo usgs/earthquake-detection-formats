@@ -1,13 +1,10 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define RETRACTSTRING "{\"Type\":\"Retract\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}"
-#define ID "12GFH48776857"
-#define AGENCYID "US"
-#define AUTHOR "TestAuthor"
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::retract retractobject, std::string testinfo)
 {

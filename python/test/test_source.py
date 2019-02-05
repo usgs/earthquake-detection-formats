@@ -16,38 +16,15 @@ class TestSource(unittest.TestCase):
         # Empty init
         source = detectionformats.source.Source()
 
-        try:
-            source.agencyID
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
-
-        try:
-            source.author
-            self.assertTrue(False)
-        except AttributeError:
-            self.assertTrue(True)
-            pass
+        self.assertFalse(hasattr(source, 'agencyID'))
+        self.assertFalse(hasattr(source, 'author'))
 
         source = detectionformats.source.Source(self.AGENCYID, self.AUTHOR)
 
-        try:
-            source.agencyID
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
+        self.assertTrue(hasattr(source, 'agencyID'))
+        self.assertTrue(hasattr(source, 'author'))
 
         self.assertEqual(source.agencyID, self.AGENCYID)
-
-        try:
-            source.author
-            self.assertTrue(True)
-        except AttributeError:
-            self.assertTrue(False)
-            pass
-
         self.assertEqual(source.author, self.AUTHOR)
 
     def test_toJSON(self):
@@ -78,6 +55,13 @@ class TestSource(unittest.TestCase):
 
         badSource = detectionformats.source.Source()
         self.assertFalse(badSource.isValid())
+
+    def test_isEmpty(self):
+        source = detectionformats.source.Source()
+        self.assertTrue(source.isEmpty())
+
+        source = detectionformats.source.Source(self.AGENCYID, self.AUTHOR)
+        self.assertFalse(source.isEmpty())
 
 if __name__ == '__main__':
     unittest.main()

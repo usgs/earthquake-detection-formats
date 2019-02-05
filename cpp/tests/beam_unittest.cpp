@@ -1,23 +1,18 @@
-#include "detection-formats.h"
+#include <detection-formats.h>
 #include <gtest/gtest.h>
 
 #include <string>
 
 // test data
-#define BEAMSTRING "{\"BackAzimuth\":2.65,\"Slowness\":1.44,\"PowerRatio\":12.18,\"BackAzimuthError\":3.8,\"SlownessError\":0.4,\"PowerRatioError\":0.557}"
-#define BACKAZIMUTH 2.65
-#define BACKAZIMUTHERROR 3.8
-#define SLOWNESS 1.44
-#define SLOWNESSERROR 0.4
-#define POWERRATIO 12.18
-#define POWERRATIOERROR 0.557
+#include "unittest_data.h" // NOLINT
 
 void checkdata(detectionformats::beam beamobject, std::string testinfo) {
-
 	// check backazimuth
-	double beambackazimuth = beamobject.backazimuth;
-	double expectedbackazimuth = BACKAZIMUTH;
-	ASSERT_EQ(beambackazimuth, expectedbackazimuth);
+	if (std::isnan(beamobject.backazimuth) != true) {
+		double beambackazimuth = beamobject.backazimuth;
+		double expectedbackazimuth = BACKAZIMUTH;
+		ASSERT_EQ(beambackazimuth, expectedbackazimuth);
+	}
 
 	// check backazimutherror
 	if (std::isnan(beamobject.backazimutherror) != true) {
@@ -26,9 +21,11 @@ void checkdata(detectionformats::beam beamobject, std::string testinfo) {
 		ASSERT_EQ(beambackazimutherror, expectedbackazimutherror);
 	}
 	// check slowness
-	double beamslowness = beamobject.slowness;
-	double expectedslowness = SLOWNESS;
-	ASSERT_EQ(beamslowness, expectedslowness);
+	if (std::isnan(beamobject.slowness) != true) {
+		double beamslowness = beamobject.slowness;
+		double expectedslowness = SLOWNESS;
+		ASSERT_EQ(beamslowness, expectedslowness);
+	}
 
 	// check slownesserror
 	if (std::isnan(beamobject.slownesserror) != true) {
@@ -99,6 +96,13 @@ TEST(BeamTest, Constructor) {
 
 	// check data values
 	checkdata(beamobject, "Tested constructor.");
+
+	// json constructor (empty)
+    rapidjson::Value emptyvalue(rapidjson::kObjectType);
+    detectionformats::beam beamobject2(emptyvalue);
+
+    // check data values
+	checkdata(beamobject2, "");
 }
 
 // tests to see if beam can successfully
@@ -133,17 +137,51 @@ TEST(BeamTest, Validate) {
 	ASSERT_EQ(result, true)<< "Tested for successful validation.";
 
 	// build bad beam object
-	detectionformats::beam badbeamobject;
-	beamobject.backazimuth = std::numeric_limits<double>::quiet_NaN();
+	detectionformats::beam badbeamobject1;
 
 	result = false;
 	try {
 		// call validation
-		result = badbeamobject.isvalid();
+		result = badbeamobject1.isvalid();
 	} catch (const std::exception &) {
 		// don't care what the exception was
 	}
 
 	// check return code
-	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation.";
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation 1.";
+
+	// build bad beam object
+	detectionformats::beam badbeamobject2;
+	badbeamobject2.backazimuth = -1;
+	badbeamobject2.slowness = -1;
+	badbeamobject2.powerratio = -1;
+	badbeamobject2.backazimutherror = -1;
+	badbeamobject2.slownesserror = -1;
+	badbeamobject2.powerratioerror = -1;
+
+	result = false;
+	try {
+		// call validation
+		result = badbeamobject2.isvalid();
+	} catch (const std::exception &) {
+		// don't care what the exception was
+	}
+
+	// check return code
+	ASSERT_EQ(result, false)<< "Tested for unsuccessful validation 2.";
+
+}
+
+// tests the isempty function
+TEST(BeamTest, IsEmpty) {
+	detectionformats::beam beamobject;
+
+	// check return
+	ASSERT_TRUE(beamobject.isempty()) << "Tested for empty.";
+
+	// build beam object
+	beamobject.backazimuth = BACKAZIMUTH;
+
+	// check return
+	ASSERT_FALSE(beamobject.isempty()) << "Tested for not empty.";
 }

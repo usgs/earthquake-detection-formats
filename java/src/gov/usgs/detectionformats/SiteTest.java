@@ -1,5 +1,7 @@
 package gov.usgs.detectionformats;
 
+import org.json.simple.JSONObject;
+
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
@@ -18,8 +20,7 @@ public class SiteTest {
 	 * Able to write a JSON string
 	 */
 	@Test
-	public void writesJSON() {
-
+	public void WritesJSON() {
 		Site SiteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
 
 		// write out to a string
@@ -27,10 +28,11 @@ public class SiteTest {
 
 		// check the data
 		try {
-			checkData(new Site(Utility.fromJSONString(jsonString)),
+			CheckData(new Site(Utility.fromJSONString(jsonString)),
 					"WritesJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in WritesJSON");
 		}
 
 	}
@@ -39,24 +41,40 @@ public class SiteTest {
 	 * Able to read a JSON string
 	 */
 	@Test
-	public void readsJSON() {
-
+	public void ReadsJSON() {
 		// build Amplitude object
 		try {
-
-			checkData(new Site(Utility.fromJSONString(SITE_STRING)),
+			CheckData(new Site(Utility.fromJSONString(SITE_STRING)),
 					"ReadsJSON");
 		} catch (ParseException e) {
 			e.printStackTrace();
+			fail("exception in ReadsJSON");
 		}
+	}
+
+/**
+	 * Constructor fills in members correctly
+	 */
+	@Test
+	public void Constructor() {
+		Site SiteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
+
+		// check data values
+		CheckData(SiteObject, "Constructor");
+
+		// empty constructor
+		JSONObject emptyJSONObject = new JSONObject();
+		Site emptyObject = new Site(emptyJSONObject);
+
+		// check the data
+		CheckData(emptyObject, "Empty Constructor");	
 	}
 
 	/**
 	 * Able to run validation function
 	 */
 	@Test
-	public void validate() {
-
+	public void Validate() {
 		Site siteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
 
 		// Successful validation
@@ -65,36 +83,50 @@ public class SiteTest {
 		// check return code
 		assertEquals("Successful Validation", true, rc);
 
-		// build bad source object
-		Site badSiteObject = new Site(null, null, null, null);
+		// build bad Site object
+		Site badSiteObject = new Site();
 
+		// Unuccessful validation
 		rc = badSiteObject.isValid();
 
 		// check return code
-		assertEquals("Unsuccessful Validation", false, rc);
+		assertEquals("Unsuccessful Validation 1", false, rc);
+
+		// build bad source object
+		Site badSiteObject2 = new Site("", null, "", null);
+
+		rc = badSiteObject2.isValid();
+
+		// check return code
+		assertEquals("Unsuccessful Validation 2", false, rc);
 	}
 
 	/**
 	 * Checks the data in the class
 	 */
-	public void checkData(Site SiteObject, String TestName) {
-
+	public void CheckData(Site SiteObject, String TestName) {
 		// check SiteObject.Station
-		assertEquals(TestName + " Site Equals", STATION,
+		if (SiteObject.getStation() != null) {
+			assertEquals(TestName + " Station Equals", STATION,
 				SiteObject.getStation());
+		}
 
 		// check SiteObject.Channel
-		assertEquals(TestName + " Channel Equals", CHANNEL,
+		if (SiteObject.getChannel() != null) {
+			assertEquals(TestName + " Channel Equals", CHANNEL,
 				SiteObject.getChannel());
+		}
 
 		// check SiteObject.Network
-		assertEquals(TestName + " Network Equals", NETWORK,
+		if (SiteObject.getNetwork() != null) {
+			assertEquals(TestName + " Network Equals", NETWORK,
 				SiteObject.getNetwork());
+		}
 
 		// check SiteObject.Location
-		assertEquals(TestName + " Location Equals", LOCATION,
+		if (SiteObject.getLocation() != null) {
+			assertEquals(TestName + " Location Equals", LOCATION,
 				SiteObject.getLocation());
-
+		}
 	}
-
 }
