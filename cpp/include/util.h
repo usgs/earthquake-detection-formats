@@ -11,12 +11,16 @@
 #include <string>
 
 // needed to disable rapidjson warnings for clang
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wexpansion-to-defined"
+#ifdef __clang__
+	#pragma clang diagnostic push
+	#pragma clang diagnostic ignored "-Wexpansion-to-defined"
+#endif
 #include "document.h" // NOLINT
 #include "writer.h" // NOLINT
 #include "stringbuffer.h"  // NOLINT
-#pragma clang diagnostic pop
+#ifdef __clang__
+	#pragma clang diagnostic pop
+#endif
 
 #define DETECTIONEXTENSION "jsondetect"
 #define RETRACTEXTENSION "jsonrtct"
