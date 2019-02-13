@@ -7,13 +7,13 @@
 #ifndef DETECTION_CLASSIFICATION_H
 #define DETECTION_CLASSIFICATION_H
 
-#include <base.h>
-#include <eventtype.h>
-#include <source.h>
-
 #include <string>
 #include <exception>
 #include <vector>
+
+#include "base.h" // NOLINT
+#include "eventtype.h" // NOLINT
+#include "source.h" // NOLINT
 
 namespace detectionformats {
 /**

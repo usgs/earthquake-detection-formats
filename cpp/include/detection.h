@@ -7,14 +7,15 @@
 #ifndef DETECTION_ORIGIN_H
 #define DETECTION_ORIGIN_H
 
-#include <source.h>
-#include <hypocenter.h>
-#include <pick.h>
-#include <correlation.h>
-#include <eventtype.h>
-
 #include <string>
 #include <vector>
+
+#include "base.h" // NOLINT
+#include "source.h" // NOLINT
+#include "hypocenter.h" // NOLINT
+#include "pick.h" // NOLINT
+#include "correlation.h" // NOLINT
+#include "eventtype.h" // NOLINT
 
 namespace detectionformats {
 /**

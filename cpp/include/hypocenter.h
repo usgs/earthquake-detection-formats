@@ -7,11 +7,11 @@
 #ifndef DETECTION_HYPOCENTER_H
 #define DETECTION_HYPOCENTER_H
 
-#include <base.h>
-
 #include <string>
 #include <exception>
 #include <vector>
+
+#include "base.h" // NOLINT
 
 namespace detectionformats {
 /**
