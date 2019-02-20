@@ -7,16 +7,17 @@
 #ifndef DETECTION_PICK_H
 #define DETECTION_PICK_H
 
-#include <site.h>
-#include <source.h>
-#include <amplitude.h>
-#include <filter.h>
-#include <beam.h>
-#include <association.h>
-#include <classification.h>
-
 #include <string>
 #include <vector>
+
+#include "base.h" // NOLINT
+#include "site.h" // NOLINT
+#include "source.h" // NOLINT
+#include "amplitude.h" // NOLINT
+#include "filter.h" // NOLINT
+#include "beam.h" // NOLINT
+#include "association.h" // NOLINT
+#include "classification.h" // NOLINT
 
 namespace detectionformats {
 

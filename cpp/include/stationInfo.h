@@ -7,12 +7,13 @@
 #ifndef STATION_INFO_H
 #define STATION_INFO_H
 
-#include <site.h>
-#include <source.h>
-
 #include <string>
 #include <exception>
 #include <vector>
+
+#include "base.h" // NOLINT
+#include "site.h" // NOLINT
+#include "source.h" // NOLINT
 
 namespace detectionformats {
 

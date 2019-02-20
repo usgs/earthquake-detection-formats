@@ -7,11 +7,12 @@
 #ifndef DETECTION_BEAM_H
 #define DETECTION_BEAM_H
 
-#include <site.h>
-#include <source.h>
-
 #include <string>
 #include <vector>
+
+#include "base.h" // NOLINT
+#include "site.h" // NOLINT
+#include "source.h" // NOLINT
 
 namespace detectionformats {
 

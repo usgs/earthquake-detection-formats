@@ -1,19 +1,14 @@
 #ifndef DETECTION_H
 #define DETECTION_H
 
-#include <hypocenter.h>
-#include <detection.h>
-#include <retract.h>
-#include <pick.h>
-#include <beam.h>
-#include <correlation.h>
-#include <util.h>
-#include <base.h>
-#include <stationInfo.h>
-#include <stationInfoRequest.h>
-#include <classification.h>
-
 #include <string>
+
+#include "detection.h" // NOLINT
+#include "retract.h" // NOLINT
+#include "pick.h" // NOLINT
+#include "correlation.h" // NOLINT
+#include "stationInfo.h" // NOLINT
+#include "stationInfoRequest.h" // NOLINT
 
 namespace detectionformats {
     /**

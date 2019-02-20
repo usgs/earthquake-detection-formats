@@ -131,7 +131,7 @@
 			<!-- Build the jar file -->
 			<jar jarfile="${dist}/DetectionFormats/DetectionFormats.jar" basedir="${build}" excludes="**/*Test*">
 				<manifest>
-					<attribute name="Main-Class" value="gov.usgs.detectionformats.Pick" />
+					<attribute name="Main-Class" value="gov.usgs.detectionformats.Version" />
 				</manifest>
 			</jar>
 

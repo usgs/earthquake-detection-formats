@@ -7,14 +7,15 @@
 #ifndef DETECTION_CORRELATION_H
 #define DETECTION_CORRELATION_H
 
-#include <hypocenter.h>
-#include <site.h>
-#include <source.h>
-#include <association.h>
-#include <eventtype.h>
-
 #include <string>
 #include <vector>
+
+#include "base.h" // NOLINT
+#include "hypocenter.h" // NOLINT
+#include "site.h" // NOLINT
+#include "source.h" // NOLINT
+#include "association.h" // NOLINT
+#include "eventtype.h" // NOLINT
 
 namespace detectionformats {
 
