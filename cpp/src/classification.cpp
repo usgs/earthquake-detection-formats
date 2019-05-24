@@ -106,9 +106,14 @@ classification::classification(rapidjson::Value &json) {
 
 	// distance
 	if ((json.HasMember(DISTANCE_KEY) == true)
-			&& (json[DISTANCE_KEY].IsNumber() == true)
-			&& (json[DISTANCE_KEY].IsDouble() == true)) {
-		distance = json[DISTANCE_KEY].GetDouble();
+			&& (json[DISTANCE_KEY].IsNumber() == true)) {
+		if (json[DISTANCE_KEY].IsDouble() == true) {
+			distance = json[DISTANCE_KEY].GetDouble();
+		} else if (json[DISTANCE_KEY].IsInt() == true) {
+			distance = static_cast<double>(json[DISTANCE_KEY].GetInt());
+		} else {
+			distance = std::numeric_limits<double>::quiet_NaN();
+		}
 	} else {
 		distance = std::numeric_limits<double>::quiet_NaN();
 	}
@@ -124,9 +129,14 @@ classification::classification(rapidjson::Value &json) {
 
 	// azimuth
 	if ((json.HasMember(AZIMUTH_KEY) == true)
-			&& (json[AZIMUTH_KEY].IsNumber() == true)
-			&& (json[AZIMUTH_KEY].IsDouble() == true)) {
-		azimuth = json[AZIMUTH_KEY].GetDouble();
+			&& (json[AZIMUTH_KEY].IsNumber() == true)) {
+		if (json[AZIMUTH_KEY].IsDouble() == true) {
+			azimuth = json[AZIMUTH_KEY].GetDouble();
+		} else if (json[AZIMUTH_KEY].IsInt() == true) {
+			azimuth = static_cast<double>(json[AZIMUTH_KEY].GetInt());
+		} else {
+			azimuth = std::numeric_limits<double>::quiet_NaN();
+		}
 	} else {
 		azimuth = std::numeric_limits<double>::quiet_NaN();
 	}
