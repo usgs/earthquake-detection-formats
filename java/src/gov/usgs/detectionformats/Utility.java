@@ -15,7 +15,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 enum FormatTypes {
 	Pick, Correlation, Detection, Retract, StationInfo, StationInfoRequest,
-		Unknown;
+		Unknown, Error;
 }
 
 /**
@@ -156,6 +156,29 @@ public class Utility {
 		}
 	}
 
+/**
+	 * Convenience method to check if the provided string is valid json
+	 *
+	 * @param jsonString
+	 *            the json formatted string to check.
+	 * @return a boolean indicating whether the json is valid
+	 */
+	public static boolean isJSONValid(String jsonString) {
+		// use a parser to convert to a string
+		JSONParser parser = new JSONParser();
+
+		// parse it
+		JSONObject newJSONObject;
+		
+		try {
+			newJSONObject = (JSONObject) parser.parse(jsonString);
+		} catch (ParseException e) { 
+			return(false);
+		}
+
+		return(true);
+	}
+
 	/**
 	 * Convenience method to check if the provided string is for one of the 
 	 * supported types
@@ -175,7 +198,7 @@ public class Utility {
 		try {
 			newJSONObject = (JSONObject) parser.parse(jsonString);
 		} catch (ParseException e) { 
-			return(FormatTypes.Unknown);
+			return(FormatTypes.Error);
 		}
 
 		return(getDetectionType(newJSONObject));

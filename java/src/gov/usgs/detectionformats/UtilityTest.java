@@ -140,7 +140,7 @@ public class UtilityTest {
 
         // test unsuccessful identification 1
         assertEquals("unsuccessful identification 1", 
-            Utility.getDetectionType(BAD_MESSAGE), FormatTypes.Unknown);
+            Utility.getDetectionType(BAD_MESSAGE), FormatTypes.Error);
 
         // test unsuccessful identification 2
         assertEquals("unsuccessful identification 2", 
@@ -148,7 +148,22 @@ public class UtilityTest {
 
         // test unsuccessful identification 3
         assertEquals("unsuccessful identification 3", 
-            Utility.getDetectionType(""),FormatTypes.Unknown);
+            Utility.getDetectionType(""),FormatTypes.Error);
+    }
+
+/**
+	 * Check isJSONValid
+	 */
+	@Test
+	public void isJSONValid() {
+        
+        // test invalid json
+        assertEquals("invalid json", 
+            Utility.isJSONValid(BAD_MESSAGE), false);
+
+        // test valid json
+        assertEquals("valid json", 
+            Utility.isJSONValid(PICK_STRING), true);
     }
 
     /**

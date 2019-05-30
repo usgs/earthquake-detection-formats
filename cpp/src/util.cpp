@@ -10,12 +10,29 @@
 namespace detectionformats {
 ////////////// functions //////////////
 
+bool IsJSONValid(std::string jsonstring) {
+	rapidjson::Document jsondocument;
+
+	// parse the json into a document
+	if (jsondocument.Parse(jsonstring.c_str()).HasParseError()) {
+		// parse error
+		return (false);
+	}
+
+	// make sure we got a valid json object
+	if (jsondocument.IsObject() == false) {
+		return (false);
+	}
+
+	return(true);
+}
+
 int GetDetectionType(std::string jsonstring) {
 	rapidjson::Document jsondocument;
 
 	// parse the json into a document
 	if (jsondocument.Parse(jsonstring.c_str()).HasParseError()) {
-		return (formattypes::unknown);
+		return (formattypes::error);
 	}
 
 	return(GetDetectionType(jsondocument));
@@ -24,7 +41,7 @@ int GetDetectionType(std::string jsonstring) {
 int GetDetectionType(rapidjson::Value &json) { // NOLINT
 	// make sure we got valid json
 	if (json.IsObject() == false) {
-		return (formattypes::unknown);
+		return (formattypes::error);
 	}
 
 	// Type

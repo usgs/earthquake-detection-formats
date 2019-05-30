@@ -160,8 +160,14 @@ enum formattypes {
 	retracttype = 3,
 	stationinfotype = 4,
 	stationinforequesttype = 5,
-	unknown = -1
+	unknown = -1,
+	error = -2
 };
+
+/**
+ * \brief detectionformats function to check whether a string is valid json
+ */
+bool IsJSONValid(std::string jsonstring);
 
 /**
  * \brief detectionformats function to get the detection type for a provided
