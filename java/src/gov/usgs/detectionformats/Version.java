@@ -14,7 +14,7 @@ public class Version {
          */
         public static final Integer VERSION_MAJOR = 0;
         public static final Integer VERSION_MINOR = 9;
-        public static final Integer VERSION_PATCH = 8; 
+        public static final Integer VERSION_PATCH = 9; 
 
         /**
          * main function for launcher

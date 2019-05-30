@@ -34,7 +34,7 @@ TEST(UtilTest, GetDetectionType) {
 
     // test unsuccessful identification 1
     ASSERT_EQ(detectionformats::GetDetectionType(std::string(BADMESSAGE)),
-        detectionformats::formattypes::unknown);
+        detectionformats::formattypes::error);
 
     // test unsuccessful identification 2
     ASSERT_EQ(detectionformats::GetDetectionType(std::string(BADMESSAGE2)),
@@ -42,7 +42,17 @@ TEST(UtilTest, GetDetectionType) {
 
     // test unsuccessful identification 3
     ASSERT_EQ(detectionformats::GetDetectionType(std::string("")),
-        detectionformats::formattypes::unknown);
+        detectionformats::formattypes::error);
+}
+
+TEST(UtilTest, IsJSONValid) {
+    // test invalid json
+    ASSERT_EQ(detectionformats::IsJSONValid(std::string(BADMESSAGE)),
+        false);
+
+    // test valid json
+    ASSERT_EQ(detectionformats::IsJSONValid(std::string(PICKSTRING)),
+        true);
 }
 
 TEST(UtilTest, IsStringAlpha) {
