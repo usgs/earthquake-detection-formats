@@ -13,11 +13,6 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-enum FormatTypes {
-	Pick, Correlation, Detection, Retract, StationInfo, StationInfoRequest,
-		Unknown, Error;
-}
-
 /**
  * a utility class containing functions used by detectionformats.
  *
