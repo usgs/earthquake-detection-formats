@@ -69,6 +69,7 @@ TEST(UtilTest, IsStringAlpha) {
 TEST(UtilTest, IsStringISO8601) {
     // success test
     ASSERT_TRUE(detectionformats::IsStringISO8601(std::string(TIME)));
+    ASSERT_TRUE(detectionformats::IsStringISO8601(std::string(TIME2)));
 
     // failure tests
     ASSERT_FALSE(detectionformats::IsStringISO8601(std::string(EMPTYTIME)));
@@ -96,10 +97,14 @@ TEST(UtilTest, ConvertISO8601ToEpochTime) {
     double ExpectedEpochTime = EPOCHTIME;
     double FailureTime = -1.0;
 
-	// test ISO8601 to  epoch time conversion
+	// test ISO8601 to epoch time conversion
 	double ConvertedEpochTime = detectionformats::ConvertISO8601ToEpochTime(
 			std::string(ISO8601TIME));
 	ASSERT_EQ(ConvertedEpochTime, ExpectedEpochTime);
+
+	double ConvertedAltEpochTime = detectionformats::ConvertISO8601ToEpochTime(
+			std::string(ISO8601ALTTIME));
+	ASSERT_EQ(ConvertedAltEpochTime, ExpectedEpochTime);
 
     // failure cases
     ConvertedEpochTime = detectionformats::ConvertISO8601ToEpochTime(
