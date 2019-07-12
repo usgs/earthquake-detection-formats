@@ -20,7 +20,10 @@ messaging between seismic applications and organizations.
       "Station"   : String,
       "Channel"   : String,
       "Network"   : String,
-      "Location"  : String
+      "Location"  : String,
+      "Latitude"  : Number,
+      "Longitude" : Number,
+      "Elevation" : Number
     }
 ```
 
@@ -40,3 +43,6 @@ part of a Site.
 
 * Channel - A string containing the channel code.
 * Location - A string containing the location code.
+* Latitude - A decimal number that identifies the latitude of this site in degrees.
+* Longitude - A decimal number that identifies the longitude of this site in degrees.
+* Elevation - A decimal number that identifies the elevation of this site in meters.

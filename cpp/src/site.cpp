@@ -9,6 +9,9 @@
 #define CHANNEL_KEY "Channel"
 #define NETWORK_KEY "Network"
 #define LOCATION_KEY "Location"
+#define LATITUDE_KEY "Latitude"
+#define LONGITUDE_KEY "Longitude"
+#define ELEVATION_KEY "Elevation"
 
 namespace detectionformats {
 site::site() {
@@ -16,6 +19,9 @@ site::site() {
 	channel = "";
 	network = "";
 	location = "";
+	latitude = std::numeric_limits<double>::quiet_NaN();
+	longitude = std::numeric_limits<double>::quiet_NaN();
+	elevation = std::numeric_limits<double>::quiet_NaN();
 }
 
 site::site(std::string newstation, std::string newchannel,
@@ -24,6 +30,21 @@ site::site(std::string newstation, std::string newchannel,
 	channel = newchannel;
 	network = newnetwork;
 	location = newlocation;
+	latitude = std::numeric_limits<double>::quiet_NaN();
+	longitude = std::numeric_limits<double>::quiet_NaN();
+	elevation = std::numeric_limits<double>::quiet_NaN();
+}
+
+site::site(std::string newstation, std::string newchannel,
+			std::string newnetwork, std::string newlocation, double newlatitude,
+			double newlongitude, double newelevation) {
+	station = newstation;
+	channel = newchannel;
+	network = newnetwork;
+	location = newlocation;
+	latitude = newlatitude;
+	longitude = newlongitude;
+	elevation = newelevation;
 }
 
 site::site(rapidjson::Value &json) {
@@ -64,6 +85,33 @@ site::site(rapidjson::Value &json) {
 	} else {
 		location = "";
 	}
+
+	// latitude
+	if ((json.HasMember(LATITUDE_KEY) == true)
+			&& (json[LATITUDE_KEY].IsNumber() == true)
+			&& (json[LATITUDE_KEY].IsDouble() == true)) {
+		latitude = json[LATITUDE_KEY].GetDouble();
+	} else {
+		latitude = std::numeric_limits<double>::quiet_NaN();
+	}
+
+	// longitude
+	if ((json.HasMember(LONGITUDE_KEY) == true)
+			&& (json[LONGITUDE_KEY].IsNumber() == true)
+			&& (json[LONGITUDE_KEY].IsDouble() == true)) {
+		longitude = json[LONGITUDE_KEY].GetDouble();
+	} else {
+		longitude = std::numeric_limits<double>::quiet_NaN();
+	}
+
+	// elevation
+	if ((json.HasMember(ELEVATION_KEY) == true)
+			&& (json[ELEVATION_KEY].IsNumber() == true)
+			&& (json[ELEVATION_KEY].IsDouble() == true)) {
+		elevation = json[ELEVATION_KEY].GetDouble();
+	} else {
+		elevation = std::numeric_limits<double>::quiet_NaN();
+	}
 }
 
 site::site(const site & newsite) {
@@ -71,6 +119,9 @@ site::site(const site & newsite) {
 	channel = newsite.channel;
 	network = newsite.network;
 	location = newsite.location;
+	latitude = newsite.latitude;
+	longitude = newsite.longitude;
+	elevation = newsite.elevation;
 }
 
 site::~site() {
@@ -114,6 +165,21 @@ rapidjson::Value & site::tojson(
 		json.AddMember(LOCATION_KEY, locationvalue, allocator);
 	}
 
+	// latitude
+	if (std::isnan(latitude) != true) {
+		json.AddMember(LATITUDE_KEY, latitude, allocator);
+	}
+
+	// longitude
+	if (std::isnan(longitude) != true) {
+		json.AddMember(LONGITUDE_KEY, longitude, allocator);
+	}
+
+	// elevation
+	if (std::isnan(elevation) != true) {
+		json.AddMember(ELEVATION_KEY, elevation, allocator);
+	}
+
 	return (json);
 }
 
@@ -131,6 +197,29 @@ std::vector<std::string> site::geterrors() {
 	if (network.empty() == true) {
 		// empty network
 		errorlist.push_back("Empty Network in site class.");
+	}
+
+	// latitude
+	if (std::isnan(latitude) != true) {
+		if ((latitude < -90) || (latitude > 90)) {
+			errorlist.push_back("Latitude in site class not in the range of -90 to 90.");
+		}
+	}
+
+	// longitude
+	if (std::isnan(longitude) != true) {
+		if ((longitude < -180) || (longitude > 180)) {
+			errorlist.push_back("Longitude in site class not in the range of -180 "
+				"to 180.");
+		}
+	}
+
+	// elevation
+	if (std::isnan(elevation) != true) {
+		if ((elevation < -500) || (elevation > 8900)) {
+			errorlist.push_back("Elevation in site class not in the range of -500 "
+				"to 8900.");
+		}
 	}
 
 	// since station, channel, network, and location are free text strings, no

@@ -9,19 +9,25 @@ import static org.junit.Assert.*;
 
 public class SiteTest {
 
-	public static final String SITE_STRING = "{\"Station\":\"BMN\",\"Channel\":"
-			+ "\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"}";
-	public static final String STATION = "BMN";
-	public static final String CHANNEL = "HHZ";
-	public static final String NETWORK = "LB";
-	public static final String LOCATION = "01";
+	public static String SITE_STRING = "{\"Station\":\"BOZ\",\"Channel\":"
+			+ "\"BHZ\",\"Network\":\"US\",\"Location\":\"00\","
+			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,"
+			+ "\"Elevation\":1589.0}";
+	public static String STATION = "BOZ";
+	public static String CHANNEL = "BHZ";
+	public static String NETWORK = "US";
+	public static String LOCATION = "00";
+	public static double LATITUDE = 45.596970;
+	public static double LONGITUDE = -111.629670;
+	public static double ELEVATION = 1589.000000;
 
 	/**
 	 * Able to write a JSON string
 	 */
 	@Test
 	public void WritesJSON() {
-		Site SiteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
+		Site SiteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION,
+		LATITUDE, LONGITUDE, ELEVATION);
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(SiteObject.toJSON());
@@ -42,7 +48,7 @@ public class SiteTest {
 	 */
 	@Test
 	public void ReadsJSON() {
-		// build Amplitude object
+		// build Site object
 		try {
 			CheckData(new Site(Utility.fromJSONString(SITE_STRING)),
 					"ReadsJSON");
@@ -60,7 +66,13 @@ public class SiteTest {
 		Site SiteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
 
 		// check data values
-		CheckData(SiteObject, "Constructor");
+		CheckData(SiteObject, "Constructor 1");
+
+		Site SiteObject2 = new Site(STATION, CHANNEL, NETWORK, LOCATION,
+			LATITUDE, LONGITUDE, ELEVATION);
+
+		// check data values
+		CheckData(SiteObject2, "Constructor 2");
 
 		// empty constructor
 		JSONObject emptyJSONObject = new JSONObject();
@@ -75,7 +87,8 @@ public class SiteTest {
 	 */
 	@Test
 	public void Validate() {
-		Site siteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION);
+		Site siteObject = new Site(STATION, CHANNEL, NETWORK, LOCATION, 
+			LATITUDE, LONGITUDE, ELEVATION);
 
 		// Successful validation
 		boolean rc = siteObject.isValid();
@@ -127,6 +140,24 @@ public class SiteTest {
 		if (SiteObject.getLocation() != null) {
 			assertEquals(TestName + " Location Equals", LOCATION,
 				SiteObject.getLocation());
+		}
+
+		// check SiteObject.Latitude
+		if (SiteObject.getLatitude() != null) {
+			assertEquals(TestName + " Latitude Equals", LATITUDE,
+				SiteObject.getLatitude(), 0);
+		}
+
+		// check SiteObject.Longitude
+		if (SiteObject.getLongitude() != null) {
+			assertEquals(TestName + " Longitude Equals", LONGITUDE,
+				SiteObject.getLongitude(), 0);
+		}
+
+		// check SiteObject.Elevation
+		if (SiteObject.getElevation() != null) {
+			assertEquals(TestName + " Elevation Equals", ELEVATION,
+				SiteObject.getElevation(), 0);
 		}
 	}
 }

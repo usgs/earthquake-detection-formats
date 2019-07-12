@@ -77,9 +77,6 @@ class stationInfo : public detectionbase {
 	 * Initializes members to provided values.
 	 *
 	 * \param newsite - A detectionformats::site containing the site to use
-	 * \param newlatitude - A double containing the latitude to use
-	 * \param newlongitude - A double containing the longitude to use
-	 * \param newelevation - A double containing the elevation to use
 	 * \param newquality - A double containing the quality to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newenable - A bool containing the enable flag to use
@@ -89,8 +86,7 @@ class stationInfo : public detectionbase {
 	 * \param newinformationrequestor - A detectionformats::source containing
 	 * the information requestor to use
 	 */
-	stationInfo(detectionformats::site newsite, double newlatitude,
-				double newlongitude, double newelevation, double newquality,
+	stationInfo(detectionformats::site newsite, double newquality,
 				bool newenable, bool newuse, bool newuseforteleseismic,
 				detectionformats::source newinformationrequestor);
 
@@ -150,27 +146,6 @@ class stationInfo : public detectionbase {
 	 * stationInfo message
 	 */
 	detectionformats::site site;
-
-	/**
-	 * \brief latitude value
-	 *
-	 * A required double defining the latitude of this stationInfo
-	 */
-	double latitude;
-
-	/**
-	 * \brief longitude value
-	 *
-	 * A required double defining the longitude of this stationInfo
-	 */
-	double longitude;
-
-	/**
-	 * \brief elevation value
-	 *
-	 * A required double containing the elevation for this stationInfo
-	 */
-	double elevation;
 
 	/**
 	 * \brief quality value

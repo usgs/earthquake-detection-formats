@@ -18,6 +18,9 @@ public class Site implements DetectionInt {
 	public static final String CHANNEL_KEY = "Channel";
 	public static final String NETWORK_KEY = "Network";
 	public static final String LOCATION_KEY = "Location";
+	public static final String LATITUDE_KEY = "Latitude";
+	public static final String LONGITUDE_KEY = "Longitude";
+	public static final String ELEVATION_KEY = "Elevation";	
 
 	/**
 	 * Required station code.
@@ -40,6 +43,21 @@ public class Site implements DetectionInt {
 	private final String location;
 
 	/**
+	 * Optional Double containing the latitude in degreesw
+	 */
+	private Double latitude;
+
+	/**
+	 * Optional Double containing the longitude in degreesw
+	 */
+	private Double longitude;
+
+	/**
+	 * Optional Double containing the elevation in meters
+	 */
+	private Double elevation;
+
+	/**
 	 * The constructor for the Site class. Initializes members to null values.
 	 */
 	public Site() {
@@ -47,6 +65,9 @@ public class Site implements DetectionInt {
 		channel = null;
 		network = null;
 		location = null;
+		latitude = null;
+		longitude = null;
+		elevation = null;
 	}
 
 	/**
@@ -68,6 +89,37 @@ public class Site implements DetectionInt {
 		channel = newChannel;
 		network = newNetwork;
 		location = newLocation;
+	}
+
+	/**
+	 * The alternate advanced constructor for the Site class. Initializes
+	 * members to provided values.
+	 *
+	 * @param newStation
+	 *            - A String containing the station to use
+	 * @param newChannel
+	 *            - A String containing the channel to use (null omit)
+	 * @param newNetwork
+	 *            - A String containing the network to use
+	 * @param newLocation
+	 *            - A String containing the location to use (null omit)
+	 * @param newLatitude
+	 *            - A Double containing the latitude in degrees to use (null omit)
+	 * @param newLongitude
+	 *            - A Double containing the longitude in degrees to use (null omit)
+	 * @param newElevation
+	 *            - A Double containing the elevation in meters to use (null omit)
+	 */
+	public Site(String newStation, String newChannel, String newNetwork,
+			String newLocation, Double newLatitude, Double newLongitude,
+			Double newElevation) {
+		station = newStation;
+		channel = newChannel;
+		network = newNetwork;
+		location = newLocation;
+		latitude = newLatitude;
+		longitude = newLongitude;
+		elevation = newElevation;
 	}
 
 	/**
@@ -106,6 +158,27 @@ public class Site implements DetectionInt {
 		} else {
 			location = null;
 		}
+
+		// latitude
+		if (newJSONObject.containsKey(LATITUDE_KEY)) {
+			latitude = (double) newJSONObject.get(LATITUDE_KEY);
+		} else {
+			latitude = null;
+		}
+
+		// longitude
+		if (newJSONObject.containsKey(LONGITUDE_KEY)) {
+			longitude = (double) newJSONObject.get(LONGITUDE_KEY);
+		} else {
+			longitude = null;
+		}
+
+		// elevation
+		if (newJSONObject.containsKey(ELEVATION_KEY)) {
+			elevation = (double) newJSONObject.get(ELEVATION_KEY);
+		} else {
+			elevation = null;
+		}	
 	}
 
 	/**
@@ -121,6 +194,9 @@ public class Site implements DetectionInt {
 		String jsonNetwork = getNetwork();
 		String jsonChannel = getChannel();
 		String jsonLocation = getLocation();
+		Double jsonLatitude = getLatitude();
+		Double jsonLongitude = getLongitude();
+		Double jsonElevation = getElevation();
 
 		// required values
 		// station
@@ -142,6 +218,21 @@ public class Site implements DetectionInt {
 		// location
 		if ((jsonLocation != null) && (!jsonLocation.isEmpty())) {
 			NewJSONObject.put(LOCATION_KEY, jsonLocation);
+		}
+
+		// latitude
+		if (jsonLatitude != null) {
+			NewJSONObject.put(LATITUDE_KEY, jsonLatitude);
+		}
+
+		// longitude
+		if (jsonLongitude != null) {
+			NewJSONObject.put(LONGITUDE_KEY, jsonLongitude);
+		}
+
+		// elevation
+		if (jsonElevation != null) {
+			NewJSONObject.put(ELEVATION_KEY, jsonElevation);
 		}
 
 		// return valid object
@@ -169,6 +260,9 @@ public class Site implements DetectionInt {
 	public ArrayList<String> getErrors() {
 		String jsonStation = getStation();
 		String jsonNetwork = getNetwork();
+		Double jsonLatitude = getLatitude();
+		Double jsonLongitude = getLongitude();
+		Double jsonElevation = getElevation();
 
 		ArrayList<String> errorList = new ArrayList<String>();
 
@@ -189,6 +283,33 @@ public class Site implements DetectionInt {
 		} else if (jsonNetwork.isEmpty()) {
 			// network empty
 			errorList.add("Empty Network in Site Class.");
+		}
+
+		// latitude
+		if (jsonLatitude != null) {
+			if ((jsonLatitude < -90.0) || (jsonLatitude > 90.0)) {
+				// invalid latitude
+				errorList.add(
+						"Latitude in Site Class not in the range of -90 to 90.");
+			}
+		}
+
+		// longitude
+		if (jsonLongitude != null) {
+			if ((jsonLongitude < -180.0) || (jsonLongitude > 180.0)) {
+				// invalid longitude
+				errorList.add(
+						"Longitude in Site Class not in the range of -180 to 180.");
+			}
+		}
+
+		// elevation
+		if (jsonElevation != null) {
+			if ((jsonElevation < -500.0) || (jsonElevation > 8900.0)) {
+				// invalid elevation
+				errorList.add(
+						"Elevation in Site Class not in the range of -500 to 8900.");
+			}
 		}
 
 		// since station, channel, network, and location are free text
@@ -228,4 +349,25 @@ public class Site implements DetectionInt {
 	public String getLocation() {
 		return location;
 	}
+
+	/**
+	 * @return the latitude
+	 */
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @return the elevation
+	 */
+	public Double getElevation() {
+		return elevation;
+	}		
 }

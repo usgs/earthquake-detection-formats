@@ -6,9 +6,6 @@
 
 // JSON Keys
 #define SITE_KEY "Site"
-#define LATITUDE_KEY "Latitude"
-#define LONGITUDE_KEY "Longitude"
-#define ELEVATION_KEY "Elevation"
 #define QUALITY_KEY "Quality"
 #define ENABLE_KEY "Enable"
 #define USE_KEY "Use"
@@ -19,9 +16,6 @@ namespace detectionformats {
 stationInfo::stationInfo() {
 	type = STATIONINFO_TYPE;
 	site = detectionformats::site();
-	latitude = std::numeric_limits<double>::quiet_NaN();
-	longitude = std::numeric_limits<double>::quiet_NaN();
-	elevation = std::numeric_limits<double>::quiet_NaN();
 	quality = std::numeric_limits<double>::quiet_NaN();
 	enable = true;
 	use = true;
@@ -38,10 +32,7 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 							std::string newauthor) {
 	type = STATIONINFO_TYPE;
 	site = detectionformats::site(newstation, newchannel, newnetwork,
-									newlocation);
-	latitude = newlatitude;
-	longitude = newlongitude;
-	elevation = newelevation;
+									newlocation, newlatitude, newlongitude, newelevation);
 	quality = newquality;
 	enable = newenable;
 	use = newuse;
@@ -49,16 +40,12 @@ stationInfo::stationInfo(std::string newstation, std::string newchannel,
 	informationRequestor = detectionformats::source(newagencyid, newauthor);
 }
 
-stationInfo::stationInfo(detectionformats::site newsite, double newlatitude,
-							double newlongitude, double newelevation,
+stationInfo::stationInfo(detectionformats::site newsite,
 							double newquality, bool newenable, bool newuse,
 							bool newuseforteleseismic,
 							detectionformats::source newinformationrequestor) {
 	type = STATIONINFO_TYPE;
 	stationInfo::site = newsite;
-	latitude = newlatitude;
-	longitude = newlongitude;
-	elevation = newelevation;
 	quality = newquality;
 	enable = newenable;
 	use = newuse;
@@ -83,33 +70,6 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 		site = detectionformats::site(sitevalue);
 	} else {
 		site = detectionformats::site();
-	}
-
-	// latitude
-	if ((json.HasMember(LATITUDE_KEY) == true)
-			&& (json[LATITUDE_KEY].IsNumber() == true)
-			&& (json[LATITUDE_KEY].IsDouble() == true)) {
-		latitude = json[LATITUDE_KEY].GetDouble();
-	} else {
-		latitude = std::numeric_limits<double>::quiet_NaN();
-	}
-
-	// longitude
-	if ((json.HasMember(LONGITUDE_KEY) == true)
-			&& (json[LONGITUDE_KEY].IsNumber() == true)
-			&& (json[LONGITUDE_KEY].IsDouble() == true)) {
-		longitude = json[LONGITUDE_KEY].GetDouble();
-	} else {
-		longitude = std::numeric_limits<double>::quiet_NaN();
-	}
-
-	// elevation
-	if ((json.HasMember(ELEVATION_KEY) == true)
-			&& (json[ELEVATION_KEY].IsNumber() == true)
-			&& (json[ELEVATION_KEY].IsDouble() == true)) {
-		elevation = json[ELEVATION_KEY].GetDouble();
-	} else {
-		elevation = std::numeric_limits<double>::quiet_NaN();
 	}
 
 	// optional values
@@ -159,9 +119,6 @@ stationInfo::stationInfo(rapidjson::Value &json) {
 stationInfo::stationInfo(const stationInfo &newstation) {
 	type = STATIONINFO_TYPE;
 	site = newstation.site;
-	latitude = newstation.latitude;
-	longitude = newstation.longitude;
-	elevation = newstation.elevation;
 	quality = newstation.quality;
 	enable = newstation.enable;
 	use = newstation.use;
@@ -187,21 +144,6 @@ rapidjson::Value & stationInfo::tojson(
 	rapidjson::Value sitevalue(rapidjson::kObjectType);
 	site.tojson(sitevalue, allocator);
 	json.AddMember(SITE_KEY, sitevalue, allocator);
-
-	// latitude
-	if (std::isnan(latitude) != true) {
-		json.AddMember(LATITUDE_KEY, latitude, allocator);
-	}
-
-	// longitude
-	if (std::isnan(longitude) != true) {
-		json.AddMember(LONGITUDE_KEY, longitude, allocator);
-	}
-
-	// elevation
-	if (std::isnan(elevation) != true) {
-		json.AddMember(ELEVATION_KEY, elevation, allocator);
-	}
 
 	// optional values
 	// quality
@@ -245,25 +187,30 @@ std::vector<std::string> stationInfo::geterrors() {
 	}
 
 	// latitude
-	if (std::isnan(latitude) == true) {
+	if (std::isnan(site.latitude) == true) {
 		// latitude not found
 		errorlist.push_back("No Latitude in stationInfo class.");
-	} else if ((latitude < -90) || (latitude > 90)) {
-		errorlist.push_back("Invalid Latitude in stationInfo class.");
+	} else if ((site.latitude < -90) || (site.latitude > 90)) {
+		errorlist.push_back("Latitude in stationInfo class not in the range of -90 "
+				"to 90.");
 	}
 
 	// longitude
-	if (std::isnan(longitude) == true) {
+	if (std::isnan(site.longitude) == true) {
 		// longitude not found
 		errorlist.push_back("No Longitude in stationInfo class.");
-	} else if ((longitude < -180) || (longitude > 180)) {
-		errorlist.push_back("Invalid Longitude in stationInfo class.");
+	} else if ((site.longitude < -180) || (site.longitude > 180)) {
+		errorlist.push_back("Longitude in stationInfo class not in the range of -180 "
+				"to 180.");
 	}
 
 	// elevation
-	if (std::isnan(elevation) == true) {
+	if (std::isnan(site.elevation) == true) {
 		// elevation not found
 		errorlist.push_back("No Elevation in stationInfo class.");
+	} else if ((site.elevation < -500) || (site.elevation > 8900)) {
+			errorlist.push_back("Elevation in stationInfo class not in the range of "
+				"-500 to 8900.");
 	}
 
 	// optional data

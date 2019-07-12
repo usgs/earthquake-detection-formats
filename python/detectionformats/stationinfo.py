@@ -15,16 +15,12 @@ class StationInfo:
     # json keys
     TYPE_KEY = "Type"
     SITE_KEY = "Site"
-    LATITUDE_KEY = "Latitude"
-    LONGITUDE_KEY = "Longitude"
-    ELEVATION_KEY = "Elevation"
     QUALITY_KEY = "Quality"
     ENABLE_KEY = "Enable"
     USEFORTELESEISMIC_KEY = "UseForTeleseismic"
     INFORMATIONREQUESTOR_KEY = "InformationRequestor"
 
-    def __init__(self, newSite=None, newLatitude=None, newLongitude=None,
-        newElevation=None, newQuality=None, newEnable=None,
+    def __init__(self, newSite=None, newQuality=None, newEnable=None,
         newUseForTeleseismic=None, newInformationRequestor=None):
         """Initialize the station info object. Constructs an empty object
            if all arguments are None
@@ -55,12 +51,6 @@ class StationInfo:
             self.site = newSite
         else:
             self.site = detectionformats.site.Site()
-        if newLatitude is not None:
-            self.latitude = newLatitude
-        if newLongitude is not None:
-            self.longitude = newLongitude
-        if newElevation is not None:
-            self.elevation = newElevation
 
         # second optional keys
         if newQuality is not None:
@@ -104,9 +94,6 @@ class StationInfo:
         try:
             self.type = aDict[self.TYPE_KEY]
             self.site.fromDict(aDict[self.SITE_KEY])
-            self.latitude = aDict[self.LATITUDE_KEY]
-            self.longitude = aDict[self.LONGITUDE_KEY]
-            self.elevation = aDict[self.ELEVATION_KEY]
         except(ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
@@ -153,9 +140,6 @@ class StationInfo:
         try:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.SITE_KEY] = self.site.toDict()
-            aDict[self.LATITUDE_KEY] = self.latitude
-            aDict[self.LONGITUDE_KEY] = self.longitude
-            aDict[self.ELEVATION_KEY] = self.elevation
         except(NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
@@ -216,19 +200,20 @@ class StationInfo:
             errorList.append('No Site in StationInfo Class.')
 
         try:
-            if self.latitude < -90 or self.latitude > 90:
+            if self.site.latitude < -90 or self.site.latitude > 90:
                 errorList.append('Latitude in StationInfo Class not in the range of -90 to 90.')
         except(NameError, AttributeError):
             errorList.append('No Latitude in StationInfo Class.')
 
         try:
-            if self.longitude < -180 or self.longitude > 180:
+            if self.site.longitude < -180 or self.site.longitude > 180:
                 errorList.append('Longitude in StationInfo Class not in the range of -180 to 180.')
         except(NameError, AttributeError):
             errorList.append('No Longitude in StationInfo Class.')
 
         try:
-            self.elevation
+            if self.site.elevation < -550 or self.site.elevation > 8900:
+                errorList.append('Elevation in StationInfo Class not in the range of -550 to 8900.')
         except(NameError, AttributeError):
             errorList.append('No Elevation in StationInfo Class.')
 

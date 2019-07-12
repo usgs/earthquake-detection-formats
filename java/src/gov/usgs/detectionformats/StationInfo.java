@@ -17,9 +17,6 @@ public class StationInfo implements DetectionInt {
 	 */
 	public static final String TYPE_KEY = "Type";
 	public static final String SITE_KEY = "Site";
-	public static final String LATITUDE_KEY = "Latitude";
-	public static final String LONGITUDE_KEY = "Longitude";
-	public static final String ELEVATION_KEY = "Elevation";
 	public static final String QUALITY_KEY = "Quality";
 	public static final String ENABLE_KEY = "Enable";
 	public static final String USE_KEY = "Use";
@@ -35,21 +32,6 @@ public class StationInfo implements DetectionInt {
 	 * Required site.
 	 */
 	private final Site site;
-
-	/**
-	 * Required Double containing the latitude
-	 */
-	private final Double latitude;
-
-	/**
-	 * Required Double containing the longitude
-	 */
-	private final Double longitude;
-
-	/**
-	 * Required Double containing the elevation
-	 */
-	private final Double elevation;
 
 	/**
 	 * Optional Double containing the quality
@@ -83,9 +65,6 @@ public class StationInfo implements DetectionInt {
 	public StationInfo() {
 		type = "StationInfo";
 		site = null;
-		latitude = null;
-		longitude = null;
-		elevation = null;
 		quality = null;
 		enable = null;
 		use = null;
@@ -130,8 +109,8 @@ public class StationInfo implements DetectionInt {
 			Double newElevation, Double newQuality, Boolean newEnable, 
 			Boolean newUse, Boolean newUseForTeleseismic, String newAgencyID,
 			String newAuthor) {
-		this(new Site(newStation, newChannel, newNetwork, newLocation),
-				newLatitude, newLongitude, newElevation, newQuality, newEnable,
+		this(new Site(newStation, newChannel, newNetwork, newLocation, newLatitude, 
+				newLongitude, newElevation), newQuality, newEnable,
 				newUse, newUseForTeleseismic, new Source(newAgencyID, newAuthor));
 	}
 
@@ -141,12 +120,6 @@ public class StationInfo implements DetectionInt {
 	 *
 	 * @param newSite
 	 *            - A Site containing the site to use
-	 * @param newLatitude
-	 *            - A Double containing the latitude to use
-	 * @param newLongitude
-	 *            - A Double containing the longitude to use
-	 * @param newElevation
-	 *            - A Double containing the elevation to use
 	 * @param newQuality
 	 *            - A Double containing the quality to use, null to omit
 	 * @param newEnable
@@ -160,15 +133,11 @@ public class StationInfo implements DetectionInt {
 	 *            - A Source containing the information requestor to use, null
 	 *            to omit
 	 */
-	public StationInfo(Site newSite, Double newLatitude, Double newLongitude,
-			Double newElevation, Double newQuality, Boolean newEnable, 
+	public StationInfo(Site newSite, Double newQuality, Boolean newEnable, 
 			Boolean newUse, Boolean newUseForTeleseismic, 
 			Source newInformationRequestor) {
 		type = "StationInfo";
 		site = newSite;
-		latitude = newLatitude;
-		longitude = newLongitude;
-		elevation = newElevation;
 		quality = newQuality;
 		enable = newEnable;
 		use = newUse;
@@ -196,27 +165,6 @@ public class StationInfo implements DetectionInt {
 			site = new Site((JSONObject) newJSONObject.get(SITE_KEY));
 		} else {
 			site = null;
-		}
-
-		// latitude
-		if (newJSONObject.containsKey(LATITUDE_KEY)) {
-			latitude = (double) newJSONObject.get(LATITUDE_KEY);
-		} else {
-			latitude = null;
-		}
-
-		// longitude
-		if (newJSONObject.containsKey(LONGITUDE_KEY)) {
-			longitude = (double) newJSONObject.get(LONGITUDE_KEY);
-		} else {
-			longitude = null;
-		}
-
-		// elevation
-		if (newJSONObject.containsKey(ELEVATION_KEY)) {
-			elevation = (double) newJSONObject.get(ELEVATION_KEY);
-		} else {
-			elevation = null;
 		}
 
 		// Optional values
@@ -270,9 +218,6 @@ public class StationInfo implements DetectionInt {
 
 		String jsonType = getType();
 		Site jsonSite = getSite();
-		Double jsonLatitude = getLatitude();
-		Double jsonLongitude = getLongitude();
-		Double jsonElevation = getElevation();
 		Double jsonQuality = getQuality();
 		Boolean jsonEnable = getEnable();
 		Boolean jsonUse = getUse();
@@ -286,21 +231,6 @@ public class StationInfo implements DetectionInt {
 		// site
 		if (jsonSite != null) {
 			newJSONObject.put(SITE_KEY, jsonSite.toJSON());
-		}
-
-		// latitude
-		if (jsonLatitude != null) {
-			newJSONObject.put(LATITUDE_KEY, jsonLatitude);
-		}
-
-		// longitude
-		if (jsonLongitude != null) {
-			newJSONObject.put(LONGITUDE_KEY, jsonLongitude);
-		}
-
-		// elevation
-		if (jsonElevation != null) {
-			newJSONObject.put(ELEVATION_KEY, jsonElevation);
 		}
 
 		// Optional values
@@ -355,9 +285,6 @@ public class StationInfo implements DetectionInt {
 
 		String jsonType = getType();
 		Site jsonSite = getSite();
-		Double jsonLatitude = getLatitude();
-		Double jsonLongitude = getLongitude();
-		Double jsonElevation = getElevation();
 		Source jsonInformationRequestor = getInformationRequestor();
 
 		ArrayList<String> errorList = new ArrayList<String>();
@@ -382,32 +309,38 @@ public class StationInfo implements DetectionInt {
 		} else if (!jsonSite.isValid()) {
 			// site invalid
 			errorList.add("Invalid Site in StationInfo Class.");
-		}
+		} else {
+			Double jsonLatitude = getSite().getLatitude();
+			Double jsonLongitude = getSite().getLongitude();
+			Double jsonElevation = getSite().getElevation();
+			
+			// part of this is checked by Site, but then this information is optional
+			// in Site, but required for SiteInfo.
+			// latitude
+			if (jsonLatitude == null) {
+				// latitude not found
+				errorList.add("No Latitude in StationInfo Class.");
+			} else if ((jsonLatitude < -90) || (jsonLatitude > 90)) {
+				// invalid latitude
+				errorList.add(
+						"Latitude in StationInfo Class not in the range of -90 to 90.");
+			}
 
-		// latitude
-		if (jsonLatitude == null) {
-			// latitude not found
-			errorList.add("No Latitude in StationInfo Class.");
-		} else if ((jsonLatitude < -90) || (jsonLatitude > 90)) {
-			// invalid latitude
-			errorList.add(
-					"Latitude in StationInfo Class not in the range of -90 to 90.");
-		}
+			// longitude
+			if (jsonLongitude == null) {
+				// longitude not found
+				errorList.add("No Longitude in StationInfo Class.");
+			} else if ((jsonLongitude < -180) || (jsonLongitude > 180)) {
+				// invalid longitude
+				errorList.add(
+						"Longitude in StationInfo Class not in the range of -180 to 180.");
+			}
 
-		// longitude
-		if (jsonLongitude == null) {
-			// longitude not found
-			errorList.add("No Longitude in StationInfo Class.");
-		} else if ((jsonLongitude < -180) || (jsonLongitude > 180)) {
-			// invalid longitude
-			errorList.add(
-					"Longitude in StationInfo Class not in the range of -180 to 180.");
-		}
-
-		// elevation
-		if (jsonElevation == null) {
-			// elevation not found
-			errorList.add("No Elevation in StationInfo Class.");
+			// elevation
+			if (jsonElevation == null) {
+				// elevation not found
+				errorList.add("No Elevation in StationInfo Class.");
+			}
 		}
 
 		// Optional Keys
@@ -438,27 +371,6 @@ public class StationInfo implements DetectionInt {
 	 */
 	public Site getSite() {
 		return site;
-	}
-
-	/**
-	 * @return the latitude
-	 */
-	public Double getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * @return the longitude
-	 */
-	public Double getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * @return the elevation
-	 */
-	public Double getElevation() {
-		return elevation;
 	}
 
 	/**

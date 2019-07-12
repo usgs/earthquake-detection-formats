@@ -78,10 +78,10 @@ public class DetectionFormatsTest {
     public static String RETRACT_STRING = "{\"Type\":\"Retract\",\"Source\":{\"Author\":"
             + "\"TestAuthor\",\"AgencyID\":\"US\"},\"ID\":\"12GFH48776857\"}";    
     public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
-			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
+			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\","
+			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,\"Elevation\":1589.0},"
 			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\","
-			+ "\"Use\":true,\"Elevation\":1589.0,\"UseForTeleseismic\":true,"
-			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,"
+			+ "\"Use\":true,\"UseForTeleseismic\":true,"
 			+ "\"InformationRequestor\":{\"Author\":\"TestAuthor\","
             + "\"AgencyID\":\"US\"}}";
     public static final String REQUEST_STRING = "{\"Site\":{\"Station\":\"BOZ\","

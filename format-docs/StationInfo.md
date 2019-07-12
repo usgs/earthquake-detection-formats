@@ -21,11 +21,11 @@ Format is intended as a method of requesting a StationInfo message.
          "Station"   : String,
          "Channel"   : String,
          "Network"   : String,
-         "Location"  : String
+         "Location"  : String,
+         "Latitude"  : Number,
+         "Longitude" : Number,
+         "Elevation" : Number,
       },
-      "Latitude"      : Number,
-      "Longitude"     : Number,
-      "Elevation"     : Number,
       "Quality"       : Number,
       "Enable"        : Boolean,
       "Use"           : Boolean,
@@ -46,9 +46,6 @@ These are the values **required** to define a StationInfo.
 
 * Type - A string that identifies this message as a StationInfo.
 * Site - An object containing the site for the station, see [Site](Site.md).
-* Latitude - A decimal number that identifies the latitude of this station in degrees.
-* Longitude - A decimal number that identifies the longitude of this station in degrees.
-* Elevation - A decimal number that identifies the elevation of this station in meters.
 
 **Optional Values:**
 

@@ -9,10 +9,10 @@ import org.junit.Test;
 
 public class StationInfoTest {
 	public static final String STATION_STRING = "{\"Site\":{\"Station\":\"BOZ\","
-			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\"},"
+			+ "\"Channel\":\"BHZ\",\"Network\":\"US\",\"Location\":\"00\","
+			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,\"Elevation\":1589.0},"
 			+ "\"Enable\":true,\"Quality\":1.0,\"Type\":\"StationInfo\","
-			+ "\"Use\":true,\"Elevation\":1589.0,\"UseForTeleseismic\":true,"
-			+ "\"Latitude\":45.59697,\"Longitude\":-111.62967,"
+			+ "\"Use\":true,\"UseForTeleseismic\":true,"
 			+ "\"InformationRequestor\":{\"Author\":\"TestAuthor\","
 			+ "\"AgencyID\":\"US\"}}";
 
@@ -82,9 +82,8 @@ public class StationInfoTest {
 
 		// use constructor
 		StationInfo altStationObject = new StationInfo(
-			new Site(STATION, CHANNEL, NETWORK, LOCATION), 
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, 
-			USEFORTELESEISM,
+			new Site(STATION, CHANNEL, NETWORK, LOCATION, LATITUDE, LONGITUDE, 
+				ELEVATION), QUALITY, ENABLE, USE, USEFORTELESEISM,
 			new Source(AGENCYID, AUTHOR));
 
 		// check data values
@@ -116,7 +115,7 @@ public class StationInfoTest {
 		// build bad StationInfo object
 		StationInfo badStationInfoObject = new StationInfo();
 
-		// Unuccessful validation
+		// Unsuccessful validation
 		rc = badStationInfoObject.isValid();
 
 		// check return code
@@ -159,24 +158,24 @@ public class StationInfoTest {
 				assertEquals(TestName + " Location Equals", LOCATION,
 					stationObject.getSite().getLocation());
 			}
-		}
 
-		// check stationObject.Latitude
-		if (stationObject.getLatitude() != null) {
-			assertEquals(TestName + " Latitude Equals", LATITUDE,
-				stationObject.getLatitude(), 0);
-		}
+			// check stationObject.site.Latitude
+			if (stationObject.getSite().getLatitude() != null) {
+				assertEquals(TestName + " Latitude Equals", LATITUDE,
+					stationObject.getSite().getLatitude(), 0);
+			}
 
-		// check stationObject.Longitude
-		if (stationObject.getLongitude() != null) {
-			assertEquals(TestName + " Longitude Equals", LONGITUDE,
-				stationObject.getLongitude(), 0);
-		}
+			// check stationObject.site.Longitude
+			if (stationObject.getSite().getLongitude() != null) {
+				assertEquals(TestName + " Longitude Equals", LONGITUDE,
+					stationObject.getSite().getLongitude(), 0);
+			}
 
-		// check stationObject.Depth
-		if (stationObject.getElevation() != null) {
-			assertEquals(TestName + " Elevation Equals", ELEVATION,
-				stationObject.getElevation(), 0);
+			// check stationObject.site.Elevation
+			if (stationObject.getSite().getElevation() != null) {
+				assertEquals(TestName + " Elevation Equals", ELEVATION,
+					stationObject.getSite().getElevation(), 0);
+			}
 		}
 
 		// optional values

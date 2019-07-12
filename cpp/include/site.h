@@ -48,6 +48,27 @@ class site : public detectionbase {
 	/**
 	 * \brief site advanced constructor
 	 *
+	 * The advanced constructor for the source class.
+	 * Initializes members to provided values.
+	 *
+	 * \param newstation - A std::string containing the station to use
+	 * \param newchannel - A std::string containing the channel to use
+	 * \param newnetwork - A std::string containing the network to use
+	 * \param newlocation - A std::string containing the location to use
+	 * \param newlatitude - A double containing the latitude to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newlongitude - A double containing the longitude to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 * \paramnewelevation - A double containing the elevation to use, 
+	 * std::numeric_limits<double>::quiet_NaN() to omit
+	 */
+	site(std::string newstation, std::string newchannel, std::string newnetwork,
+			std::string newlocation, double newlatitude, double newlongitude,
+			double newelevation);
+
+	/**
+	 * \brief site advanced constructor
+	 *
 	 * The advanced constructor for the site class.
 	 * Converts the provided object from a rapidjson::Value, populating members
 	 * \param json - A rapidjson::Value containing the parsed json.
@@ -120,6 +141,27 @@ class site : public detectionbase {
 	 * An optional std::string containing the location code for this site.
 	 */
 	std::string location;
+
+	/**
+	 * \brief latitude value
+	 *
+	 * An optional double defining the latitude of this site.
+	 */
+	double latitude;
+
+	/**
+	 * \brief longitude value
+	 *
+	 * An optional double defining the longitude of this site.
+	 */
+	double longitude;
+
+	/**
+	 * \brief elevation value
+	 *
+	 * An optional double containing the elevation for this site.
+	 */
+	double elevation;
 };
 }  // namespace detectionformats
 #endif  // DETECTION_SITE_H
