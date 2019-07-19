@@ -154,8 +154,8 @@ public class Source implements DetectionInt {
 	public boolean isEmpty() {
 		if (getAgencyID() != null) {
 			return (false);
-        }
-        if (getAuthor() != null) {
+		}
+		if (getAuthor() != null) {
 			return (false);
 		}          
 		return (true);

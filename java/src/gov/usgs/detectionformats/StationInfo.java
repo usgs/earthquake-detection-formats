@@ -255,7 +255,8 @@ public class StationInfo implements DetectionInt {
 		}
 
 		// informationRequestor
-		if (jsonInformationRequestor != null) {
+		if ((jsonInformationRequestor != null) 
+				&& (jsonInformationRequestor.isEmpty() == false)) {
 			newJSONObject.put(INFORMATIONREQUESTOR_KEY,
 					jsonInformationRequestor.toJSON());
 		}
@@ -348,10 +349,10 @@ public class StationInfo implements DetectionInt {
 		// Enable, and UseForTeleseismic.
 
 		// informationRequestor
-		if (jsonInformationRequestor != null) {
-
+		if ((jsonInformationRequestor != null) 
+				&& (jsonInformationRequestor.isEmpty() == false)) {
 			if (!jsonInformationRequestor.isValid()) {
-				// informationRequestor invalid
+				// informationRequestor invalidk
 				errorList.add("Invalid InformationRequestor in StationInfo Class.");
 			}
 		}

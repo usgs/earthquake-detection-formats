@@ -89,6 +89,9 @@ public class Site implements DetectionInt {
 		channel = newChannel;
 		network = newNetwork;
 		location = newLocation;
+		latitude = null;
+		longitude = null;
+		elevation = null;
 	}
 
 	/**
