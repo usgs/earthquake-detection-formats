@@ -9,6 +9,7 @@ sudo: false
 addons:
   apt:
     packages:
+      - ant
       - g++-5
       - gcc-5
       - libgtest-dev
