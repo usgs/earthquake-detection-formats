@@ -84,8 +84,8 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/java
   - ./gradlew --info build check javadoc
   # copy javadocs where deploy expects them
-  - mkdir ${TRAVIS_BUILD_DIR}/doc/javadoc
-  - cp -r ./build/docs/javadoc/* ${TRAVIS_BUILD_DIR}/doc/javadoc
+  # - mkdir ${TRAVIS_BUILD_DIR}/doc/javadoc
+  # - cp -r ./build/docs/javadoc/* ${TRAVIS_BUILD_DIR}/doc/javadoc
   # C++ build, tests, and coverage
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
