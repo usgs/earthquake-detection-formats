@@ -26,6 +26,27 @@ void checkdata(detectionformats::site siteobject, std::string testinfo) {
 	std::string sitelocation = siteobject.location;
 	std::string expectedlocation = std::string(LOCATION);
 	ASSERT_STREQ(sitelocation.c_str(), expectedlocation.c_str());
+
+	// check latitude
+	if (std::isnan(siteobject.latitude) != true) {
+		double stationlatitude = siteobject.latitude;
+		double expectedlatitude = LATITUDE;
+		ASSERT_EQ(stationlatitude, expectedlatitude);
+	}
+
+	// check longitude
+	if (std::isnan(siteobject.longitude) != true) {
+		double stationlongitude = siteobject.longitude;
+		double expectedlongitude = LONGITUDE;
+		ASSERT_EQ(stationlongitude, expectedlongitude);
+	}
+
+	// check elevation
+	if (std::isnan(siteobject.elevation) != true) {
+		double stationelevation = siteobject.elevation;
+		double expectedelevation = ELEVATION;
+		ASSERT_EQ(stationelevation, expectedelevation);
+	}
 }
 
 // tests to see if site can successfully
@@ -38,6 +59,10 @@ TEST(SiteTest, WritesJSON) {
 	siteobject.channel = std::string(CHANNEL);
 	siteobject.network = std::string(NETWORK);
 	siteobject.location = std::string(LOCATION);
+
+	siteobject.latitude = LATITUDE;
+	siteobject.longitude = LONGITUDE;
+	siteobject.elevation = ELEVATION;
 
 	// build json string
 	rapidjson::Document sitedocument;
@@ -74,6 +99,13 @@ TEST(SiteTest, Constructor) {
 
 	// check data values
 	checkdata(siteobject, "");
+
+	// use constructor
+	detectionformats::site siteobject2(STATION, CHANNEL, NETWORK, LOCATION,
+			LATITUDE, LONGITUDE, ELEVATION);
+
+	// check data values
+	checkdata(siteobject2, "");
 }
 
 // tests to see if site can successfully
@@ -86,6 +118,9 @@ TEST(SiteTest, Validate) {
 	siteobject.channel = std::string(CHANNEL);
 	siteobject.network = std::string(NETWORK);
 	siteobject.location = std::string(LOCATION);
+	siteobject.latitude = LATITUDE;
+	siteobject.longitude = LONGITUDE;
+	siteobject.elevation = ELEVATION;
 
 	// successful validation
 	bool result = siteobject.isvalid();

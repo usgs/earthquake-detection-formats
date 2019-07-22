@@ -82,12 +82,13 @@ bool IsStringAlpha(const std::string &s) {
 
 bool IsStringISO8601(const std::string &s) {
 	// ISO8601 time string format:
-	// 000000000011111111112222
-	// 012345678901234567890123
+	// 0000000000111111111122222222
+	// 0123456789012345678901234567
 	// YYYY-MM-DDTHH:MM:SS.SSSZ
+	// YYYY-MM-DDTHH:MM:SS.SSS+0000
 
 	// length checks
-	if (s.length() != 24) {
+	if ((s.length() != 24) && (s.length() != 28)) {
 		return (false);
 	}
 
@@ -120,8 +121,13 @@ bool IsStringISO8601(const std::string &s) {
 		// seconds (17-22 in ISO8601 string)
 		double seconds = std::stod(s.substr(17, 6));
 
-		// Z  (23 in ISO8601 string)
-		std::string z = s.substr(23, 1);
+		// Z or +0000 (23 in ISO8601 string)
+		std::string z = "";
+		if (s.length() == 24) {
+			z = s.substr(23, 1);
+		} else if (s.length() == 28) {
+			z = s.substr(23, 5);
+		}
 
 		if (!((year >= 0) && (year <= 9999))) {
 			throw std::invalid_argument(
@@ -171,9 +177,9 @@ bool IsStringISO8601(const std::string &s) {
 			return (false);
 		}
 
-		if (z != "Z") {
+		if ((z != "Z") && (z != "+0000")) {
 			throw std::invalid_argument(
-					std::string("Formatting error validating ISO8601 time."));
+					std::string("Formatting error validating Z / +0000 ISO8601 time: " + z));
 			return (false);
 		}
 	} catch (const std::exception &e) {

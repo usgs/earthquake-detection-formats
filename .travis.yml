@@ -2,7 +2,23 @@
 language: java
 
 jdk:
-  - openjdk7
+  - openjdk10
+  - openjdk11
+  - openjdk12
+  - openjdk-ea
+
+matrix:
+  allow_failures:
+    - jdk: openjdk-ea
+
+# gradle caching
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
 
 sudo: false
 # add modern c++, gtest, and python3
@@ -67,7 +83,10 @@ before_script:
 script:
   # Java build, tests, javadocs, and coverage
   - cd ${TRAVIS_BUILD_DIR}/java
-  - ant all
+  - ./gradlew --info build check javadoc
+  # copy javadocs where deploy expects them
+  # - mkdir ${TRAVIS_BUILD_DIR}/doc/javadoc
+  # - cp -r ./build/docs/javadoc/* ${TRAVIS_BUILD_DIR}/doc/javadoc
   # C++ build, tests, and coverage
   - cd ${TRAVIS_BUILD_DIR}/cpp
   - mkdir build
@@ -81,3 +100,4 @@ script:
 after_success:
   # Uploading coverage report to CodeCov
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  - "./gradlew sendCoverageToCodacy"

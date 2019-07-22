@@ -41,22 +41,22 @@ void checkdata(detectionformats::stationInfo stationobject,
 	}
 
 	// check latitude
-	if (std::isnan(stationobject.latitude) != true) {
-		double stationlatitude = stationobject.latitude;
+	if (std::isnan(stationobject.site.latitude) != true) {
+		double stationlatitude = stationobject.site.latitude;
 		double expectedlatitude = LATITUDE;
 		ASSERT_EQ(stationlatitude, expectedlatitude);
 	}
 
 	// check longitude
-	if (std::isnan(stationobject.longitude) != true) {
-		double stationlongitude = stationobject.longitude;
+	if (std::isnan(stationobject.site.longitude) != true) {
+		double stationlongitude = stationobject.site.longitude;
 		double expectedlongitude = LONGITUDE;
 		ASSERT_EQ(stationlongitude, expectedlongitude);
 	}
 
 	// check elevation
-	if (std::isnan(stationobject.elevation) != true) {
-		double stationelevation = stationobject.elevation;
+	if (std::isnan(stationobject.site.elevation) != true) {
+		double stationelevation = stationobject.site.elevation;
 		double expectedelevation = ELEVATION;
 		ASSERT_EQ(stationelevation, expectedelevation);
 	}
@@ -115,10 +115,9 @@ TEST(StationInfoTest, WritesJSON) {
 	stationobject.site.channel = std::string(CHANNEL);
 	stationobject.site.network = std::string(NETWORK);
 	stationobject.site.location = std::string(LOCATION);
-
-	stationobject.latitude = LATITUDE;
-	stationobject.longitude = LONGITUDE;
-	stationobject.elevation = ELEVATION;
+	stationobject.site.latitude = LATITUDE;
+	stationobject.site.longitude = LONGITUDE;
+	stationobject.site.elevation = ELEVATION;
 
 	stationobject.quality = QUALITY;
 	stationobject.enable = ENABLE;
@@ -181,8 +180,9 @@ TEST(StationInfoTest, Constructor) {
 	// use alternate constructor
 	detectionformats::stationInfo stationobject_altc(
 			detectionformats::site(std::string(STATION), std::string(CHANNEL),
-					std::string(NETWORK), std::string(LOCATION)),
-			LATITUDE, LONGITUDE, ELEVATION, QUALITY, ENABLE, USE, USEFORTELESEISM,
+					std::string(NETWORK), std::string(LOCATION), LATITUDE, LONGITUDE,
+					ELEVATION),
+			QUALITY, ENABLE, USE, USEFORTELESEISM,
 			detectionformats::source(std::string(AGENCYID),
 					std::string(AUTHOR)));
 
@@ -224,9 +224,9 @@ TEST(StationInfoTest, Validate) {
 	stationobject.site.network = std::string(NETWORK);
 	stationobject.site.location = std::string(LOCATION);
 
-	stationobject.latitude = LATITUDE;
-	stationobject.longitude = LONGITUDE;
-	stationobject.elevation = ELEVATION;
+	stationobject.site.latitude = LATITUDE;
+	stationobject.site.longitude = LONGITUDE;
+	stationobject.site.elevation = ELEVATION;
 
 	stationobject.quality = QUALITY;
 	stationobject.enable = ENABLE;
@@ -267,8 +267,8 @@ TEST(StationInfoTest, Validate) {
 
 	// build bad stationinfo object
 	detectionformats::stationInfo badstationobject2;
-	stationobject.latitude = -9999;
-	stationobject.longitude = -9999;
+	stationobject.site.latitude = -9999;
+	stationobject.site.longitude = -9999;
 
 	result = false;
 	try {

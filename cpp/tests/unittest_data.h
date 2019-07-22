@@ -65,6 +65,7 @@
 #define LATITUDE 40.3344
 #define LONGITUDE -121.44
 #define TIME "2015-12-28T21:32:24.017Z"
+#define TIME2 "2015-12-28T21:32:24.017+0000"
 #define DEPTH 32.44
 #define LATITUDEERROR 12.5
 #define LONGITUDEERROR 22.64
@@ -84,7 +85,7 @@
 #define RETRACTSTRING "{\"Type\":\"Retract\",\"ID\":\"12GFH48776857\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
 
 // site
-#define SITESTRING "{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"}" // NOLINT
+#define SITESTRING "{\"Station\":\"BMN\",\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\",\"Latitude\":40.3344,\"Longitude\":-121.44,\"Elevation\":1589.0}" // NOLINT
 #define STATION "BMN"
 #define CHANNEL "HHZ"
 #define NETWORK "LB"
@@ -96,7 +97,7 @@
 #define AUTHOR "TestAuthor"
 
 // stationinfo
-#define STATIONSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Enable\":true,\"Use\":true,\"Quality\":1.0,\"Type\":\"StationInfo\",\"Elevation\":1589.0,\"UseForTeleseismic\":false,\"Latitude\":40.3344,\"Longitude\":-121.44,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
+#define STATIONSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\",\"Latitude\":40.3344,\"Longitude\":-121.44,\"Elevation\":1589.0},\"Enable\":true,\"Use\":true,\"Quality\":1.0,\"Type\":\"StationInfo\",\"UseForTeleseismic\":false,\"InformationRequestor\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
 #define ELEVATION 1589.000000
 #define QUALITY 1.0
 #define ENABLE true
@@ -118,6 +119,7 @@
 
 // util
 #define ISO8601TIME "2015-12-28T21:32:24.017Z"
+#define ISO8601ALTTIME "2015-12-28T21:32:24.017+0000"
 #define EPOCHTIME 1451338344.017
 
 #define ISO8601TIME2 "2015-12-28T21:32:24.500Z"

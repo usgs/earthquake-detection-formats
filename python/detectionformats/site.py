@@ -12,9 +12,13 @@ class Site:
     CHANNEL_KEY = "Channel"
     NETWORK_KEY = "Network"
     LOCATION_KEY = "Location"
+    LATITUDE_KEY = "Latitude"
+    LONGITUDE_KEY = "Longitude"
+    ELEVATION_KEY = "Elevation"
 
     def __init__(self, newStation=None, newNetwork=None, newChannel=None,
-        newLocation=None):
+        newLocation=None, newLatitude=None, newLongitude=None,
+        newElevation=None,):
         """Initialize the site object. Constructs an empty object
            if all arguments are None
 
@@ -42,6 +46,13 @@ class Site:
         if newLocation is not None:
             if newLocation != '':
                 self.location = newLocation
+
+        if newLatitude is not None:
+            self.latitude = newLatitude
+        if newLongitude is not None:
+            self.longitude = newLongitude
+        if newElevation is not None:
+            self.elevation = newElevation
 
     def fromJSONString(self, jsonString):
         """Populates the object from a json formatted string
@@ -78,6 +89,13 @@ class Site:
             self.channel = aDict[self.CHANNEL_KEY]
         if self.LOCATION_KEY in aDict:
             self.location = aDict[self.LOCATION_KEY]
+        if self.LATITUDE_KEY in aDict:
+            self.latitude = aDict[self.LATITUDE_KEY]
+        if self.LONGITUDE_KEY in aDict:
+            self.longitude = aDict[self.LONGITUDE_KEY]
+        if self.ELEVATION_KEY in aDict:
+            self.elevation = aDict[self.ELEVATION_KEY]
+
 
     def toJSONString(self):
         """Converts the object to a json formatted string
@@ -121,6 +139,15 @@ class Site:
             if self.location != '':
                 aDict[self.LOCATION_KEY] = self.location
 
+        if hasattr(self, 'latitude'):
+            aDict[self.LATITUDE_KEY] = self.latitude
+
+        if hasattr(self, 'longitude'):
+            aDict[self.LONGITUDE_KEY] = self.longitude
+
+        if hasattr(self, 'elevation'):
+            aDict[self.ELEVATION_KEY] = self.elevation
+
         return aDict
 
     def isValid(self):
@@ -160,5 +187,17 @@ class Site:
                 errorList.append('Empty Network in Site Class.')
         except(NameError, AttributeError):
             errorList.append('No Network in Site Class.')
+
+        if hasattr(self, 'latitude'):
+            if self.latitude < -90 or self.latitude > 90:
+                errorList.append('Latitude in Site Class not in the range of -90 to 90.')
+
+        if hasattr(self, 'longitude'):
+            if self.longitude < -180 or self.longitude > 180:
+                errorList.append('Longitude in Site Class not in the range of -180 to 180.')
+
+        if hasattr(self, 'elevation'):
+            if self.elevation < -550 or self.elevation > 8900:
+                errorList.append('Elevation in Site Class not in the range of -550 to 8900.')
 
         return errorList
