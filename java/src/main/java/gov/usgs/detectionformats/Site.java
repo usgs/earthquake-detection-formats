@@ -293,7 +293,7 @@ public class Site implements DetectionInt {
 			if ((jsonLatitude < -90.0) || (jsonLatitude > 90.0)) {
 				// invalid latitude
 				errorList.add(
-						"Latitude in Site Class not in the range of -90 to 90.");
+						"Latitude in Site Class not in the range of -90 to 90 degrees.");
 			}
 		}
 
@@ -302,7 +302,7 @@ public class Site implements DetectionInt {
 			if ((jsonLongitude < -180.0) || (jsonLongitude > 180.0)) {
 				// invalid longitude
 				errorList.add(
-						"Longitude in Site Class not in the range of -180 to 180.");
+						"Longitude in Site Class not in the range of -180 to 180 degrees.");
 			}
 		}
 
@@ -311,7 +311,7 @@ public class Site implements DetectionInt {
 			if ((jsonElevation < -500.0) || (jsonElevation > 8900.0)) {
 				// invalid elevation
 				errorList.add(
-						"Elevation in Site Class not in the range of -500 to 8900.");
+						"Elevation in Site Class not in the range of -500 to 8900 meters.");
 			}
 		}
 

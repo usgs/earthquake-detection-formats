@@ -202,7 +202,8 @@ std::vector<std::string> site::geterrors() {
 	// latitude
 	if (std::isnan(latitude) != true) {
 		if ((latitude < -90) || (latitude > 90)) {
-			errorlist.push_back("Latitude in site class not in the range of -90 to 90.");
+			errorlist.push_back("Latitude in site class not in the range of -90 to "
+				"90 degrees.");
 		}
 	}
 
@@ -210,7 +211,7 @@ std::vector<std::string> site::geterrors() {
 	if (std::isnan(longitude) != true) {
 		if ((longitude < -180) || (longitude > 180)) {
 			errorlist.push_back("Longitude in site class not in the range of -180 "
-				"to 180.");
+				"to 180 degrees.");
 		}
 	}
 
@@ -218,7 +219,7 @@ std::vector<std::string> site::geterrors() {
 	if (std::isnan(elevation) != true) {
 		if ((elevation < -500) || (elevation > 8900)) {
 			errorlist.push_back("Elevation in site class not in the range of -500 "
-				"to 8900.");
+				"to 8900 meters.");
 		}
 	}
 
