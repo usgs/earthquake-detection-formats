@@ -252,7 +252,7 @@ public class UtilityTest {
 	 */
 	@Test
 	public void getXMLGregorianCalendar() {    
-        assertNotEquals("getXMLGregorianCalendar", null, 
+        assertNotSame("getXMLGregorianCalendar", null, 
             Utility.getXMLGregorianCalendar(TIME));
 
         assertEquals("getXMLGregorianCalendar null", null, 
