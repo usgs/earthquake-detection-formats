@@ -44,7 +44,29 @@
 			"cwchar": "cpp",
 			"cwctype": "cpp",
 			"iterator": "cpp",
-			"string_view": "cpp"
+			"string_view": "cpp",
+			"__locale": "cpp",
+			"__mutex_base": "cpp",
+			"__threading_support": "cpp",
+			"bitset": "cpp",
+			"cstdarg": "cpp",
+			"ctime": "cpp",
+			"deque": "cpp",
+			"iomanip": "cpp",
+			"ios": "cpp",
+			"iostream": "cpp",
+			"istream": "cpp",
+			"locale": "cpp",
+			"map": "cpp",
+			"mutex": "cpp",
+			"ostream": "cpp",
+			"queue": "cpp",
+			"regex": "cpp",
+			"set": "cpp",
+			"sstream": "cpp",
+			"stack": "cpp",
+			"streambuf": "cpp",
+			"system_error": "cpp"
 		}
 	}
 }
