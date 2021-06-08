@@ -43,6 +43,7 @@ applications.
       "MinimumDistance" : Number,
       "RMS"             : Number,
       "Gap"             : Number,
+      "Detector"        : String,
       "Data"            : [PickJSON and/or CorrelationJSON Objects, ...]
     }
 ```
@@ -69,3 +70,4 @@ The following are supplementary values that **may or may not** be provided as pa
 * Sigma - A decimal number indicating the standard deviation of the hypocenter time measurement.
 * Data - An array of [Pick](Pick.md), and / or [Correlation](Correlation.md) objects used to generate this Detection.
 * MinimumDistance - The minimum distance to the closest station.
+* Detector - A string identifying the detection grid, algorithm, or other information.

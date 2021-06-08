@@ -42,7 +42,8 @@ public class DetectionTest {
 			+ "\"RMS\":3.8,\"Bayes\":2.65,\"DetectionType\":\"New\","
 			+ "\"DetectionTime\":\"2015-12-28T21:32:28.017Z\",\"ID\":"
 			+ "\"12GFH48776857\",\"EventType\":{\"Type\":\"Earthquake\","
-			+ "\"Certainty\":\"Suspected\"},\"MinimumDistance\":2.14}";
+			+ "\"Certainty\":\"Suspected\"},\"MinimumDistance\":2.14,"
+			+ "\"Detector\":\"Global\"}";
 	public static String ID = "12GFH48776857";
 	public static String AGENCYID = "US";
 	public static String AUTHOR = "TestAuthor";
@@ -62,6 +63,7 @@ public class DetectionTest {
 	public static double MINIMUMDISTANCE = 2.14;
 	public static double RMS = 3.8;
 	public static double GAP = 33.67;
+	public static String DETECTOR = "Global";
 	public static String PICKDATA = "{\"Type\":\"Pick\",\"ID\":\"12GFH48776857\""
 			+ ",\"Site\":{\"Station\":\"BMN\","
 			+ "\"Network\":\"LB\",\"Channel\":\"HHZ\",\"Location\":\"01\"},"
@@ -97,8 +99,8 @@ public class DetectionTest {
 		Detection detectionObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 			LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 			TIMEERROR, DEPTHERROR, DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, 
-			CERTAINTY, BAYES, MINIMUMDISTANCE, RMS, GAP, buildPickData(),
-			buildCorrelationData());
+			CERTAINTY, BAYES, MINIMUMDISTANCE, RMS, GAP, DETECTOR,
+			buildPickData(), buildCorrelationData());
 
 		// write out to a string
 		String jsonString = Utility.toJSONString(detectionObject.toJSON());
@@ -136,8 +138,8 @@ public class DetectionTest {
 		Detection detectionObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 			LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 			TIMEERROR, DEPTHERROR, DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, 
-			CERTAINTY, BAYES, MINIMUMDISTANCE, RMS, GAP, buildPickData(),
-			buildCorrelationData());
+			CERTAINTY, BAYES, MINIMUMDISTANCE, RMS, GAP, DETECTOR,
+			buildPickData(), buildCorrelationData());
 			
 		// check data values
 		CheckData(detectionObject, "Constructor");
@@ -148,8 +150,8 @@ public class DetectionTest {
 				LONGITUDEERROR, TIMEERROR, DEPTHERROR),
 			DETECTIONTYPE, DETECTIONTIME, 
 			new EventType(EVENTTYPE, CERTAINTY),
-			BAYES, MINIMUMDISTANCE, RMS, GAP, buildPickData(), 
-			buildCorrelationData());
+			BAYES, MINIMUMDISTANCE, RMS, GAP, DETECTOR,
+			buildPickData(), buildCorrelationData());
 
 		// check data values
 		CheckData(altDetectionObject, "Alternate Constructor 1");
@@ -170,8 +172,8 @@ public class DetectionTest {
 		Detection detectionObject = new Detection(ID, AGENCYID, AUTHOR, LATITUDE,
 			LONGITUDE, TIME, DEPTH, LATITUDEERROR, LONGITUDEERROR,
 			TIMEERROR, DEPTHERROR, DETECTIONTYPE, DETECTIONTIME, EVENTTYPE, 
-			CERTAINTY, BAYES, MINIMUMDISTANCE, RMS, GAP, buildPickData(),
-			buildCorrelationData());
+			CERTAINTY, BAYES, MINIMUMDISTANCE, RMS, GAP, DETECTOR,
+			buildPickData(), buildCorrelationData());
 
 		// Successful validation
 		boolean rc = detectionObject.isValid();
@@ -190,7 +192,7 @@ public class DetectionTest {
 		// build bad Detection object
 		Detection badDetectionObject2 = new Detection("", "", null, -999.0,
 			-999.0, null, -99999.0, null, null, null, null, "??", null, "chair", 
-			"fjord", -99.0, -1.0, null, -99.0, buildPickData(), 
+			"fjord", -99.0, -1.0, null, -99.0, "", buildPickData(), 
 			buildCorrelationData());
 
 		rc = badDetectionObject2.isValid();
@@ -271,7 +273,7 @@ public class DetectionTest {
 			}
 		}
 
-		// check OriginObject.DetectionType
+		// check detectionObject.DetectionType
 		if (detectionObject.getDetectionType() != null) {
 			assertEquals(TestName + " DetectionType Equals", DETECTIONTYPE,
 					detectionObject.getDetectionType());
@@ -299,28 +301,34 @@ public class DetectionTest {
 			}
 		}
 
-		// check OriginObject.Bayes
+		// check detectionObject.Bayes
 		if (detectionObject.getBayes() != null) {
 			assertEquals(TestName + " Bayes Equals", BAYES, 
 				detectionObject.getBayes(), 0);
 		}
 
-		// check OriginObject.MinimumDistance
+		// check detectionObject.MinimumDistance
 		if (detectionObject.getMinimumDistance() != null) {
 			assertEquals(TestName + " MinimumDistance Equals", MINIMUMDISTANCE,
 				detectionObject.getMinimumDistance(), 0);
 		}
 
-		// check OriginObject.RMS
+		// check detectionObject.RMS
 		if (detectionObject.getRMS() != null) {
 			assertEquals(TestName + " RMS Equals", RMS, 
 				detectionObject.getRMS(), 0);
 		}
 
-		// check OriginObject.Gap
+		// check detectionObject.Gap
 		if (detectionObject.getGap() != null) {
 			assertEquals(TestName + " Gap Equals", GAP, 
 				detectionObject.getGap(), 0);
+		}
+
+		// check detectionObject.detector
+		if (detectionObject.getDetector() != null) {
+			assertEquals(TestName + " detector Equals", DETECTOR, 
+				detectionObject.getDetector());
 		}
 
 		// should check data still!!!!!!

@@ -78,6 +78,8 @@ class detection : public detectionbase {
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newgap - A double containing the gap to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newdetector - A std::string containing the detecton method, empty
+	 * 		string to omit.
 	 * \param newpickdata - A std::vector<detectionformats::pickjson> newdata
 	 * 		containing the data that went into this detection, empty vector to
 	 * 		omit
@@ -93,7 +95,8 @@ class detection : public detectionbase {
 				double newdetectiontime, std::string neweventtype,
 				std::string neweventtypecertainty, double newbayes,
 				double newminimumdistance, double newrms,
-				double newgap, std::vector<detectionformats::pick> newpickdata,
+				double newgap, std::string newdetector,
+				std::vector<detectionformats::pick> newpickdata,
 				std::vector<detectionformats::correlation> newcorrelationdata);
 
 	/**
@@ -122,6 +125,8 @@ class detection : public detectionbase {
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newgap - A double containing the gap to use,
 	 * 		std::numeric_limits<double>::quiet_NaN() to omit
+	 * \param newdetector - A std::string containing the detecton method, empty
+	 * 		string to omit.
 	 * \param newpickdata - A std::vector<detectionformats::pickjson> newdata
 	 * 		containing the data that went into this detection, empty vector to
 	 * 		omit
@@ -134,6 +139,7 @@ class detection : public detectionbase {
 				std::string newdetectiontype, double newdetectiontime,
 				detectionformats::eventtype neweventtype, double newbayes,
 				double newminimumdistance, double newrms, double newgap,
+				std::string newdetector,
 				std::vector<detectionformats::pick> newpickdata,
 				std::vector<detectionformats::correlation> newcorrelationdata);
 
@@ -259,6 +265,13 @@ class detection : public detectionbase {
 	 * how quickly after origin time.
 	 */
 	double detectiontime;
+
+	/**
+	 * \brief detector method
+	 *
+	 * An optional std::string containing the detector string
+	 */
+	std::string detector;
 
 	/**
 	 * \brief pick data vector
