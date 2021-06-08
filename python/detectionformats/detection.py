@@ -26,11 +26,12 @@ class Detection:
     RMS_KEY = "RMS"
     GAP_KEY = "Gap"
     DATA_KEY = "Data"
+    DETECTOR_KEY = "Detector"
 
     def __init__(self, newID=None, newSource=None, newHypocenter=None,
         newDetectionType=None, newEventType=None, newDetectionTime=None,
         newBayes=None, newMinimumDistance=None, newRMS=None, newGap=None,
-        newPickData=None, newCorrelationData=None):
+        newDetector=None, newPickData=None, newCorrelationData=None):
         """Initialize the detection object. Constructs an empty object
            if all arguments are None
 
@@ -53,6 +54,7 @@ class Detection:
             newRMS: an optional Number containing the desired RMS estimate as a
                 float
             newGap: an optional Number containing the gap estimate as a float
+            newDetector: an optioanl String containing the detection method
             newPickData: an optional array of detectionformats.pick.Pick objects
                 that support this detection
             newCorrelationData: an optional array of
@@ -101,6 +103,9 @@ class Detection:
 
         if newGap is not None:
             self.gap = newGap
+
+        if newDetector is not None:
+            self.detector = newDetector
 
         if newPickData is not None:
             if newPickData and len(newPickData) > 0:
@@ -165,6 +170,9 @@ class Detection:
 
         if self.GAP_KEY in aDict:
             self.gap = aDict[self.GAP_KEY]
+
+        if self.DETECTOR_KEY in aDict:
+            self.detector = aDict[self.DETECTOR_KEY]
 
         if self.DATA_KEY in aDict:
             aDataList = aDict[self.DATA_KEY]
@@ -240,6 +248,9 @@ class Detection:
 
         if hasattr(self, 'gap'):
             aDict[self.GAP_KEY] = self.gap
+
+        if hasattr(self, 'detector'):
+            aDict[self.DETECTOR_KEY] = self.detector
 
         aDataList = []
         if hasattr(self, 'pickData'):

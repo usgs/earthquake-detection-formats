@@ -26,6 +26,7 @@ public class Detection implements DetectionInt {
 	public static final String RMS_KEY = "RMS";
 	public static final String GAP_KEY = "Gap";
 	public static final String DATA_KEY = "Data";
+	public static final String DETECTOR_KEY = "Detector";
 
 	/**
 	 * Required type identifier for this Detection
@@ -85,6 +86,11 @@ public class Detection implements DetectionInt {
 	private final Double gap;
 
 	/**
+	 * Optional detector method string
+	 */
+	private final String detector;
+
+	/**
 	 * An optional vector of Pick objects used to generate this origin
 	 */
 	private final ArrayList<Pick> pickData;
@@ -113,6 +119,7 @@ public class Detection implements DetectionInt {
 		gap = null;
 		pickData = null;
 		correlationData = null;
+		detector = null;
 	}
 
 	/**
@@ -162,6 +169,8 @@ public class Detection implements DetectionInt {
 	 *            - A Double containing the rms to use, null to omit
 	 * @param newGap
 	 *            - A Double containing the gap to use, null to omit
+	 * @param newDetector - A string containing the detecton method, empty
+	 * 			  string to omit. 
 	 * @param newPickData
 	 *            - A ArrayList&lt;Pick&gt; newPickData containing the data that
 	 *            went into this origin, null to omit
@@ -176,6 +185,7 @@ public class Detection implements DetectionInt {
 			Date newDetectionTime, String newEventType, 
 			String newEventTypeCertainty, Double newBayes, 
 			Double newMinimumDistance, Double newRMS, Double newGap, 
+			String newDetector,
 			ArrayList<Pick> newPickData, 
 			ArrayList<Correlation> newCorrelationData) {
 		this(newID, new Source(newAgencyID, newAuthor),
@@ -184,8 +194,8 @@ public class Detection implements DetectionInt {
 						newDepthError),
 				newDetectionType, newDetectionTime, 
 				new EventType(newEventType, newEventTypeCertainty),
-				newBayes, newMinimumDistance, newRMS, newGap, newPickData, 
-				newCorrelationData);
+				newBayes, newMinimumDistance, newRMS, newGap, newDetector, 
+				newPickData, newCorrelationData);
 	}
 
 	/**
@@ -216,6 +226,8 @@ public class Detection implements DetectionInt {
 	 *            - A Double containing the rms to use, null to omit
 	 * @param newGap
 	 *            - A Double containing the gap to use, null to omit
+	 * @param newDetector - A string containing the detecton method, empty
+	 * 			  string to omit. 
 	 * @param newPickData
 	 *            - A ArrayList&lt;Pick&gt; newPickData containing the data that
 	 *            went into this origin, null to omit
@@ -226,7 +238,8 @@ public class Detection implements DetectionInt {
 	public Detection(String newID, Source newSource, Hypocenter newHypocenter,
 			String newDetectionType, Date newDetectionTime, EventType newEventType,
 			Double newBayes, Double newMinimumDistance, Double newRMS, Double newGap,
-			ArrayList<Pick> newPickData, ArrayList<Correlation> newCorrelationData) {
+			String newDetector,	ArrayList<Pick> newPickData, 
+			ArrayList<Correlation> newCorrelationData) {
 		type = "Detection";
 		id = newID;
 		source = newSource;
@@ -238,6 +251,7 @@ public class Detection implements DetectionInt {
 		minimumDistance = newMinimumDistance;
 		rms = newRMS;
 		gap = newGap;
+		detector = newDetector;
 
 		pickData = newPickData;
 		correlationData = newCorrelationData;
@@ -332,6 +346,13 @@ public class Detection implements DetectionInt {
 			gap = null;
 		}
 
+		// detector
+		if (newJSONObject.containsKey(DETECTOR_KEY)) {
+			detector = newJSONObject.get(DETECTOR_KEY).toString();
+		} else {
+			detector = null;
+		}
+
 		// Data
 		if (newJSONObject.containsKey(DATA_KEY)) {
 			pickData = new ArrayList<Pick>();
@@ -393,6 +414,7 @@ public class Detection implements DetectionInt {
 		Double jsonMinimumDistance = getMinimumDistance();
 		Double jsonRMS = getRMS();
 		Double jsonGap = getGap();
+		String jsonDetector = getDetector();
 		ArrayList<Pick> jsonPickData = getPickData();
 		ArrayList<Correlation> jsonCorrelationData = getCorrelationData();
 
@@ -450,6 +472,11 @@ public class Detection implements DetectionInt {
 		// gap
 		if (jsonGap != null) {
 			newJSONObject.put(GAP_KEY, jsonGap);
+		}
+
+		// detector
+		if (jsonDetector != null) {
+			newJSONObject.put(DETECTOR_KEY, jsonDetector);
 		}
 
 		// Data
@@ -739,6 +766,13 @@ public class Detection implements DetectionInt {
 	 */
 	public Double getGap() {
 		return gap;
+	}
+
+	/**
+	 * @return the detector
+	 */
+	public String getDetector() {
+		return detector;
 	}
 
 	/**

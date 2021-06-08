@@ -173,6 +173,13 @@ void checkdata(detectionformats::detection detectionobject,
 		ASSERT_EQ(detectiongap, expectedgap);
 	}
 
+	// check detector
+	if (detectionobject.id.empty() != true) {
+		std::string detectiondetector = detectionobject.detector;
+		std::string expecteddetector = std::string(DETECTOR);
+		ASSERT_STREQ(detectiondetector.c_str(), expecteddetector.c_str());
+	}
+
 	// should check data still!!!!!!
 	// somehow?
 }
@@ -209,6 +216,7 @@ TEST(DetectionTest, WritesJSON) {
 	detectionobject.minimumdistance = MINIMUMDISTANCE;
 	detectionobject.rms = RMS;
 	detectionobject.gap = GAP;
+	detectionobject.detector = std::string(DETECTOR);
 
 	// data
 	detectionobject.pickdata = buildpickdata();
@@ -256,7 +264,8 @@ TEST(DetectionTest, Constructor) {
 			detectionformats::ConvertISO8601ToEpochTime(
 					std::string(DETECTIONTIME)),
 			std::string(EVENTTYPE), std::string(CERTAINTY),
-			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, std::string(DETECTOR),
+			buildpickdata(),
 			buildcorrleationdata());
 
 	// check data values
@@ -273,7 +282,8 @@ TEST(DetectionTest, Constructor) {
 			detectionformats::ConvertISO8601ToEpochTime(
 					std::string(DETECTIONTIME)),
 			detectionformats::eventtype(std::string(EVENTTYPE), std::string(CERTAINTY)),
-			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, std::string(DETECTOR),
+			buildpickdata(),
 			buildcorrleationdata());
 
 	// check data values
@@ -300,7 +310,8 @@ TEST(DetectionTest, CopyConstructor) {
 			detectionformats::ConvertISO8601ToEpochTime(
 					std::string(DETECTIONTIME)),
 			std::string(EVENTTYPE), std::string(CERTAINTY),
-			BAYES, MINIMUMDISTANCE, RMS, GAP, buildpickdata(),
+			BAYES, MINIMUMDISTANCE, RMS, GAP, std::string(DETECTOR),
+			buildpickdata(),
 			buildcorrleationdata());
 
 	detectionformats::detection detectionobject(fromdetectionobject);
@@ -341,6 +352,7 @@ TEST(DetectionTest, Validate) {
 	detectionobject.minimumdistance = MINIMUMDISTANCE;
 	detectionobject.rms = RMS;
 	detectionobject.gap = GAP;
+	detectionobject.detector = std::string(DETECTOR);
 
 	// data
 	detectionobject.pickdata = buildpickdata();

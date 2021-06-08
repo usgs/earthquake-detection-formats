@@ -16,6 +16,7 @@
 #define RMS_KEY "RMS"
 #define GAP_KEY "Gap"
 #define DATA_KEY "Data"
+#define DETECTOR_KEY "Detector"
 
 namespace detectionformats {
 detection::detection() {
@@ -32,6 +33,7 @@ detection::detection() {
 	gap = std::numeric_limits<double>::quiet_NaN();
 	pickdata.clear();
 	correlationdata.clear();
+	detector = "";
 }
 
 detection::detection(
@@ -42,6 +44,7 @@ detection::detection(
 		double newdetectiontime, std::string neweventtype,
 		std::string neweventtypecertainty, double newbayes,
 		double newminimumdistance, double newrms, double newgap,
+		std::string newdetector,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
@@ -59,6 +62,7 @@ detection::detection(
 	minimumdistance = newminimumdistance;
 	rms = newrms;
 	gap = newgap;
+	detector = newdetector;
 
 	// copy data
 	pickdata.clear();
@@ -78,6 +82,7 @@ detection::detection(
 		std::string newdetectiontype, double newdetectiontime,
 		detectionformats::eventtype neweventtype, double newbayes,
 		double newminimumdistance, double newrms, double newgap,
+		std::string newdetector,
 		std::vector<detectionformats::pick> newpickdata,
 		std::vector<detectionformats::correlation> newcorrelationdata) {
 	type = DETECTION_TYPE;
@@ -91,6 +96,7 @@ detection::detection(
 	minimumdistance = newminimumdistance;
 	rms = newrms;
 	gap = newgap;
+	detector = newdetector;
 
 	// copy data
 	pickdata.clear();
@@ -204,6 +210,15 @@ detection::detection(rapidjson::Value &json) {
 		gap = std::numeric_limits<double>::quiet_NaN();
 	}
 
+	// detector
+	if ((json.HasMember(DETECTOR_KEY) == true) &&
+		(json[DETECTOR_KEY].IsString() == true)) {
+		detector = std::string(json[DETECTOR_KEY].GetString(),
+							json[DETECTOR_KEY].GetStringLength());
+	} else {
+		detector = "";
+	}
+
 	// data
 	pickdata.clear();
 	correlationdata.clear();
@@ -252,6 +267,7 @@ detection::detection(const detection & newdetection) {
 	minimumdistance = newdetection.minimumdistance;
 	rms = newdetection.rms;
 	gap = newdetection.gap;
+	detector = newdetection.detector;
 
 	// copy data
 	pickdata.clear();
@@ -340,6 +356,13 @@ rapidjson::Value & detection::tojson(
 	// gap
 	if (std::isnan(gap) != true)
 		json.AddMember(GAP_KEY, gap, allocator);
+
+	// detector
+	if (detector != "") {
+		rapidjson::Value detectorvalue;
+		detectorvalue.SetString(rapidjson::StringRef(detector.c_str()), allocator);
+		json.AddMember(DETECTOR_KEY, detectorvalue, allocator);
+	}
 
 	// data
 	// build json array
