@@ -11,8 +11,8 @@ public class ClassificationTest {
 
     public static final String CLASSIFICATION_STRING = "{\"Phase\":\"P\","
             + "\"PhaseProbability\":0.22,\"Distance\":0.442559," 
-            + "\"DistanceProbability\":22.5,\"Azimuth\":0.418479," 
-            + "\"AzimuthProbability\":0.16,\"Magnitude\":2.14,"
+            + "\"DistanceProbability\":22.5,\"Backazimuth\":0.418479," 
+            + "\"BackazimuthProbability\":0.16,\"Magnitude\":2.14,"
             + "\"MagnitudeType\":\"Mb\",\"MagnitudeProbability\":0.55,"
             + "\"Depth\":32.44,\"DepthProbability\":11.2,"
             + "\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},"
@@ -23,8 +23,8 @@ public class ClassificationTest {
     public static final double PHASEPROBABILITY = 0.22;
     public static final double DISTANCE = 0.442559;
     public static final double DISTANCEPROBABILITY = 22.5;
-    public static final double AZIMUTH = 0.418479;
-    public static final double AZIMUTHPROBABILITY = 0.16;
+    public static final double BACKAZIMUTH = 0.418479;
+    public static final double BACKAZIMUTHPROBABILITY = 0.16;
     public static final double MAGNITUDE = 2.14;
     public static final String MAGNITUDETYPE = "Mb";
     public static final double MAGNITUDEPROBABILITY = 0.55;
@@ -42,8 +42,8 @@ public class ClassificationTest {
 	@Test
 	public void WritesJSON() {
         Classification classificationObject = new Classification(PHASE, 
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH, 
-            AZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH, 
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
             DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY, EVENTTYPEPROBABILITY,
 			AGENCYID, AUTHOR);
 
@@ -82,8 +82,8 @@ public class ClassificationTest {
 	@Test
 	public void Constructor() {
 		Classification classificationObject = new Classification(PHASE, 
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH, 
-            AZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH, 
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
             DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY, EVENTTYPEPROBABILITY,
             AGENCYID, AUTHOR);
 
@@ -91,8 +91,8 @@ public class ClassificationTest {
 		CheckData(classificationObject, "Constructor");
 
         Classification classificationObject2 = new Classification(PHASE, 
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH, 
-            AZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH, 
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
             DEPTH, DEPTHPROBABILITY, new EventType(EVENTTYPE, CERTAINTY), 
             EVENTTYPEPROBABILITY, new Source(AGENCYID, AUTHOR));
 
@@ -113,8 +113,8 @@ public class ClassificationTest {
 	@Test
 	public void validate() {
 		Classification classificationObject = new Classification(PHASE, 
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH, 
-            AZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH, 
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
             DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY, EVENTTYPEPROBABILITY,
 			AGENCYID, AUTHOR);
 
@@ -151,8 +151,8 @@ public class ClassificationTest {
 
 		// not empty object
 		Classification classificationObject2 = new Classification(PHASE, 
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH, 
-            AZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH, 
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, MAGNITUDETYPE, MAGNITUDEPROBABILITY,
             DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY, EVENTTYPEPROBABILITY,
 			AGENCYID, AUTHOR);
 
@@ -192,17 +192,17 @@ public class ClassificationTest {
                 ClassificationObject.getDistanceProbability(), 0);
 		}        
 
-		// check ClassificationObject.Azimuth
-		if (ClassificationObject.getAzimuth() != null) {
-			assertEquals(TestName + " Azimuth Equals", AZIMUTH,
-				ClassificationObject.getAzimuth(), 0);
+		// check ClassificationObject.Backazimuth
+		if (ClassificationObject.getBackazimuth() != null) {
+			assertEquals(TestName + " Backazimuth Equals", BACKAZIMUTH,
+				ClassificationObject.getBackazimuth(), 0);
         }
         
-        // check ClassificationObject.azimuthProbability
-		if (ClassificationObject.getAzimuthProbability() != null) {
-            assertEquals(TestName + " Azimuth Probability Equals", 
-                AZIMUTHPROBABILITY, 
-                ClassificationObject.getAzimuthProbability(), 0);
+        // check ClassificationObject.backazimuthProbability
+		if (ClassificationObject.getBackazimuthProbability() != null) {
+            assertEquals(TestName + " Backazimuth Probability Equals", 
+                BACKAZIMUTHPROBABILITY, 
+                ClassificationObject.getBackazimuthProbability(), 0);
 		}             
 
 		// check ClassificationObject.magnitude

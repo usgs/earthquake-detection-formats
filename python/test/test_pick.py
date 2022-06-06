@@ -36,8 +36,8 @@ class TestPick(unittest.TestCase):
         12.5, 22.0, 88.2, 45.0, 67.0, 1.2, 'Mb', 33.33, 12.5, 50.2, EVENTTYPE, 
         22.0, SOURCE)
 
-    JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Filter": [{"Type": "BandPass", "HighPass": 1.2, "LowPass": 0.2, "Units": "Hertz"}], "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}'
-    DICT = {"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "Filter": [{"Type": "BandPass", "HighPass": 1.2, "LowPass": 0.2, "Units": "Hertz"}], "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Azimuth": 45.0, "AzimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}
+    JSONSTRING = '{"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Filter": [{"Type": "BandPass", "HighPass": 1.2, "LowPass": 0.2, "Units": "Hertz"}], "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Backazimuth": 45.0, "BackazimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}'
+    DICT = {"Type": "Pick", "ID": "123456789", "Site": {"Station": "BOZ", "Network": "BHZ", "Channel": "US", "Location": "00"}, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}, "Time": "2018-02-06T12:30:59.000Z", "Phase": "P", "Polarity": "up", "Onset": "impulsive", "Picker": "other", "Amplitude": {"Amplitude": 5.5, "Period": 1.5, "SNR": 6.2}, "Beam": {"BackAzimuth": 22.5, "Slowness": 1.2, "PowerRatio": 4.6, "BackAzimuthError": 1.2, "SlownessError": 3.5, "PowerRatioError": 2.1}, "Filter": [{"Type": "BandPass", "HighPass": 1.2, "LowPass": 0.2, "Units": "Hertz"}], "AssociationInfo": {"Phase": "P", "Distance": 12.5, "Azimuth": 255.0, "Residual": 3.2, "Sigma": 4.8}, "ClassificationInfo": {"Phase": "P", "PhaseProbability": 12.5, "Distance": 22.0, "DistanceProbability": 88.2, "Backazimuth": 45.0, "BackazimuthProbability": 67.0, "Magnitude": 1.2, "MagnitudeType": "Mb", "MagnitudeProbability": 33.33, "Depth": 12.5, "DepthProbability": 50.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 22.0, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}}
 
     def test_init(self):
         # Empty init
@@ -74,8 +74,8 @@ class TestPick(unittest.TestCase):
         self.assertFalse(hasattr(pick.classificationInfo, 'phaseProbability'))
         self.assertFalse(hasattr(pick.classificationInfo, 'distance'))
         self.assertFalse(hasattr(pick.classificationInfo, 'distanceProbability'))
-        self.assertFalse(hasattr(pick.classificationInfo, 'azimuth'))
-        self.assertFalse(hasattr(pick.classificationInfo, 'azimuthProbability'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'backazimuth'))
+        self.assertFalse(hasattr(pick.classificationInfo, 'backazimuthProbability'))
         self.assertFalse(hasattr(pick.classificationInfo, 'magnitude'))
         self.assertFalse(hasattr(pick.classificationInfo, 'magnitudeType'))
         self.assertFalse(hasattr(pick.classificationInfo, 'magnitudeProbability'))
@@ -123,8 +123,8 @@ class TestPick(unittest.TestCase):
         self.assertTrue(hasattr(pick.classificationInfo, 'phaseProbability'))
         self.assertTrue(hasattr(pick.classificationInfo, 'distance'))
         self.assertTrue(hasattr(pick.classificationInfo, 'distanceProbability'))
-        self.assertTrue(hasattr(pick.classificationInfo, 'azimuth'))
-        self.assertTrue(hasattr(pick.classificationInfo, 'azimuthProbability'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'backazimuth'))
+        self.assertTrue(hasattr(pick.classificationInfo, 'backazimuthProbability'))
         self.assertTrue(hasattr(pick.classificationInfo, 'magnitude'))
         self.assertTrue(hasattr(pick.classificationInfo, 'magnitudeType'))
         self.assertTrue(hasattr(pick.classificationInfo, 'magnitudeProbability'))
@@ -167,8 +167,8 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
         self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
         self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
-        self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
-        self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability)        
+        self.assertEqual(pick.classificationInfo.backazimuth, self.CLASSIFICATIONINFO.backazimuth)
+        self.assertEqual(pick.classificationInfo.backazimuthProbability, self.CLASSIFICATIONINFO.backazimuthProbability)        
         self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
         self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
         self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)
@@ -224,8 +224,8 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
         self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
         self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
-        self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
-        self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability) 
+        self.assertEqual(pick.classificationInfo.backazimuth, self.CLASSIFICATIONINFO.backazimuth)
+        self.assertEqual(pick.classificationInfo.backazimuthProbability, self.CLASSIFICATIONINFO.backazimuthProbability) 
         self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
         self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
         self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)
@@ -280,8 +280,8 @@ class TestPick(unittest.TestCase):
         self.assertEqual(pick.classificationInfo.phaseProbability, self.CLASSIFICATIONINFO.phaseProbability)
         self.assertEqual(pick.classificationInfo.distance, self.CLASSIFICATIONINFO.distance)
         self.assertEqual(pick.classificationInfo.distanceProbability, self.CLASSIFICATIONINFO.distanceProbability)
-        self.assertEqual(pick.classificationInfo.azimuth, self.CLASSIFICATIONINFO.azimuth)
-        self.assertEqual(pick.classificationInfo.azimuthProbability, self.CLASSIFICATIONINFO.azimuthProbability) 
+        self.assertEqual(pick.classificationInfo.backazimuth, self.CLASSIFICATIONINFO.backazimuth)
+        self.assertEqual(pick.classificationInfo.backazimuthProbability, self.CLASSIFICATIONINFO.backazimuthProbability) 
         self.assertEqual(pick.classificationInfo.magnitude, self.CLASSIFICATIONINFO.magnitude)
         self.assertEqual(pick.classificationInfo.magnitudeType, self.CLASSIFICATIONINFO.magnitudeType)
         self.assertEqual(pick.classificationInfo.magnitudeProbability, self.CLASSIFICATIONINFO.magnitudeProbability)

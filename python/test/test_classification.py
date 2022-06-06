@@ -13,8 +13,8 @@ class TestClassification(unittest.TestCase):
     PHASEPROBABILITY = 0.22
     DISTANCE = 0.442559
     DISTANCEPROBABILITY = 22.5
-    AZIMUTH = 0.418479
-    AZIMUTHPROBABILITY = 0.16
+    BACKAZIMUTH = 0.418479
+    BACKAZIMUTHPROBABILITY = 0.16
     MAGNITUDE = 2.14
     MAGNITUDETYPE = "Mb"
     MAGNITUDEPROBABILITY = 0.55
@@ -24,8 +24,8 @@ class TestClassification(unittest.TestCase):
     EVENTTYPEPROBABILITY = 1.1
     SOURCE = detectionformats.source.Source('testAgency', 'testAuthor')
 
-    JSONSTRING = '{"Phase": "P", "PhaseProbability": 0.22, "Distance": 0.442559, "DistanceProbability": 22.5, "Azimuth": 0.418479, "AzimuthProbability": 0.16, "Magnitude": 2.14, "MagnitudeType": "Mb", "MagnitudeProbability": 0.55, "Depth": 32.44, "DepthProbability": 11.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 1.1, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}'
-    DICT = {"Phase": "P", "PhaseProbability": 0.22, "Distance": 0.442559, "DistanceProbability": 22.5, "Azimuth": 0.418479, "AzimuthProbability": 0.16, "Magnitude": 2.14, "MagnitudeType": "Mb", "MagnitudeProbability": 0.55, "Depth": 32.44, "DepthProbability": 11.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 1.1, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}
+    JSONSTRING = '{"Phase": "P", "PhaseProbability": 0.22, "Distance": 0.442559, "DistanceProbability": 22.5, "Backazimuth": 0.418479, "BackazimuthProbability": 0.16, "Magnitude": 2.14, "MagnitudeType": "Mb", "MagnitudeProbability": 0.55, "Depth": 32.44, "DepthProbability": 11.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 1.1, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}'
+    DICT = {"Phase": "P", "PhaseProbability": 0.22, "Distance": 0.442559, "DistanceProbability": 22.5, "Backazimuth": 0.418479, "BackazimuthProbability": 0.16, "Magnitude": 2.14, "MagnitudeType": "Mb", "MagnitudeProbability": 0.55, "Depth": 32.44, "DepthProbability": 11.2, "EventType": {"Type": "Earthquake", "Certainty": "Suspected"}, "EventTypeProbability": 1.1, "Source": {"AgencyID": "testAgency", "Author": "testAuthor"}}
 
     def test_init(self):
         # Empty init
@@ -35,8 +35,8 @@ class TestClassification(unittest.TestCase):
         self.assertFalse(hasattr(classification, 'phaseProbability'))
         self.assertFalse(hasattr(classification, 'distance'))
         self.assertFalse(hasattr(classification, 'distanceProbability'))
-        self.assertFalse(hasattr(classification, 'azimuth'))
-        self.assertFalse(hasattr(classification, 'azimuthProbability'))
+        self.assertFalse(hasattr(classification, 'backazimuth'))
+        self.assertFalse(hasattr(classification, 'backazimuthProbability'))
         self.assertFalse(hasattr(classification, 'magnitude'))
         self.assertFalse(hasattr(classification, 'magnitudeType'))
         self.assertFalse(hasattr(classification, 'magnitudeProbability'))
@@ -50,7 +50,7 @@ class TestClassification(unittest.TestCase):
 
         classification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, self.DISTANCE, self.DISTANCEPROBABILITY, 
-            self.AZIMUTH, self.AZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
+            self.BACKAZIMUTH, self.BACKAZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
             self.MAGNITUDEPROBABILITY, self.DEPTH, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
 
@@ -58,8 +58,8 @@ class TestClassification(unittest.TestCase):
         self.assertTrue(hasattr(classification, 'phaseProbability'))
         self.assertTrue(hasattr(classification, 'distance'))
         self.assertTrue(hasattr(classification, 'distanceProbability'))
-        self.assertTrue(hasattr(classification, 'azimuth'))
-        self.assertTrue(hasattr(classification, 'azimuthProbability'))
+        self.assertTrue(hasattr(classification, 'backazimuth'))
+        self.assertTrue(hasattr(classification, 'backazimuthProbability'))
         self.assertTrue(hasattr(classification, 'magnitude'))
         self.assertTrue(hasattr(classification, 'magnitudeType'))
         self.assertTrue(hasattr(classification, 'magnitudeProbability'))
@@ -75,8 +75,8 @@ class TestClassification(unittest.TestCase):
         self.assertEqual(classification.phase, self.PHASE)
         self.assertEqual(classification.distance, self.DISTANCE)
         self.assertEqual(classification.distanceProbability, self.DISTANCEPROBABILITY)
-        self.assertEqual(classification.azimuth, self.AZIMUTH)
-        self.assertEqual(classification.azimuthProbability, self.AZIMUTHPROBABILITY)      
+        self.assertEqual(classification.backazimuth, self.BACKAZIMUTH)
+        self.assertEqual(classification.backazimuthProbability, self.BACKAZIMUTHPROBABILITY)      
         self.assertEqual(classification.magnitude, self.MAGNITUDE)
         self.assertEqual(classification.magnitudeType, self.MAGNITUDETYPE)
         self.assertEqual(classification.magnitudeProbability, self.MAGNITUDEPROBABILITY)
@@ -91,7 +91,7 @@ class TestClassification(unittest.TestCase):
     def test_toJSON(self):
         classification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, self.DISTANCE, self.DISTANCEPROBABILITY, 
-            self.AZIMUTH, self.AZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
+            self.BACKAZIMUTH, self.BACKAZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
             self.MAGNITUDEPROBABILITY, self.DEPTH, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
         self.maxDiff = None
@@ -105,8 +105,8 @@ class TestClassification(unittest.TestCase):
         self.assertEqual(classification.phaseProbability, self.PHASEPROBABILITY)
         self.assertEqual(classification.distance, self.DISTANCE)
         self.assertEqual(classification.distanceProbability, self.DISTANCEPROBABILITY)
-        self.assertEqual(classification.azimuth, self.AZIMUTH)
-        self.assertEqual(classification.azimuthProbability, self.AZIMUTHPROBABILITY) 
+        self.assertEqual(classification.backazimuth, self.BACKAZIMUTH)
+        self.assertEqual(classification.backazimuthProbability, self.BACKAZIMUTHPROBABILITY) 
         self.assertEqual(classification.magnitude, self.MAGNITUDE)
         self.assertEqual(classification.magnitudeType, self.MAGNITUDETYPE)
         self.assertEqual(classification.magnitudeProbability, self.MAGNITUDEPROBABILITY)
@@ -121,7 +121,7 @@ class TestClassification(unittest.TestCase):
     def test_toDict(self):
         classification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, self.DISTANCE, self.DISTANCEPROBABILITY, 
-            self.AZIMUTH, self.AZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
+            self.BACKAZIMUTH, self.BACKAZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
             self.MAGNITUDEPROBABILITY, self.DEPTH, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
         self.assertEqual(classification.toDict(), self.DICT)
@@ -134,8 +134,8 @@ class TestClassification(unittest.TestCase):
         self.assertEqual(classification.phaseProbability, self.PHASEPROBABILITY)
         self.assertEqual(classification.distance, self.DISTANCE)
         self.assertEqual(classification.distanceProbability, self.DISTANCEPROBABILITY)
-        self.assertEqual(classification.azimuth, self.AZIMUTH)
-        self.assertEqual(classification.azimuthProbability, self.AZIMUTHPROBABILITY) 
+        self.assertEqual(classification.backazimuth, self.BACKAZIMUTH)
+        self.assertEqual(classification.backazimuthProbability, self.BACKAZIMUTHPROBABILITY) 
         self.assertEqual(classification.magnitude, self.MAGNITUDE)
         self.assertEqual(classification.magnitudeType, self.MAGNITUDETYPE)
         self.assertEqual(classification.magnitudeProbability, self.MAGNITUDEPROBABILITY)
@@ -150,14 +150,14 @@ class TestClassification(unittest.TestCase):
     def test_isValid(self):
         classification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, self.DISTANCE, self.DISTANCEPROBABILITY, 
-            self.AZIMUTH, self.AZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
+            self.BACKAZIMUTH, self.BACKAZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
             self.MAGNITUDEPROBABILITY, self.DEPTH, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
         self.assertTrue(classification.isValid())
 
         badClassification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, -1, self.DISTANCEPROBABILITY, 
-            -1, self.AZIMUTHPROBABILITY, -100.0, self.MAGNITUDETYPE, 
+            -1, self.BACKAZIMUTHPROBABILITY, -100.0, self.MAGNITUDETYPE, 
             self.MAGNITUDEPROBABILITY, -9999.0, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
 
@@ -169,7 +169,7 @@ class TestClassification(unittest.TestCase):
 
         classification = detectionformats.classification.Classification(self.PHASE,
             self.PHASEPROBABILITY, self.DISTANCE, self.DISTANCEPROBABILITY, 
-            self.AZIMUTH, self.AZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
+            self.BACKAZIMUTH, self.BACKAZIMUTHPROBABILITY, self.MAGNITUDE, self.MAGNITUDETYPE, 
             self.MAGNITUDEPROBABILITY, self.DEPTH, self.DEPTHPROBABILITY, 
             self.EVENTTYPE, self.EVENTTYPEPROBABILITY, self.SOURCE)
         self.assertFalse(classification.isEmpty())

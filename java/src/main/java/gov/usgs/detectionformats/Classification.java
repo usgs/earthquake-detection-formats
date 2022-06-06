@@ -19,8 +19,8 @@ public class Classification implements DetectionInt {
     public static final String PHASEPROB_KEY = "PhaseProbability";
     public static final String DISTANCE_KEY = "Distance";
     public static final String DISTANCEPROB_KEY = "DistanceProbability";
-    public static final String AZIMUTH_KEY = "Azimuth";
-    public static final String AZIMUTHPROB_KEY = "AzimuthProbability";
+    public static final String BACKAZIMUTH_KEY = "Backazimuth";
+    public static final String BACKAZIMUTHPROB_KEY = "BackazimuthProbability";
     public static final String MAGNITUDE_KEY = "Magnitude";
     public static final String MAGNITUDETYPE_KEY = "MagnitudeType";
     public static final String MAGNITUDEPROB_KEY = "MagnitudeProbability";
@@ -53,15 +53,15 @@ public class Classification implements DetectionInt {
 	private final Double distanceProbability;
 
 	/**
-	 * An optional private final Double containing the classification azimuth
+	 * An optional private final Double containing the classification backazimuth
 	 */
-	private final Double azimuth;
+	private final Double backazimuth;
 
 	/**
 	 * An optional private final Double containing the probability of the 
-     * classification azimuth
+     * classification backazimuth
 	 */
-	private final Double azimuthProbability;
+	private final Double backazimuthProbability;
 
 	/**
 	 * An optional private final Double containing the classification magnitude
@@ -117,8 +117,8 @@ public class Classification implements DetectionInt {
         phaseProbability = null;
         distance = null;
         distanceProbability = null;
-        azimuth = null;
-        azimuthProbability = null;
+        backazimuth = null;
+        backazimuthProbability = null;
         magnitude = null;
         magnitudeType = null;
         magnitudeProbability = null;
@@ -146,11 +146,11 @@ public class Classification implements DetectionInt {
      * @param newDistanceProb 
      *            - A Double containing the probability of the distance estimate
      * (null omit)
-	 * @param newAzimuth
-	 *            - A private final Double containing the azimuth to use (null 
+	 * @param newBackazimuth
+	 *            - A private final Double containing the backazimuth to use (null 
      * omit)
-     * @param newAzimuthProb 
-     *            - A Double containing the probability of the azimuth estimate 
+     * @param newBackazimuthProb 
+     *            - A Double containing the probability of the backazimuth estimate 
      * (null omit)
      * @param newMagnitude 
      *            - A Double containing the magnitude to use (null omit)
@@ -179,14 +179,14 @@ public class Classification implements DetectionInt {
 	 *            - A String containing the classifing author to use (null omit)
 	 */
 	public Classification(String newPhase, Double newPhaseProb,
-            Double newDistance, Double newDistanceProb, Double newAzimuth,
-            Double newAzimuthProb, Double newMagnitude, String newMagType,
+            Double newDistance, Double newDistanceProb, Double newBackazimuth,
+            Double newBackazimuthProb, Double newMagnitude, String newMagType,
             Double newMagProb, Double newDepth, Double newDepthProb,
             String newEventType, String newEventTypeCertainty,
             Double newEventTypeProb, String newAgencyID,
             String newAuthor) {
-        this(newPhase, newPhaseProb, newDistance, newDistanceProb, newAzimuth,
-                newAzimuthProb, newMagnitude, newMagType, newMagProb, newDepth, 
+        this(newPhase, newPhaseProb, newDistance, newDistanceProb, newBackazimuth,
+                newBackazimuthProb, newMagnitude, newMagType, newMagProb, newDepth, 
                 newDepthProb, new EventType(newEventType, newEventTypeCertainty), 
                 newEventTypeProb, new Source(newAgencyID, newAuthor));
 	}
@@ -208,11 +208,11 @@ public class Classification implements DetectionInt {
      * @param newDistanceProb 
      *            - A Double containing the probability of the distance estimate
      * (null omit)
-	 * @param newAzimuth
-	 *            - A private final Double containing the azimuth to use (null 
+	 * @param newBackazimuth
+	 *            - A private final Double containing the backazimuth to use (null 
      * omit)
-     * @param newAzimuthProb 
-     *            - A Double containing the probability of the azimuth estimate 
+     * @param newBackazimuthProb 
+     *            - A Double containing the probability of the backazimuth estimate 
      * (null omit)
      * @param newMagnitude 
      *            - A Double containing the magnitude to use (null omit)
@@ -236,16 +236,16 @@ public class Classification implements DetectionInt {
 	 *            - A Source object classifing source to use (null omit)
 	 */
 	public Classification(String newPhase, Double newPhaseProb,
-            Double newDistance, Double newDistanceProb, Double newAzimuth,
-            Double newAzimuthProb, Double newMagnitude, String newMagType,
+            Double newDistance, Double newDistanceProb, Double newBackazimuth,
+            Double newBackazimuthProb, Double newMagnitude, String newMagType,
             Double newMagProb, Double newDepth, Double newDepthProb,
             EventType newEventType, Double newEventTypeProb, Source newSource) {
         phase = newPhase;
         phaseProbability = newPhaseProb;
         distance = newDistance;
         distanceProbability = newDistanceProb;
-        azimuth = newAzimuth;
-        azimuthProbability = newAzimuthProb;
+        backazimuth = newBackazimuth;
+        backazimuthProbability = newBackazimuthProb;
         magnitude = newMagnitude;
         magnitudeType = newMagType;
         magnitudeProbability = newMagProb;
@@ -292,18 +292,18 @@ public class Classification implements DetectionInt {
 			distanceProbability = null;
 		}        
 
-		// azimuth
-		if (newJSONObject.containsKey(AZIMUTH_KEY)) {
-			azimuth = (double) newJSONObject.get(AZIMUTH_KEY);
+		// backazimuth
+		if (newJSONObject.containsKey(BACKAZIMUTH_KEY)) {
+			backazimuth = (double) newJSONObject.get(BACKAZIMUTH_KEY);
 		} else {
-			azimuth = null;
+			backazimuth = null;
         }
         
-		// azimuthProbability
-		if (newJSONObject.containsKey(AZIMUTHPROB_KEY)) {
-            azimuthProbability = (double) newJSONObject.get(AZIMUTHPROB_KEY);
+		// backazimuthProbability
+		if (newJSONObject.containsKey(BACKAZIMUTHPROB_KEY)) {
+            backazimuthProbability = (double) newJSONObject.get(BACKAZIMUTHPROB_KEY);
 		} else {
-			azimuthProbability = null;
+			backazimuthProbability = null;
 		}        
 
 		// magnitude
@@ -379,8 +379,8 @@ public class Classification implements DetectionInt {
         Double jsonPhaseProb = getPhaseProbability();
 		Double jsonDistance = getDistance();
 		Double jsonDistanceProb = getDistanceProbability();
-		Double jsonAzimuth = getAzimuth();
-		Double jsonAzimuthProb = getAzimuthProbability();
+		Double jsonBackazimuth = getBackazimuth();
+		Double jsonBackazimuthProb = getBackazimuthProbability();
         Double jsonMagnitude = getMagnitude();
 		String jsonMagnitudeType = getMagnitudeType();
 		Double jsonMagnitudeProb = getMagnitudeProbability();
@@ -411,14 +411,14 @@ public class Classification implements DetectionInt {
 			newJSONObject.put(DISTANCEPROB_KEY, jsonDistanceProb);
 		}        
 
-		// azimuth
-		if (jsonAzimuth != null) {
-			newJSONObject.put(AZIMUTH_KEY, jsonAzimuth);
+		// backazimuth
+		if (jsonBackazimuth != null) {
+			newJSONObject.put(BACKAZIMUTH_KEY, jsonBackazimuth);
         }
         
-        // azimuthProbability
-		if (jsonAzimuthProb != null) {
-			newJSONObject.put(AZIMUTHPROB_KEY, jsonAzimuthProb);
+        // backazimuthProbability
+		if (jsonBackazimuthProb != null) {
+			newJSONObject.put(BACKAZIMUTHPROB_KEY, jsonBackazimuthProb);
 		}
 
 		// magnitude
@@ -485,7 +485,7 @@ public class Classification implements DetectionInt {
 	public ArrayList<String> getErrors() {
 		String jsonPhase = getPhase();
  		Double jsonDistance = getDistance();
-		Double jsonAzimuth = getAzimuth();
+		Double jsonBackazimuth = getBackazimuth();
 	    Double jsonMagnitude = getMagnitude();
 		Double jsonDepth = getDepth();
 		EventType jsonEventType = getEventType();
@@ -515,12 +515,12 @@ public class Classification implements DetectionInt {
 			}
 		}
 
-		// azimuth
-		if (jsonAzimuth != null) {
-			// check azimuth
-			if (jsonAzimuth < 0) {
-				// azimuth negative (invalid)
-				errorList.add("Invalid Azimuth in Classification Class.");
+		// backazimuth
+		if (jsonBackazimuth != null) {
+			// check backazimuth
+			if (jsonBackazimuth < 0) {
+				// backazimuth negative (invalid)
+				errorList.add("Invalid Backazimuth in Classification Class.");
 			}
 		}
 
@@ -580,10 +580,10 @@ public class Classification implements DetectionInt {
 		if (getDistanceProbability() != null) {
 			return (false);
 		}
-		if (getAzimuth() != null) {
+		if (getBackazimuth() != null) {
 			return (false);
 		}
-		if (getAzimuthProbability() != null) {
+		if (getBackazimuthProbability() != null) {
 			return (false);
 		}
 		if (getMagnitude() != null) {
@@ -642,17 +642,17 @@ public class Classification implements DetectionInt {
     }
         
 	/**
-	 * @return the azimuth
+	 * @return the backazimuth
 	 */
-	public Double getAzimuth() {
-		return azimuth;
+	public Double getBackazimuth() {
+		return backazimuth;
 	}
 
 	/**
-	 * @return the azimuthProbability
+	 * @return the backazimuthProbability
 	 */
-	public Double getAzimuthProbability() {
-		return azimuthProbability;
+	public Double getBackazimuthProbability() {
+		return backazimuthProbability;
 	}
 
 	/**

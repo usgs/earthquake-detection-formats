@@ -204,10 +204,10 @@ public class Pick implements DetectionInt {
      * @param newClassificationDistanceProb
 	 *            - A Double containing the probability of the distance estimate, 
 	 * 			  null to omit
-	 * @param newClassificationAzimuth
-	 *            - A Double containing the azimuth to use, null to omit
-     * @param newClassificationAzimuthProb
-	 *            - A Double containing the probability of the azimuth estimate, 
+	 * @param newClassificationBackazimuth
+	 *            - A Double containing the backazimuth to use, null to omit
+     * @param newClassificationBackazimuthProb
+	 *            - A Double containing the probability of the backazimuth estimate, 
 	 * 			  null to omit
 	 * @param newClassificationMagnitude
 	 *            - A Double containing the magnitude to use, null to omit
@@ -249,7 +249,7 @@ public class Pick implements DetectionInt {
 			Double newAssociationResidual, Double newAssociationSigma,
 			String newClassificationPhase, Double newClassificationPhaseProb,
             Double newClassificationDistance, Double newClassificationDistanceProb,
-			Double newClassificationAzimuth, Double newClassificationAzimuthProb,
+			Double newClassificationBackazimuth, Double newClassificationBackazimuthProb,
 			Double newClassificationMagnitude, String newClassificationMagType,
             Double newClassificationMagProb, Double newClassificationDepth,
 			Double newClassificationDepthProb, String newClassificationEventType,
@@ -271,8 +271,8 @@ public class Pick implements DetectionInt {
 					newAssociationSigma),
 				new Classification(newClassificationPhase, 
 					newClassificationPhaseProb, newClassificationDistance, 
-					newClassificationDistanceProb, newClassificationAzimuth, 
-					newClassificationAzimuthProb, newClassificationMagnitude, 
+					newClassificationDistanceProb, newClassificationBackazimuth, 
+					newClassificationBackazimuthProb, newClassificationMagnitude, 
 					newClassificationMagType, newClassificationMagProb, 
 					newClassificationDepth, newClassificationDepthProb, 
 					newClassificationEventType, 

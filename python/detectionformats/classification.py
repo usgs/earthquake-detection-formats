@@ -17,8 +17,8 @@ class Classification:
     PHASEPROB_KEY = "PhaseProbability"
     DISTANCE_KEY = "Distance"
     DISTANCEPROB_KEY = "DistanceProbability"
-    AZIMUTH_KEY = "Azimuth"
-    AZIMUTHPROB_KEY = "AzimuthProbability"
+    BACKAZIMUTH_KEY = "Backazimuth"
+    BACKAZIMUTHPROB_KEY = "BackazimuthProbability"
     MAGNITUDE_KEY = "Magnitude"
     MAGNITUDETYPE_KEY = "MagnitudeType"
     MAGNITUDEPROB_KEY = "MagnitudeProbability"
@@ -29,7 +29,7 @@ class Classification:
     SOURCE_KEY = "Source"
 
     def __init__(self, newPhase=None, newPhaseProb=None, newDistance=None, 
-        newDistanceProb=None, newAzimuth=None, newAzimuthProb=None,
+        newDistanceProb=None, newBackazimuth=None, newBackazimuthProb=None,
         newMagnitude=None, newMagType=None, newMagProb=None, newDepth=None,
         newDepthProb=None, newEventType=None, newEventTypeProb=None, 
         newSource=None):
@@ -45,10 +45,10 @@ class Classification:
                 measurement as a float 
             newDistanceProb: an optional Number representing the probability of 
                 the distance measurement as a float
-            newAzimuth: an optional Number containing the desired azimuth
+            newBackazimuth: an optional Number containing the desired backazimuth
                 measurement as a float
-            newAzimuthProb: an optional Number representing the probability of 
-                the azimuth measurement as a float
+            newBackazimuthProb: an optional Number representing the probability of 
+                the backazimuth measurement as a float
             newMagnitude: an optional Number representing the desired magnitude
                 estimate as a float
             newMagType: an optional String containing the desired magnitude type
@@ -83,11 +83,11 @@ class Classification:
         if newDistanceProb is not None:
             self.distanceProbability = newDistanceProb
 
-        if newAzimuth is not None:
-            self.azimuth = newAzimuth
+        if newBackazimuth is not None:
+            self.backazimuth = newBackazimuth
 
-        if newAzimuthProb is not None:
-            self.azimuthProbability = newAzimuthProb
+        if newBackazimuthProb is not None:
+            self.backazimuthProbability = newBackazimuthProb
 
         if newMagnitude is not None:
             self.magnitude = newMagnitude
@@ -153,11 +153,11 @@ class Classification:
         if self.DISTANCEPROB_KEY in aDict:
             self.distanceProbability = aDict[self.DISTANCEPROB_KEY]
 
-        if self.AZIMUTH_KEY in aDict:
-            self.azimuth = aDict[self.AZIMUTH_KEY]
+        if self.BACKAZIMUTH_KEY in aDict:
+            self.backazimuth = aDict[self.BACKAZIMUTH_KEY]
 
-        if self.AZIMUTHPROB_KEY in aDict:
-            self.azimuthProbability = aDict[self.AZIMUTHPROB_KEY]
+        if self.BACKAZIMUTHPROB_KEY in aDict:
+            self.backazimuthProbability = aDict[self.BACKAZIMUTHPROB_KEY]
 
         if self.MAGNITUDE_KEY in aDict:
             self.magnitude = aDict[self.MAGNITUDE_KEY]
@@ -224,11 +224,11 @@ class Classification:
         if hasattr(self, 'distanceProbability'):
             aDict[self.DISTANCEPROB_KEY] = self.distanceProbability
 
-        if hasattr(self, 'azimuth'):
-            aDict[self.AZIMUTH_KEY] = self.azimuth
+        if hasattr(self, 'backazimuth'):
+            aDict[self.BACKAZIMUTH_KEY] = self.backazimuth
 
-        if hasattr(self, 'azimuthProbability'):
-            aDict[self.AZIMUTHPROB_KEY] = self.azimuthProbability
+        if hasattr(self, 'backazimuthProbability'):
+            aDict[self.BACKAZIMUTHPROB_KEY] = self.backazimuthProbability
 
         if hasattr(self, 'magnitude'):
             aDict[self.MAGNITUDE_KEY] = self.magnitude
@@ -289,9 +289,9 @@ class Classification:
             if self.distance < 0:
                 errorList.append('Invalid Distance in Classification Class.')
 
-        if hasattr(self, 'azimuth'):
-            if self.azimuth < 0:
-                errorList.append('Invalid Azimuth in Classification Class.')
+        if hasattr(self, 'backazimuth'):
+            if self.backazimuth < 0:
+                errorList.append('Invalid Backazimuth in Classification Class.')
 
         if hasattr(self, 'magnitude'):
             if self.magnitude < -2 or self.magnitude > 10:
@@ -334,10 +334,10 @@ class Classification:
         if hasattr(self, 'distanceProbability'):
             return False
 
-        if hasattr(self, 'azimuth'):
+        if hasattr(self, 'backazimuth'):
             return False
 
-        if hasattr(self, 'azimuthProbability'):
+        if hasattr(self, 'backazimuthProbability'):
             return False
  
         if hasattr(self, 'magnitude'):

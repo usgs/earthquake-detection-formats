@@ -24,8 +24,8 @@ public class PickTest {
 			+ "\"Azimuth\":0.418479,\"Phase\":\"P\",\"Sigma\":0.086333,\"Residual\":"
 			+ "-0.025393},\"ClassificationInfo\":{\"Phase\":\"P\","
             + "\"PhaseProbability\":0.22,\"Distance\":0.442559," 
-            + "\"DistanceProbability\":22.5,\"Azimuth\":0.418479," 
-            + "\"AzimuthProbability\":0.16,\"Magnitude\":2.14,"
+            + "\"DistanceProbability\":22.5,\"Backazimuth\":0.418479," 
+            + "\"BackazimuthProbability\":0.16,\"Magnitude\":2.14,"
             + "\"MagnitudeType\":\"Mb\",\"MagnitudeProbability\":0.55,"
             + "\"Depth\":32.44,\"DepthProbability\":11.2,"
             + "\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},"
@@ -65,8 +65,8 @@ public class PickTest {
     public static double CLASSPHASEPROBABILITY = 0.22;
     public static double CLASSDISTANCE = 0.442559;
     public static double CLASSDISTANCEPROBABILITY = 22.5;
-    public static double CLASSAZIMUTH = 0.418479;
-    public static double CLASSAZIMUTHPROBABILITY = 0.16;
+    public static double CLASSBACKAZIMUTH = 0.418479;
+    public static double CLASSBACKAZIMUTHPROBABILITY = 0.16;
     public static double CLASSMAGNITUDE = 2.14;
     public static String CLASSMAGNITUDETYPE = "Mb";
     public static double CLASSMAGNITUDEPROBABILITY = 0.55;
@@ -90,7 +90,7 @@ public class PickTest {
 			POWERRATIO, POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, 
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA, CLASSPHASE, 
 			CLASSPHASEPROBABILITY, CLASSDISTANCE, CLASSDISTANCEPROBABILITY, 
-			CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
+			CLASSBACKAZIMUTH, CLASSBACKAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
 			CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, CLASSDEPTH, 
 			CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, CLASSCERTAINTY, 
 			CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, CLASSAUTHOR);
@@ -135,7 +135,7 @@ public class PickTest {
 			POWERRATIO, POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, 
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA, CLASSPHASE, 
 			CLASSPHASEPROBABILITY, CLASSDISTANCE, CLASSDISTANCEPROBABILITY, 
-			CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
+			CLASSBACKAZIMUTH, CLASSBACKAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
 			CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, CLASSDEPTH, 
 			CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, CLASSCERTAINTY, 
 			CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, CLASSAUTHOR);
@@ -178,7 +178,7 @@ public class PickTest {
 			new Association(ASSOCPHASE, ASSOCDISTANCE, ASSOCAZIMUTH,
 				ASSOCRESIDUAL, ASSOCSIGMA),
 			new Classification(CLASSPHASE, CLASSPHASEPROBABILITY, CLASSDISTANCE, 
-				CLASSDISTANCEPROBABILITY, CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, 
+				CLASSDISTANCEPROBABILITY, CLASSBACKAZIMUTH, CLASSBACKAZIMUTHPROBABILITY, 
 				CLASSMAGNITUDE, CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, 
 				CLASSDEPTH, CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, 
 				CLASSCERTAINTY, CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, 
@@ -207,7 +207,7 @@ public class PickTest {
 			POWERRATIO, POWERRATIOERROR, ASSOCPHASE, ASSOCDISTANCE, 
 			ASSOCAZIMUTH, ASSOCRESIDUAL, ASSOCSIGMA, CLASSPHASE, 
 			CLASSPHASEPROBABILITY, CLASSDISTANCE, CLASSDISTANCEPROBABILITY, 
-			CLASSAZIMUTH, CLASSAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
+			CLASSBACKAZIMUTH, CLASSBACKAZIMUTHPROBABILITY, CLASSMAGNITUDE, 
 			CLASSMAGNITUDETYPE, CLASSMAGNITUDEPROBABILITY, CLASSDEPTH, 
 			CLASSDEPTHPROBABILITY, CLASSEVENTTYPE, CLASSCERTAINTY, 
 			CLASSEVENTTYPEPROBABILITY, CLASSAGENCYID, CLASSAUTHOR);
@@ -481,18 +481,18 @@ public class PickTest {
 					0);
 			}        
 
-			// check pickObject.getClassificationInfo().Azimuth
-			if (pickObject.getClassificationInfo().getAzimuth() != null) {
-				assertEquals(TestName + " Azimuth Equals", CLASSAZIMUTH,
-					pickObject.getClassificationInfo().getAzimuth(), 0);
+			// check pickObject.getClassificationInfo().Backazimuth
+			if (pickObject.getClassificationInfo().getBackazimuth() != null) {
+				assertEquals(TestName + " Backazimuth Equals", CLASSBACKAZIMUTH,
+					pickObject.getClassificationInfo().getBackazimuth(), 0);
 			}
 
-			// check pickObject.getClassificationInfo().azimuthProbability
-			if (pickObject.getClassificationInfo().getAzimuthProbability() != 
+			// check pickObject.getClassificationInfo().backazimuthProbability
+			if (pickObject.getClassificationInfo().getBackazimuthProbability() != 
 				null) {
-				assertEquals(TestName + " Azimuth Probability Equals", 
-				CLASSAZIMUTHPROBABILITY, 
-					pickObject.getClassificationInfo().getAzimuthProbability(), 
+				assertEquals(TestName + " Backazimuth Probability Equals", 
+				CLASSBACKAZIMUTHPROBABILITY, 
+					pickObject.getClassificationInfo().getBackazimuthProbability(), 
 					0);
 			}             
 

@@ -272,20 +272,20 @@ void checkdata(detectionformats::pick pickobject, std::string testinfo) {
 			ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
 		}
 
-		// check azimuth
-		if (std::isnan(pickobject.classificationinfo.azimuth) != true) {
-			double classificationazimuth = pickobject.classificationinfo.azimuth;
-			double expectedazimuth = AZIMUTH;
-			ASSERT_EQ(classificationazimuth, expectedazimuth);
+		// check backazimuth
+		if (std::isnan(pickobject.classificationinfo.backazimuth) != true) {
+			double classificationbackazimuth = pickobject.classificationinfo.backazimuth;
+			double expectedbackazimuth = BACKAZIMUTH;
+			ASSERT_EQ(classificationbackazimuth, expectedazimuth);
 		}
 
-		// check azimuth probability
-		if (std::isnan(pickobject.classificationinfo.azimuthprobability)
+		// check backazimuth probability
+		if (std::isnan(pickobject.classificationinfo.backazimuthprobability)
 			!= true) {
-			double classificationazimuthprob =
-				pickobject.classificationinfo.azimuthprobability;
-			double expectedazimuthprob = AZIMUTHPROBABILITY;
-			ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+			double classificationbackazimuthprob =
+				pickobject.classificationinfo.backazimuthprobability;
+			double expectedbackazimuthprob = BACKAZIMUTHPROBABILITY;
+			ASSERT_EQ(classificationbackazimuthprob, expectedbackazimuthprob);
 		}
 
 		// check magnitude
@@ -431,8 +431,8 @@ TEST(PickTest, WritesJSON) {
 	pickobject.classificationinfo.phaseprobability = PHASEPROBABILITY;
     pickobject.classificationinfo.distance = DISTANCE;
 	pickobject.classificationinfo.distanceprobability = DISTANCEPROBABILITY;
-    pickobject.classificationinfo.azimuth = AZIMUTH;
-    pickobject.classificationinfo.azimuthprobability = AZIMUTHPROBABILITY;
+    pickobject.classificationinfo.backazimuth = BACKAZIMUTH;
+    pickobject.classificationinfo.backazimuthprobability = BACKAZIMUTHPROBABILITY;
     pickobject.classificationinfo.magnitude = MAGNITUDE;
     pickobject.classificationinfo.magnitudetype = std::string(MAGNITUDETYPE);
     pickobject.classificationinfo.magnitudeprobability = MAGNITUDEPROBABILITY;
@@ -508,8 +508,8 @@ TEST(PickTest, WritesJSONNoFilter) {
 	pickobject.classificationinfo.phaseprobability = PHASEPROBABILITY;
     pickobject.classificationinfo.distance = DISTANCE;
 	pickobject.classificationinfo.distanceprobability = DISTANCEPROBABILITY;
-    pickobject.classificationinfo.azimuth = AZIMUTH;
-    pickobject.classificationinfo.azimuthprobability = AZIMUTHPROBABILITY;
+    pickobject.classificationinfo.backazimuth = BACKAZIMUTH;
+    pickobject.classificationinfo.backazimuthprobability = BACKAZIMUTHPROBABILITY;
     pickobject.classificationinfo.magnitude = MAGNITUDE;
     pickobject.classificationinfo.magnitudetype = std::string(MAGNITUDETYPE);
     pickobject.classificationinfo.magnitudeprobability = MAGNITUDEPROBABILITY;
@@ -579,8 +579,8 @@ TEST(PickTest, Constructor) {
 			BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
 			POWERRATIOERROR, std::string(PHASE), DISTANCE, AZIMUTH,
 			RESIDUAL, SIGMA, std::string(PHASE),
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
             EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
 
@@ -630,8 +630,8 @@ TEST(PickTest, Constructor) {
 			detectionformats::beam(BACKAZIMUTH, BACKAZIMUTHERROR, SLOWNESS,
 				SLOWNESSERROR, POWERRATIO, POWERRATIOERROR),
 			detectionformats::classification(std::string(PHASE),
-            	PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            	AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            	PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            	BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             	MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE,
             	CERTAINTY, EVENTTYPEPROBABILITY, AGENCYID, AUTHOR));
 
@@ -671,8 +671,8 @@ TEST(PickTest, Constructor) {
 			detectionformats::association(std::string(PHASE), DISTANCE,
 				AZIMUTH, RESIDUAL, SIGMA),
 			detectionformats::classification(std::string(PHASE),
-            	PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            	AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            	PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            	BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             	MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE,
             	CERTAINTY, EVENTTYPEPROBABILITY, AGENCYID, AUTHOR));
 
@@ -701,8 +701,8 @@ TEST(PickTest, CopyConstructor) {
 			BACKAZIMUTHERROR, SLOWNESS, SLOWNESSERROR, POWERRATIO,
 			POWERRATIOERROR, std::string(PHASE), DISTANCE, AZIMUTH,
 			RESIDUAL, SIGMA, std::string(PHASE),
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
             EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
 
@@ -768,8 +768,8 @@ TEST(PickTest, Validate) {
 	pickobject.classificationinfo.phaseprobability = PHASEPROBABILITY;
     pickobject.classificationinfo.distance = DISTANCE;
 	pickobject.classificationinfo.distanceprobability = DISTANCEPROBABILITY;
-    pickobject.classificationinfo.azimuth = AZIMUTH;
-    pickobject.classificationinfo.azimuthprobability = AZIMUTHPROBABILITY;
+    pickobject.classificationinfo.backazimuth = BACKAZIMUTH;
+    pickobject.classificationinfo.backazimuthprobability = BACKAZIMUTHPROBABILITY;
     pickobject.classificationinfo.magnitude = MAGNITUDE;
     pickobject.classificationinfo.magnitudetype = std::string(MAGNITUDETYPE);
     pickobject.classificationinfo.magnitudeprobability = MAGNITUDEPROBABILITY;
