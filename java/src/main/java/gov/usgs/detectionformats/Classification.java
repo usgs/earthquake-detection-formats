@@ -19,8 +19,8 @@ public class Classification implements DetectionInt {
     public static final String PHASEPROB_KEY = "PhaseProbability";
     public static final String DISTANCE_KEY = "Distance";
     public static final String DISTANCEPROB_KEY = "DistanceProbability";
-    public static final String BACKAZIMUTH_KEY = "Backazimuth";
-    public static final String BACKAZIMUTHPROB_KEY = "BackazimuthProbability";
+    public static final String BACKAZIMUTH_KEY = "BackAzimuth";
+    public static final String BACKAZIMUTHPROB_KEY = "BackAzimuthProbability";
     public static final String MAGNITUDE_KEY = "Magnitude";
     public static final String MAGNITUDETYPE_KEY = "MagnitudeType";
     public static final String MAGNITUDEPROB_KEY = "MagnitudeProbability";
