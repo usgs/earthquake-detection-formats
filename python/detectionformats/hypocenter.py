@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 import datetime
 
+
 class Hypocenter:
-    """ Hypocenter - a conversion class used to create, parse, and validate 
-        hypocenter data as part of detection data.
+    """Hypocenter - a conversion class used to create, parse, and validate
+    hypocenter data as part of detection data.
     """
+
     # json keys
     LATITUDE_KEY = "Latitude"
     LONGITUDE_KEY = "Longitude"
@@ -18,9 +20,17 @@ class Hypocenter:
     DEPTH_ERROR_KEY = "DepthError"
     TIME_ERROR_KEY = "TimeError"
 
-    def __init__(self, newLatitude=None, newLongitude=None, newDepth=None,
-        newTime=None, newLatitudeError=None, newLongitudeError=None,
-        newDepthError=None, newTimeError=None):
+    def __init__(
+        self,
+        newLatitude=None,
+        newLongitude=None,
+        newDepth=None,
+        newTime=None,
+        newLatitudeError=None,
+        newLongitudeError=None,
+        newDepthError=None,
+        newTimeError=None,
+    ):
         """Initialize the hypocenter object. Constructs an empty object
            if all arguments are None
 
@@ -99,7 +109,7 @@ class Hypocenter:
             self.depth = aDict[self.DEPTH_KEY]
             timeString = aDict[self.TIME_KEY][:-1] + "000Z"
             self.time = datetime.datetime.strptime(timeString, "%Y-%m-%dT%H:%M:%S.%fZ")
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
@@ -146,22 +156,22 @@ class Hypocenter:
             aDict[self.LATITUDE_KEY] = self.latitude
             aDict[self.LONGITUDE_KEY] = self.longitude
             aDict[self.DEPTH_KEY] = self.depth
-            timeString = self.time.isoformat(timespec='milliseconds') + "Z"
+            timeString = self.time.isoformat(timespec="milliseconds") + "Z"
             aDict[self.TIME_KEY] = timeString
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         # second optional keys
-        if hasattr(self, 'latitudeError'):
+        if hasattr(self, "latitudeError"):
             aDict[self.LATITUDE_ERROR_KEY] = self.latitudeError
 
-        if hasattr(self, 'longitudeError'):
+        if hasattr(self, "longitudeError"):
             aDict[self.LONGITUDE_ERROR_KEY] = self.longitudeError
 
-        if hasattr(self, 'depthError'):
+        if hasattr(self, "depthError"):
             aDict[self.DEPTH_ERROR_KEY] = self.depthError
 
-        if hasattr(self, 'timeError'):
+        if hasattr(self, "timeError"):
             aDict[self.TIME_ERROR_KEY] = self.timeError
 
         return aDict
@@ -195,20 +205,26 @@ class Hypocenter:
         # required values
         try:
             if self.latitude < -90 or self.latitude > 90:
-                errorList.append('Latitude in Hypocenter Class not in the range of -90 to 90.')
-        except(NameError, AttributeError):
-            errorList.append('No Latitude in Hypocenter Class.')
+                errorList.append(
+                    "Latitude in Hypocenter Class not in the range of -90 to 90."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Latitude in Hypocenter Class.")
 
         try:
             if self.longitude < -180 or self.longitude > 180:
-                errorList.append('Longitude in Hypocenter Class not in the range of -180 to 180.')
-        except(NameError, AttributeError):
-            errorList.append('No Longitude in Hypocenter Class.')
+                errorList.append(
+                    "Longitude in Hypocenter Class not in the range of -180 to 180."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Longitude in Hypocenter Class.")
 
         try:
             if self.depth < -100 or self.depth > 1500:
-                errorList.append('Depth in Hypocenter Class not in the range of -100 to 1500.')
-        except(NameError, AttributeError):
-            errorList.append('No Depth in Hypocenter Class.')
+                errorList.append(
+                    "Depth in Hypocenter Class not in the range of -100 to 1500."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Depth in Hypocenter Class.")
 
         return errorList

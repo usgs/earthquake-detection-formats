@@ -11,23 +11,22 @@ plugins {
     id 'java-library'
     // code coverage
     id "jacoco"
+    //
+    id "com.kageiit.jacobo" version "2.1.0"
     // static code analysis
-    // id "pmd"
-    // post build results online
-    id "com.gradle.build-scan" version "2.0.2"
-    // git clone, etc.
-    id "org.ajoberstar.grgit" version "2.3.0"
+    id "pmd"
     // google java format
-    // id "com.github.sherter.google-java-format" version "0.8"
+    id "com.github.sherter.google-java-format" version "0.9"
+    // support publishing to maven repositories
+    id 'maven-publish'    
 }
 
-sourceCompatibility = '1.10'
-targetCompatibility = '1.10'
-version = '0.9.10'
+sourceCompatibility = '1.11'
+targetCompatibility = '1.11'
+version = '0.1.0'
+group = "gov.usgs"
 
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
 }
 
@@ -37,54 +36,66 @@ configurations {
 
 dependencies {
     // com.googlecode.json.simple
-    compile "com.googlecode.json-simple:json-simple:1.1.1"
+    implementation "com.googlecode.json-simple:json-simple:1.1.1"
 
-    // Use JUnit test framework
-    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    // Use JUnit 5
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
+
+// by default, implementation cannot be referenced, 
+// this allows us to use it below
+project.configurations.implementation.setCanBeResolved(true)
 
 // set jar entry point
 jar {
+  duplicatesStrategy = 'include'
+
   manifest {
     attributes(
-      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Class-Path': configurations.implementation.collect { it.name }.join(' '),
       'Main-Class': 'gov.usgs.detectionformats.Version'
     )
   }
   from {
-      configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+      configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) }
   }
 }
 
-// Note: To reformat all java code (not in lib) into the
-// google java style, run ./gradlew goJF
-// googleJavaFormat {
-//   exclude "lib/**"
-// }
-// Google java style is checked automatically as part of the check task
-// project.tasks.check.dependsOn(verifyGoogleJavaFormat)
+// always format to google style prior to the build
+compileJava.dependsOn 'googleJavaFormat'
+
+// Added Google java style check (shouldn't find anything)
+project.tasks.check.dependsOn(verifyGoogleJavaFormat)
 
 // coverage reports
 jacoco {
-  toolVersion "0.8.2"
+  toolVersion "0.8.7"
 }
 jacocoTestReport {
   reports {
-    html.enabled true
-    xml.enabled true
+    // Note I think these will need to be changed 
+    // to .required = true when/if we move to 
+    // gradle 8
+    html.enabled = true
+    xml.enabled = true
   }
-
-  // exclude librarys
-  afterEvaluate {
-        getClassDirectories().from(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    "gov/usgs/traveltime/**",
-                    "gov/usgs/processingformats/**"
-            ])
-        }))
-    }
 }
 check.dependsOn jacocoTestReport
+
+pmd {
+  toolVersion = "6.29.0"
+  ruleSets = [
+    file("pmd-ruleset.xml")
+  ]
+}
+
+test {
+  useJUnitPlatform()
+  filter {
+    includeTestsMatching "*Test"
+  }
+}
 
 // show compile warnings
 tasks.withType(JavaCompile) {
@@ -101,25 +112,35 @@ javadoc {
   }
 }
 
-// Tasks for TravisCI
+// convert jacoco to cobertura
+import com.kageiit.jacobo.JacoboTask
+tasks.create("jacobo", JacoboTask, {
+    it.jacocoReport = file("${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+    it.coberturaReport = file("${project.buildDir}/reports/cobertura/cobertura.xml")
+    it.srcDirs = sourceSets.main.java.srcDirs
+}).dependsOn(jacocoTestReport)
+project.tasks.check.dependsOn jacobo
 
-// run with "gradle build --scan" to post build output online
-buildScan {
-  termsOfServiceUrl = "https://gradle.com/terms-of-service"
-  termsOfServiceAgree = "yes"
+// publish to our maven package repository
+// note this will only work from within the pipeline
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+          // The general NEIC package registry
+          url "https://code.usgs.gov/api/v4/projects/8197/packages/maven"
+          name "GitLab"
+          credentials(HttpHeaderCredentials) {
+              name = 'Job-Token'
+              value = System.getenv("CI_JOB_TOKEN")
+          }
+          authentication {
+              header(HttpHeaderAuthentication)
+          }
+        }
+    }
 }
-
-// .travis.yml uses this to upload coverage
-task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
-  description = "Upload coverage to codacy (used by TravisCI)"
-  main = "com.codacy.CodacyCoverageReporter"
-  classpath = configurations.codacy
-  args = [
-    "report",
-    "-l",
-    "Java",
-    "-r",
-    "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-  ]
-}
-

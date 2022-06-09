@@ -1,24 +1,26 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.source
 import detectionformats.eventtype
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class Classification:
-    """ Classification - a conversion class used to create, parse, and validate 
-        value added classification data from advanced algorithms such as machine 
-        learning as part of detection data.
+    """Classification - a conversion class used to create, parse, and validate
+    value added classification data from advanced algorithms such as machine
+    learning as part of detection data.
     """
+
     # json keys
     PHASE_KEY = "Phase"
     PHASEPROB_KEY = "PhaseProbability"
     DISTANCE_KEY = "Distance"
     DISTANCEPROB_KEY = "DistanceProbability"
-    AZIMUTH_KEY = "Azimuth"
-    AZIMUTHPROB_KEY = "AzimuthProbability"
+    BACKAZIMUTH_KEY = "BackAzimuth"
+    BACKAZIMUTHPROB_KEY = "BackAzimuthProbability"
     MAGNITUDE_KEY = "Magnitude"
     MAGNITUDETYPE_KEY = "MagnitudeType"
     MAGNITUDEPROB_KEY = "MagnitudeProbability"
@@ -28,42 +30,54 @@ class Classification:
     EVENTTYPEPROB_KEY = "EventTypeProbability"
     SOURCE_KEY = "Source"
 
-    def __init__(self, newPhase=None, newPhaseProb=None, newDistance=None, 
-        newDistanceProb=None, newAzimuth=None, newAzimuthProb=None,
-        newMagnitude=None, newMagType=None, newMagProb=None, newDepth=None,
-        newDepthProb=None, newEventType=None, newEventTypeProb=None, 
-        newSource=None):
+    def __init__(
+        self,
+        newPhase=None,
+        newPhaseProb=None,
+        newDistance=None,
+        newDistanceProb=None,
+        newBackAzimuth=None,
+        newBackAzimuthProb=None,
+        newMagnitude=None,
+        newMagType=None,
+        newMagProb=None,
+        newDepth=None,
+        newDepthProb=None,
+        newEventType=None,
+        newEventTypeProb=None,
+        newSource=None,
+    ):
         """Initialize the classification object. Constructs an empty object
            if all arguments are None
 
         Args:
             newPhase: an optional String containing the desired phase
                 identification
-            newPhaseProb: an optional Number representing the probability of 
+            newPhaseProb: an optional Number representing the probability of
                 the phase identification as a float
             newDistance: an optional Number containing the desired distance
-                measurement as a float 
-            newDistanceProb: an optional Number representing the probability of 
-                the distance measurement as a float
-            newAzimuth: an optional Number containing the desired azimuth
                 measurement as a float
-            newAzimuthProb: an optional Number representing the probability of 
-                the azimuth measurement as a float
+            newDistanceProb: an optional Number representing the probability of
+                the distance measurement as a float
+            newBackAzimuth: an optional Number containing the desired backazimuth
+                measurement as a float
+            newBackAzimuthProb: an optional Number representing the probability of
+                the backazimuth measurement as a float
             newMagnitude: an optional Number representing the desired magnitude
                 estimate as a float
             newMagType: an optional String containing the desired magnitude type
                 identification
-            newMagProb: an optional Number representing the probability of 
+            newMagProb: an optional Number representing the probability of
                 the magnitude estimate as a float
             newDepth: an optional Number containing the desired depth measurement
                 as a float
-            newDepthProb: an optional Number representing the probability of 
+            newDepthProb: an optional Number representing the probability of
                 the depth measurement as a float
-            newEventType: an optional detectionformats.eventtype.EventType 
+            newEventType: an optional detectionformats.eventtype.EventType
                 containing the desired event type
-            newEventTypeProb: an optional Number representing the probability of 
+            newEventTypeProb: an optional Number representing the probability of
                 the event type as a float
-            newSource: an optional detectionformats.source.Source containing 
+            newSource: an optional detectionformats.source.Source containing
                 the source of the classification information
         Returns:
             Nothing
@@ -83,11 +97,11 @@ class Classification:
         if newDistanceProb is not None:
             self.distanceProbability = newDistanceProb
 
-        if newAzimuth is not None:
-            self.azimuth = newAzimuth
+        if newBackAzimuth is not None:
+            self.backAzimuth = newBackAzimuth
 
-        if newAzimuthProb is not None:
-            self.azimuthProbability = newAzimuthProb
+        if newBackAzimuthProb is not None:
+            self.backAzimuthProbability = newBackAzimuthProb
 
         if newMagnitude is not None:
             self.magnitude = newMagnitude
@@ -143,7 +157,7 @@ class Classification:
         # all members optional
         if self.PHASE_KEY in aDict:
             self.phase = aDict[self.PHASE_KEY]
-        
+
         if self.PHASEPROB_KEY in aDict:
             self.phaseProbability = aDict[self.PHASEPROB_KEY]
 
@@ -153,11 +167,11 @@ class Classification:
         if self.DISTANCEPROB_KEY in aDict:
             self.distanceProbability = aDict[self.DISTANCEPROB_KEY]
 
-        if self.AZIMUTH_KEY in aDict:
-            self.azimuth = aDict[self.AZIMUTH_KEY]
+        if self.BACKAZIMUTH_KEY in aDict:
+            self.backAzimuth = aDict[self.BACKAZIMUTH_KEY]
 
-        if self.AZIMUTHPROB_KEY in aDict:
-            self.azimuthProbability = aDict[self.AZIMUTHPROB_KEY]
+        if self.BACKAZIMUTHPROB_KEY in aDict:
+            self.backAzimuthProbability = aDict[self.BACKAZIMUTHPROB_KEY]
 
         if self.MAGNITUDE_KEY in aDict:
             self.magnitude = aDict[self.MAGNITUDE_KEY]
@@ -176,7 +190,7 @@ class Classification:
 
         if self.EVENTTYPE_KEY in aDict:
             self.eventType = detectionformats.eventtype.EventType()
-            self.eventType.fromDict(aDict[self.EVENTTYPE_KEY])         
+            self.eventType.fromDict(aDict[self.EVENTTYPE_KEY])
 
         if self.EVENTTYPEPROB_KEY in aDict:
             self.eventTypeProbability = aDict[self.EVENTTYPEPROB_KEY]
@@ -212,47 +226,47 @@ class Classification:
         aDict = {}
 
         # all members optional
-        if hasattr(self, 'phase'):
+        if hasattr(self, "phase"):
             aDict[self.PHASE_KEY] = self.phase
 
-        if hasattr(self, 'phaseProbability'):
+        if hasattr(self, "phaseProbability"):
             aDict[self.PHASEPROB_KEY] = self.phaseProbability
 
-        if hasattr(self, 'distance'):
+        if hasattr(self, "distance"):
             aDict[self.DISTANCE_KEY] = self.distance
 
-        if hasattr(self, 'distanceProbability'):
+        if hasattr(self, "distanceProbability"):
             aDict[self.DISTANCEPROB_KEY] = self.distanceProbability
 
-        if hasattr(self, 'azimuth'):
-            aDict[self.AZIMUTH_KEY] = self.azimuth
+        if hasattr(self, "backAzimuth"):
+            aDict[self.BACKAZIMUTH_KEY] = self.backAzimuth
 
-        if hasattr(self, 'azimuthProbability'):
-            aDict[self.AZIMUTHPROB_KEY] = self.azimuthProbability
+        if hasattr(self, "backAzimuthProbability"):
+            aDict[self.BACKAZIMUTHPROB_KEY] = self.backAzimuthProbability
 
-        if hasattr(self, 'magnitude'):
+        if hasattr(self, "magnitude"):
             aDict[self.MAGNITUDE_KEY] = self.magnitude
 
-        if hasattr(self, 'magnitudeType'):
+        if hasattr(self, "magnitudeType"):
             aDict[self.MAGNITUDETYPE_KEY] = self.magnitudeType
 
-        if hasattr(self, 'magnitudeProbability'):
+        if hasattr(self, "magnitudeProbability"):
             aDict[self.MAGNITUDEPROB_KEY] = self.magnitudeProbability
 
-        if hasattr(self, 'depth'):
+        if hasattr(self, "depth"):
             aDict[self.DEPTH_KEY] = self.depth
 
-        if hasattr(self, 'depthProbability'):
+        if hasattr(self, "depthProbability"):
             aDict[self.DEPTHPROB_KEY] = self.depthProbability
 
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "eventType"):
             if not self.eventType.isEmpty():
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
 
-        if hasattr(self, 'eventTypeProbability'):
+        if hasattr(self, "eventTypeProbability"):
             aDict[self.EVENTTYPEPROB_KEY] = self.eventTypeProbability
 
-        if hasattr(self, 'source'):
+        if hasattr(self, "source"):
             if not self.source.isEmpty():
                 aDict[self.SOURCE_KEY] = self.source.toDict()
 
@@ -285,30 +299,34 @@ class Classification:
         errorList = []
 
         # second optional keys
-        if hasattr(self, 'distance'):
+        if hasattr(self, "distance"):
             if self.distance < 0:
-                errorList.append('Invalid Distance in Classification Class.')
+                errorList.append("Invalid Distance in Classification Class.")
 
-        if hasattr(self, 'azimuth'):
-            if self.azimuth < 0:
-                errorList.append('Invalid Azimuth in Classification Class.')
+        if hasattr(self, "backazimuth"):
+            if self.backazimuth < 0:
+                errorList.append("Invalid Backazimuth in Classification Class.")
 
-        if hasattr(self, 'magnitude'):
+        if hasattr(self, "magnitude"):
             if self.magnitude < -2 or self.magnitude > 10:
-                errorList.append('Magnitude in Classification Class not in the range of -2 to 10.')
+                errorList.append(
+                    "Magnitude in Classification Class not in the range of -2 to 10."
+                )
 
-        if hasattr(self, 'depth'):
+        if hasattr(self, "depth"):
             if self.depth < -100 or self.depth > 1500:
-                errorList.append('Depth in Classification Class not in the range of -100 to 1500.')
+                errorList.append(
+                    "Depth in Classification Class not in the range of -100 to 1500."
+                )
 
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "eventType"):
             if not self.eventType.isValid():
-                errorList.append('Invalid EventType in Classification Class.')
+                errorList.append("Invalid EventType in Classification Class.")
 
-        if hasattr(self, 'source'):
+        if hasattr(self, "source"):
             if not self.source.isEmpty():
                 if not self.source.isValid():
-                    errorList.append('Invalid Source in Classification Class.')
+                    errorList.append("Invalid Source in Classification Class.")
 
         return errorList
 
@@ -322,49 +340,48 @@ class Classification:
         Raises:
             Nothing
         """
-        if hasattr(self, 'phase'):
+        if hasattr(self, "phase"):
             return False
 
-        if hasattr(self, 'phaseProbability'):
+        if hasattr(self, "phaseProbability"):
             return False
 
-        if hasattr(self, 'distance'):
+        if hasattr(self, "distance"):
             return False
 
-        if hasattr(self, 'distanceProbability'):
+        if hasattr(self, "distanceProbability"):
             return False
 
-        if hasattr(self, 'azimuth'):
+        if hasattr(self, "backAzimuth"):
             return False
 
-        if hasattr(self, 'azimuthProbability'):
-            return False
- 
-        if hasattr(self, 'magnitude'):
+        if hasattr(self, "backAzimuthProbability"):
             return False
 
-        if hasattr(self, 'magnitudeType'):
+        if hasattr(self, "magnitude"):
             return False
 
-        if hasattr(self, 'magnitudeProbability'):
+        if hasattr(self, "magnitudeType"):
             return False
 
-        if hasattr(self, 'depth'):
+        if hasattr(self, "magnitudeProbability"):
             return False
 
-        if hasattr(self, 'depthProbability'):
+        if hasattr(self, "depth"):
             return False
 
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "depthProbability"):
+            return False
+
+        if hasattr(self, "eventType"):
             if not self.eventType.isEmpty():
                 return False
 
-        if hasattr(self, 'eventTypeProbability'):
+        if hasattr(self, "eventTypeProbability"):
             return False
 
-        if hasattr(self, 'source'):
+        if hasattr(self, "source"):
             if not self.source.isEmpty():
                 return False
 
         return True
-

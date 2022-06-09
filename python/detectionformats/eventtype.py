@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class EventType:
-    """ EventType - a conversion class used to create, parse, and validate 
-        event type data as part of detection data.
+    """EventType - a conversion class used to create, parse, and validate
+    event type data as part of detection data.
     """
+
     # json keys
     TYPE_KEY = "Type"
     CERTAINTY_KEY = "Certainty"
@@ -54,7 +56,7 @@ class EventType:
         try:
             self.type = aDict[self.TYPE_KEY]
             self.certainty = aDict[self.CERTAINTY_KEY]
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
@@ -85,7 +87,7 @@ class EventType:
         try:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.CERTAINTY_KEY] = self.certainty
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         return aDict
@@ -117,13 +119,23 @@ class EventType:
         errorList = []
 
         # optional values
-        if hasattr(self, 'type'):
-            if self.type not in ['Earthquake', 'MineCollapse', 'NuclearExplosion', 'QuarryBlast', 'InducedOrTriggered', 'RockBurst', 'FluidInjection', 'IceQuake', 'VolcanicEruption']:
-                errorList.append('Invalid Type in EventType Class.')
+        if hasattr(self, "type"):
+            if self.type not in [
+                "Earthquake",
+                "MineCollapse",
+                "NuclearExplosion",
+                "QuarryBlast",
+                "InducedOrTriggered",
+                "RockBurst",
+                "FluidInjection",
+                "IceQuake",
+                "VolcanicEruption",
+            ]:
+                errorList.append("Invalid Type in EventType Class.")
 
-        if hasattr(self, 'certainty'):
-            if self.certainty not in ['Suspected', 'Confirmed']:
-                errorList.append('Invalid Certainty in EventType Class.')
+        if hasattr(self, "certainty"):
+            if self.certainty not in ["Suspected", "Confirmed"]:
+                errorList.append("Invalid Certainty in EventType Class.")
 
         return errorList
 
@@ -137,10 +149,10 @@ class EventType:
         Raises:
             Nothing
         """
-        if hasattr(self, 'type'):
+        if hasattr(self, "type"):
             return False
 
-        if hasattr(self, 'certainty'):
+        if hasattr(self, "certainty"):
             return False
 
         return True

@@ -1,8 +1,7 @@
 package gov.usgs.detectionformats;
 
-import org.json.simple.JSONObject;
-
 import java.util.ArrayList;
+import org.json.simple.JSONObject;
 
 /**
  * a conversion class used to create, parse, and validate beam detection data
@@ -11,349 +10,315 @@ import java.util.ArrayList;
  */
 public class Beam implements DetectionInt {
 
-	/**
-	 * JSON Keys
-	 */
-	public static final String BACKAZIMUTH_KEY = "BackAzimuth";
-	public static final String SLOWNESS_KEY = "Slowness";
-	public static final String BACKAZIMUTHERROR_KEY = "BackAzimuthError";
-	public static final String POWERRATIO_KEY = "PowerRatio";
-	public static final String POWERRATIOERROR_KEY = "PowerRatioError";
-	public static final String SLOWNESSERROR_KEY = "SlownessError";
+  /** JSON Keys */
+  public static final String BACKAZIMUTH_KEY = "BackAzimuth";
 
-	/**
-	 * Required Double containing the back azimuth
-	 */
-	private final Double backAzimuth;
+  public static final String SLOWNESS_KEY = "Slowness";
+  public static final String BACKAZIMUTHERROR_KEY = "BackAzimuthError";
+  public static final String POWERRATIO_KEY = "PowerRatio";
+  public static final String POWERRATIOERROR_KEY = "PowerRatioError";
+  public static final String SLOWNESSERROR_KEY = "SlownessError";
 
-	/**
-	 * Optional Double containing the back azimuth error
-	 */
-	private final Double backAzimuthError;
+  /** Required Double containing the back azimuth */
+  private final Double backAzimuth;
 
-	/**
-	 * Required Double containing the slowness
-	 */
-	private final Double slowness;
+  /** Optional Double containing the back azimuth error */
+  private final Double backAzimuthError;
 
-	/**
-	 * Optional Double containing the slowness error
-	 */
-	private final Double slownessError;
+  /** Required Double containing the slowness */
+  private final Double slowness;
 
-	/**
-	 * Optional Double containing the powerRatio
-	 */
-	private final Double powerRatio;
+  /** Optional Double containing the slowness error */
+  private final Double slownessError;
 
-	/**
-	 * Optional Double containing the powerRatio error
-	 */
-	private final Double powerRatioError;
+  /** Optional Double containing the powerRatio */
+  private final Double powerRatio;
 
-	/**
-	 * The constructor for the Beam class. Initializes members to null values.
-	 */
-	public Beam() {
+  /** Optional Double containing the powerRatio error */
+  private final Double powerRatioError;
 
-		backAzimuth = null;
-		backAzimuthError = null;
-		slowness = null;
-		slownessError = null;
-		powerRatio = null;
-		powerRatioError = null;
-	}
+  /** The constructor for the Beam class. Initializes members to null values. */
+  public Beam() {
 
-	/**
-	 * The advanced constructor for the Beam class. Initializes members to
-	 * provided values.
-	 *
-	 * @param newBackAzimuth
-	 *            - A Double containing the back azimuth to use
-	 * @param newBackAzimutherror
-	 *            - A Double containing the back azimuth error to use, null to
-	 *            omit
-	 * @param newSlowness
-	 *            - A Double containing the slowness to use
-	 * @param newSlownessError
-	 *            - A Double containing the slowness error to use, null to omit
-	 * @param newPowerRatio
-	 *            - A Double containing the power ratio to use, null to omit
-	 * @param newPowerRatioError
-	 *            - A Double containing the power ratio error to use, null to
-	 *            omit
-	 */
-	public Beam(Double newBackAzimuth, Double newBackAzimutherror,
-			Double newSlowness, Double newSlownessError, Double newPowerRatio,
-			Double newPowerRatioError) {
-		backAzimuth = newBackAzimuth;
-		backAzimuthError = newBackAzimutherror;
-		slowness = newSlowness;
-		slownessError = newSlownessError;
-		powerRatio = newPowerRatio;
-		powerRatioError = newPowerRatioError;
-	}
+    backAzimuth = null;
+    backAzimuthError = null;
+    slowness = null;
+    slownessError = null;
+    powerRatio = null;
+    powerRatioError = null;
+  }
 
-	/**
-	 * Constructs the class from a JSONObject, populating members
-	 *
-	 * @param newJSONObject
-	 *            - A JSONObject.
-	 */
-	public Beam(JSONObject newJSONObject) {
-		// Required values
-		// backAzimuth
-		if (newJSONObject.containsKey(BACKAZIMUTH_KEY)) {
-			backAzimuth = (double) newJSONObject.get(BACKAZIMUTH_KEY);
-		} else {
-			backAzimuth = null;
-		}
+  /**
+   * The advanced constructor for the Beam class. Initializes members to provided values.
+   *
+   * @param newBackAzimuth - A Double containing the back azimuth to use
+   * @param newBackAzimutherror - A Double containing the back azimuth error to use, null to omit
+   * @param newSlowness - A Double containing the slowness to use
+   * @param newSlownessError - A Double containing the slowness error to use, null to omit
+   * @param newPowerRatio - A Double containing the power ratio to use, null to omit
+   * @param newPowerRatioError - A Double containing the power ratio error to use, null to omit
+   */
+  public Beam(
+      Double newBackAzimuth,
+      Double newBackAzimutherror,
+      Double newSlowness,
+      Double newSlownessError,
+      Double newPowerRatio,
+      Double newPowerRatioError) {
+    backAzimuth = newBackAzimuth;
+    backAzimuthError = newBackAzimutherror;
+    slowness = newSlowness;
+    slownessError = newSlownessError;
+    powerRatio = newPowerRatio;
+    powerRatioError = newPowerRatioError;
+  }
 
-		// slowness
-		if (newJSONObject.containsKey(SLOWNESS_KEY)) {
-			slowness = (double) newJSONObject.get(SLOWNESS_KEY);
-		} else {
-			slowness = null;
-		}
+  /**
+   * Constructs the class from a JSONObject, populating members
+   *
+   * @param newJSONObject - A JSONObject.
+   */
+  public Beam(JSONObject newJSONObject) {
+    // Required values
+    // backAzimuth
+    if (newJSONObject.containsKey(BACKAZIMUTH_KEY)) {
+      backAzimuth = (double) newJSONObject.get(BACKAZIMUTH_KEY);
+    } else {
+      backAzimuth = null;
+    }
 
-		// Optional values
-		// powerRatio
-		if (newJSONObject.containsKey(POWERRATIO_KEY)) {
-			powerRatio = (double) newJSONObject.get(POWERRATIO_KEY);
-		} else {
-			powerRatio = null;
-		}
+    // slowness
+    if (newJSONObject.containsKey(SLOWNESS_KEY)) {
+      slowness = (double) newJSONObject.get(SLOWNESS_KEY);
+    } else {
+      slowness = null;
+    }
 
-		// backAzimuthError
-		if (newJSONObject.containsKey(BACKAZIMUTHERROR_KEY)) {
-			backAzimuthError = (double) newJSONObject.get(BACKAZIMUTHERROR_KEY);
-		} else {
-			backAzimuthError = null;
-		}
+    // Optional values
+    // powerRatio
+    if (newJSONObject.containsKey(POWERRATIO_KEY)) {
+      powerRatio = (double) newJSONObject.get(POWERRATIO_KEY);
+    } else {
+      powerRatio = null;
+    }
 
-		// slownessError
-		if (newJSONObject.containsKey(SLOWNESSERROR_KEY)) {
-			slownessError = (double) newJSONObject.get(SLOWNESSERROR_KEY);
-		} else {
-			slownessError = null;
-		}
+    // backAzimuthError
+    if (newJSONObject.containsKey(BACKAZIMUTHERROR_KEY)) {
+      backAzimuthError = (double) newJSONObject.get(BACKAZIMUTHERROR_KEY);
+    } else {
+      backAzimuthError = null;
+    }
 
-		// powerRatioError
-		if (newJSONObject.containsKey(POWERRATIOERROR_KEY)) {
-			powerRatioError = (double) newJSONObject.get(POWERRATIOERROR_KEY);
-		} else {
-			powerRatioError = null;
-		}
-	}
+    // slownessError
+    if (newJSONObject.containsKey(SLOWNESSERROR_KEY)) {
+      slownessError = (double) newJSONObject.get(SLOWNESSERROR_KEY);
+    } else {
+      slownessError = null;
+    }
 
-	/**
-	 * Converts the contents of the class to a json object Overridden from
-	 * DetectionBase.
-	 *
-	 * @return Returns a JSONObject containing the class contents
-	 */
-	@SuppressWarnings("unchecked")
-	public JSONObject toJSON() {
-		JSONObject newJSONObject = new JSONObject();
+    // powerRatioError
+    if (newJSONObject.containsKey(POWERRATIOERROR_KEY)) {
+      powerRatioError = (double) newJSONObject.get(POWERRATIOERROR_KEY);
+    } else {
+      powerRatioError = null;
+    }
+  }
 
-		Double jsonBackAzimuth = getBackAzimuth();
-		Double jsonSlowness = getSlowness();
-		Double jsonPowerRatio = getPowerRatio();
-		Double jsonBackAzimuthError = getBackAzimuthError();
-		Double jsonSlownessError = getSlownessError();
-		Double jsonPowerRatioError = getPowerRatioError();
+  /**
+   * Converts the contents of the class to a json object Overridden from DetectionBase.
+   *
+   * @return Returns a JSONObject containing the class contents
+   */
+  @SuppressWarnings("unchecked")
+  public JSONObject toJSON() {
+    JSONObject newJSONObject = new JSONObject();
 
-		// Required values
-		// backAzimuth
-		if (jsonBackAzimuth != null) {
-			newJSONObject.put(BACKAZIMUTH_KEY, jsonBackAzimuth);
-		}
+    Double jsonBackAzimuth = getBackAzimuth();
+    Double jsonSlowness = getSlowness();
+    Double jsonPowerRatio = getPowerRatio();
+    Double jsonBackAzimuthError = getBackAzimuthError();
+    Double jsonSlownessError = getSlownessError();
+    Double jsonPowerRatioError = getPowerRatioError();
 
-		// slowness
-		if (jsonSlowness != null) {
-			newJSONObject.put(SLOWNESS_KEY, jsonSlowness);
-		}
+    // Required values
+    // backAzimuth
+    if (jsonBackAzimuth != null) {
+      newJSONObject.put(BACKAZIMUTH_KEY, jsonBackAzimuth);
+    }
 
-		// Optional values
-		// powerRatio
-		if (jsonPowerRatio != null) {
-			newJSONObject.put(POWERRATIO_KEY, jsonPowerRatio);
-		}
+    // slowness
+    if (jsonSlowness != null) {
+      newJSONObject.put(SLOWNESS_KEY, jsonSlowness);
+    }
 
-		// backAzimuthError
-		if (jsonBackAzimuthError != null) {
-			newJSONObject.put(BACKAZIMUTHERROR_KEY, jsonBackAzimuthError);
-		}
+    // Optional values
+    // powerRatio
+    if (jsonPowerRatio != null) {
+      newJSONObject.put(POWERRATIO_KEY, jsonPowerRatio);
+    }
 
-		// SlownessError
-		if (jsonSlownessError != null) {
-			newJSONObject.put(SLOWNESSERROR_KEY, jsonSlownessError);
-		}
+    // backAzimuthError
+    if (jsonBackAzimuthError != null) {
+      newJSONObject.put(BACKAZIMUTHERROR_KEY, jsonBackAzimuthError);
+    }
 
-		// powerRatioError
-		if (jsonPowerRatioError != null) {
-			newJSONObject.put(POWERRATIOERROR_KEY, jsonPowerRatioError);
-		}
+    // SlownessError
+    if (jsonSlownessError != null) {
+      newJSONObject.put(SLOWNESSERROR_KEY, jsonSlownessError);
+    }
 
-		return (newJSONObject);
-	}
+    // powerRatioError
+    if (jsonPowerRatioError != null) {
+      newJSONObject.put(POWERRATIOERROR_KEY, jsonPowerRatioError);
+    }
 
-	/**
-	 * Validates the class.
-	 *
-	 * @return Returns true if successful
-	 */
-	public boolean isValid() {
-		if (getErrors().size() == 0) {
-			return (true);
-		} else {
-			return (false);
-		}
-	}
+    return (newJSONObject);
+  }
 
-	/**
-	 * Gets any validation errors in the class.
-	 *
-	 * @return Returns a List&lt;String&gt; of any errors found
-	 */
-	public ArrayList<String> getErrors() {
-		Double jsonBackAzimuth = getBackAzimuth();
-		Double jsonSlowness = getSlowness();
-		Double jsonPowerRatio = getPowerRatio();
-		Double jsonBackAzimuthError = getBackAzimuthError();
-		Double jsonSlownessError = getSlownessError();
-		Double jsonPowerRatioError = getPowerRatioError();
+  /**
+   * Validates the class.
+   *
+   * @return Returns true if successful
+   */
+  public boolean isValid() {
+    if (getErrors().size() == 0) {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
 
-		ArrayList<String> errorList = new ArrayList<String>();
+  /**
+   * Gets any validation errors in the class.
+   *
+   * @return Returns a List&lt;String&gt; of any errors found
+   */
+  public ArrayList<String> getErrors() {
+    Double jsonBackAzimuth = getBackAzimuth();
+    Double jsonSlowness = getSlowness();
+    Double jsonPowerRatio = getPowerRatio();
+    Double jsonBackAzimuthError = getBackAzimuthError();
+    Double jsonSlownessError = getSlownessError();
+    Double jsonPowerRatioError = getPowerRatioError();
 
-		// Required Keys
-		// backAzimuth
-		if (jsonBackAzimuth == null) {
-			// backazimuth not found
-			errorList.add("No BackAzimuth in Beam Class.");
-		} else if (jsonBackAzimuth < 0) {
-			// invalid backazimuth
-			errorList.add("Invalid BackAzimuth in Beam Class.");
-		}
+    ArrayList<String> errorList = new ArrayList<String>();
 
-		// slowness
-		if (jsonSlowness == null) {
-			// slowness not found
-			errorList.add("No Slowness in Beam Class.");
-		} else if (jsonSlowness < 0) {
-			// invalid slowness
-			errorList.add("Invalid Slowness in Beam Class.");
-		}
+    // Required Keys
+    // backAzimuth
+    if (jsonBackAzimuth == null) {
+      // backazimuth not found
+      errorList.add("No BackAzimuth in Beam Class.");
+    } else if (jsonBackAzimuth < 0) {
+      // invalid backazimuth
+      errorList.add("Invalid BackAzimuth in Beam Class.");
+    }
 
-		// Optional Keys
-		// powerRatio
-		if (jsonPowerRatio != null) {
-			if (jsonPowerRatio < 0) {
-				// invalid powerRatio
-				errorList.add("Invalid PowerRatio in Beam Class.");
-			}
-		}
+    // slowness
+    if (jsonSlowness == null) {
+      // slowness not found
+      errorList.add("No Slowness in Beam Class.");
+    } else if (jsonSlowness < 0) {
+      // invalid slowness
+      errorList.add("Invalid Slowness in Beam Class.");
+    }
 
-		// backAzimuthError
-		if (jsonBackAzimuthError != null) {
-			if (jsonBackAzimuthError < 0) {
-				// invalid backAzimuthError
-				errorList.add("Invalid BackAzimuthError in Beam Class.");
-			}
-		}
+    // Optional Keys
+    // powerRatio
+    if (jsonPowerRatio != null) {
+      if (jsonPowerRatio < 0) {
+        // invalid powerRatio
+        errorList.add("Invalid PowerRatio in Beam Class.");
+      }
+    }
 
-		// slownessError
-		if (jsonSlownessError != null) {
-			if (jsonSlownessError < 0) {
-				// invalid slownessError
-				errorList.add("Invalid SlownessError in Beam Class.");
-			}
-		}
+    // backAzimuthError
+    if (jsonBackAzimuthError != null) {
+      if (jsonBackAzimuthError < 0) {
+        // invalid backAzimuthError
+        errorList.add("Invalid BackAzimuthError in Beam Class.");
+      }
+    }
 
-		if (jsonSlownessError != null) {
-			if (jsonSlownessError < 0) {
-				// invalid slownessError
-				errorList.add("Invalid SlownessError in Beam Class.");
-			}
-		}
+    // slownessError
+    if (jsonSlownessError != null) {
+      if (jsonSlownessError < 0) {
+        // invalid slownessError
+        errorList.add("Invalid SlownessError in Beam Class.");
+      }
+    }
 
-		if (jsonPowerRatioError != null) {
-			if (jsonPowerRatioError < 0) {
-				// invalid powerRatioError
-				errorList.add("Invalid PowerRatioError in Beam Class.");
-			}
-		}
+    if (jsonSlownessError != null) {
+      if (jsonSlownessError < 0) {
+        // invalid slownessError
+        errorList.add("Invalid SlownessError in Beam Class.");
+      }
+    }
 
-		// success
-		return (errorList);
-	}
+    if (jsonPowerRatioError != null) {
+      if (jsonPowerRatioError < 0) {
+        // invalid powerRatioError
+        errorList.add("Invalid PowerRatioError in Beam Class.");
+      }
+    }
 
-	/**
-	 * Checks to see if this object is empty
-	 * 
-	 * @return Returns true if empty, false otherwise.
-	 */
-	public boolean isEmpty() {
-		if (getBackAzimuth() != null) {
-			return (false);
-		}
-		if (getBackAzimuthError() != null) {
-			return (false);
-		}
-		if (getSlowness() != null) {
-			return (false);
-		}
-		if (getSlownessError() != null) {
-			return (false);
-		}
-		if (getPowerRatio() != null) {
-			return (false);
-		}
-		if (getPowerRatioError() != null) {
-			return (false);
-		}
-		return (true);
-	}
+    // success
+    return (errorList);
+  }
 
-	/**
-	 * @return the backAzimuth
-	 */
-	public Double getBackAzimuth() {
-		return backAzimuth;
-	}
+  /**
+   * Checks to see if this object is empty
+   *
+   * @return Returns true if empty, false otherwise.
+   */
+  public boolean isEmpty() {
+    if (getBackAzimuth() != null) {
+      return (false);
+    }
+    if (getBackAzimuthError() != null) {
+      return (false);
+    }
+    if (getSlowness() != null) {
+      return (false);
+    }
+    if (getSlownessError() != null) {
+      return (false);
+    }
+    if (getPowerRatio() != null) {
+      return (false);
+    }
+    if (getPowerRatioError() != null) {
+      return (false);
+    }
+    return (true);
+  }
 
-	/**
-	 * @return the backAzimuthError
-	 */
-	public Double getBackAzimuthError() {
-		return backAzimuthError;
-	}
+  /** @return the backAzimuth */
+  public Double getBackAzimuth() {
+    return backAzimuth;
+  }
 
-	/**
-	 * @return the slowness
-	 */
-	public Double getSlowness() {
-		return slowness;
-	}
+  /** @return the backAzimuthError */
+  public Double getBackAzimuthError() {
+    return backAzimuthError;
+  }
 
-	/**
-	 * @return the powerRatio
-	 */
-	public Double getPowerRatio() {
-		return powerRatio;
-	}
+  /** @return the slowness */
+  public Double getSlowness() {
+    return slowness;
+  }
 
-	/**
-	 * @return the slownessError
-	 */
-	public Double getSlownessError() {
-		return slownessError;
-	}
+  /** @return the powerRatio */
+  public Double getPowerRatio() {
+    return powerRatio;
+  }
 
-	/**
-	 * @return the powerRatioError
-	 */
-	public Double getPowerRatioError() {
-		return powerRatioError;
-	}
+  /** @return the slownessError */
+  public Double getSlownessError() {
+    return slownessError;
+  }
+
+  /** @return the powerRatioError */
+  public Double getPowerRatioError() {
+    return powerRatioError;
+  }
 }

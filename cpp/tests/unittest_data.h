@@ -109,10 +109,10 @@
 #define REQUESTSTRING "{\"Site\":{\"Station\":\"BMN\",\"Channel\":\"HHZ\",\"Network\":\"LB\",\"Location\":\"01\"},\"Type\":\"StationInfoRequest\",\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
 
 // classification
-#define CLASSIFICATIONSTRING "{\"Phase\":\"P\",\"PhaseProbability\":0.22,\"Distance\":0.442559,\"DistanceProbability\":22.5,\"Azimuth\":0.418479,\"AzimuthProbability\":0.16,\"Magnitude\":2.14,\"MagnitudeType\":\"Mb\",\"MagnitudeProbability\":0.55,\"Depth\":32.44,\"DepthProbability\":11.2,\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},\"EventTypeProbability\":1.1,\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
+#define CLASSIFICATIONSTRING "{\"Phase\":\"P\",\"PhaseProbability\":0.22,\"Distance\":0.442559,\"DistanceProbability\":22.5,\"BackAzimuth\":0.418479,\"BackAzimuthProbability\":0.16,\"Magnitude\":2.14,\"MagnitudeType\":\"Mb\",\"MagnitudeProbability\":0.55,\"Depth\":32.44,\"DepthProbability\":11.2,\"EventType\":{\"Type\":\"Earthquake\",\"Certainty\":\"Suspected\"},\"EventTypeProbability\":1.1,\"Source\":{\"AgencyID\":\"US\",\"Author\":\"TestAuthor\"}}" // NOLINT
 #define PHASEPROBABILITY 0.22
 #define DISTANCEPROBABILITY 22.5
-#define AZIMUTHPROBABILITY 0.16
+#define BACKAZIMUTHPROBABILITY 0.16
 #define MAGNITUDETYPE "Mb"
 #define MAGNITUDEPROBABILITY 0.55
 #define DEPTHPROBABILITY 11.2

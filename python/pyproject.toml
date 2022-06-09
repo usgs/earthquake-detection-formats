@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "earthquake-detection-formats"
+version = "0.1.0"
+description = "Python implementation of the library used to communicate seismic event detection information between systems"
+authors = ["John Patton <jpatton@usgs.gov>"]
+license = "CC0-1.0"
+homepage="https://code.usgs.gov/ghsc/neic/utilities/earthquake-detection-formats"
+include = [
+  "LICENSE.md"
+]
+repository="https://code.usgs.gov/ghsc/neic/utilities/earthquake-detection-formats"
+keywords = ["usgs", "neic", "earthquakes", "formats", "detection"]
+packages = [
+  {include = "detectionformats" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.8,<3.11"
+twine = "^4.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+safety = "^1.10.3"
+pytest = "^6.2.4"
+pytest-cov = "^2.12.1"
+
+
+[tool.poetry.extras]
+pycurl = ["pycurl"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.site
 import detectionformats.source
 
-#stdlib imports
+# stdlib imports
 import json
 
 
 class StationInfo:
-    """ StationInfo - a conversion class used to create, parse, and validate 
-        station info data as part of detection data.
+    """StationInfo - a conversion class used to create, parse, and validate
+    station info data as part of detection data.
     """
+
     # json keys
     TYPE_KEY = "Type"
     SITE_KEY = "Site"
@@ -20,8 +21,14 @@ class StationInfo:
     USEFORTELESEISMIC_KEY = "UseForTeleseismic"
     INFORMATIONREQUESTOR_KEY = "InformationRequestor"
 
-    def __init__(self, newSite=None, newQuality=None, newEnable=None,
-        newUseForTeleseismic=None, newInformationRequestor=None):
+    def __init__(
+        self,
+        newSite=None,
+        newQuality=None,
+        newEnable=None,
+        newUseForTeleseismic=None,
+        newInformationRequestor=None,
+    ):
         """Initialize the station info object. Constructs an empty object
            if all arguments are None
 
@@ -46,7 +53,7 @@ class StationInfo:
             Nothing
         """
         # first required keys
-        self.type = 'StationInfo'
+        self.type = "StationInfo"
         if newSite is not None:
             self.site = newSite
         else:
@@ -94,7 +101,7 @@ class StationInfo:
         try:
             self.type = aDict[self.TYPE_KEY]
             self.site.fromDict(aDict[self.SITE_KEY])
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
@@ -140,20 +147,20 @@ class StationInfo:
         try:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.SITE_KEY] = self.site.toDict()
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         # second optional keys
-        if hasattr(self, 'quality'):
+        if hasattr(self, "quality"):
             aDict[self.QUALITY_KEY] = self.quality
 
-        if hasattr(self, 'enable'):
+        if hasattr(self, "enable"):
             aDict[self.ENABLE_KEY] = self.enable
 
-        if hasattr(self, 'useForTeleseismic'):
+        if hasattr(self, "useForTeleseismic"):
             aDict[self.USEFORTELESEISMIC_KEY] = self.useForTeleseismic
 
-        if hasattr(self, 'informationRequestor'):
+        if hasattr(self, "informationRequestor"):
             aDict[self.INFORMATIONREQUESTOR_KEY] = self.informationRequestor.toDict()
 
         return aDict
@@ -186,40 +193,46 @@ class StationInfo:
 
         # first required keys
         try:
-            if self.type == '':
-                errorList.append('Empty Type in StationInfo Class.')
-            elif self.type != 'StationInfo':
-                errorList.append('Non-StationInfo Type in StationInfo Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Type in StationInfo Class.')
+            if self.type == "":
+                errorList.append("Empty Type in StationInfo Class.")
+            elif self.type != "StationInfo":
+                errorList.append("Non-StationInfo Type in StationInfo Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Type in StationInfo Class.")
 
         try:
             if not self.site.isValid():
-                errorList.append('Invalid Site in StationInfo Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Site in StationInfo Class.')
+                errorList.append("Invalid Site in StationInfo Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Site in StationInfo Class.")
 
         try:
             if self.site.latitude < -90 or self.site.latitude > 90:
-                errorList.append('Latitude in StationInfo Class not in the range of -90 to 90.')
-        except(NameError, AttributeError):
-            errorList.append('No Latitude in StationInfo Class.')
+                errorList.append(
+                    "Latitude in StationInfo Class not in the range of -90 to 90."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Latitude in StationInfo Class.")
 
         try:
             if self.site.longitude < -180 or self.site.longitude > 180:
-                errorList.append('Longitude in StationInfo Class not in the range of -180 to 180.')
-        except(NameError, AttributeError):
-            errorList.append('No Longitude in StationInfo Class.')
+                errorList.append(
+                    "Longitude in StationInfo Class not in the range of -180 to 180."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Longitude in StationInfo Class.")
 
         try:
             if self.site.elevation < -550 or self.site.elevation > 8900:
-                errorList.append('Elevation in StationInfo Class not in the range of -550 to 8900.')
-        except(NameError, AttributeError):
-            errorList.append('No Elevation in StationInfo Class.')
+                errorList.append(
+                    "Elevation in StationInfo Class not in the range of -550 to 8900."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Elevation in StationInfo Class.")
 
         # second optional keys
-        if hasattr(self, 'informationRequestor'):
+        if hasattr(self, "informationRequestor"):
             if not self.informationRequestor.isValid():
-                errorList.append('Invalid InformationRequestor in StationInfo Class.')
+                errorList.append("Invalid InformationRequestor in StationInfo Class.")
 
         return errorList

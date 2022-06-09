@@ -1,293 +1,259 @@
 package gov.usgs.detectionformats;
 
 import java.util.ArrayList;
-
 import org.json.simple.*;
 
 /**
- * a conversion class used to create, parse, and validate associated data as
- * part of detection data.
+ * a conversion class used to create, parse, and validate associated data as part of detection data.
  *
  * @author U.S. Geological Survey &lt;jpatton at usgs.gov&gt;
  */
 public class Association implements DetectionInt {
 
-	/**
-	 * JSON Keys
-	 */
-	public static final String PHASE_KEY = "Phase";
-	public static final String DISTANCE_KEY = "Distance";
-	public static final String AZIMUTH_KEY = "Azimuth";
-	public static final String RESIDUAL_KEY = "Residual";
-	public static final String SIGMA_KEY = "Sigma";
+  /** JSON Keys */
+  public static final String PHASE_KEY = "Phase";
 
-	/**
-	 * Optional String containing the associated phase name
-	 */
-	private final String phase;
+  public static final String DISTANCE_KEY = "Distance";
+  public static final String AZIMUTH_KEY = "Azimuth";
+  public static final String RESIDUAL_KEY = "Residual";
+  public static final String SIGMA_KEY = "Sigma";
 
-	/**
-	 * Optional double containing the associated distance
-	 */
-	private final Double distance;
+  /** Optional String containing the associated phase name */
+  private final String phase;
 
-	/**
-	 * Optional double containing the associated azimuth
-	 */
-	private final Double azimuth;
+  /** Optional double containing the associated distance */
+  private final Double distance;
 
-	/**
-	 * Optional double containing the associated residual
-	 */
-	private final Double residual;
+  /** Optional double containing the associated azimuth */
+  private final Double azimuth;
 
-	/**
-	 * Optional double containing the associated sigma
-	 */
-	private final Double sigma;
+  /** Optional double containing the associated residual */
+  private final Double residual;
 
-	/**
-	 * The constructor for the Association class. Initializes members to null
-	 * values.
-	 */
-	public Association() {
-		phase = null;
-		distance = null;
-		azimuth = null;
-		residual = null;
-		sigma = null;
-	}
+  /** Optional double containing the associated sigma */
+  private final Double sigma;
 
-	/**
-	 * The advanced constructor for the Association class. Initializes members to
-	 * provided values.
-	 *
-	 * @param newPhase
-	 *            - A String containing the phase name to use (null omit)
-	 * @param newDistance
-	 *            - A double containing the distance to use (null omit)
-	 * @param newAzimuth
-	 *            - A double containing the azimuth to use (null omit)
-	 * @param newResidual
-	 *            - A double containing the residual to use (null omit)
-	 * @param newSigma
-	 *            - A double containing the sigma to use (null omit)
-	 */
-	public Association(String newPhase, Double newDistance, Double newAzimuth,
-			Double newResidual, Double newSigma) {
-		phase = newPhase;
-		distance = newDistance;
-		azimuth = newAzimuth;
-		residual = newResidual;
-		sigma = newSigma;
-	}
+  /** The constructor for the Association class. Initializes members to null values. */
+  public Association() {
+    phase = null;
+    distance = null;
+    azimuth = null;
+    residual = null;
+    sigma = null;
+  }
 
-	/**
-	 * Constructs the class from a JSONObject, populating members
-	 *
-	 * @param newJSONObject
-	 *            - A JSONObject.
-	 */
-	public Association(JSONObject newJSONObject) {
-		// optional values
-		// phase
-		if (newJSONObject.containsKey(PHASE_KEY)) {
-			phase = (String) newJSONObject.get(PHASE_KEY);
-		} else {
-			phase = null;
-		}
+  /**
+   * The advanced constructor for the Association class. Initializes members to provided values.
+   *
+   * @param newPhase - A String containing the phase name to use (null omit)
+   * @param newDistance - A double containing the distance to use (null omit)
+   * @param newAzimuth - A double containing the azimuth to use (null omit)
+   * @param newResidual - A double containing the residual to use (null omit)
+   * @param newSigma - A double containing the sigma to use (null omit)
+   */
+  public Association(
+      String newPhase, Double newDistance, Double newAzimuth, Double newResidual, Double newSigma) {
+    phase = newPhase;
+    distance = newDistance;
+    azimuth = newAzimuth;
+    residual = newResidual;
+    sigma = newSigma;
+  }
 
-		// distance
-		if (newJSONObject.containsKey(DISTANCE_KEY)) {
-			distance = (double) newJSONObject.get(DISTANCE_KEY);
-		} else {
-			distance = null;
-		}
+  /**
+   * Constructs the class from a JSONObject, populating members
+   *
+   * @param newJSONObject - A JSONObject.
+   */
+  public Association(JSONObject newJSONObject) {
+    // optional values
+    // phase
+    if (newJSONObject.containsKey(PHASE_KEY)) {
+      phase = (String) newJSONObject.get(PHASE_KEY);
+    } else {
+      phase = null;
+    }
 
-		// azimuth
-		if (newJSONObject.containsKey(AZIMUTH_KEY)) {
-			azimuth = (double) newJSONObject.get(AZIMUTH_KEY);
-		} else {
-			azimuth = null;
-		}
+    // distance
+    if (newJSONObject.containsKey(DISTANCE_KEY)) {
+      distance = (double) newJSONObject.get(DISTANCE_KEY);
+    } else {
+      distance = null;
+    }
 
-		// residual
-		if (newJSONObject.containsKey(RESIDUAL_KEY)) {
-			residual = (double) newJSONObject.get(RESIDUAL_KEY);
-		} else {
-			residual = null;
-		}
+    // azimuth
+    if (newJSONObject.containsKey(AZIMUTH_KEY)) {
+      azimuth = (double) newJSONObject.get(AZIMUTH_KEY);
+    } else {
+      azimuth = null;
+    }
 
-		// sigma
-		if (newJSONObject.containsKey(SIGMA_KEY)) {
-			sigma = (double) newJSONObject.get(SIGMA_KEY);
-		} else {
-			sigma = null;
-		}
-	}
+    // residual
+    if (newJSONObject.containsKey(RESIDUAL_KEY)) {
+      residual = (double) newJSONObject.get(RESIDUAL_KEY);
+    } else {
+      residual = null;
+    }
 
-	/**
-	 * Converts the contents of the class to a json object Overridden from
-	 * DetectionBase.
-	 *
-	 * @return Returns a JSONObject containing the class contents
-	 */
-	@SuppressWarnings("unchecked")
-	public JSONObject toJSON() {
-		JSONObject newJSONObject = new JSONObject();
+    // sigma
+    if (newJSONObject.containsKey(SIGMA_KEY)) {
+      sigma = (double) newJSONObject.get(SIGMA_KEY);
+    } else {
+      sigma = null;
+    }
+  }
 
-		String jsonPhase = getPhase();
-		Double jsonDistance = getDistance();
-		Double jsonAzimuth = getAzimuth();
-		Double jsonResidual = getResidual();
-		Double jsonSigma = getSigma();
+  /**
+   * Converts the contents of the class to a json object Overridden from DetectionBase.
+   *
+   * @return Returns a JSONObject containing the class contents
+   */
+  @SuppressWarnings("unchecked")
+  public JSONObject toJSON() {
+    JSONObject newJSONObject = new JSONObject();
 
-		// optional values
-		// phase
-		if (jsonPhase != null) {
-			newJSONObject.put(PHASE_KEY, jsonPhase);
-		}
+    String jsonPhase = getPhase();
+    Double jsonDistance = getDistance();
+    Double jsonAzimuth = getAzimuth();
+    Double jsonResidual = getResidual();
+    Double jsonSigma = getSigma();
 
-		// distance
-		if (jsonDistance != null) {
-			newJSONObject.put(DISTANCE_KEY, jsonDistance);
-		}
+    // optional values
+    // phase
+    if (jsonPhase != null) {
+      newJSONObject.put(PHASE_KEY, jsonPhase);
+    }
 
-		// azimuth
-		if (jsonAzimuth != null) {
-			newJSONObject.put(AZIMUTH_KEY, jsonAzimuth);
-		}
+    // distance
+    if (jsonDistance != null) {
+      newJSONObject.put(DISTANCE_KEY, jsonDistance);
+    }
 
-		// residual
-		if (jsonResidual != null) {
-			newJSONObject.put(RESIDUAL_KEY, jsonResidual);
-		}
+    // azimuth
+    if (jsonAzimuth != null) {
+      newJSONObject.put(AZIMUTH_KEY, jsonAzimuth);
+    }
 
-		// sigma
-		if (jsonSigma != null) {
-			newJSONObject.put(SIGMA_KEY, jsonSigma);
-		}
+    // residual
+    if (jsonResidual != null) {
+      newJSONObject.put(RESIDUAL_KEY, jsonResidual);
+    }
 
-		return (newJSONObject);
-	}
+    // sigma
+    if (jsonSigma != null) {
+      newJSONObject.put(SIGMA_KEY, jsonSigma);
+    }
 
-	/**
-	 * Validates the class.
-	 *
-	 * @return Returns true if successful
-	 */
-	public boolean isValid() {
-		if (getErrors().size() == 0) {
-			return (true);
-		} else {
-			return (false);
-		}
-	}
+    return (newJSONObject);
+  }
 
-	/**
-	 * Gets any validation errors in the class.
-	 *
-	 * @return Returns a List&lt;String&gt; of any errors found
-	 */
-	public ArrayList<String> getErrors() {
-		String jsonPhase = getPhase();
-		Double jsonDistance = getDistance();
-		Double jsonAzimuth = getAzimuth();
+  /**
+   * Validates the class.
+   *
+   * @return Returns true if successful
+   */
+  public boolean isValid() {
+    if (getErrors().size() == 0) {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
 
-		ArrayList<String> errorList = new ArrayList<String>();
+  /**
+   * Gets any validation errors in the class.
+   *
+   * @return Returns a List&lt;String&gt; of any errors found
+   */
+  public ArrayList<String> getErrors() {
+    String jsonPhase = getPhase();
+    Double jsonDistance = getDistance();
+    Double jsonAzimuth = getAzimuth();
 
-		// Optional Keys
-		// phase
-		if (jsonPhase != null) {
-			// check phase string
-			if (jsonPhase.isEmpty()) {
-				// phase empty
-				errorList.add("Empty Phase in Association Class.");
-			} else if (!Utility.isStringAlpha(jsonPhase)) {
-				// invalid phase
-				errorList.add("Phase did not validate in Association class.");
-			}
-		}
+    ArrayList<String> errorList = new ArrayList<String>();
 
-		// distance
-		if (jsonDistance != null) {
-			// check distance
-			if (jsonDistance < 0) {
-				// distance negative (invalid)
-				errorList.add("Invalid Distance in Association Class.");
-			}
-		}
+    // Optional Keys
+    // phase
+    if (jsonPhase != null) {
+      // check phase string
+      if (jsonPhase.isEmpty()) {
+        // phase empty
+        errorList.add("Empty Phase in Association Class.");
+      } else if (!Utility.isStringAlpha(jsonPhase)) {
+        // invalid phase
+        errorList.add("Phase did not validate in Association class.");
+      }
+    }
 
-		// azimuth
-		if (jsonAzimuth != null) {
-			// check azimuth
-			if (jsonAzimuth < 0) {
-				// azimuth negative (invalid)
-				errorList.add("Invalid Azimuth in Association Class.");
-			}
-		}
+    // distance
+    if (jsonDistance != null) {
+      // check distance
+      if (jsonDistance < 0) {
+        // distance negative (invalid)
+        errorList.add("Invalid Distance in Association Class.");
+      }
+    }
 
-		// success
-		return (errorList);
-	}
+    // azimuth
+    if (jsonAzimuth != null) {
+      // check azimuth
+      if (jsonAzimuth < 0) {
+        // azimuth negative (invalid)
+        errorList.add("Invalid Azimuth in Association Class.");
+      }
+    }
 
-	/**
-	 * Checks to see if this object is empty
-	 *
-	 * @return Returns true if empty, false otherwise.
-	 */
-	public boolean isEmpty() {
-		if (phase != null) {
-			return (false);
-		}
-		if (distance != null) {
-			return (false);
-		}
-		if (azimuth != null) {
-			return (false);
-		}
-		if (residual != null) {
-			return (false);
-		}
-		if (sigma != null) {
-			return (false);
-		}
+    // success
+    return (errorList);
+  }
 
-		return (true);
-	}
+  /**
+   * Checks to see if this object is empty
+   *
+   * @return Returns true if empty, false otherwise.
+   */
+  public boolean isEmpty() {
+    if (phase != null) {
+      return (false);
+    }
+    if (distance != null) {
+      return (false);
+    }
+    if (azimuth != null) {
+      return (false);
+    }
+    if (residual != null) {
+      return (false);
+    }
+    if (sigma != null) {
+      return (false);
+    }
 
-	/**
-	 * @return the phase
-	 */
-	public String getPhase() {
-		return phase;
-	}
+    return (true);
+  }
 
-	/**
-	 * @return the distance
-	 */
-	public Double getDistance() {
-		return distance;
-	}
+  /** @return the phase */
+  public String getPhase() {
+    return phase;
+  }
 
-	/**
-	 * @return the azimuth
-	 */
-	public Double getAzimuth() {
-		return azimuth;
-	}
+  /** @return the distance */
+  public Double getDistance() {
+    return distance;
+  }
 
-	/**
-	 * @return the residual
-	 */
-	public Double getResidual() {
-		return residual;
-	}
+  /** @return the azimuth */
+  public Double getAzimuth() {
+    return azimuth;
+  }
 
-	/**
-	 * @return the sigma
-	 */
-	public Double getSigma() {
-		return sigma;
-	}
+  /** @return the residual */
+  public Double getResidual() {
+    return residual;
+  }
+
+  /** @return the sigma */
+  public Double getSigma() {
+    return sigma;
+  }
 }

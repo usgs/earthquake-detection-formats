@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class Association:
-    """ Association - a conversion class used to create, parse, and validate 
-        association data as part of detection data.
+    """Association - a conversion class used to create, parse, and validate
+    association data as part of detection data.
     """
+
     # json keys
     PHASE_KEY = "Phase"
     DISTANCE_KEY = "Distance"
@@ -14,8 +16,14 @@ class Association:
     RESIDUAL_KEY = "Residual"
     SIGMA_KEY = "Sigma"
 
-    def __init__(self, newPhase=None, newDistance=None, newAzimuth=None,
-        newResidual=None, newSigma=None):
+    def __init__(
+        self,
+        newPhase=None,
+        newDistance=None,
+        newAzimuth=None,
+        newResidual=None,
+        newSigma=None,
+    ):
         """Initialize the associated object. Constructs an empty object
            if all arguments are None
 
@@ -109,19 +117,19 @@ class Association:
         aDict = {}
 
         # all members optional
-        if hasattr(self, 'phase'):
+        if hasattr(self, "phase"):
             aDict[self.PHASE_KEY] = self.phase
 
-        if hasattr(self, 'distance'):
+        if hasattr(self, "distance"):
             aDict[self.DISTANCE_KEY] = self.distance
 
-        if hasattr(self, 'azimuth'):
+        if hasattr(self, "azimuth"):
             aDict[self.AZIMUTH_KEY] = self.azimuth
 
-        if hasattr(self, 'residual'):
+        if hasattr(self, "residual"):
             aDict[self.RESIDUAL_KEY] = self.residual
 
-        if hasattr(self, 'sigma'):
+        if hasattr(self, "sigma"):
             aDict[self.SIGMA_KEY] = self.sigma
 
         return aDict
@@ -158,13 +166,13 @@ class Association:
         # if it's a letter
 
         # second optional keys
-        if hasattr(self, 'distance'):
+        if hasattr(self, "distance"):
             if self.distance < 0:
-                errorList.append('Invalid Distance in Association Class.')
+                errorList.append("Invalid Distance in Association Class.")
 
-        if hasattr(self, 'azimuth'):
+        if hasattr(self, "azimuth"):
             if self.azimuth < 0:
-                errorList.append('Invalid Azimuth in Association Class.')
+                errorList.append("Invalid Azimuth in Association Class.")
 
         return errorList
 
@@ -178,19 +186,19 @@ class Association:
         Raises:
             Nothing
         """
-        if hasattr(self, 'phase'):
+        if hasattr(self, "phase"):
             return False
 
-        if hasattr(self, 'distance'):
+        if hasattr(self, "distance"):
             return False
 
-        if hasattr(self, 'azimuth'):
+        if hasattr(self, "azimuth"):
             return False
 
-        if hasattr(self, 'residual'):
+        if hasattr(self, "residual"):
             return False
 
-        if hasattr(self, 'sigma'):
+        if hasattr(self, "sigma"):
             return False
 
         return True

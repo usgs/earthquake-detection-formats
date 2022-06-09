@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 
 
 class Source:
-    """ Source - a conversion class used to create, parse, and validate source 
-        data as part of detection data.
+    """Source - a conversion class used to create, parse, and validate source
+    data as part of detection data.
     """
+
     # json keys
     AGENCYID_KEY = "AgencyID"
     AUTHOR_KEY = "Author"
@@ -55,7 +56,7 @@ class Source:
         try:
             self.agencyID = aDict[self.AGENCYID_KEY]
             self.author = aDict[self.AUTHOR_KEY]
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
@@ -86,7 +87,7 @@ class Source:
         try:
             aDict[self.AGENCYID_KEY] = self.agencyID
             aDict[self.AUTHOR_KEY] = self.author
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         return aDict
@@ -118,16 +119,16 @@ class Source:
         errorList = []
 
         try:
-            if self.agencyID == '':
-                errorList.append('Empty AgencyID in Source Class.')
-        except(NameError, AttributeError):
-            errorList.append('No AgencyID in Source Class.')
+            if self.agencyID == "":
+                errorList.append("Empty AgencyID in Source Class.")
+        except (NameError, AttributeError):
+            errorList.append("No AgencyID in Source Class.")
 
         try:
-            if self.author == '':
-                errorList.append('Empty Author in Source Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Author in Source Class.')
+            if self.author == "":
+                errorList.append("Empty Author in Source Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Author in Source Class.")
 
         return errorList
 
@@ -141,10 +142,10 @@ class Source:
         Raises:
             Nothing
         """
-        if hasattr(self, 'agencyID'):
+        if hasattr(self, "agencyID"):
             return False
 
-        if hasattr(self, 'author'):
+        if hasattr(self, "author"):
             return False
 
         return True

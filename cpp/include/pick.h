@@ -108,10 +108,10 @@ class pick : public detectionbase {
      * \param newclassificationdistanceprob - A double containing the 
      * probability of the distance estimate, 
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newclassificationazimuth - A double containing the azimuth to use,
+	 * \param newclassificationbackazimuth - A double containing the backazimuth to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-     * \param newclassificationazimuthprob - A double containing the probability 
-	 * of the azimuth estimate, std::numeric_limits<double>::quiet_NaN() to omit
+     * \param newclassificationbackazimuthprob - A double containing the probability 
+	 * of the backazimuth estimate, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newclassificationmagnitude - A double containing the magnitude to 
 	 * use, std::numeric_limits<double>::quiet_NaN() to omit
      * \param newclassificationmagtype - A std::string containing the magnitude 
@@ -149,7 +149,7 @@ class pick : public detectionbase {
 			std::string newclassificationphase, double newclassificationphaseprob,
             double newclassificationdistance,
 			double newclassificationdistanceprob,
-			double newclassificationazimuth, double newclassificationazimuthprob,
+			double newclassificationbackazimuth, double newclassificationbackazimuthprob,
 			double newclassificationmagnitude, std::string newclassificationmagtype,
             double newclassificationmagprob, double newclassificationdepth,
 			double newclassificationdepthprob,

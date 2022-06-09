@@ -9,8 +9,8 @@
 #define PHASEPROB_KEY "PhaseProbability"
 #define DISTANCE_KEY "Distance"
 #define DISTANCEPROB_KEY "DistanceProbability"
-#define AZIMUTH_KEY "Azimuth"
-#define AZIMUTHPROB_KEY "AzimuthProbability"
+#define BACKAZIMUTH_KEY "BackAzimuth"
+#define BACKAZIMUTHPROB_KEY "BackAzimuthProbability"
 #define MAGNITUDE_KEY "Magnitude"
 #define MAGNITUDETYPE_KEY "MagnitudeType"
 #define MAGNITUDEPROB_KEY "MagnitudeProbability"
@@ -26,8 +26,8 @@ classification::classification() {
     phaseprobability = std::numeric_limits<double>::quiet_NaN();
 	distance = std::numeric_limits<double>::quiet_NaN();
     distanceprobability = std::numeric_limits<double>::quiet_NaN();
-	azimuth = std::numeric_limits<double>::quiet_NaN();
-    azimuthprobability = std::numeric_limits<double>::quiet_NaN();
+	backazimuth = std::numeric_limits<double>::quiet_NaN();
+    backazimuthprobability = std::numeric_limits<double>::quiet_NaN();
 	magnitude = std::numeric_limits<double>::quiet_NaN();
     magnitudetype = "";
     magnitudeprobability = std::numeric_limits<double>::quiet_NaN();
@@ -39,8 +39,8 @@ classification::classification() {
 }
 
 classification::classification(std::string newphase, double newphaseprob,
-            double newdistance, double newdistanceprob, double newazimuth,
-			double newazimuthprob, double newmagnitude, std::string newmagtype,
+            double newdistance, double newdistanceprob, double newbackazimuth,
+			double newbackazimuthprob, double newmagnitude, std::string newmagtype,
             double newmagprob, double newdepth, double newdepthprob,
             std::string neweventtype, std::string neweventtypecertainty,
             double neweventtypeprob, std::string newagencyid,
@@ -49,8 +49,8 @@ classification::classification(std::string newphase, double newphaseprob,
     phaseprobability = newphaseprob;
 	distance = newdistance;
     distanceprobability = newdistanceprob;
-	azimuth = newazimuth;
-    azimuthprobability = newazimuthprob;
+	backazimuth = newbackazimuth;
+    backazimuthprobability = newbackazimuthprob;
 	magnitude = newmagnitude;
     magnitudetype = newmagtype;
     magnitudeprobability = newmagprob;
@@ -63,8 +63,8 @@ classification::classification(std::string newphase, double newphaseprob,
 }
 
 classification::classification(std::string newphase, double newphaseprob,
-            double newdistance, double newdistanceprob, double newazimuth,
-			double newazimuthprob, double newmagnitude, std::string newmagtype,
+            double newdistance, double newdistanceprob, double newbackazimuth,
+			double newbackazimuthprob, double newmagnitude, std::string newmagtype,
             double newmagprob, double newdepth, double newdepthprob,
             detectionformats::eventtype neweventtype, double neweventtypeprob,
             detectionformats::source newsource) {
@@ -72,8 +72,8 @@ classification::classification(std::string newphase, double newphaseprob,
     phaseprobability = newphaseprob;
 	distance = newdistance;
     distanceprobability = newdistanceprob;
-	azimuth = newazimuth;
-    azimuthprobability = newazimuthprob;
+	backazimuth = newbackazimuth;
+    backazimuthprobability = newbackazimuthprob;
 	magnitude = newmagnitude;
     magnitudetype = newmagtype;
     magnitudeprobability = newmagprob;
@@ -127,27 +127,27 @@ classification::classification(rapidjson::Value &json) {
 		distanceprobability = std::numeric_limits<double>::quiet_NaN();
     }
 
-	// azimuth
-	if ((json.HasMember(AZIMUTH_KEY) == true)
-			&& (json[AZIMUTH_KEY].IsNumber() == true)) {
-		if (json[AZIMUTH_KEY].IsDouble() == true) {
-			azimuth = json[AZIMUTH_KEY].GetDouble();
-		} else if (json[AZIMUTH_KEY].IsInt() == true) {
-			azimuth = static_cast<double>(json[AZIMUTH_KEY].GetInt());
+	// backazimuth
+	if ((json.HasMember(BACKAZIMUTH_KEY) == true)
+			&& (json[BACKAZIMUTH_KEY].IsNumber() == true)) {
+		if (json[BACKAZIMUTH_KEY].IsDouble() == true) {
+			backazimuth = json[BACKAZIMUTH_KEY].GetDouble();
+		} else if (json[BACKAZIMUTH_KEY].IsInt() == true) {
+			backazimuth = static_cast<double>(json[BACKAZIMUTH_KEY].GetInt());
 		} else {
-			azimuth = std::numeric_limits<double>::quiet_NaN();
+			backazimuth = std::numeric_limits<double>::quiet_NaN();
 		}
 	} else {
-		azimuth = std::numeric_limits<double>::quiet_NaN();
+		backazimuth = std::numeric_limits<double>::quiet_NaN();
 	}
 
-    // azimuth probability
-	if ((json.HasMember(AZIMUTHPROB_KEY) == true)
-			&& (json[AZIMUTHPROB_KEY].IsNumber() == true)
-			&& (json[AZIMUTHPROB_KEY].IsDouble() == true)) {
-		azimuthprobability = json[AZIMUTHPROB_KEY].GetDouble();
+    // backazimuth probability
+	if ((json.HasMember(BACKAZIMUTHPROB_KEY) == true)
+			&& (json[BACKAZIMUTHPROB_KEY].IsNumber() == true)
+			&& (json[BACKAZIMUTHPROB_KEY].IsDouble() == true)) {
+		backazimuthprobability = json[BACKAZIMUTHPROB_KEY].GetDouble();
     } else {
-		azimuthprobability = std::numeric_limits<double>::quiet_NaN();
+		backazimuthprobability = std::numeric_limits<double>::quiet_NaN();
     }
 
 	// magnitude
@@ -227,8 +227,8 @@ classification::classification(const classification & newclassification) {
     phaseprobability = newclassification.phaseprobability;
 	distance = newclassification.distance;
     distanceprobability = newclassification.distanceprobability;
-	azimuth = newclassification.azimuth;
-    azimuthprobability = newclassification.azimuthprobability;
+	backazimuth = newclassification.backazimuth;
+    backazimuthprobability = newclassification.backazimuthprobability;
 	magnitude = newclassification.magnitude;
     magnitudetype = newclassification.magnitudetype;
     magnitudeprobability = newclassification.magnitudeprobability;
@@ -270,14 +270,14 @@ rapidjson::Value & classification::tojson(
 		json.AddMember(DISTANCEPROB_KEY, distanceprobability, allocator);
 	}
 
-	// azimuth
-	if (std::isnan(azimuth) != true) {
-		json.AddMember(AZIMUTH_KEY, azimuth, allocator);
+	// backazimuth
+	if (std::isnan(backazimuth) != true) {
+		json.AddMember(BACKAZIMUTH_KEY, backazimuth, allocator);
 	}
 
-	// azimuthprobability
-	if (std::isnan(azimuthprobability) != true) {
-		json.AddMember(AZIMUTHPROB_KEY, azimuthprobability, allocator);
+	// backazimuthprobability
+	if (std::isnan(backazimuthprobability) != true) {
+		json.AddMember(BACKAZIMUTHPROB_KEY, backazimuthprobability, allocator);
 	}
 
 	// magnitude
@@ -347,10 +347,10 @@ std::vector<std::string> classification::geterrors() {
 		}
 	}
 
-	// azimuth
-	if (std::isnan(azimuth) == false) {
-		if ((azimuth < 0) || (azimuth >= 360)) {
-			errorlist.push_back("Invalid azimuth in classification object.");
+	// backazimuth
+	if (std::isnan(backazimuth) == false) {
+		if ((backazimuth < 0) || (backazimuth >= 360)) {
+			errorlist.push_back("Invalid backazimuth in classification object.");
 		}
 	}
 
@@ -418,10 +418,10 @@ bool classification::isempty() {
 	if (std::isnan(distanceprobability) != true) {
 		return (false);
 	}
-	if (std::isnan(azimuth) != true) {
+	if (std::isnan(backazimuth) != true) {
 		return (false);
 	}
-	if (std::isnan(azimuthprobability) != true) {
+	if (std::isnan(backazimuthprobability) != true) {
 		return (false);
 	}
 	if (std::isnan(magnitude) != true) {

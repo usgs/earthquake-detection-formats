@@ -1,20 +1,22 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.source
 import detectionformats.site
 import detectionformats.hypocenter
 import detectionformats.eventtype
 import detectionformats.association
 
-#stdlib imports
+# stdlib imports
 import json
 import datetime
 
+
 class Correlation:
-    """Correlation - a conversion class used to create, parse, and validate a 
-        correlation as part of detection data.
+    """Correlation - a conversion class used to create, parse, and validate a
+    correlation as part of detection data.
     """
+
     # json keys
     TYPE_KEY = "Type"
     ID_KEY = "ID"
@@ -32,11 +34,23 @@ class Correlation:
     THRESHOLDTYPE_KEY = "ThresholdType"
     ASSOCIATIONINFO_KEY = "AssociationInfo"
 
-    def __init__(self, newID=None, newSite=None, newSource=None, newPhase=None,
-        newTime=None, newCorrelation=None, newHypocenter=None, newEventType=None,
-        newMagnitude=None, newSNR=None, newZScore=None,
-        newDetectionThreshold=None, newThresholdType=None,
-        newAssociationInfo=None):
+    def __init__(
+        self,
+        newID=None,
+        newSite=None,
+        newSource=None,
+        newPhase=None,
+        newTime=None,
+        newCorrelation=None,
+        newHypocenter=None,
+        newEventType=None,
+        newMagnitude=None,
+        newSNR=None,
+        newZScore=None,
+        newDetectionThreshold=None,
+        newThresholdType=None,
+        newAssociationInfo=None,
+    ):
         """Initialize the correlation object. Constructs an empty object
            if all arguments are None
 
@@ -50,7 +64,7 @@ class Correlation:
             newTime: a required datetime containing the correlation time
             newHypocenter: a required detectionformats.hypocenter.Hypocenter
                 containing the desired hypocenter
-            newEventType: an optional detectionformats.eventtype.EventType 
+            newEventType: an optional detectionformats.eventtype.EventType
                 containing the desired event type
             newMagnitude: an optional Number containing the desired magnitude
                 estimate as a float
@@ -71,7 +85,7 @@ class Correlation:
         """
 
         # first required keys
-        self.type = 'Correlation'
+        self.type = "Correlation"
         if newID is not None:
             self.id = newID
 
@@ -159,7 +173,7 @@ class Correlation:
             self.time = datetime.datetime.strptime(timeString, "%Y-%m-%dT%H:%M:%S.%fZ")
             self.correlation = aDict[self.CORRELATION_KEY]
             self.hypocenter.fromDict(aDict[self.HYPOCENTER_KEY])
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
@@ -219,34 +233,34 @@ class Correlation:
             aDict[self.SITE_KEY] = self.site.toDict()
             aDict[self.SOURCE_KEY] = self.source.toDict()
             aDict[self.PHASE_KEY] = self.phase
-            timeString = self.time.isoformat(timespec='milliseconds') + "Z"
+            timeString = self.time.isoformat(timespec="milliseconds") + "Z"
             aDict[self.TIME_KEY] = timeString
             aDict[self.CORRELATION_KEY] = self.correlation
             aDict[self.HYPOCENTER_KEY] = self.hypocenter.toDict()
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         # second optional keys
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "eventType"):
             if not self.eventType.isEmpty():
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
 
-        if hasattr(self, 'magnitude'):
+        if hasattr(self, "magnitude"):
             aDict[self.MAGNITUDE_KEY] = self.magnitude
 
-        if hasattr(self, 'snr'):
+        if hasattr(self, "snr"):
             aDict[self.SNR_KEY] = self.snr
 
-        if hasattr(self, 'ZScore'):
+        if hasattr(self, "ZScore"):
             aDict[self.ZSCORE_KEY] = self.ZScore
 
-        if hasattr(self, 'detectionThreshold'):
+        if hasattr(self, "detectionThreshold"):
             aDict[self.DETECTIONTHRESHOLD_KEY] = self.detectionThreshold
 
-        if hasattr(self, 'thresholdType'):
+        if hasattr(self, "thresholdType"):
             aDict[self.THRESHOLDTYPE_KEY] = self.thresholdType
 
-        if hasattr(self, 'associationInfo'):
+        if hasattr(self, "associationInfo"):
             if not self.associationInfo.isEmpty():
                 aDict[self.ASSOCIATIONINFO_KEY] = self.associationInfo.toDict()
 
@@ -280,70 +294,74 @@ class Correlation:
 
         # required values
         try:
-            if self.type == '':
-                errorList.append('Empty Type in Correlation Class.')
-            elif self.type != 'Correlation':
-                errorList.append('Non-Correlation Type in Correlation Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Type in Correlation Class.')
+            if self.type == "":
+                errorList.append("Empty Type in Correlation Class.")
+            elif self.type != "Correlation":
+                errorList.append("Non-Correlation Type in Correlation Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Type in Correlation Class.")
 
         try:
-            if self.id == '':
-                errorList.append('Empty ID in Correlation Class.')
-        except(NameError, AttributeError):
-            errorList.append('No ID in Correlation Class.')
+            if self.id == "":
+                errorList.append("Empty ID in Correlation Class.")
+        except (NameError, AttributeError):
+            errorList.append("No ID in Correlation Class.")
 
         try:
             if not self.site.isValid():
-                errorList.append('Invalid Site in Correlation Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Site in Correlation Class.')
+                errorList.append("Invalid Site in Correlation Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Site in Correlation Class.")
 
         try:
             if not self.source.isValid():
-                errorList.append('Invalid Source in Correlation Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Source in Correlation Class.')
+                errorList.append("Invalid Source in Correlation Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Source in Correlation Class.")
 
         try:
             self.phase
-        except(NameError, AttributeError):
-            errorList.append('No Phase in Correlation Class.')
+        except (NameError, AttributeError):
+            errorList.append("No Phase in Correlation Class.")
 
         try:
             self.time
-        except(NameError, AttributeError):
-            errorList.append('No Time in Correlation Class.')
+        except (NameError, AttributeError):
+            errorList.append("No Time in Correlation Class.")
 
         try:
             if self.correlation < 0:
-                errorList.append('Correlation in Correlation Class not in greater than 0.')
-        except(NameError, AttributeError):
-            errorList.append('No Correlation in Correlation Class.')
+                errorList.append(
+                    "Correlation in Correlation Class not in greater than 0."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Correlation in Correlation Class.")
 
         try:
             if not self.hypocenter.isValid():
-                errorList.append('Invalid Hypocenter in Correlation Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Hypocenter in Correlation Class.')
+                errorList.append("Invalid Hypocenter in Correlation Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Hypocenter in Correlation Class.")
 
         # optional values
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "eventType"):
             if not self.eventType.isEmpty():
                 if not self.eventType.isValid():
-                    errorList.append('Invalid EventType in Correlation Class.')
+                    errorList.append("Invalid EventType in Correlation Class.")
 
-        if hasattr(self, 'magnitude'):
+        if hasattr(self, "magnitude"):
             if self.magnitude < -2 or self.magnitude > 10:
-                errorList.append('Magnitude in Correlation Class not in the range of -2 to 10.')
+                errorList.append(
+                    "Magnitude in Correlation Class not in the range of -2 to 10."
+                )
 
-        if hasattr(self, 'thresholdType'):
-            if self.thresholdType == '':
-                errorList.append('Empty ThresholdType in Correlation Class.')
+        if hasattr(self, "thresholdType"):
+            if self.thresholdType == "":
+                errorList.append("Empty ThresholdType in Correlation Class.")
 
-        if hasattr(self, 'associationInfo'):
+        if hasattr(self, "associationInfo"):
             if not self.associationInfo.isEmpty():
                 if not self.associationInfo.isValid():
-                    errorList.append('Invalid AssociationInfo in Correlation Class.')
+                    errorList.append("Invalid AssociationInfo in Correlation Class.")
 
         return errorList

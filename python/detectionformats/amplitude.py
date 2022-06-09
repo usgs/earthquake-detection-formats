@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class Amplitude:
-    """ Amplitude - a conversion class used to create, parse, and validate  
-        amplitude data as part of detection data.
+    """Amplitude - a conversion class used to create, parse, and validate
+    amplitude data as part of detection data.
     """
+
     # json keys
     AMPLITUDE_KEY = "Amplitude"
     PERIOD_KEY = "Period"
@@ -90,13 +92,13 @@ class Amplitude:
             Nothing
         """
         aDict = {}
-        if hasattr(self, 'amplitude'):
+        if hasattr(self, "amplitude"):
             aDict[self.AMPLITUDE_KEY] = self.amplitude
 
-        if hasattr(self, 'period'):
+        if hasattr(self, "period"):
             aDict[self.PERIOD_KEY] = self.period
 
-        if hasattr(self, 'snr'):
+        if hasattr(self, "snr"):
             aDict[self.SNR_KEY] = self.snr
 
         return aDict
@@ -141,13 +143,13 @@ class Amplitude:
         Raises:
             Nothing
         """
-        if hasattr(self, 'amplitude'):
+        if hasattr(self, "amplitude"):
             return False
 
-        if hasattr(self, 'period'):
+        if hasattr(self, "period"):
             return False
 
-        if hasattr(self, 'snr'):
+        if hasattr(self, "snr"):
             return False
 
         return True

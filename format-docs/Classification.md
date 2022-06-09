@@ -20,8 +20,8 @@ applications and organizations.
         "PhaseProbability"     : Number,
         "Distance"             : Number,
         "DistanceProbability"  : Number,
-        "Azimuth"              : Number,
-        "AzimuthProbability"   : Number,
+        "Backazimuth"              : Number,
+        "BackazimuthProbability"   : Number,
         "Magnitude"            : Number,
         "MagnitudeType"        : String,
         "MagnitudeProbability" : Number,
@@ -51,8 +51,8 @@ The following are values that **may or may not** be provided as part of classifi
 * PhaseProbability - A decimal number containing the probability of the phase identification
 * Distance - A decimal number containing a distance estimation in degrees
 * DistanceProbability - A decimal number containing the probability of the distance estimation
-* Azimuth - A decimal number containing a azimuth estimation in degrees
-* AzimuthProbability - A decimal number containing the probability of the azimuth estimation
+* Backazimuth - A decimal number containing a backazimuth estimation in degrees
+* BackazimuthProbability - A decimal number containing the probability of the backazimuth estimation
 * Magnitude - A decimal number containing the magnitude estimation
 * MagnitudeType - A string that identifies the magnitude type
 * MagnitudeProbability - A decimal number containing the probability of the magnitude estimation
