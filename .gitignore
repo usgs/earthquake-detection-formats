@@ -6,6 +6,8 @@
 *.suo
 *.user
 *.sln.docstates
+.coverage
+junit.xml
 
 # Build results
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class Site:
-    """ Site - a conversion class used to create, parse, and validate site data 
-        as part of detection data.
+    """Site - a conversion class used to create, parse, and validate site data
+    as part of detection data.
     """
+
     # json keys
     STATION_KEY = "Station"
     CHANNEL_KEY = "Channel"
@@ -16,9 +18,16 @@ class Site:
     LONGITUDE_KEY = "Longitude"
     ELEVATION_KEY = "Elevation"
 
-    def __init__(self, newStation=None, newNetwork=None, newChannel=None,
-        newLocation=None, newLatitude=None, newLongitude=None,
-        newElevation=None,):
+    def __init__(
+        self,
+        newStation=None,
+        newNetwork=None,
+        newChannel=None,
+        newLocation=None,
+        newLatitude=None,
+        newLongitude=None,
+        newElevation=None,
+    ):
         """Initialize the site object. Constructs an empty object
            if all arguments are None
 
@@ -40,11 +49,11 @@ class Site:
 
         # second optional keys
         if newChannel is not None:
-            if newChannel != '':
+            if newChannel != "":
                 self.channel = newChannel
 
         if newLocation is not None:
-            if newLocation != '':
+            if newLocation != "":
                 self.location = newLocation
 
         if newLatitude is not None:
@@ -81,7 +90,7 @@ class Site:
         try:
             self.station = aDict[self.STATION_KEY]
             self.network = aDict[self.NETWORK_KEY]
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
@@ -95,7 +104,6 @@ class Site:
             self.longitude = aDict[self.LONGITUDE_KEY]
         if self.ELEVATION_KEY in aDict:
             self.elevation = aDict[self.ELEVATION_KEY]
-
 
     def toJSONString(self):
         """Converts the object to a json formatted string
@@ -127,25 +135,25 @@ class Site:
         try:
             aDict[self.STATION_KEY] = self.station
             aDict[self.NETWORK_KEY] = self.network
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         # second optional keys
-        if hasattr(self, 'channel'):
-            if self.channel != '':
+        if hasattr(self, "channel"):
+            if self.channel != "":
                 aDict[self.CHANNEL_KEY] = self.channel
 
-        if hasattr(self, 'location'):
-            if self.location != '':
+        if hasattr(self, "location"):
+            if self.location != "":
                 aDict[self.LOCATION_KEY] = self.location
 
-        if hasattr(self, 'latitude'):
+        if hasattr(self, "latitude"):
             aDict[self.LATITUDE_KEY] = self.latitude
 
-        if hasattr(self, 'longitude'):
+        if hasattr(self, "longitude"):
             aDict[self.LONGITUDE_KEY] = self.longitude
 
-        if hasattr(self, 'elevation'):
+        if hasattr(self, "elevation"):
             aDict[self.ELEVATION_KEY] = self.elevation
 
         return aDict
@@ -177,27 +185,33 @@ class Site:
         errorList = []
 
         try:
-            if self.station == '':
-                errorList.append('Empty Station in Site Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Station in Site Class.')
+            if self.station == "":
+                errorList.append("Empty Station in Site Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Station in Site Class.")
 
         try:
-            if self.network == '':
-                errorList.append('Empty Network in Site Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Network in Site Class.')
+            if self.network == "":
+                errorList.append("Empty Network in Site Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Network in Site Class.")
 
-        if hasattr(self, 'latitude'):
+        if hasattr(self, "latitude"):
             if self.latitude < -90 or self.latitude > 90:
-                errorList.append('Latitude in Site Class not in the range of -90 to 90.')
+                errorList.append(
+                    "Latitude in Site Class not in the range of -90 to 90."
+                )
 
-        if hasattr(self, 'longitude'):
+        if hasattr(self, "longitude"):
             if self.longitude < -180 or self.longitude > 180:
-                errorList.append('Longitude in Site Class not in the range of -180 to 180.')
+                errorList.append(
+                    "Longitude in Site Class not in the range of -180 to 180."
+                )
 
-        if hasattr(self, 'elevation'):
+        if hasattr(self, "elevation"):
             if self.elevation < -550 or self.elevation > 8900:
-                errorList.append('Elevation in Site Class not in the range of -550 to 8900.')
+                errorList.append(
+                    "Elevation in Site Class not in the range of -550 to 8900."
+                )
 
         return errorList

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class Beam:
-    """ Beam - a conversion class used to create, parse, and validate beam data 
-        as part of detection data.
+    """Beam - a conversion class used to create, parse, and validate beam data
+    as part of detection data.
     """
+
     # json keys
     BACKAZIMUTH_KEY = "BackAzimuth"
     SLOWNESS_KEY = "Slowness"
@@ -15,9 +17,15 @@ class Beam:
     SLOWNESSERROR_KEY = "SlownessError"
     POWERRATIOERROR_KEY = "PowerRatioError"
 
-    def __init__(self, newBackAzimuth=None, newSlowness=None, newPowerRatio=None,
-        newBackAzimuthError=None, newSlownessError=None,
-        newPowerRatioError=None):
+    def __init__(
+        self,
+        newBackAzimuth=None,
+        newSlowness=None,
+        newPowerRatio=None,
+        newBackAzimuthError=None,
+        newSlownessError=None,
+        newPowerRatioError=None,
+    ):
         """Initialize the beam object. Constructs an empty object
            if all arguments are None
 
@@ -82,8 +90,8 @@ class Beam:
         try:
             self.backAzimuth = aDict[self.BACKAZIMUTH_KEY]
             self.slowness = aDict[self.SLOWNESS_KEY]
-        except(ValueError, KeyError, TypeError) as e:
-            print ("Dict format error, missing required keys: %s" % e)
+        except (ValueError, KeyError, TypeError) as e:
+            print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
         if self.POWERRATIO_KEY in aDict:
@@ -125,20 +133,20 @@ class Beam:
         try:
             aDict[self.BACKAZIMUTH_KEY] = self.backAzimuth
             aDict[self.SLOWNESS_KEY] = self.slowness
-        except(NameError, AttributeError) as e:
-            print ("Missing required data error: %s" % e)
+        except (NameError, AttributeError) as e:
+            print("Missing required data error: %s" % e)
 
         # second optional keys
-        if hasattr(self, 'powerRatio'):
+        if hasattr(self, "powerRatio"):
             aDict[self.POWERRATIO_KEY] = self.powerRatio
 
-        if hasattr(self, 'backAzimuthError'):
+        if hasattr(self, "backAzimuthError"):
             aDict[self.BACKAZIMUTHERROR_KEY] = self.backAzimuthError
 
-        if hasattr(self, 'slownessError'):
+        if hasattr(self, "slownessError"):
             aDict[self.SLOWNESSERROR_KEY] = self.slownessError
 
-        if hasattr(self, 'powerRatioError'):
+        if hasattr(self, "powerRatioError"):
             aDict[self.POWERRATIOERROR_KEY] = self.powerRatioError
 
         return aDict
@@ -172,32 +180,32 @@ class Beam:
         # first required keys
         try:
             if self.backAzimuth < 0:
-                errorList.append('Invalid BackAzimuth in Beam Class.')
-        except(NameError, AttributeError):
-            errorList.append('No BackAzimuth in Beam Class.')
+                errorList.append("Invalid BackAzimuth in Beam Class.")
+        except (NameError, AttributeError):
+            errorList.append("No BackAzimuth in Beam Class.")
 
         try:
             if self.slowness < 0:
-                errorList.append('Invalid Slowness in Beam Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Slowness in Beam Class.')
+                errorList.append("Invalid Slowness in Beam Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Slowness in Beam Class.")
 
         # second optional keys
-        if hasattr(self, 'powerRatio'):
+        if hasattr(self, "powerRatio"):
             if self.powerRatio < 0:
-                errorList.append('Invalid PowerRatio in Beam Class.')
+                errorList.append("Invalid PowerRatio in Beam Class.")
 
-        if hasattr(self, 'backAzimuthError'):
+        if hasattr(self, "backAzimuthError"):
             if self.backAzimuthError < 0:
-                errorList.append('Invalid BackAzimuthError in Beam Class.')
+                errorList.append("Invalid BackAzimuthError in Beam Class.")
 
-        if hasattr(self, 'slownessError'):
+        if hasattr(self, "slownessError"):
             if self.slownessError < 0:
-                errorList.append('Invalid SlownessError in Beam Class.')
+                errorList.append("Invalid SlownessError in Beam Class.")
 
-        if hasattr(self, 'powerRatioError'):
+        if hasattr(self, "powerRatioError"):
             if self.powerRatioError < 0:
-                errorList.append('Invalid PowerRatioError in Beam Class.')
+                errorList.append("Invalid PowerRatioError in Beam Class.")
 
         return errorList
 
@@ -211,22 +219,22 @@ class Beam:
         Raises:
             Nothing
         """
-        if hasattr(self, 'backAzimuth'):
+        if hasattr(self, "backAzimuth"):
             return False
 
-        if hasattr(self, 'slowness'):
+        if hasattr(self, "slowness"):
             return False
 
-        if hasattr(self, 'powerRatio'):
+        if hasattr(self, "powerRatio"):
             return False
 
-        if hasattr(self, 'backAzimuthError'):
+        if hasattr(self, "backAzimuthError"):
             return False
 
-        if hasattr(self, 'slownessError'):
+        if hasattr(self, "slownessError"):
             return False
 
-        if hasattr(self, 'powerRatioError'):
-            return False           
+        if hasattr(self, "powerRatioError"):
+            return False
 
         return True

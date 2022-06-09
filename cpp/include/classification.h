@@ -48,9 +48,9 @@ class classification : public detectionbase {
 	 * std::numeric_limits<double>::quiet_NaN() to omit
      * \param newdistanceprob - A double containing the probability of the 
      * distance estimate, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newazimuth - A double containing the azimuth to use,
+	 * \param newbackazimuth - A double containing the backazimuth to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-     * \param newazimuthprob - A double containing the probability of the azimuth
+     * \param newbackazimuthprob - A double containing the probability of the backazimuth
      * estimate, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
@@ -74,8 +74,8 @@ class classification : public detectionbase {
      * author to use, empty string to omit
 	 */
 	classification(std::string newphase, double newphaseprob,
-            double newdistance, double newdistanceprob, double newazimuth,
-			double newazimuthprob, double newmagnitude, std::string newmagtype,
+            double newdistance, double newdistanceprob, double newbackazimuth,
+			double newbackazimuthprob, double newmagnitude, std::string newmagtype,
             double newmagprob, double newdepth, double newdepthprob,
             std::string neweventtype, std::string neweventtypecertainty,
             double neweventtypeprob, std::string newagencyid,
@@ -95,9 +95,9 @@ class classification : public detectionbase {
 	 * std::numeric_limits<double>::quiet_NaN() to omit
      * \param newdistanceprob - A double containing the probability of the 
      * distance estimate, std::numeric_limits<double>::quiet_NaN() to omit
-	 * \param newazimuth - A double containing the azimuth to use,
+	 * \param newbackazimuth - A double containing the backazimuth to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
-     * \param newazimuthprob - A double containing the probability of the azimuth
+     * \param newbackazimuthprob - A double containing the probability of the backazimuth
      * estimate, std::numeric_limits<double>::quiet_NaN() to omit
 	 * \param newmagnitude - A double containing the magnitude to use,
 	 * std::numeric_limits<double>::quiet_NaN() to omit
@@ -117,8 +117,8 @@ class classification : public detectionbase {
      * algorithm source to use
 	 */
     classification(std::string newphase, double newphaseprob,
-            double newdistance, double newdistanceprob, double newazimuth,
-			double newazimuthprob, double newmagnitude, std::string newmagtype,
+            double newdistance, double newdistanceprob, double newbackazimuth,
+			double newbackazimuthprob, double newmagnitude, std::string newmagtype,
             double newmagprob, double newdepth, double newdepthprob,
             detectionformats::eventtype neweventtype, double neweventtypeprob,
             detectionformats::source newsource);
@@ -210,19 +210,19 @@ class classification : public detectionbase {
 	double distanceprobability;
 
 	/**
-	 * \brief classification azimuth
+	 * \brief classification backazimuth
 	 *
-	 * An optional double containing the classification azimuth
+	 * An optional double containing the classification backazimuth
 	 */
-	double azimuth;
+	double backazimuth;
 
 	/**
-	 * \brief classification azimuth probability
+	 * \brief classification backazimuth probability
 	 *
 	 * An optional double containing the probability of the classification 
-     * azimuth
+     * backazimuth
 	 */
-	double azimuthprobability;
+	double backazimuthprobability;
 
 	/**
 	 * \brief classification magnitude

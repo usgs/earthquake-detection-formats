@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.site
 import detectionformats.source
 
-#stdlib imports
+# stdlib imports
 import json
 
 
 class StationInfoRequest:
-    """ StationInfoRequest - a conversion class used to create, parse, and 
-        validate a station info request as part of detection data.
+    """StationInfoRequest - a conversion class used to create, parse, and
+    validate a station info request as part of detection data.
     """
+
     # json keys
     TYPE_KEY = "Type"
     SITE_KEY = "Site"
@@ -32,13 +33,13 @@ class StationInfoRequest:
             Nothing
         """
         # required keys
-        self.type = 'StationInfoRequest'
+        self.type = "StationInfoRequest"
 
         if newSite is not None:
             self.site = newSite
         else:
             self.site = detectionformats.site.Site()
-            
+
         if newSource is not None:
             self.source = newSource
         else:
@@ -72,7 +73,7 @@ class StationInfoRequest:
             self.type = aDict[self.TYPE_KEY]
             self.site.fromDict(aDict[self.SITE_KEY])
             self.source.fromDict(aDict[self.SOURCE_KEY])
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
@@ -106,7 +107,7 @@ class StationInfoRequest:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.SITE_KEY] = self.site.toDict()
             aDict[self.SOURCE_KEY] = self.source.toDict()
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         return aDict
@@ -138,23 +139,25 @@ class StationInfoRequest:
         errorList = []
 
         try:
-            if self.type == '':
-                errorList.append('Empty Type in StationInfoRequest Class.')
-            elif self.type != 'StationInfoRequest':
-                errorList.append('Non-StationInfoRequest Type in StationInfoRequest Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Type in StationInfoRequest Class.')
+            if self.type == "":
+                errorList.append("Empty Type in StationInfoRequest Class.")
+            elif self.type != "StationInfoRequest":
+                errorList.append(
+                    "Non-StationInfoRequest Type in StationInfoRequest Class."
+                )
+        except (NameError, AttributeError):
+            errorList.append("No Type in StationInfoRequest Class.")
 
         try:
             if not self.site.isValid():
-                errorList.append('Invalid Site in StationInfoRequest Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Site in StationInfoRequest Class.')
+                errorList.append("Invalid Site in StationInfoRequest Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Site in StationInfoRequest Class.")
 
         try:
             if not self.source.isValid():
-                errorList.append('Invalid Source in StationInfoRequest Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Source in StationInfoRequest Class.')
+                errorList.append("Invalid Source in StationInfoRequest Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Source in StationInfoRequest Class.")
 
         return errorList

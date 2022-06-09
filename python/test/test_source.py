@@ -1,28 +1,29 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.source
 
-#stdlib imports
+# stdlib imports
 import unittest
 
+
 class TestSource(unittest.TestCase):
-    AGENCYID = 'testAgency'
-    AUTHOR = 'testAuthor'
+    AGENCYID = "testAgency"
+    AUTHOR = "testAuthor"
     JSONSTRING = '{"AgencyID": "testAgency", "Author": "testAuthor"}'
-    DICT = {'AgencyID': 'testAgency', 'Author': 'testAuthor'}
+    DICT = {"AgencyID": "testAgency", "Author": "testAuthor"}
 
     def test_init(self):
         # Empty init
         source = detectionformats.source.Source()
 
-        self.assertFalse(hasattr(source, 'agencyID'))
-        self.assertFalse(hasattr(source, 'author'))
+        self.assertFalse(hasattr(source, "agencyID"))
+        self.assertFalse(hasattr(source, "author"))
 
         source = detectionformats.source.Source(self.AGENCYID, self.AUTHOR)
 
-        self.assertTrue(hasattr(source, 'agencyID'))
-        self.assertTrue(hasattr(source, 'author'))
+        self.assertTrue(hasattr(source, "agencyID"))
+        self.assertTrue(hasattr(source, "author"))
 
         self.assertEqual(source.agencyID, self.AGENCYID)
         self.assertEqual(source.author, self.AUTHOR)
@@ -63,5 +64,6 @@ class TestSource(unittest.TestCase):
         source = detectionformats.source.Source(self.AGENCYID, self.AUTHOR)
         self.assertFalse(source.isEmpty())
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

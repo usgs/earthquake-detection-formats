@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.source
 import detectionformats.pick
 import detectionformats.correlation
 
-#stdlib imports
+# stdlib imports
 import json
 import datetime
 
+
 class Detection:
-    """ Detection - a conversion class used to create, parse, and validate a
-        Detection as part of detection data.
+    """Detection - a conversion class used to create, parse, and validate a
+    Detection as part of detection data.
     """
+
     # json keys
     TYPE_KEY = "Type"
     ID_KEY = "ID"
@@ -28,10 +30,22 @@ class Detection:
     DATA_KEY = "Data"
     DETECTOR_KEY = "Detector"
 
-    def __init__(self, newID=None, newSource=None, newHypocenter=None,
-        newDetectionType=None, newEventType=None, newDetectionTime=None,
-        newBayes=None, newMinimumDistance=None, newRMS=None, newGap=None,
-        newDetector=None, newPickData=None, newCorrelationData=None):
+    def __init__(
+        self,
+        newID=None,
+        newSource=None,
+        newHypocenter=None,
+        newDetectionType=None,
+        newEventType=None,
+        newDetectionTime=None,
+        newBayes=None,
+        newMinimumDistance=None,
+        newRMS=None,
+        newGap=None,
+        newDetector=None,
+        newPickData=None,
+        newCorrelationData=None,
+    ):
         """Initialize the detection object. Constructs an empty object
            if all arguments are None
 
@@ -43,7 +57,7 @@ class Detection:
                 containing the desired hypocenter
             newDetectionType: an optional String containing the desired detection
                 type
-            newEventType: an optional detectionformats.eventtype.EventType 
+            newEventType: an optional detectionformats.eventtype.EventType
                 containing the desired event type
             newDetectionTime: an optional datetime containing the time this
                 detection was made
@@ -66,7 +80,7 @@ class Detection:
             Nothing
         """
         # first required keys
-        self.type = 'Detection'
+        self.type = "Detection"
         if newID is not None:
             self.id = newID
 
@@ -144,7 +158,7 @@ class Detection:
             self.id = aDict[self.ID_KEY]
             self.source.fromDict(aDict[self.SOURCE_KEY])
             self.hypocenter.fromDict(aDict[self.HYPOCENTER_KEY])
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
         # second optional keys
@@ -157,7 +171,9 @@ class Detection:
 
         if self.DETECTIONTIME_KEY in aDict:
             timeString = aDict[self.DETECTIONTIME_KEY][:-1] + "000Z"
-            self.detectionTime = datetime.datetime.strptime(timeString, "%Y-%m-%dT%H:%M:%S.%fZ")
+            self.detectionTime = datetime.datetime.strptime(
+                timeString, "%Y-%m-%dT%H:%M:%S.%fZ"
+            )
 
         if self.BAYES_KEY in aDict:
             self.bayes = aDict[self.BAYES_KEY]
@@ -181,11 +197,11 @@ class Detection:
                 self.correlationData = []
                 for aData in aDataList:
                     if self.TYPE_KEY in aData:
-                        if aData[self.TYPE_KEY] == 'Pick':
+                        if aData[self.TYPE_KEY] == "Pick":
                             newPick = detectionformats.pick.Pick()
                             newPick.fromDict(aData)
                             self.pickData.append(newPick)
-                        elif aData[self.TYPE_KEY] == 'Correlation':
+                        elif aData[self.TYPE_KEY] == "Correlation":
                             newCorrelation = detectionformats.correlation.Correlation()
                             newCorrelation.fromDict(aData)
                             self.correlationData.append(newCorrelation)
@@ -222,43 +238,43 @@ class Detection:
             aDict[self.ID_KEY] = self.id
             aDict[self.SOURCE_KEY] = self.source.toDict()
             aDict[self.HYPOCENTER_KEY] = self.hypocenter.toDict()
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         # second optional keys
-        if hasattr(self, 'detectionType'):
+        if hasattr(self, "detectionType"):
             aDict[self.DETECTIONTYPE_KEY] = self.detectionType
 
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "eventType"):
             if not self.eventType.isEmpty():
                 aDict[self.EVENTTYPE_KEY] = self.eventType.toDict()
 
-        if hasattr(self, 'detectionTime'):
-            timeString = self.detectionTime.isoformat(timespec='milliseconds') + "Z"
+        if hasattr(self, "detectionTime"):
+            timeString = self.detectionTime.isoformat(timespec="milliseconds") + "Z"
             aDict[self.DETECTIONTIME_KEY] = timeString
 
-        if hasattr(self, 'bayes'):
+        if hasattr(self, "bayes"):
             aDict[self.BAYES_KEY] = self.bayes
 
-        if hasattr(self, 'minimumDistance'):
+        if hasattr(self, "minimumDistance"):
             aDict[self.MINIMUMDISTANCE_KEY] = self.minimumDistance
 
-        if hasattr(self, 'rms'):
+        if hasattr(self, "rms"):
             aDict[self.RMS_KEY] = self.rms
 
-        if hasattr(self, 'gap'):
+        if hasattr(self, "gap"):
             aDict[self.GAP_KEY] = self.gap
 
-        if hasattr(self, 'detector'):
+        if hasattr(self, "detector"):
             aDict[self.DETECTOR_KEY] = self.detector
 
         aDataList = []
-        if hasattr(self, 'pickData'):
+        if hasattr(self, "pickData"):
             if self.pickData and len(self.pickData) > 0:
                 for aPick in self.pickData:
                     aDataList.append(aPick.toDict())
 
-        if hasattr(self, 'correlationData'):
+        if hasattr(self, "correlationData"):
             if self.correlationData and len(self.correlationData) > 0:
                 for aCorrelation in self.correlationData:
                     aDataList.append(aCorrelation.toDict())
@@ -295,63 +311,65 @@ class Detection:
 
         # required values
         try:
-            if self.type == '':
-                errorList.append('Empty Type in Detection Class.')
-            elif self.type != 'Detection':
-                errorList.append('Non-Detection Type in Detection Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Type in Detection Class.')
+            if self.type == "":
+                errorList.append("Empty Type in Detection Class.")
+            elif self.type != "Detection":
+                errorList.append("Non-Detection Type in Detection Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Type in Detection Class.")
 
         try:
-            if self.id == '':
-                errorList.append('Empty ID in Detection Class.')
-        except(NameError, AttributeError):
-            errorList.append('No ID in Detection Class.')
+            if self.id == "":
+                errorList.append("Empty ID in Detection Class.")
+        except (NameError, AttributeError):
+            errorList.append("No ID in Detection Class.")
 
         try:
             if not self.source.isValid():
-                errorList.append('Invalid Source in Detection Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Source in Detection Class.')
+                errorList.append("Invalid Source in Detection Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Source in Detection Class.")
 
         try:
             if not self.hypocenter.isValid():
-                errorList.append('Invalid Hypocenter in Detection Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Hypocenter in Detection Class.')
+                errorList.append("Invalid Hypocenter in Detection Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Hypocenter in Detection Class.")
 
         # optional values
-        if hasattr(self, 'detectionType'):
-            if self.detectionType not in ['New', 'Update', 'Final', 'Retract']:
-                errorList.append('Invalid DetectionType in Detection Class.')
+        if hasattr(self, "detectionType"):
+            if self.detectionType not in ["New", "Update", "Final", "Retract"]:
+                errorList.append("Invalid DetectionType in Detection Class.")
 
-        if hasattr(self, 'eventType'):
+        if hasattr(self, "eventType"):
             if not self.eventType.isEmpty():
                 if not self.eventType.isValid():
-                    errorList.append('Invalid EventType in Detection Class.')
+                    errorList.append("Invalid EventType in Detection Class.")
 
-        if hasattr(self, 'bayes'):
+        if hasattr(self, "bayes"):
             if self.bayes < 0:
-                errorList.append('Bayes in Detection Class not in greater than 0.')
+                errorList.append("Bayes in Detection Class not in greater than 0.")
 
-        if hasattr(self, 'minimumDistance'):
+        if hasattr(self, "minimumDistance"):
             if self.minimumDistance < 0:
-                errorList.append('MinimumDistance in Detection Class not in greater than 0.')
+                errorList.append(
+                    "MinimumDistance in Detection Class not in greater than 0."
+                )
 
-        if hasattr(self, 'gap'):
+        if hasattr(self, "gap"):
             if self.gap < 0 or self.gap > 360:
-                errorList.append('Gap in Detection Class not in the range of 0 to 360.')
+                errorList.append("Gap in Detection Class not in the range of 0 to 360.")
 
-        if hasattr(self, 'pickData'):
+        if hasattr(self, "pickData"):
             if self.pickData and len(self.pickData) > 0:
                 for aPick in self.pickData:
                     if not aPick.isValid():
-                        errorList.append('Invalid Pick in Detection Class.')
+                        errorList.append("Invalid Pick in Detection Class.")
 
-        if hasattr(self, 'correlationData'):
+        if hasattr(self, "correlationData"):
             if self.correlationData and len(self.correlationData) > 0:
                 for aCorrelation in self.correlationData:
                     if not aCorrelation.isValid():
-                        errorList.append('Invalid Correlation in Detection Class.')
+                        errorList.append("Invalid Correlation in Detection Class.")
 
         return errorList

@@ -1,128 +1,117 @@
 package gov.usgs.detectionformats;
 
 import org.json.simple.JSONObject;
-
-import static org.junit.Assert.*;
-
 import org.json.simple.parser.ParseException;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class RetractTest {
-	public static String RETRACT_STRING = "{\"Type\":\"Retract\",\"Source\":{\"Author\":"
-			+ "\"TestAuthor\",\"AgencyID\":\"US\"},\"ID\":\"12GFH48776857\"}";
-	public static String ID = "12GFH48776857";
-	public static String AGENCYID = "US";
-	public static String AUTHOR = "TestAuthor";
-	
-	/**
-	 * Able to write a JSON string
-	 */
-	@Test
-	public void WritesJSON() {
-		Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
+  public static String RETRACT_STRING =
+      "{\"Type\":\"Retract\",\"Source\":{\"Author\":"
+          + "\"TestAuthor\",\"AgencyID\":\"US\"},\"ID\":\"12GFH48776857\"}";
+  public static String ID = "12GFH48776857";
+  public static String AGENCYID = "US";
+  public static String AUTHOR = "TestAuthor";
 
-		// write out to a string
-		String jsonString = Utility.toJSONString(retractObject.toJSON());
+  /** Able to write a JSON string */
+  @Test
+  public void WritesJSON() {
+    Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
 
-		// check the data
-		try {
-			CheckData(new Retract(Utility.fromJSONString(jsonString)),
-					"WritesJSON");
-		} catch (ParseException e) {
-			e.printStackTrace();
-			fail("exception in WritesJSON");
-		}
-	}
+    // write out to a string
+    String jsonString = Utility.toJSONString(retractObject.toJSON());
 
-	/**
-	 * Able to read a JSON string
-	 */
-	@Test
-	public void ReadsJSON() {
-		// build Correlation object
-		try {
-			CheckData(new Retract(Utility.fromJSONString(RETRACT_STRING)),
-					"ReadsJSON");
-		} catch (ParseException e) {
-			e.printStackTrace();
-			fail("exception in ReadsJSON");
-		}
-	}
+    // check the data
+    try {
+      CheckData(new Retract(Utility.fromJSONString(jsonString)), "WritesJSON");
+    } catch (ParseException e) {
+      e.printStackTrace();
+      Assertions.fail("exception in WritesJSON");
+    }
+  }
 
-	/**
-	 * Constructor fills in members correctly
-	 */
-	@Test
-	public void Constructor() {
-		// use constructor
-		Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
+  /** Able to read a JSON string */
+  @Test
+  public void ReadsJSON() {
+    // build Correlation object
+    try {
+      CheckData(new Retract(Utility.fromJSONString(RETRACT_STRING)), "ReadsJSON");
+    } catch (ParseException e) {
+      e.printStackTrace();
+      Assertions.fail("exception in ReadsJSON");
+    }
+  }
 
-		// check data values
-		CheckData(retractObject, "Constructor");
+  /** Constructor fills in members correctly */
+  @Test
+  public void Constructor() {
+    // use constructor
+    Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
 
-		// use constructor
-		Retract altRetractObject = new Retract(ID, new Source(AGENCYID, AUTHOR));
+    // check data values
+    CheckData(retractObject, "Constructor");
 
-		// check data values
-		CheckData(altRetractObject, "Alternate Constructor");	
-		
-		// empty constructor
-		JSONObject emptyJSONObject = new JSONObject();
-		Retract emptyObject = new Retract(emptyJSONObject);
+    // use constructor
+    Retract altRetractObject = new Retract(ID, new Source(AGENCYID, AUTHOR));
 
-		// check the data
-		CheckData(emptyObject, "Empty Constructor");
-	}
+    // check data values
+    CheckData(altRetractObject, "Alternate Constructor");
 
-	/**
-	 * Able to run validation function
-	 */
-	@Test
-	public void Validate() {
-		Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
+    // empty constructor
+    JSONObject emptyJSONObject = new JSONObject();
+    Retract emptyObject = new Retract(emptyJSONObject);
 
-		// Successful validation
-		boolean rc = retractObject.isValid();
+    // check the data
+    CheckData(emptyObject, "Empty Constructor");
+  }
 
-		// check return code
-		assertEquals("Successful Validation", true, rc);
+  /** Able to run validation function */
+  @Test
+  public void Validate() {
+    Retract retractObject = new Retract(ID, AGENCYID, AUTHOR);
 
-		// build bad Retract object
-		Retract badRetractObject = new Retract();
+    // Successful validation
+    boolean rc = retractObject.isValid();
 
-		rc = badRetractObject.isValid();
+    // check return code
+    Assertions.assertEquals(true, rc, "Successful Validation");
 
-		// check return code
-		assertEquals("Unsuccessful Validation", false, rc);
+    // build bad Retract object
+    Retract badRetractObject = new Retract();
 
-		// build bad Retract object
-		Retract badRetractObject2= new Retract("", "", null);
+    rc = badRetractObject.isValid();
 
-		rc = badRetractObject2.isValid();
+    // check return code
+    Assertions.assertEquals(false, rc, "Unsuccessful Validation");
 
-		// check return code
-		assertEquals("Unsuccessful Validation 2", false, rc);
-	}
+    // build bad Retract object
+    Retract badRetractObject2 = new Retract("", "", null);
 
-	public void CheckData(Retract retractObject, String TestName) {
-		// check retractObject.ID
-		if (retractObject.getID() != null) {
-			assertEquals(TestName + " ID Equals", ID, retractObject.getID());
-		}
+    rc = badRetractObject2.isValid();
 
-		// check retractObject.Source
-		if (retractObject.getSource() != null) {
-			// check retractObject.Source.AgencyID
-			if (retractObject.getSource().getAgencyID() != null) {
-				assertEquals(TestName + " AgencyID Equals", AGENCYID,
-					retractObject.getSource().getAgencyID());
-			}
+    // check return code
+    Assertions.assertEquals(false, rc, "Unsuccessful Validation 2");
+  }
 
-			// check retractObject.Source.Author
-			if (retractObject.getSource().getAuthor() != null) {
-				assertEquals(TestName + " Author Equals", AUTHOR,
-					retractObject.getSource().getAuthor());
-			}
-		}
-	}	
+  public void CheckData(Retract retractObject, String TestName) {
+    // check retractObject.ID
+    if (retractObject.getID() != null) {
+      Assertions.assertEquals(ID, retractObject.getID(), TestName + " ID Equals");
+    }
+
+    // check retractObject.Source
+    if (retractObject.getSource() != null) {
+      // check retractObject.Source.AgencyID
+      if (retractObject.getSource().getAgencyID() != null) {
+        Assertions.assertEquals(
+            AGENCYID, retractObject.getSource().getAgencyID(), TestName + " AgencyID Equals");
+      }
+
+      // check retractObject.Source.Author
+      if (retractObject.getSource().getAuthor() != null) {
+        Assertions.assertEquals(
+            AUTHOR, retractObject.getSource().getAuthor(), TestName + " Author Equals");
+      }
+    }
+  }
 }

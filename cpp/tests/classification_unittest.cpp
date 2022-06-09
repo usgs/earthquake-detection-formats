@@ -38,19 +38,19 @@ void checkdata(detectionformats::classification classificationobject,
         ASSERT_EQ(classificationdistanceprob, expecteddistanceprob);
     }
 
-	// check azimuth
-    if (std::isnan(classificationobject.azimuth) != true) {
-        double classificationazimuth = classificationobject.azimuth;
-        double expectedazimuth = AZIMUTH;
-        ASSERT_EQ(classificationazimuth, expectedazimuth);
+	// check backazimuth
+    if (std::isnan(classificationobject.backazimuth) != true) {
+        double classificationbackazimuth = classificationobject.backazimuth;
+        double expectedbackazimuth = BACKAZIMUTH;
+        ASSERT_EQ(classificationbackazimuth, expectedbackazimuth);
     }
 
-    // check azimuth probability
-    if (std::isnan(classificationobject.azimuthprobability) != true) {
-        double classificationazimuthprob =
-            classificationobject.azimuthprobability;
-        double expectedazimuthprob = AZIMUTHPROBABILITY;
-        ASSERT_EQ(classificationazimuthprob, expectedazimuthprob);
+    // check backazimuth probability
+    if (std::isnan(classificationobject.backazimuthprobability) != true) {
+        double classificationbackazimuthprob =
+            classificationobject.backazimuthprobability;
+        double expectedbackazimuthprob = BACKAZIMUTHPROBABILITY;
+        ASSERT_EQ(classificationbackazimuthprob, expectedbackazimuthprob);
     }
 
     // check magnitude
@@ -138,8 +138,8 @@ TEST(ClassificationTest, WritesJSON) {
 	classificationobject.phaseprobability = PHASEPROBABILITY;
     classificationobject.distance = DISTANCE;
 	classificationobject.distanceprobability = DISTANCEPROBABILITY;
-    classificationobject.azimuth = AZIMUTH;
-    classificationobject.azimuthprobability = AZIMUTHPROBABILITY;
+    classificationobject.backazimuth = BACKAZIMUTH;
+    classificationobject.backazimuthprobability = BACKAZIMUTHPROBABILITY;
     classificationobject.magnitude = MAGNITUDE;
     classificationobject.magnitudetype = std::string(MAGNITUDETYPE);
     classificationobject.magnitudeprobability = MAGNITUDEPROBABILITY;
@@ -185,8 +185,8 @@ TEST(ClassificationTest, ReadsJSON) {
 TEST(ClassificationTest, Constructor) {
 	// use constructor
 	detectionformats::classification classificationobject(std::string(PHASE),
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
             EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
 
@@ -195,8 +195,8 @@ TEST(ClassificationTest, Constructor) {
 
     // alternate constructor
 	detectionformats::classification classificationobject2(std::string(PHASE),
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY,
             detectionformats::eventtype(EVENTTYPE, CERTAINTY),
             EVENTTYPEPROBABILITY, detectionformats::source(AGENCYID, AUTHOR));
@@ -217,8 +217,8 @@ TEST(ClassificationTest, Constructor) {
 TEST(ClassificationTest, CopyConstructor) {
 	// use constructor
 	detectionformats::classification classificationobject(std::string(PHASE),
-            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, AZIMUTH,
-            AZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
+            PHASEPROBABILITY, DISTANCE, DISTANCEPROBABILITY, BACKAZIMUTH,
+            BACKAZIMUTHPROBABILITY, MAGNITUDE, std::string(MAGNITUDETYPE),
             MAGNITUDEPROBABILITY, DEPTH, DEPTHPROBABILITY, EVENTTYPE, CERTAINTY,
             EVENTTYPEPROBABILITY, AGENCYID, AUTHOR);
 
@@ -239,8 +239,8 @@ TEST(ClassificationTest, Validate) {
 	classificationobject.phaseprobability = PHASEPROBABILITY;
     classificationobject.distance = DISTANCE;
 	classificationobject.distanceprobability = PHASEPROBABILITY;
-    classificationobject.azimuth = AZIMUTH;
-    classificationobject.azimuthprobability = AZIMUTHPROBABILITY;
+    classificationobject.backazimuth = BACKAZIMUTH;
+    classificationobject.backazimuthprobability = BACKAZIMUTHPROBABILITY;
     classificationobject.magnitude = MAGNITUDE;
     classificationobject.magnitudetype = std::string(MAGNITUDETYPE);
     classificationobject.magnitudeprobability = MAGNITUDEPROBABILITY;
@@ -262,7 +262,7 @@ TEST(ClassificationTest, Validate) {
 	detectionformats::classification badclassificationobject;
 	badclassificationobject.phase = "22";
     badclassificationobject.distance = 9999;
-    badclassificationobject.azimuth = 9999;
+    badclassificationobject.backazimuth = 9999;
     badclassificationobject.magnitude = 99;
     badclassificationobject.depth = -9999;
     badclassificationobject.eventtype.type = "chair";

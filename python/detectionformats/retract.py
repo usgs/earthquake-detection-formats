@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
-#package imports
+# package imports
 import detectionformats.source
 
-#stdlib imports
+# stdlib imports
 import json
 
+
 class Retract:
-    """ Retract - a conversion class used to create, parse, and validate a 
-        retraction as part of detection data.
+    """Retract - a conversion class used to create, parse, and validate a
+    retraction as part of detection data.
     """
+
     # json keys
     TYPE_KEY = "Type"
     ID_KEY = "ID"
@@ -29,7 +31,7 @@ class Retract:
             Nothing
         """
         # first required keys
-        self.type = 'Retract'
+        self.type = "Retract"
 
         if newID is not None:
             self.id = newID
@@ -67,7 +69,7 @@ class Retract:
             self.type = aDict[self.TYPE_KEY]
             self.id = aDict[self.ID_KEY]
             self.source.fromDict(aDict[self.SOURCE_KEY])
-        except(ValueError, KeyError, TypeError) as e:
+        except (ValueError, KeyError, TypeError) as e:
             print("Dict format error, missing required keys: %s" % e)
 
     def toJSONString(self):
@@ -101,7 +103,7 @@ class Retract:
             aDict[self.TYPE_KEY] = self.type
             aDict[self.ID_KEY] = self.id
             aDict[self.SOURCE_KEY] = self.source.toDict()
-        except(NameError, AttributeError) as e:
+        except (NameError, AttributeError) as e:
             print("Missing required data error: %s" % e)
 
         return aDict
@@ -133,23 +135,23 @@ class Retract:
         errorList = []
 
         try:
-            if self.type == '':
-                errorList.append('Empty Type in Retract Class.')
-            elif self.type != 'Retract':
-                errorList.append('Non-Retract Type in Retract Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Type in Retract Class.')
+            if self.type == "":
+                errorList.append("Empty Type in Retract Class.")
+            elif self.type != "Retract":
+                errorList.append("Non-Retract Type in Retract Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Type in Retract Class.")
 
         try:
-            if self.id == '':
-                errorList.append('Empty ID in Retract Class.')
-        except(NameError, AttributeError):
-            errorList.append('No ID in Retract Class.')
+            if self.id == "":
+                errorList.append("Empty ID in Retract Class.")
+        except (NameError, AttributeError):
+            errorList.append("No ID in Retract Class.")
 
         try:
             if not self.source.isValid():
-                errorList.append('Invalid Source in Retract Class.')
-        except(NameError, AttributeError):
-            errorList.append('No Source in Retract Class.')
+                errorList.append("Invalid Source in Retract Class.")
+        except (NameError, AttributeError):
+            errorList.append("No Source in Retract Class.")
 
         return errorList
