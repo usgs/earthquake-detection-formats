@@ -7,7 +7,7 @@ stages:
 variables:
   JAVA_IMAGE: ${DEVOPS_REGISTRY}usgs/java:11-jdk
   PYTHON_IMAGE: ${DEVOPS_REGISTRY}usgs/python:3.9-obspy
-  CPP_IMAGE: ${DEVOPS_REGISTRY}usgs/python:3.9-obspy # gets us ubuntu
+  # CPP_IMAGE: ${DEVOPS_REGISTRY}usgs/python:3.9-obspy # gets us ubuntu
 
   # environment variables
   APP_NAME: earthquake-detection-formats
@@ -55,10 +55,10 @@ Java Test:
     - export GRADLE_USER_HOME="${CI_PROJECT_DIR}/.gradle"
     - ./gradlew build javadoc
   rules:
-      - <<: *dev-env
-        when: always
-      - <<: *publish-env
-        when: always
+    - <<: *dev-env
+      when: always
+    - <<: *publish-env
+      when: always
   stage: test
   tags:
     - development
@@ -76,10 +76,10 @@ Python Build:
     - poetry run safety check   
     - poetry build
   rules:
-      - <<: *dev-env
-        when: always
-      - <<: *publish-env
-        when: always
+    - <<: *dev-env
+      when: always
+    - <<: *publish-env
+      when: always
   stage: test
   image: ${PYTHON_IMAGE}
   variables:
@@ -96,10 +96,10 @@ Python Lint:
     - poetry install
     - poetry run black --check .
   rules:
-      - <<: *dev-env
-        when: always
-      - <<: *publish-env
-        when: always
+    - <<: *dev-env
+      when: always
+    - <<: *publish-env
+      when: always
   stage: test
   image: ${PYTHON_IMAGE}
   variables:
@@ -119,10 +119,10 @@ Python Test:
     - poetry run pytest --cov=detectionformats --junitxml junit.xml
     - poetry run coverage xml
   rules:
-      - <<: *dev-env
-        when: always
-      - <<: *publish-env
-        when: always
+    - <<: *dev-env
+      when: always
+    - <<: *publish-env
+      when: always
   stage: test
   image: ${PYTHON_IMAGE}
 
@@ -159,17 +159,23 @@ Java Publish:
       - java/.gradle/wrapper
   image: ${JAVA_IMAGE}
   script:
+    # upstream check
+    - if [ "${CI_PROJECT_PATH}" != "${UPSTREAM_PATH}" ]; then
+      echo "Skipping publish on non-upstream (${CI_PROJECT_PATH})";
+      exit 0;
+      fi
     - cd java
     # use gradle to publish to our maven repository
     - export GRADLE_USER_HOME="${CI_PROJECT_DIR}/.gradle"
     - ./gradlew publish
   stage: publish
   rules:
-      - <<: *publish-env
-        when: manual
+    - <<: *dev-env
+      when: never
+    - <<: *publish-env
+      when: manual
   tags:
-    - development
-
+    - build
 
 Python Publish:
   cache:
@@ -177,6 +183,11 @@ Python Publish:
       # cache pip installed dependencies, see PIP_CACHE_DIR variable below
       - .cache/pip    
   script:
+      # upstream check
+    - if [ "${CI_PROJECT_PATH}" != "${UPSTREAM_PATH}" ]; then
+      echo "Skipping publish on non-upstream (${CI_PROJECT_PATH})";
+      exit 0;
+      fi
     - cd python
     - poetry config virtualenvs.in-project true --local
     - poetry install   
@@ -193,7 +204,9 @@ Python Publish:
     PACKAGE_URL: "${CI_API_V4_URL}/projects/8197/packages/pypi"
   stage: publish
   rules:
-      - <<: *publish-env
-        when: manual
+    - <<: *dev-env
+      when: never
+    - <<: *publish-env
+      when: manual
   tags:
-    - development
+    - build
