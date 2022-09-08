@@ -1,3 +1,7 @@
+> **THIS PROJECT HAS BEEN ARCHIVED**
+> 
+> Please see [https://code.usgs.gov/ghsc/neic/utilities/earthquake-detection-formats)
+
 # Detection Formats
 
 [![Build Status](https://travis-ci.org/usgs/earthquake-detection-formats.svg?branch=master)](https://travis-ci.org/usgs/earthquake-detection-formats)
